@@ -1089,6 +1089,13 @@
     font-size: 12.5px; font-variant-numeric: tabular-nums;
     direction: rtl;
   }
+  table.ref-table.ltr {
+    direction: ltr; text-align: left;
+  }
+  table.ref-table.ltr th, table.ref-table.ltr td { text-align: left; }
+  table.ref-table.ltr td.product { white-space: nowrap; }
+  table.ref-table.ltr td.warn { color: var(--amber-text); }
+  table.ref-table.ltr td.crit { color: var(--red-text); font-weight: 600; }
   table.ref-table thead {
     background: var(--surface2);
   }
@@ -3446,101 +3453,180 @@
     </div>
 
     <div class="pph-detail-area" id="pph-sec-products" data-pph-sec="products" style="display:none">
-    <div class="sec" style="margin-top:0">מוצרי דם — מה כל מנה תורמת</div>
+    <div class="sec" style="margin-top:0">מוצרי דם — תכולה, השפעה, מינון</div>
 
+    <!-- ============== TABLE 1: Standard Blood Products ============== -->
+    <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin:4px 0 6px">
+      1. Standard Blood Products
+    </div>
     <div class="ref-table-wrap">
-      <table class="ref-table" aria-label="מוצרי דם — תכולה, השפעה ומינון">
+      <table class="ref-table ltr" aria-label="Standard blood products">
         <thead>
           <tr>
-            <th>מוצר</th>
-            <th>נפח / תכולה</th>
-            <th>השפעה ליחידה</th>
-            <th>מינון ב-PPH</th>
-            <th>הערות</th>
+            <th>Product</th>
+            <th>Volume / Composition</th>
+            <th>Effect per unit</th>
+            <th>Dose in PPH</th>
+            <th>Notes</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="product">PRBC<span class="abbr">תרכיז כדוריות</span></td>
-            <td>~280 ml · Hct 55-65%</td>
-            <td><span class="effect">+1.0 g/dL Hb</span> · +3% Hct</td>
-            <td class="dose">1–2 יח' לפי הצורך</td>
-            <td>Hb &lt;7 או &lt;8 עם תסמינים · O-neg חירום · חמם אם &gt;1 יח'/15 דק'</td>
+            <td class="product">PRBC<span class="abbr">Packed Red Cells</span></td>
+            <td>~280 ml · Hct 55–65%</td>
+            <td><span class="effect">↑ Hb 1.0 g/dL</span> · ↑ Hct 3%</td>
+            <td class="dose">1–2 units as needed</td>
+            <td>Hb &lt;7 g/dL, or &lt;8 with symptoms · O-neg in emergency · Warm if &gt;1 unit / 15 min</td>
           </tr>
           <tr>
-            <td class="product">FFP<span class="abbr">פלזמה טרייה קפואה</span></td>
-            <td>200-250 ml · כל גורמי הקרישה · פיברינוגן ~400 mg</td>
-            <td><span class="effect">+20% גורמי קרישה</span></td>
-            <td class="dose">15 ml/kg (≈4 יח' ב-70 ק"ג)</td>
-            <td>יחס 1:1 ל-PRBC ב-MTP · הפשרה 20-30 דק' — להזמין מוקדם!</td>
+            <td class="product">FFP<span class="abbr">Fresh Frozen Plasma</span></td>
+            <td>200–250 ml · all clotting factors · fibrinogen ~400 mg</td>
+            <td><span class="effect">↑ Clotting factors ~20%</span></td>
+            <td class="dose">15 ml/kg (≈ 4 units / 70 kg)</td>
+            <td>1:1 ratio with PRBC in MTP · 20–30 min thaw — order early</td>
           </tr>
           <tr>
-            <td class="product">Cryo (יחידה)<span class="abbr">קריופרציפיטט</span></td>
-            <td>10-15 ml · פיברינוגן 150-250 mg · Factor VIII 80 U · F.XIII · vWF</td>
+            <td class="product">Cryo (1 unit)<span class="abbr">Cryoprecipitate</span></td>
+            <td>10–15 ml · Fibrinogen 150–250 mg · Factor VIII 80 U · Factor XIII · vWF · Fibronectin</td>
             <td>—</td>
-            <td class="dose">לא ניתן ליחידה אחת</td>
-            <td>תמיד ניתן כ-<b>צבר</b> של 10 יחידות</td>
+            <td class="dose">Not given as single unit</td>
+            <td>Always administered as a pool of 10 units</td>
           </tr>
           <tr style="background:var(--primary-bg)">
-            <td class="product">Cryo (צבר)<span class="abbr">10 יח' מאוחדות</span></td>
-            <td>~150 ml · פיברינוגן 1.5-2.5 g · גורמי קרישה רבים</td>
-            <td><span class="effect">+70-100 mg/dL פיברינוגן</span></td>
-            <td class="dose">צבר 1 (10 יח') אם פיברינוגן &lt;200</td>
-            <td>יעד פיברינוגן ≥200 mg/dL (≥2 g/L)</td>
+            <td class="product">Cryo (10-unit pool)<span class="abbr">Standard order</span></td>
+            <td>~150 ml · Fibrinogen 1.5–2.5 g · multiple clotting factors</td>
+            <td><span class="effect">↑ Fibrinogen 70–100 mg/dL</span></td>
+            <td class="dose">1 pool (10 units) if fibrinogen &lt; 200 mg/dL</td>
+            <td>Target fibrinogen ≥ 200 mg/dL (≥ 2 g/L) during active bleeding</td>
           </tr>
           <tr>
-            <td class="product">פלטליות<span class="abbr">Apheresis / Pooled</span></td>
-            <td>Apheresis 250 ml = 1 תורם · Pooled = 4-6 יח' מאוחדות</td>
-            <td><span class="effect">+30,000/μL</span></td>
-            <td class="dose">1 unit אם &lt;75K + דימום פעיל</td>
-            <td>יעד ≥75K · &lt;50K ב-MTP · ABO-תואם · נשים פוריות: Rh-תואם</td>
+            <td class="product">Platelets<span class="abbr">Apheresis / Pooled</span></td>
+            <td>Apheresis 250 ml = 1 donor · Pooled = 4–6 random units</td>
+            <td><span class="effect">↑ Count 30,000/μL</span></td>
+            <td class="dose">1 unit if Plt &lt; 75K + active bleeding</td>
+            <td>Target ≥ 75K (active bleed); ≥ 50K (post-control) · ABO-compatible · Rh-match in childbearing-age women</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="sec" style="font-size:11px;margin-top:14px">קונצנטרטים מיוחדים וטיפול תומך</div>
+    <!-- ============== TABLE 2: Hemostatic Concentrates ============== -->
+    <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin:18px 0 6px">
+      2. Hemostatic Concentrates
+    </div>
     <div class="ref-table-wrap">
-      <table class="ref-table" aria-label="קונצנטרטים מיוחדים">
+      <table class="ref-table ltr" aria-label="Hemostatic concentrates">
         <thead>
           <tr>
-            <th>מוצר</th>
-            <th>השפעה</th>
-            <th>מינון</th>
-            <th>אינדיקציה / זהירות</th>
+            <th>Brand</th>
+            <th>Generic / Class</th>
+            <th>Effect</th>
+            <th>Dose</th>
+            <th>Indication / Caution</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:var(--primary-bg)">
+            <td class="product">Haemocomplettan<br>RiaSTAP · Fibryga</td>
+            <td>Fibrinogen concentrate</td>
+            <td><span class="effect">↑ Fibrinogen ~30 mg/dL per gram</span></td>
+            <td class="dose">25–50 mg/kg (≈ 2–4 g IV)</td>
+            <td><b>First-line if available</b> — no thawing, faster than Cryo · ready in 5 min · pathogen-inactivated</td>
+          </tr>
+          <tr>
+            <td class="product">Octaplex<br>Beriplex · Kcentra<br>Confidex</td>
+            <td>4-Factor PCC<br>(Factors II, VII, IX, X)</td>
+            <td>Replaces vitamin-K-dependent factors</td>
+            <td class="dose">25–50 U/kg<br>(INR-guided)</td>
+            <td>Warfarin / DOAC emergency reversal · <b>not first-line</b> in obstetric PPH · thrombotic risk</td>
+          </tr>
+          <tr>
+            <td class="product">FEIBA</td>
+            <td>Activated PCC<br>(aPCC)</td>
+            <td>Bypasses Factor VIII / IX inhibitors</td>
+            <td class="dose">50–100 U/kg<br>(max 200 U/kg/day)</td>
+            <td>Hemophilia with inhibitors · rare use in PPH · high thrombotic risk</td>
+          </tr>
+          <tr>
+            <td class="product crit">NovoSeven<br>NovoSeven RT</td>
+            <td>Recombinant Factor VIIa<br>(rFVIIa)</td>
+            <td>Activates extrinsic clotting pathway</td>
+            <td class="dose">90 μg/kg IV bolus<br>(may repeat ×1 after 2 h)</td>
+            <td class="crit">LAST RESORT — only after all standard products failed. Prereq: fibrinogen ≥ 150 · Plt ≥ 50K · pH ≥ 7.2 · normothermia · ionized Ca normal · significant thrombotic risk (MI, stroke, DIC)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ============== TABLE 3: Adjuncts & Reversal Agents ============== -->
+    <div style="font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin:18px 0 6px">
+      3. Adjuncts &amp; Reversal Agents
+    </div>
+    <div class="ref-table-wrap">
+      <table class="ref-table ltr" aria-label="Adjuncts and reversal agents">
+        <thead>
+          <tr>
+            <th>Agent</th>
+            <th>Indication</th>
+            <th>Dose</th>
+            <th>Notes</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="product">RiaSTAP / Haemocomplettan<span class="abbr">קונצנטרט פיברינוגן</span></td>
-            <td><span class="effect">+30 mg/dL לכל גרם</span></td>
-            <td class="dose">25-50 mg/kg (2-4 גרם)</td>
-            <td>מהיר וזמין מיידית · ללא הפשרה · עדיף על קריו אם זמין</td>
+            <td class="product">TXA (Tranexamic acid)<br>Hexakapron · Cyklokapron</td>
+            <td>Antifibrinolytic — every PPH</td>
+            <td class="dose">1 g IV over 10 min · repeat 1 g at 30 min if bleeding continues</td>
+            <td><b>Within 3 h of bleeding onset</b> (WOMAN trial) · reduces death from bleeding 31%</td>
           </tr>
           <tr>
-            <td class="product">PCC<span class="abbr">Prothrombin Complex</span></td>
-            <td>גורמים II, VII, IX, X</td>
-            <td class="dose">25-50 U/kg</td>
-            <td>חירום עם Warfarin / DOAC · <b>לא קו ראשון</b> ב-PPH אובסטטרי</td>
+            <td class="product">Calcium Gluconate 10%</td>
+            <td>Citrate toxicity in MTP (chelates ionized Ca)</td>
+            <td class="dose">10 ml IV per 4 units of blood</td>
+            <td>Mandatory in MTP · monitor ionized Ca every 30 min</td>
           </tr>
           <tr>
-            <td class="product">NovoSeven<span class="abbr">Factor VIIa</span></td>
-            <td>הפעלת מסלול קרישה חיצוני</td>
-            <td class="dose">90 μg/kg IV</td>
-            <td><b>מוצא אחרון</b> · רק אחרי כל הסטנדרטיים · פיברינוגן ≥150 · Plt ≥50K · pH ≥7.2 · חימום · סיכון טרומבוטי</td>
+            <td class="product">DDAVP (Desmopressin)<br>Octostim</td>
+            <td>vWD type 1 · uremic platelet dysfunction · mild hemophilia A</td>
+            <td class="dose">0.3 μg/kg IV over 30 min</td>
+            <td>Tachyphylaxis after 2–3 doses · hyponatremia risk · not effective in active major bleed</td>
           </tr>
           <tr>
-            <td class="product">Ca Gluconate 10%</td>
-            <td>תיקון Ca יוני (ציטראט)</td>
-            <td class="dose">10 ml IV / 4 יח' דם</td>
-            <td>חובה ב-MTP · ציטראט בדם מאוחסן קושר Ca יוני</td>
+            <td class="product">Vitamin K (Phytomenadione)<br>Konakion</td>
+            <td>Warfarin reversal (slow)</td>
+            <td class="dose">5–10 mg IV / PO</td>
+            <td>Effect onset 6–24 h · combine with 4F-PCC for urgent reversal</td>
+          </tr>
+          <tr>
+            <td class="product">Protamine Sulfate</td>
+            <td>Heparin reversal</td>
+            <td class="dose">1 mg per 100 U unfractionated heparin (last 2 h)<br>LMWH: 1 mg per 100 anti-Xa units (partial only)</td>
+            <td>Risk of severe hypotension if given too quickly</td>
+          </tr>
+          <tr>
+            <td class="product">Idarucizumab<br>Praxbind</td>
+            <td>Dabigatran-specific reversal agent</td>
+            <td class="dose">5 g IV (two 2.5 g vials)</td>
+            <td>Reverses Dabigatran within minutes · expensive · narrow indication</td>
+          </tr>
+          <tr>
+            <td class="product">Andexanet alfa<br>Andexxa</td>
+            <td>Apixaban / Rivaroxaban reversal</td>
+            <td class="dose">Low dose: 400 mg bolus + 4 mg/min × 120 min<br>High dose: 800 mg bolus + 8 mg/min × 120 min</td>
+            <td>Reverses Factor Xa inhibitors · short half-life — rebound bleeding possible · very expensive</td>
+          </tr>
+          <tr>
+            <td class="product">Albumin 5% / 20%</td>
+            <td>Volume expansion in hypovolemia (not first-line)</td>
+            <td class="dose">250–500 ml IV</td>
+            <td>Not a coagulation product — for resuscitation only · crystalloids first</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="rec-src" style="margin-top:10px;color:var(--text3);font-size:10.5px">
-      <b>מקורות:</b> AABB Standards 2023 · BCSH 2016 · ACOG PB 183 · Pacheco LD et al. <i>AJOG</i> 2016 (Massive Transfusion in OB) · נייר עמדה ישראלי #12 (PPH, 2024)
+    <div class="rec-src" style="margin-top:14px;color:var(--text3);font-size:10.5px">
+      <b>Sources:</b> AABB Standards 2023 · BCSH (UK Blood Transfusion Guidelines) 2016 · ACOG Practice Bulletin 183 · Pacheco LD et al. <i>AJOG</i> 2016 (Massive Transfusion in Obstetrics) · נייר עמדה ישראלי #12 (PPH, 2024) · ESA Guidelines on management of severe perioperative bleeding (Kozek-Langenecker, 2017)
     </div>
     </div>
 
@@ -3613,7 +3699,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.9';
+const APP_VERSION = '3.10';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
