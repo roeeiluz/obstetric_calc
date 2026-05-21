@@ -1078,6 +1078,52 @@
   .info-frame.compact { margin-top: 14px; padding-top: 14px; }
   .info-frame[data-label]::before { content: attr(data-label); }
 
+  /* ── Reference data tables (used in PPH blood products etc.) ──────── */
+  .ref-table-wrap {
+    margin: 8px 0 12px; border-radius: var(--radius);
+    border: 1px solid var(--border); overflow-x: auto;
+    background: var(--surface);
+  }
+  table.ref-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 12.5px; font-variant-numeric: tabular-nums;
+    direction: rtl;
+  }
+  table.ref-table thead {
+    background: var(--surface2);
+  }
+  table.ref-table th {
+    text-align: right; font-weight: 700;
+    color: var(--text2); padding: 10px 12px;
+    font-size: 11px; text-transform: uppercase;
+    letter-spacing: .06em;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  table.ref-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2); line-height: 1.45;
+    vertical-align: top;
+  }
+  table.ref-table tr:last-child td { border-bottom: none; }
+  table.ref-table td.product {
+    font-weight: 600; color: var(--text);
+    white-space: nowrap;
+  }
+  table.ref-table td.product .abbr {
+    display: block; font-size: 11px;
+    color: var(--text3); font-weight: 500; margin-top: 2px;
+  }
+  table.ref-table td b { color: var(--text); font-weight: 600; }
+  table.ref-table .effect { color: var(--primary); font-weight: 600; }
+  table.ref-table .dose { color: var(--text); font-weight: 600; }
+  table.ref-table tbody tr:hover { background: var(--surface2); }
+  @media (max-width: 560px) {
+    table.ref-table { font-size: 12px; }
+    table.ref-table th, table.ref-table td { padding: 8px 10px; }
+  }
+
   /* ── PPH detail cards (replaces long scroll) ──────────────────────── */
   .pph-cards {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -3401,67 +3447,100 @@
 
     <div class="pph-detail-area" id="pph-sec-products" data-pph-sec="products" style="display:none">
     <div class="sec" style="margin-top:0">מוצרי דם — מה כל מנה תורמת</div>
-    <div class="rec-box" style="margin-top:0">
-      <div class="rec-head">
-        <span>טבלת ייחוס מהירה למוצרי דם</span>
-        <span class="rec-tag" style="background:var(--surface2);color:var(--text2)">לכל יחידה ב-70 ק"ג</span>
-      </div>
-      <div class="rec-body">
-        <div class="rec-section">
-          <div class="rec-section-title">תרכיז כדוריות אדומות (PRBC)</div>
-          <ul class="rec-list">
-            <li><b>נפח:</b> ~280 ml · <b>המטוקריט:</b> 55–65%</li>
-            <li><b>השפעה:</b> מעלה Hb ב-<b>~1.0 g/dL</b> ו-Hct ב-<b>~3%</b> לכל יחידה</li>
-            <li><b>אינדיקציה ב-PPH:</b> Hb &lt; 7 g/dL · Hb &lt; 8 עם תסמינים · אובדן דם פעיל ניכר</li>
-            <li><b>תאימות:</b> חוצה-תאימות אם זמן · O-negative חירום (לפני סיום צלב-תאימות)</li>
-            <li><b>קריריות:</b> חמם אם &gt;1 יחידה ב-15 דקות · הימנע מהיפותרמיה</li>
-          </ul>
-        </div>
-        <div class="rec-section">
-          <div class="rec-section-title">פלזמה טרייה קפואה (FFP)</div>
-          <ul class="rec-list">
-            <li><b>נפח:</b> 200–250 ml · <b>תכולה:</b> כל גורמי הקרישה ב-1 U/ml · פיברינוגן ~400 mg ליחידה</li>
-            <li><b>מינון פרופילקטי:</b> <b>15 ml/kg</b> (≈ 4 יחידות ב-70 ק"ג) — בעדיפות יחס 1:1 ל-PRBC</li>
-            <li><b>השפעה:</b> מעלה גורמי קרישה ב-<b>~20%</b> · משפר PT/PTT ב-<b>~30%</b></li>
-            <li><b>אינדיקציה:</b> PT/PTT &gt;1.5× נורמלי · INR &gt;1.5 + דימום פעיל · MTP</li>
-            <li><b>זמן הפשרה:</b> 20–30 דקות — להזמין מוקדם!</li>
-          </ul>
-        </div>
-        <div class="rec-section">
-          <div class="rec-section-title">קריופרציפיטט (Cryo)</div>
-          <ul class="rec-list">
-            <li><b>נפח:</b> 10–15 ml ליחידה · <b>בריכה:</b> בדרך כלל 10 יחידות יחד</li>
-            <li><b>תכולה ל-יחידה:</b> פיברינוגן ~150–250 mg · Factor VIII ~80 U · Factor XIII · vWF · פיברונקטין</li>
-            <li><b>השפעה:</b> בריכה של 10 יחידות (~150 ml) → פיברינוגן עולה ב-<b>~70–100 mg/dL</b></li>
-            <li><b>מינון מומלץ ב-PPH:</b> <b>10 יחידות (1 בריכה)</b> ב-פיברינוגן &lt; 200 mg/dL ו-דימום פעיל</li>
-            <li><b>יעד:</b> פיברינוגן ≥ 200 mg/dL (≥ 2 g/L) — קריטי במהלך דימום פעיל</li>
-            <li><b>אם זמין:</b> <b>קונצנטרט פיברינוגן (RiaSTAP/Haemocomplettan)</b> — 2–4 גרם IV, מהיר ויעיל יותר</li>
-          </ul>
-        </div>
-        <div class="rec-section">
-          <div class="rec-section-title">פלטליות (Platelets)</div>
-          <ul class="rec-list">
-            <li><b>סוגים:</b> Apheresis (1 יחידה = 1 תורם, ~250 ml) · Pooled random (4–6 יחידות בריכה)</li>
-            <li><b>השפעה:</b> 1 unit (apheresis או pooled) → ספירה עולה ב-<b>~30,000/μL</b></li>
-            <li><b>מינון ב-PPH:</b> <b>1 unit</b> אם פלטליות &lt; 75K עם דימום פעיל · &lt; 50K אם MTP</li>
-            <li><b>יעד:</b> ≥ 75,000/μL בדימום פעיל · ≥ 50,000/μL אחרי שליטה</li>
-            <li><b>תאימות:</b> ABO-תואם רצוי · נשים בגיל פוריות → Rh-תואם או anti-D אם Rh-</li>
-          </ul>
-        </div>
-        <div class="rec-section">
-          <div class="rec-section-title">קונצנטרטים מיוחדים</div>
-          <ul class="rec-list">
-            <li><b>קונצנטרט פיברינוגן (RiaSTAP):</b> 1 גרם → פיברינוגן +30 mg/dL · מינון: 25–50 mg/kg
-              <br><i>מהיר וזמין מיידית — אין צורך בהפשרה. לרוב 2–4 גרם ב-PPH משמעותי.</i></li>
-            <li><b>PCC (Prothrombin Complex):</b> 4 גורמים (II, VII, IX, X) · מינון: 25–50 U/kg
-              <br><i>שמור למצב חירום עם warfarin / DOAC active bleeding · לא קו ראשון ב-PPH אובסטטרי.</i></li>
-            <li><b>Factor VIIa (NovoSeven):</b> 90 μg/kg IV
-              <br><i>"מוצא אחרון" — רק לאחר שכל מוצרי הדם הסטנדרטיים נכשלו, פיברינוגן ≥150, פלטליות ≥50K, pH ≥7.2, חימום. סיכון טרומבוטי.</i></li>
-            <li><b>Calcium Gluconate 10%:</b> 10 ml IV לכל 4 יחידות דם · ציטראט מציגזיון Ca יוני</li>
-          </ul>
-        </div>
-        <div class="rec-src">AABB Standards 2023 · BCSH (British Committee for Standards in Haematology) 2016 · ACOG PB 183 · Pacheco LD et al. <i>AJOG</i> 2016 (Massive Transfusion in OB)</div>
-      </div>
+
+    <div class="ref-table-wrap">
+      <table class="ref-table" aria-label="מוצרי דם — תכולה, השפעה ומינון">
+        <thead>
+          <tr>
+            <th>מוצר</th>
+            <th>נפח / תכולה</th>
+            <th>השפעה ליחידה</th>
+            <th>מינון ב-PPH</th>
+            <th>הערות</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="product">PRBC<span class="abbr">תרכיז כדוריות</span></td>
+            <td>~280 ml · Hct 55-65%</td>
+            <td><span class="effect">+1.0 g/dL Hb</span> · +3% Hct</td>
+            <td class="dose">1–2 יח' לפי הצורך</td>
+            <td>Hb &lt;7 או &lt;8 עם תסמינים · O-neg חירום · חמם אם &gt;1 יח'/15 דק'</td>
+          </tr>
+          <tr>
+            <td class="product">FFP<span class="abbr">פלזמה טרייה קפואה</span></td>
+            <td>200-250 ml · כל גורמי הקרישה · פיברינוגן ~400 mg</td>
+            <td><span class="effect">+20% גורמי קרישה</span></td>
+            <td class="dose">15 ml/kg (≈4 יח' ב-70 ק"ג)</td>
+            <td>יחס 1:1 ל-PRBC ב-MTP · הפשרה 20-30 דק' — להזמין מוקדם!</td>
+          </tr>
+          <tr>
+            <td class="product">Cryo (יחידה)<span class="abbr">קריופרציפיטט</span></td>
+            <td>10-15 ml · פיברינוגן 150-250 mg · Factor VIII 80 U · F.XIII · vWF</td>
+            <td>—</td>
+            <td class="dose">לא ניתן ליחידה אחת</td>
+            <td>תמיד ניתן כ-<b>צבר</b> של 10 יחידות</td>
+          </tr>
+          <tr style="background:var(--primary-bg)">
+            <td class="product">Cryo (צבר)<span class="abbr">10 יח' מאוחדות</span></td>
+            <td>~150 ml · פיברינוגן 1.5-2.5 g · גורמי קרישה רבים</td>
+            <td><span class="effect">+70-100 mg/dL פיברינוגן</span></td>
+            <td class="dose">צבר 1 (10 יח') אם פיברינוגן &lt;200</td>
+            <td>יעד פיברינוגן ≥200 mg/dL (≥2 g/L)</td>
+          </tr>
+          <tr>
+            <td class="product">פלטליות<span class="abbr">Apheresis / Pooled</span></td>
+            <td>Apheresis 250 ml = 1 תורם · Pooled = 4-6 יח' מאוחדות</td>
+            <td><span class="effect">+30,000/μL</span></td>
+            <td class="dose">1 unit אם &lt;75K + דימום פעיל</td>
+            <td>יעד ≥75K · &lt;50K ב-MTP · ABO-תואם · נשים פוריות: Rh-תואם</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="sec" style="font-size:11px;margin-top:14px">קונצנטרטים מיוחדים וטיפול תומך</div>
+    <div class="ref-table-wrap">
+      <table class="ref-table" aria-label="קונצנטרטים מיוחדים">
+        <thead>
+          <tr>
+            <th>מוצר</th>
+            <th>השפעה</th>
+            <th>מינון</th>
+            <th>אינדיקציה / זהירות</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="product">RiaSTAP / Haemocomplettan<span class="abbr">קונצנטרט פיברינוגן</span></td>
+            <td><span class="effect">+30 mg/dL לכל גרם</span></td>
+            <td class="dose">25-50 mg/kg (2-4 גרם)</td>
+            <td>מהיר וזמין מיידית · ללא הפשרה · עדיף על קריו אם זמין</td>
+          </tr>
+          <tr>
+            <td class="product">PCC<span class="abbr">Prothrombin Complex</span></td>
+            <td>גורמים II, VII, IX, X</td>
+            <td class="dose">25-50 U/kg</td>
+            <td>חירום עם Warfarin / DOAC · <b>לא קו ראשון</b> ב-PPH אובסטטרי</td>
+          </tr>
+          <tr>
+            <td class="product">NovoSeven<span class="abbr">Factor VIIa</span></td>
+            <td>הפעלת מסלול קרישה חיצוני</td>
+            <td class="dose">90 μg/kg IV</td>
+            <td><b>מוצא אחרון</b> · רק אחרי כל הסטנדרטיים · פיברינוגן ≥150 · Plt ≥50K · pH ≥7.2 · חימום · סיכון טרומבוטי</td>
+          </tr>
+          <tr>
+            <td class="product">Ca Gluconate 10%</td>
+            <td>תיקון Ca יוני (ציטראט)</td>
+            <td class="dose">10 ml IV / 4 יח' דם</td>
+            <td>חובה ב-MTP · ציטראט בדם מאוחסן קושר Ca יוני</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="rec-src" style="margin-top:10px;color:var(--text3);font-size:10.5px">
+      <b>מקורות:</b> AABB Standards 2023 · BCSH 2016 · ACOG PB 183 · Pacheco LD et al. <i>AJOG</i> 2016 (Massive Transfusion in OB) · נייר עמדה ישראלי #12 (PPH, 2024)
     </div>
     </div>
 
@@ -3534,7 +3613,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.8';
+const APP_VERSION = '3.9';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
