@@ -2505,7 +2505,7 @@
       </summary>
       <div class="ref">
         <b>משרד הבריאות, האיגוד הישראלי למיילדות וגינקולוגיה:</b> מעקב הריון תקין — תוכנית בדיקות מומלצת<br>
-        <b>סל בריאות 2023:</b> סקר משולב T1, סקר ביוכימי T2, NIPT (תנאים), סקירה מאוחרת<br>
+        <b>סל בריאות 2023:</b> סקר משולב T1, סקר ביוכימי T2, סקירה מאוחרת · <b>NIPT — אינו בסל הבריאות</b>, אופציה פרטית / ביטוח משלים<br>
         <b>ACOG Practice Bulletins:</b> 226 (אבחון כרומוזומלי) · 222 (יל"ד) · 190 (GDM) · 200 (חיסונים) · 234 (תאומים)<br>
         <b>הערה:</b> ההמלצות מותאמות אישית על בסיס מצבי רקע. בדיקות פרטיות מסומנות בנפרד.
       </div>
@@ -3074,7 +3074,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.3';
+const APP_VERSION = '3.4';
 
 // ─── Global search (filter tabs by text + keyword aliases) ────────────────
 const TAB_KEYWORDS = {
@@ -7178,8 +7178,8 @@ function getPpRiskItems(state){
 
   // Age ≥35
   if(state.age >= 35){
-    items.push({fromW:10, toW:13, label:'NIPT — מומלץ במיוחד', cat:'lab', priority:'high',
-      tests:'גילוי טריזומיות 21/18/13 ברגישות 99% · במקום או בנוסף לסקר משולב',
+    items.push({fromW:10, toW:13, label:'NIPT — אופציה פרטית מומלצת', cat:'optional', priority:'high',
+      tests:'גילוי טריזומיות 21/18/13 ברגישות 99% · במקום או בנוסף לסקר משולב · אינו בסל הבריאות, תשלום פרטי / ביטוח משלים',
       reason:'גיל אמהי מתקדם'});
     items.push({fromW:21, toW:24, label:'אקו לב עוברי', cat:'us', priority:'medium',
       tests:'סיכון מוגבר למומי לב — בדיקה מורחבת',
@@ -7189,6 +7189,9 @@ function getPpRiskItems(state){
 
   // BMI high
   if(state.bmi >= 30){
+    items.push({fromW:5, toW:12, label:'חומצה פולית 5 מ"ג ליום', cat:'lab', priority:'high',
+      tests:'מינון מוגבר ב-BMI ≥30 — נייר עמדה ישראלי (סיכון מוגבר ל-NTD)',
+      reason:'BMI ≥ 30'});
     items.push({fromW:16, toW:18, label:'GCT 50g מוקדם', cat:'lab', priority:'high',
       tests:'בדיקת GDM מוקדמת — חזרה ב-24–28w אם תקין',
       reason:'BMI ≥ 30'});
@@ -7279,6 +7282,9 @@ function getPpRiskItems(state){
 
   // Pregestational diabetes
   if(state.r_dm){
+    items.push({fromW:5, toW:12, label:'חומצה פולית 5 מ"ג ליום', cat:'lab', priority:'high',
+      tests:'מינון מוגבר בסוכרת קדם-הריון — נייר עמדה ישראלי (סיכון מוגבר ל-NTD)',
+      reason:'סוכרת קדם-הריון'});
     items.push({fromW:6, toW:8, label:'HbA1c + יעדים גליקמיים', cat:'lab', priority:'high',
       tests:'יעד HbA1c <6.5% · ייעוץ אנדוקרינולוגי',
       reason:'סוכרת קדם-הריון'});
@@ -7388,8 +7394,8 @@ function getPpRiskItems(state){
     items.push({fromW:6, toW:8, label:'ייעוץ נוירולוגי + הערכת תרופות', cat:'visit', priority:'high',
       tests:'הימנעות מ-Valproate · עדיפות ל-Lamotrigine/Levetiracetam',
       reason:'אפילפסיה'});
-    items.push({fromW:6, toW:12, label:'חומצה פולית 4–5 מ"ג ליום', cat:'lab', priority:'high',
-      tests:'מינון גבוה לאוכלוסיית אפילפסיה',
+    items.push({fromW:5, toW:12, label:'חומצה פולית 5 מ"ג ליום', cat:'lab', priority:'high',
+      tests:'מינון מוגבר בנשים על AED — נייר עמדה ישראלי (סיכון מוגבר ל-NTD)',
       reason:'אפילפסיה'});
   }
 
@@ -7437,13 +7443,13 @@ function getPpRiskItems(state){
 // ── Standard schedule (Israeli MOH baseline)
 const ppStandardSchedule = [
   {fromW:5,  toW:8,  label:'ביקור ראשון', cat:'visit',
-   tests:'אנמנזה · ייעוץ פולית 400 µg · אומדן סיכון · BMI · לחץ דם · תרבית שתן'},
+   tests:'אנמנזה · אומדן סיכון · BMI · לחץ דם · תרבית שתן · <b>חומצה פולית 400 µg/יום</b> (5 מ"ג ביום אם BMI≥30 · סוכרת · אפילפסיה · NTD קודם)'},
   {fromW:8,  toW:10, label:'מעבדה ראשונית', cat:'lab',
    tests:'CBC · סוג דם + Rh · TSH · HIV · VDRL · HBsAg · HCV · Rubella IgG · Varicella IgG · CMV · גלוקוז בצום · שתן'},
   {fromW:10, toW:13, label:'שקיפות עורפית (NT) + סקר משולב', cat:'us',
    tests:'NT + PAPP-A + free βhCG · חישוב סיכון לטריזומיות · אישור גיל הריון'},
-  {fromW:10, toW:22, label:'NIPT (אופציה)', cat:'optional',
-   tests:'DNA חופשי · טריזומיות 21/18/13 · בסל בריאות מ-2023 (תנאים)'},
+  {fromW:10, toW:22, label:'NIPT (אופציה פרטית)', cat:'optional',
+   tests:'DNA חופשי · טריזומיות 21/18/13 · רגישות 99% · <b>אינו בסל הבריאות</b> — תשלום פרטי או ביטוח משלים'},
   {fromW:14, toW:17, label:'סקר ביוכימי שני (טריפל/קוואד)', cat:'lab',
    tests:'αFP, βhCG, uE3 (+ inhibin A בקוואד) · טריזומיה 21 ופגמי נורית עצבית'},
   {fromW:14, toW:17, label:'סקירה מוקדמת (פרטי)', cat:'optional',
