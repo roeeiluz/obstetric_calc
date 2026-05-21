@@ -1400,6 +1400,10 @@
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="13" rx="2"/><path d="M3 8.5h14M7 2.5v3M13 2.5v3"/><path d="M10 13l-1.5-1.5M10 13l3-3" stroke="currentColor"/></svg>
           <span>תזמון לידה</span>
         </button>
+        <button class="tab" onclick="showTab('breech',this)" role="tab">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="11.5" rx="6" ry="6.5"/><circle cx="10" cy="5" r="2.2"/><path d="M8 11.5c0-1 1-2 2-2s2 1 2 2"/></svg>
+          <span>עכוז</span>
+        </button>
         <button class="tab" onclick="showTab('tolac',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a7 7 0 1 1 14 0"/><path d="M3 11v3M17 11v3"/><path d="M6.5 14.5l1.5 1.5 4-4"/></svg>
           <span>TOLAC</span>
@@ -2244,6 +2248,158 @@
     <input type="hidden" id="del-category">
     <input type="hidden" id="del-condition">
     <div id="delivery-res"></div>
+  </div>
+
+  <!-- ===== Breech Vaginal Delivery Eligibility (Israeli #2, Feb 2025) ===== -->
+  <div id="breech" class="panel">
+    <details class="ref-wrap">
+      <summary>
+        <svg class="ref-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5h7l3 3v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1Z"/><path d="M10 2.5v3h3"/><path d="M5 9h6M5 11.5h4"/></svg>
+        <span>מקורות וקריטריונים</span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="ref">
+        <b>נייר עמדה ישראלי #2 (פברואר 2025):</b> לידת עכוז — האיגוד הישראלי למיילדות וגינקולוגיה + החברה לרפואת האם והעובר (בירון-שנטל, הירש, סלע, רוזן, ויטנר, פריאנטה, גבאי בן זיו)<br>
+        <b>Term Breech Trial (Hannah 2000):</b> Lancet 2000;356:1375 — תמותה ותחלואה 1.6% ק"ק לעומת 5% לידה לדנית<br>
+        <b>Whyte 2004:</b> AJOG 2004;191:864 — מעקב 2 שנים — ללא הבדל בתמותה או עיכוב התפתחותי<br>
+        <b>Rietberg 2005:</b> BJOG 2005;112:205 — עליית ק"ק 50→80% בהולנד · ירידת תמותה ניאונטלית 0.35→0.18% · ירידת טראומה 0.29→0.08%<br>
+        <b>Alarab 2004, Guiliani 2002, Berhan 2016:</b> תוצאות מצוינות בלידה לדנית במרכזים מנוסים עם פרוטוקולים מוגדרים<br>
+        <b>היארעות:</b> 3-4% במועד · 7% בשבוע 32 · 25% מתחת לשבוע 28<br>
+        <b>הערה:</b> נייר העמדה אינו דן בתאומים או עוברים בגבול גיל החיות
+      </div>
+    </details>
+
+    <div class="pplan-header">
+      <div class="pplan-step-count" id="breech-step-count">0 / 4 שלבים</div>
+      <div class="pplan-title">לידת עכוז — קבילות ללידה לדנית</div>
+      <div class="pplan-sub">סמני את הפרמטרים. המחשבון יקבע אם הלידה הלדנית מותרת לפי הנייר הישראלי #2.</div>
+      <div class="pplan-progress" id="breech-progress">
+        <div></div><div></div><div></div><div></div>
+      </div>
+    </div>
+
+    <details class="pp-section" data-step="1" open>
+      <summary>
+        <div class="pp-sec-ico">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="13" rx="2"/><path d="M3 8.5h14M7 2.5v3M13 2.5v3"/></svg>
+        </div>
+        <div class="pp-sec-text">
+          <div class="pp-sec-title">פרטי הריון ועובר</div>
+          <div class="pp-sec-sub">גיל הריון, EFW, סוג עכוז, מצב ראש</div>
+        </div>
+        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="pp-sec-body">
+        <div class="row">
+          <label>גיל הריון</label>
+          <div class="ga-row">
+            <select id="breech-w" onchange="calcBreech()">
+              <option value="">שבועות</option>
+              <script>for(let i=24;i<=42;i++)document.write(`<option value="${i}">${i}</option>`)</script>
+            </select>
+            <span class="unit">+</span>
+            <select id="breech-d" style="width:80px" onchange="calcBreech()">
+              <option value="0">0 ימים</option><option value="1">1 יום</option>
+              <option value="2">2 ימים</option><option value="3">3 ימים</option>
+              <option value="4">4 ימים</option><option value="5">5 ימים</option>
+              <option value="6">6 ימים</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <label>EFW (משקל מוערך)</label>
+          <input type="number" id="breech-efw" min="500" max="6000" step="10" placeholder="גרם" oninput="calcBreech()">
+          <span class="unit">גרם · קריטריון: 1500-4000g</span>
+        </div>
+        <div class="row">
+          <label>סוג מצג עכוז</label>
+          <div class="seg" id="breech-type">
+            <button data-v="frank" class="active" onclick="setBreechSeg(this,'type')">Frank<br><span style="font-size:10px;opacity:.7">עכוז שלם</span></button>
+            <button data-v="complete" onclick="setBreechSeg(this,'type')">Complete<br><span style="font-size:10px;opacity:.7">מקופל</span></button>
+            <button data-v="footling" onclick="setBreechSeg(this,'type')">Footling<br><span style="font-size:10px;opacity:.7">רגליים</span></button>
+            <button data-v="incomplete" onclick="setBreechSeg(this,'type')">Incomplete<br><span style="font-size:10px;opacity:.7">חלקי</span></button>
+          </div>
+        </div>
+        <div class="row">
+          <label>מצב ראש העובר ב-US</label>
+          <div class="seg" id="breech-head">
+            <button data-v="flexed" class="active" onclick="setBreechSeg(this,'head')">כפוף (תקין)</button>
+            <button data-v="extended" onclick="setBreechSeg(this,'head')">זקוף (Hyperextended)</button>
+            <button data-v="unknown" onclick="setBreechSeg(this,'head')">לא הוערך</button>
+          </div>
+        </div>
+        <div class="row">
+          <label>פריות (Parity)</label>
+          <div class="seg" id="breech-parity">
+            <button data-v="primip" class="active" onclick="setBreechSeg(this,'parity')">מבכירה</button>
+            <button data-v="multip" onclick="setBreechSeg(this,'parity')">מולטיפרה</button>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <details class="pp-section" data-step="2">
+      <summary>
+        <div class="pp-sec-ico">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="7" r="3"/><path d="M4 17c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
+        </div>
+        <div class="pp-sec-text">
+          <div class="pp-sec-title">הסכמה והערכה</div>
+          <div class="pp-sec-sub">תיעוד הסבר, הסכמת היולדת, בדיקת US</div>
+        </div>
+        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="pp-sec-body">
+        <div class="pp-grid">
+          <label class="pp-check"><input type="checkbox" id="breech_consent" onchange="calcBreech()"> יולדת קיבלה הסבר מפורט והסכימה בכתב</label>
+          <label class="pp-check"><input type="checkbox" id="breech_us_done" onchange="calcBreech()"> בוצעה בדיקת US (EFW + מצב ראש)</label>
+          <label class="pp-check"><input type="checkbox" id="breech_ecv_tried" onchange="calcBreech()"> נשקל/נוסה היפוך חיצוני (ECV)</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="pp-section" data-step="3">
+      <summary>
+        <div class="pp-sec-ico">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2.5h7l3 3v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1Z"/><path d="M12 2.5v3h3"/><path d="M7 9h6M7 12h6"/></svg>
+        </div>
+        <div class="pp-sec-text">
+          <div class="pp-sec-title">תנאי צוות וזמינות</div>
+          <div class="pp-sec-sub">מיילד בכיר מנוסה, מרדים, רופא ילדים</div>
+        </div>
+        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="pp-sec-body">
+        <div class="pp-grid">
+          <label class="pp-check"><input type="checkbox" id="breech_senior" onchange="calcBreech()"> מיילד בכיר זמין עם ניסיון בלידת עכוז לדנית</label>
+          <label class="pp-check"><input type="checkbox" id="breech_anesth" onchange="calcBreech()"> מרדים זמין לחדר לידה</label>
+          <label class="pp-check"><input type="checkbox" id="breech_neonat" onchange="calcBreech()"> רופא ילדים/ניאונטולוג זמין</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="pp-section" data-step="4">
+      <summary>
+        <div class="pp-sec-ico">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M7 7l6 6M13 7l-6 6"/></svg>
+        </div>
+        <div class="pp-sec-text">
+          <div class="pp-sec-title">התוויות נגד אחרות ללידה נרתיקית</div>
+          <div class="pp-sec-sub">שליית פתח, NRFHR, סיבה מילדותית</div>
+        </div>
+        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="pp-sec-body">
+        <div class="pp-grid">
+          <label class="pp-check"><input type="checkbox" id="breech_contra_vag" onchange="calcBreech()"> קיימת התווית נגד אחרת ללידה נרתיקית (שליית פתח, NRFHR, וכו')</label>
+        </div>
+      </div>
+    </details>
+
+    <div class="pp-cta-row">
+      <button class="btn btn-primary" onclick="calcBreech()">חשב התאמה ללידה לדנית</button>
+    </div>
+    <div id="breech-res"></div>
   </div>
 
   <!-- ===== TOLAC / VBAC Calculator (Grobman 2021) ===== -->
@@ -3763,7 +3919,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.11';
+const APP_VERSION = '3.12';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -3793,6 +3949,7 @@ function openPapersPanel(){
       {id:'dsrisk', resultId:'ds-res', label:'פרטי הבדיקה'},
       {id:'delivery', resultId:'delivery-res', label:'פרטי הבדיקה'},
       {id:'tolac', resultId:'tolac-res', label:'פרטי הבדיקה'},
+      // breech uses pp-section layout (like pplan/vte) — no auto-wrap needed
       {id:'rupture', resultId:'rupture-res', label:'פרטי הבדיקה'},
     ];
     targets.forEach(t => {
@@ -4073,8 +4230,8 @@ function showPphSection(id){
 const ISRAELI_PAPERS = [
   {num:'1', title:'לידה לדנית לאחר ניתוח קיסרי קודם (VBAC)', org:'איגוד מיילדות', year:'פברואר 2025', tags:['VBAC','TOLAC','ניתוח קיסרי'], relatedTabs:['tolac','rupture'],
    keyPoints:['TOLAC מותר ב-1 קיסרי קודם עם חתך טרנסברסלי נמוך','סיכון לקרע רחם: 0.5–1% (חתך טרנסברסלי); 4–9% בחתך קלאסי','≥2 ניתוחים קיסריים — TOLAC לא מומלץ','שימוש בחישוב Grobman לחיזוי הצלחה','חתך אנכי / T / J — TOLAC אסור','השראה עם פרוסטגלנדינים מעלה סיכון לקרע משמעותית']},
-  {num:'2', title:'לידת עכוז', org:'איגוד מיילדות', year:'פברואר 2025', tags:['עכוז','Breech','ECV'], relatedTabs:['delivery'],
-   keyPoints:['ECV מומלץ ב-36-37 שבועות (סיכוי הצלחה 50-60%)','התוויות נגד ל-ECV: דימום, היפרדות, מומים','לידה וגינלית של עכוז: רק במרכזים עם ניסיון, EFW 2.5-3.8 ק"ג','קיסרי מתוכנן ב-39+0 אם נכשל ECV / לא מתאים']},
+  {num:'2', title:'לידת עכוז', org:'איגוד מיילדות', year:'פברואר 2025', tags:['עכוז','Breech','ECV'], relatedTabs:['breech','delivery'],
+   keyPoints:['<b>קריטריונים מוחלטים ללידה לדנית של עכוז:</b>','EFW בין <b>1500-4000 גרם</b> (קלינית או US)','מצג <b>Frank או Complete</b> (לא Footling/Incomplete)','ראש העובר <b>כפוף</b> (לא Hyperextended)','הסכמת היולדת לאחר הסבר ותיעוד בכתב','<b>מיילד בכיר מנוסה בלידת עכוז זמין</b>','מרדים ורופא ילדים זמינים בזמן היילוד','<b>נתוני סיכון:</b> תמותה/תחלואה ניאונטלית 1.6% בק"ק לעומת 5% בלידה לדנית (Term Breech Trial 2000) · אך אין הבדל בתוצאות התפתחותיות בגיל שנתיים (Whyte 2004)','<b>היארעות:</b> 3-4% במועד · 7% בשבוע 32 · 25% מתחת ל-28','שקול ECV ב-37 שבועות (סיכוי הצלחה 50-60%)','אפשרי גם במבכירות · אפשרי בכל אלחוש כולל אפידוראלי','הנייר אינו דן בתאומים או עוברים בגבול גיל החיות']},
   {num:'3', title:'ניהול היריון שלאחר המועד', org:'איגוד מיילדות', year:'פברואר 2022', tags:['Postterm','השראת לידה'], relatedTabs:['delivery','preg'],
    keyPoints:['41+0–41+6: שקול השראה','42+0 ומעלה: השראה מומלצת בחוזק','מ-40+0: NST + AFI בכל 2-3 ימים','דיון עם המטופלת על סיכונים (תמותה עוברית עולה אחרי 41+0)']},
   {num:'4', title:'יילוד עובר החשוד כמקרוזומי', org:'איגוד מיילדות', year:'יולי 2025', tags:['מקרוזומיה','Macrosomia','כליאת כתפיים'], relatedTabs:['delivery','efw'],
@@ -4293,6 +4450,7 @@ const TAB_KEYWORDS = {
   papers:     ['ניירות','עמדה','position','paper','הנחיות','guidelines','aam','איגוד','מיילדות','אולטרסאונד','רישומי','ranking'],
   pplan:      ['תוכנית','plan','schedule','בדיקות','timing','moh','משרד הבריאות','nipt'],
   delivery:   ['delivery','תזמון','לידה','37','38','39','induction','השראה','smfm','acog','timing'],
+  breech:     ['breech','עכוז','frank','complete','footling','ecv','היפוך','external cephalic','version','hannah','term breech trial'],
   tolac:      ['tolac','vbac','grobman','קיסרי','cs','קיסרית','race-neutral'],
   rupture:    ['rupture','קרע','רחם','uterine','landon','bujold','gyamfi','interval'],
   pph:        ['pph','דימום','postpartum','tone','trauma','tissue','thrombin','txa','bakri','b-lynch','massive transfusion','mtp','woman','tranexamic','teg','rotem','cryo','קריו','ffp','פלזמה','פיברינוגן','fibrinogen','riastap','prbc','כדוריות','platelets','פלטליות','novoseven'],
@@ -8174,6 +8332,180 @@ function calcDsRisk(){
 
   el.innerHTML = html;
 }
+
+// ─── BREECH VAGINAL DELIVERY ELIGIBILITY (Israeli Paper #2, Feb 2025) ──
+const breechState = { type:'frank', head:'flexed', parity:'primip' };
+function setBreechSeg(btn, group){
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  breechState[group] = btn.dataset.v;
+  calcBreech();
+}
+
+function calcBreech(){
+  const el = document.getElementById('breech-res');
+  if(!el) return;
+  const $ = id => document.getElementById(id);
+  const chk = id => $(id)?.checked || false;
+  const w = parseInt($('breech-w')?.value);
+  const d = parseInt($('breech-d')?.value)||0;
+  const efw = parseFloat($('breech-efw')?.value);
+  const ga = !isNaN(w) ? w + d/7 : null;
+
+  // Progress: 4 steps
+  const step1 = !isNaN(w) && !isNaN(efw);
+  const step2 = chk('breech_consent') && chk('breech_us_done');
+  const step3 = chk('breech_senior');
+  const step4 = !chk('breech_contra_vag');
+  const states = [step1, step2, step3, step4];
+  const bars = document.querySelectorAll('#breech-progress > div');
+  let done = 0;
+  bars.forEach((b,i)=>{ b.classList.toggle('done', states[i]); if(states[i]) done++; });
+  const cnt = $('breech-step-count');
+  if(cnt) cnt.textContent = `${done} / 4 שלבים`;
+
+  // Absolute contraindications per Israeli paper #2
+  const absolute = [];
+  const relative = [];
+  const conditional = [];
+
+  if (!chk('breech_consent')) absolute.push('היעדר הסכמה של היולדת ללידת עכוז לדנית');
+  if (!isNaN(efw)) {
+    if (efw > 4000) absolute.push(`EFW ${efw.toFixed(0)} גר' מעל 4000 — חורג מהקריטריון`);
+    else if (efw < 1500) absolute.push(`EFW ${efw.toFixed(0)} גר' מתחת ל-1500 — חורג מהקריטריון`);
+  } else {
+    conditional.push('יש להזין EFW (קריטריון: 1500–4000 גר\')');
+  }
+  if (breechState.type === 'footling') absolute.push('מצג רגליים (Footling)');
+  if (breechState.type === 'incomplete') absolute.push('מצג Incomplete');
+  if (breechState.head === 'extended') absolute.push('זקיפות ראש (Hyperextended)');
+  if (breechState.head === 'unknown') conditional.push('יש לוודא מצב ראש העובר ב-US (לא הוערך)');
+  if (!chk('breech_us_done')) conditional.push('יש לבצע בדיקת US (משקל + מצב ראש) לפני קבלת החלטה');
+  if (chk('breech_contra_vag')) absolute.push('קיימת התווית נגד נוספת ללידה נרתיקית');
+
+  // Team availability — required for any vaginal breech
+  if (!chk('breech_senior')) absolute.push('היעדר מיילד בכיר מנוסה בלידת עכוז לדנית');
+  if (!chk('breech_anesth')) relative.push('מרדים אינו זמין בחדר לידה');
+  if (!chk('breech_neonat')) relative.push('רופא ילדים/ניאונטולוג אינו זמין');
+
+  // ECV advice
+  if (ga !== null && ga >= 36 && ga < 38 && !chk('breech_ecv_tried')) {
+    conditional.push('שקול להציע ניסיון היפוך חיצוני (ECV) — נייר #45 ממליץ על ניסיון ב-37 שבועות');
+  }
+
+  const eligible = absolute.length === 0;
+
+  // Result
+  let cls, label;
+  if (eligible && relative.length === 0 && conditional.length === 0) {
+    cls = 'ok'; label = 'מתאימה ללידת עכוז לדנית';
+  } else if (eligible && (relative.length > 0 || conditional.length > 0)) {
+    cls = 'warn'; label = 'לידה לדנית אפשרית — דרושים תיקונים';
+  } else {
+    cls = 'bad'; label = 'לידה לדנית — התוויות נגד';
+  }
+
+  const color = cls==='ok'?'var(--green)':cls==='warn'?'var(--amber)':'var(--red)';
+  const bg = cls==='ok'?'var(--green-bg)':cls==='warn'?'var(--amber-bg)':'var(--red-bg)';
+
+  let html = `<div class="result">
+    <div class="result-label">המלצה — לידת עכוז</div>
+    <div class="big" style="color:${color}">${eligible ? '✓' : '✗'}<span style="font-size:18px;margin-right:8px">${label}</span></div>
+    ${badge(cls, eligible ? `${absolute.length === 0 ? 'אין התוויות נגד מוחלטות' : ''}` : `${absolute.length} התוויות נגד מוחלטות`)}
+  </div>`;
+
+  if (absolute.length > 0) {
+    html += `<div class="rec-box" style="border-color:var(--red)">
+      <div class="rec-head" style="background:var(--red-bg)">
+        <span style="color:var(--red-text)">התוויות נגד מוחלטות ללידת עכוז לדנית</span>
+        <span class="rec-tag rec-tag-bad">${absolute.length}</span>
+      </div>
+      <div class="rec-body">
+        <ul class="rec-list">${absolute.map(r => `<li class="crit"><b>${r}</b></li>`).join('')}</ul>
+        <div class="rec-src">לפי נייר עמדה ישראלי #2 (פברואר 2025)</div>
+      </div>
+    </div>`;
+  }
+
+  if (relative.length > 0) {
+    html += `<div class="rec-box" style="border-color:var(--amber)">
+      <div class="rec-head" style="background:var(--amber-bg)">
+        <span style="color:var(--amber-text)">הסתייגויות יחסיות — דורש השלמה</span>
+        <span class="rec-tag rec-tag-warn">${relative.length}</span>
+      </div>
+      <div class="rec-body">
+        <ul class="rec-list">${relative.map(r => `<li class="warn">${r}</li>`).join('')}</ul>
+      </div>
+    </div>`;
+  }
+
+  if (conditional.length > 0) {
+    html += `<div class="rec-box">
+      <div class="rec-head">
+        <span>פעולות הכנה נדרשות</span>
+        <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">${conditional.length}</span>
+      </div>
+      <div class="rec-body">
+        <ul class="rec-list">${conditional.map(r => `<li>${r}</li>`).join('')}</ul>
+      </div>
+    </div>`;
+  }
+
+  // Always show the protocol summary
+  html += `<div class="rec-box">
+    <div class="rec-head">
+      <span>פרוטוקול לידת עכוז — סיכום</span>
+      <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">נייר #2</span>
+    </div>
+    <div class="rec-body">
+      <div class="rec-section">
+        <div class="rec-section-title">קריטריונים ללידה לדנית</div>
+        <ul class="rec-list">
+          <li>הסכמת היולדת לאחר הסבר מלא (תיעוד בכתב)</li>
+          <li>EFW בין 1500 ל-4000 גרם</li>
+          <li>מצג עכוז Frank או Complete (לא Footling/Incomplete)</li>
+          <li>ראש העובר כפוף (לא Hyperextended)</li>
+          <li>אין התווית נגד אחרת ללידה נרתיקית</li>
+          <li>מיילד בכיר מנוסה בלידת עכוז זמין</li>
+          <li>מרדים ורופא ילדים זמינים בזמן היילוד</li>
+        </ul>
+      </div>
+      <div class="rec-section">
+        <div class="rec-section-title">נתוני סיכון (Term Breech Trial + מעקב)</div>
+        <ul class="rec-list">
+          <li>תמותה/תחלואה ניאונטלית: <b>1.6%</b> בק"ק לעומת <b>5%</b> בלידה לדנית (Hannah 2000)</li>
+          <li>מעקב 2 שנים: <b>אין הבדל</b> בתמותה או עיכוב התפתחותי (Whyte 2004)</li>
+          <li>תמותה פרינטלית במצג עכוז: <b>פי 3-5</b> ביחס למצג ראש (ללא קשר לאופן הלידה)</li>
+          <li>היארעות עכוז: 3-4% במועד · 7% בשבוע 32 · 25% מתחת ל-28</li>
+        </ul>
+      </div>
+      <div class="rec-section">
+        <div class="rec-section-title">הבהרות נוספות</div>
+        <ul class="rec-list">
+          <li>אפשרי בכל סוג אלחוש, כולל אפידוראלי</li>
+          <li>השראת לידה והחשת לידה אפשרית לפי שיקול הבכיר</li>
+          <li>לידה לדנית בעכוז אפשרית גם במבכירות (בכפוף לקריטריונים)</li>
+          <li>בשלב לידה מתקדם — המיילד הבכיר רשאי להחליט על יילוד לדני</li>
+          <li>הנייר אינו דן בתאומים או עוברים בגבול גיל החיות</li>
+        </ul>
+      </div>
+      <div class="rec-src">נייר עמדה ישראלי #2 · פברואר 2025 · החברה לרפואת האם והעובר + האיגוד הישראלי למיילדות וגינקולוגיה</div>
+    </div>
+  </div>`;
+
+  el.innerHTML = html;
+}
+
+(function bindBreechAuto(){
+  const init = () => {
+    document.querySelectorAll('#breech input, #breech select').forEach(el => {
+      el.addEventListener('change', calcBreech);
+      if (el.tagName === 'INPUT' && el.type !== 'checkbox') el.addEventListener('input', calcBreech);
+    });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
 
 // ─── VTE RISK ASSESSMENT (RCOG Green-top 37a, 2015) ────────────────────
 function calcVte(){
