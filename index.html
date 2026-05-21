@@ -1096,6 +1096,50 @@
   table.ref-table.ltr td.product { white-space: nowrap; }
   table.ref-table.ltr td.warn { color: var(--amber-text); }
   table.ref-table.ltr td.crit { color: var(--red-text); font-weight: 600; }
+  /* Expandable product rows */
+  table.ref-table tr.prod-row { cursor: pointer; transition: background .15s; }
+  table.ref-table tr.prod-row td.chev { width: 28px; text-align: center; padding-right: 8px; padding-left: 8px; }
+  table.ref-table tr.prod-row td.chev svg {
+    width: 14px; height: 14px; color: var(--text3);
+    transition: transform .25s ease, color .15s;
+  }
+  table.ref-table tr.prod-row.expanded td.chev svg { transform: rotate(180deg); color: var(--primary); }
+  table.ref-table tr.prod-row.expanded {
+    background: var(--primary-bg) !important;
+    border-bottom: 1px solid var(--primary);
+  }
+  table.ref-table tr.prod-detail td {
+    background: var(--surface2);
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    direction: rtl; text-align: right;
+  }
+  .prod-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 10px;
+  }
+  .prod-detail-grid > div {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--text2);
+    direction: rtl; text-align: right;
+  }
+  .prod-detail-grid > div > b {
+    display: block;
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    margin-bottom: 4px;
+  }
+  .prod-detail-grid > div.crit { border-color: var(--red); background: var(--red-bg); }
+  .prod-detail-grid > div.crit > b { color: var(--red); }
   table.ref-table thead {
     background: var(--surface2);
   }
@@ -2272,7 +2316,7 @@
     </div>
 
     <div class="row">
-      <label>אינדיקציה לק"ק קודם</label>
+      <label>אינדיקציה לקיסרי קודם</label>
       <div class="seg" id="tol-ind">
         <button data-v="0" class="active" onclick="setTolToggle(this,'ind')">לא חוזרת</button>
         <button data-v="1" onclick="setTolToggle(this,'ind')">חוזרת (אי-התקדמות / דיסטוציה)</button>
@@ -2772,7 +2816,7 @@
         </div>
         <div class="pp-sec-text">
           <div class="pp-sec-title">גורמים זמניים / פוסט-נטלי</div>
-          <div class="pp-sec-sub">היפר-אמזיס, אי-תנועה, ניתוח, OHSS, ק"ק, PPH...</div>
+          <div class="pp-sec-sub">היפר-אמזיס, אי-תנועה, ניתוח, OHSS, קיסרי, PPH...</div>
         </div>
         <span class="pp-sec-count" id="vte-count-trans">—</span>
         <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
@@ -2790,8 +2834,8 @@
 
         <div class="sec" style="display:block;font-size:10.5px;color:var(--text3);margin:14px 0 10px;border:none;padding:0">פוסט-נטלי (אם ההערכה לאחר לידה)</div>
         <div class="pp-grid">
-          <label class="pp-check"><input type="checkbox" id="vte_cs_emergency" onchange="calcVte()"> ק"ק דחוף בלידה (2 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_cs_elective" onchange="calcVte()"> ק"ק אלקטיבי (1 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_cs_emergency" onchange="calcVte()"> קיסרי דחוף בלידה (2 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_cs_elective" onchange="calcVte()"> קיסרי אלקטיבי (1 נק')</label>
           <label class="pp-check"><input type="checkbox" id="vte_mid_forceps" onchange="calcVte()"> מילקדים סיבוביים/אמצע-אגן (1 נק')</label>
           <label class="pp-check"><input type="checkbox" id="vte_prolonged" onchange="calcVte()"> לידה ממושכת &gt;24 שעות (1 נק')</label>
           <label class="pp-check"><input type="checkbox" id="vte_pph" onchange="calcVte()"> PPH &gt;1L או עירוי (1 נק')</label>
@@ -2905,7 +2949,7 @@
         </div>
         <div class="pp-sec-text">
           <div class="pp-sec-title">היסטוריה מיילדותית</div>
-          <div class="pp-sec-sub">ק"ק, FGR, רעלת, GDM, לידה מוקדמת...</div>
+          <div class="pp-sec-sub">קיסרי, FGR, רעלת, GDM, לידה מוקדמת...</div>
         </div>
         <span class="pp-sec-count" id="pp-count-hx">10</span>
         <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
@@ -3214,7 +3258,7 @@
         <div class="rec-section">
           <div class="rec-section-title">פרוטוקול הכנסה</div>
           <ul class="rec-list">
-            <li><b>גישה:</b> דרך הנרתיק (לאחר לידה וגינלית) או דרך הרחם הפתוח (במהלך ק"ק)</li>
+            <li><b>גישה:</b> דרך הנרתיק (לאחר לידה וגינלית) או דרך הרחם הפתוח (במהלך קיסרי)</li>
             <li><b>נפח מילוי ראשוני:</b> 250–300 מ"ל סליין סטרילי — הערך תגובה תוך 5 דקות</li>
             <li><b>נפח מילוי מרבי:</b> <b>500 מ"ל</b> — מעבר לכך סיכון לקרע / נמק</li>
             <li><b>זמן שהיה:</b> 12–24 שעות (מקסימום 24 שעות)</li>
@@ -3253,7 +3297,7 @@
       </div>
       <div class="rec-body">
         <ul class="rec-list">
-          <li><b>תפרים דחיסה (B-Lynch / Hayman):</b> בק"ק או לאחר לפרוטומיה — מהיר ויעיל</li>
+          <li><b>תפרים דחיסה (B-Lynch / Hayman):</b> בקיסרי או לאחר לפרוטומיה — מהיר ויעיל</li>
           <li><b>קשירת עורקים:</b> רחמיים (uterine artery), הילרי פנימי (internal iliac/hypogastric)</li>
           <li><b>אמבוליזציה רדיולוגית (UAE):</b> אם המטופלת יציבה ויש זמינות 24/7</li>
           <li><b>היסטרקטומיה:</b> מוצא אחרון — לא לעכב כאשר אין שליטה בדימום</li>
@@ -3468,43 +3512,49 @@
             <th>Effect per unit</th>
             <th>Dose in PPH</th>
             <th>Notes</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr class="prod-row" data-prod="prbc" onclick="togglePphDetail(this)">
             <td class="product">PRBC<span class="abbr">Packed Red Cells</span></td>
             <td>~280 ml · Hct 55–65%</td>
             <td><span class="effect">↑ Hb 1.0 g/dL</span> · ↑ Hct 3%</td>
             <td class="dose">1–2 units as needed</td>
             <td>Hb &lt;7 g/dL, or &lt;8 with symptoms · O-neg in emergency · Warm if &gt;1 unit / 15 min</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
-          <tr>
+          <tr class="prod-row" data-prod="ffp" onclick="togglePphDetail(this)">
             <td class="product">FFP<span class="abbr">Fresh Frozen Plasma</span></td>
             <td>200–250 ml · all clotting factors · fibrinogen ~400 mg</td>
             <td><span class="effect">↑ Clotting factors ~20%</span></td>
             <td class="dose">15 ml/kg (≈ 4 units / 70 kg)</td>
             <td>1:1 ratio with PRBC in MTP · 20–30 min thaw — order early</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
-          <tr>
+          <tr class="prod-row" data-prod="cryo_unit" onclick="togglePphDetail(this)">
             <td class="product">Cryo (1 unit)<span class="abbr">Cryoprecipitate</span></td>
             <td>10–15 ml · Fibrinogen 150–250 mg · Factor VIII 80 U · Factor XIII · vWF · Fibronectin</td>
             <td>—</td>
             <td class="dose">Not given as single unit</td>
             <td>Always administered as a pool of 10 units</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
-          <tr style="background:var(--primary-bg)">
+          <tr class="prod-row" data-prod="cryo_pool" onclick="togglePphDetail(this)" style="background:var(--primary-bg)">
             <td class="product">Cryo (10-unit pool)<span class="abbr">Standard order</span></td>
             <td>~150 ml · Fibrinogen 1.5–2.5 g · multiple clotting factors</td>
             <td><span class="effect">↑ Fibrinogen 70–100 mg/dL</span></td>
             <td class="dose">1 pool (10 units) if fibrinogen &lt; 200 mg/dL</td>
             <td>Target fibrinogen ≥ 200 mg/dL (≥ 2 g/L) during active bleeding</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
-          <tr>
+          <tr class="prod-row" data-prod="platelets" onclick="togglePphDetail(this)">
             <td class="product">Platelets<span class="abbr">Apheresis / Pooled</span></td>
             <td>Apheresis 250 ml = 1 donor · Pooled = 4–6 random units</td>
             <td><span class="effect">↑ Count 30,000/μL</span></td>
             <td class="dose">1 unit if Plt &lt; 75K + active bleeding</td>
             <td>Target ≥ 75K (active bleed); ≥ 50K (post-control) · ABO-compatible · Rh-match in childbearing-age women</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
         </tbody>
       </table>
@@ -3523,36 +3573,41 @@
             <th>Effect</th>
             <th>Dose</th>
             <th>Indication / Caution</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr style="background:var(--primary-bg)">
+          <tr class="prod-row" data-prod="haemocomplettan" onclick="togglePphDetail(this)" style="background:var(--primary-bg)">
             <td class="product">Haemocomplettan<br>RiaSTAP · Fibryga</td>
             <td>Fibrinogen concentrate</td>
             <td><span class="effect">↑ Fibrinogen ~30 mg/dL per gram</span></td>
             <td class="dose">25–50 mg/kg (≈ 2–4 g IV)</td>
             <td><b>First-line if available</b> — no thawing, faster than Cryo · ready in 5 min · pathogen-inactivated</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
-          <tr>
+          <tr class="prod-row" data-prod="pcc" onclick="togglePphDetail(this)">
             <td class="product">Octaplex<br>Beriplex · Kcentra<br>Confidex</td>
             <td>4-Factor PCC<br>(Factors II, VII, IX, X)</td>
             <td>Replaces vitamin-K-dependent factors</td>
             <td class="dose">25–50 U/kg<br>(INR-guided)</td>
             <td>Warfarin / DOAC emergency reversal · <b>not first-line</b> in obstetric PPH · thrombotic risk</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
-          <tr>
+          <tr class="prod-row" data-prod="feiba" onclick="togglePphDetail(this)">
             <td class="product">FEIBA</td>
             <td>Activated PCC<br>(aPCC)</td>
             <td>Bypasses Factor VIII / IX inhibitors</td>
             <td class="dose">50–100 U/kg<br>(max 200 U/kg/day)</td>
             <td>Hemophilia with inhibitors · rare use in PPH · high thrombotic risk</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
-          <tr>
+          <tr class="prod-row" data-prod="novoseven" onclick="togglePphDetail(this)">
             <td class="product crit">NovoSeven<br>NovoSeven RT</td>
             <td>Recombinant Factor VIIa<br>(rFVIIa)</td>
             <td>Activates extrinsic clotting pathway</td>
             <td class="dose">90 μg/kg IV bolus<br>(may repeat ×1 after 2 h)</td>
             <td class="crit">LAST RESORT — only after all standard products failed. Prereq: fibrinogen ≥ 150 · Plt ≥ 50K · pH ≥ 7.2 · normothermia · ionized Ca normal · significant thrombotic risk (MI, stroke, DIC)</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
         </tbody>
       </table>
@@ -3570,56 +3625,65 @@
             <th>Indication</th>
             <th>Dose</th>
             <th>Notes</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr class="prod-row" data-prod="txa" onclick="togglePphDetail(this)">
             <td class="product">TXA (Tranexamic acid)<br>Hexakapron · Cyklokapron</td>
             <td>Antifibrinolytic — every PPH</td>
             <td class="dose">1 g IV over 10 min · repeat 1 g at 30 min if bleeding continues</td>
             <td><b>Within 3 h of bleeding onset</b> (WOMAN trial) · reduces death from bleeding 31%</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
-          <tr>
+          <tr class="prod-row" data-prod="ca_gluconate" onclick="togglePphDetail(this)">
             <td class="product">Calcium Gluconate 10%</td>
             <td>Citrate toxicity in MTP (chelates ionized Ca)</td>
             <td class="dose">10 ml IV per 4 units of blood</td>
             <td>Mandatory in MTP · monitor ionized Ca every 30 min</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
-          <tr>
+          <tr class="prod-row" data-prod="ddavp" onclick="togglePphDetail(this)">
             <td class="product">DDAVP (Desmopressin)<br>Octostim</td>
             <td>vWD type 1 · uremic platelet dysfunction · mild hemophilia A</td>
             <td class="dose">0.3 μg/kg IV over 30 min</td>
             <td>Tachyphylaxis after 2–3 doses · hyponatremia risk · not effective in active major bleed</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
-          <tr>
+          <tr class="prod-row" data-prod="vitamin_k" onclick="togglePphDetail(this)">
             <td class="product">Vitamin K (Phytomenadione)<br>Konakion</td>
             <td>Warfarin reversal (slow)</td>
             <td class="dose">5–10 mg IV / PO</td>
             <td>Effect onset 6–24 h · combine with 4F-PCC for urgent reversal</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
-          <tr>
+          <tr class="prod-row" data-prod="protamine" onclick="togglePphDetail(this)">
             <td class="product">Protamine Sulfate</td>
             <td>Heparin reversal</td>
             <td class="dose">1 mg per 100 U unfractionated heparin (last 2 h)<br>LMWH: 1 mg per 100 anti-Xa units (partial only)</td>
             <td>Risk of severe hypotension if given too quickly</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
-          <tr>
+          <tr class="prod-row" data-prod="praxbind" onclick="togglePphDetail(this)">
             <td class="product">Idarucizumab<br>Praxbind</td>
             <td>Dabigatran-specific reversal agent</td>
             <td class="dose">5 g IV (two 2.5 g vials)</td>
             <td>Reverses Dabigatran within minutes · expensive · narrow indication</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
-          <tr>
+          <tr class="prod-row" data-prod="andexxa" onclick="togglePphDetail(this)">
             <td class="product">Andexanet alfa<br>Andexxa</td>
             <td>Apixaban / Rivaroxaban reversal</td>
             <td class="dose">Low dose: 400 mg bolus + 4 mg/min × 120 min<br>High dose: 800 mg bolus + 8 mg/min × 120 min</td>
             <td>Reverses Factor Xa inhibitors · short half-life — rebound bleeding possible · very expensive</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
-          <tr>
+          <tr class="prod-row" data-prod="albumin" onclick="togglePphDetail(this)">
             <td class="product">Albumin 5% / 20%</td>
             <td>Volume expansion in hypovolemia (not first-line)</td>
             <td class="dose">250–500 ml IV</td>
             <td>Not a coagulation product — for resuscitation only · crystalloids first</td>
+            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
         </tbody>
       </table>
@@ -3699,7 +3763,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.10';
+const APP_VERSION = '3.11';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -3808,6 +3872,191 @@ async function openPaperPdf(num){
   }
 }
 
+// ─── PPH blood product details (Hebrew RTL expansion) ────────────────
+const PRODUCT_DETAILS = {
+  prbc: [
+    {label:'אינדיקציות', value:'Hb &lt;7 g/dL · Hb &lt;8 g/dL עם תסמינים (טכיקרדיה, ל"ד נמוך, חמצון לקוי) · אובדן דם פעיל ניכר · שוק היפו-וולמי'},
+    {label:'יעד מטרה', value:'Hb ≥8 g/dL בדימום פעיל · ≥7 g/dL לאחר שליטה · ≥9 g/dL במחלת לב/COPD'},
+    {label:'תאימות ABO', value:'דורש Type &amp; Crossmatch · O-negative בחירום (עד 4 יח\' לפני סיום צלב-תאימות) · בנשים פוריות: עדיף O-neg'},
+    {label:'זמן הכנה', value:'30-45 דק\' לצלב-תאימות מלא · 10-15 דק\' Type &amp; Screen · O-neg מיידי'},
+    {label:'צורת הכנה', value:'מאוחסן בקירור 2-6°C · ללא הפשרה · Y-set עם NS בלבד (לא Lactated Ringer\'s — סידן קושר ציטראט)'},
+    {label:'חימום מנה', value:'חובה אם &gt;1 יח\' / 15 דק\' · Blood warmer · להימנע מהיפותרמיה &lt;35°C (מחמירה קואגולופתיה)'},
+    {label:'הערות חשובות', value:'חיי מדף 35-42 ימים · ירידה ב-2,3-DPG אחרי 21 ימים → חמצון מופחת · סיכון: TRALI, TACO, היפר-קלמיה בעירוי מהיר'}
+  ],
+  ffp: [
+    {label:'אינדיקציות', value:'INR &gt;1.5 + דימום פעיל · PT/PTT &gt;1.5× נורמלי · MTP יחס 1:1 ל-PRBC · DIC עם דימום · TTP (Plasma exchange)'},
+    {label:'יעד מטרה', value:'INR &lt;1.5 · PT/PTT &lt;1.5× נורמלי · גורמי קרישה ≥30%'},
+    {label:'תאימות ABO', value:'דורש תאימות ABO (מכיל anti-A/anti-B) · AB יוניברסלי תורם · O רק לאותו סוג דם'},
+    {label:'זמן הכנה', value:'20-30 דק\' הפשרה ב-37°C — להזמין מוקדם!'},
+    {label:'צורת הכנה', value:'מאוחסן ב-(–25°C) · מופשר במכשיר מיוחד · יציב 24 שעות מהפשרה ב-2-6°C'},
+    {label:'חימום מנה', value:'לא נדרש חימום נוסף (כבר 37°C לאחר הפשרה)'},
+    {label:'הערות חשובות', value:'נפח גדול → סיכון לעומס נוזלים (TACO) · סיכון מוגבר ל-TRALI · רגישות אלרגית · להזמין יחד עם PRBC ב-MTP'}
+  ],
+  cryo_unit: [
+    {label:'אינדיקציות', value:'יחידה בודדת לא ניתנת ולא מוזמנת — תמיד כצבר של 10 יחידות'},
+    {label:'תכולה ליחידה', value:'פיברינוגן 150-250 mg · Factor VIII ~80 U · Factor XIII · vWF · פיברונקטין · נפח 10-15 ml'},
+    {label:'תאימות ABO', value:'רצוי תואם · לא חובה (נפח קטן, פחות סיכון)'},
+    {label:'זמן הכנה', value:'15-30 דק\' הפשרה'},
+    {label:'צורת הכנה', value:'מאוחסן ב-(–18°C) · מופשר ב-37°C · יציב 4-6 שעות לאחר הפשרה'},
+    {label:'חימום מנה', value:'לא נדרש (מופשר ב-37°C)'},
+    {label:'הערות חשובות', value:'תמיד מוזמן ומנוהל כצבר של 10 יחידות — ראה השורה הבאה'}
+  ],
+  cryo_pool: [
+    {label:'אינדיקציות', value:'פיברינוגן &lt;200 mg/dL בדימום פעיל · DIC עם hypofibrinogenemia · vWD ספציפי · המופיליה A קלה (אם אין F.VIII)'},
+    {label:'יעד מטרה', value:'פיברינוגן ≥200 mg/dL (≥2 g/L) — קריטי לדימום פעיל · ≥300 mg/dL במצב מסיבי'},
+    {label:'תאימות ABO', value:'רצוי תואם ABO (מכיל פלזמה שאריות) · לא חובה'},
+    {label:'זמן הכנה', value:'15-30 דק\' הפשרה של 10 יח\' יחד'},
+    {label:'צורת הכנה', value:'10 יחידות נמסות ומאוחדות בכלי אחד · ניתן IV ב-Y-set · להשתמש תוך 4-6 שעות מאיחוד'},
+    {label:'חימום מנה', value:'לא נדרש'},
+    {label:'הערות חשובות', value:'חלופה מועדפת אם זמינה: <b>Haemocomplettan / RiaSTAP</b> — קונצנטרט פיברינוגן מסונתז, זמין מיידית, מינון מדויק, ללא הפשרה, pathogen-inactivated'}
+  ],
+  platelets: [
+    {label:'אינדיקציות', value:'Plt &lt;75K + דימום פעיל · Plt &lt;50K ב-MTP · Plt &lt;100K עם דימום משמעותי או CNS · לפני ניתוח אם &lt;50K'},
+    {label:'יעד מטרה', value:'Plt ≥75K בדימום פעיל · ≥50K לאחר שליטה · ≥100K בדימום CNS · ≥50K לפני ניתוח'},
+    {label:'תאימות ABO', value:'רצוי ABO-תואם (תוצאה טובה יותר) · Rh-תואם בנשים פוריות <b>חובה</b> · anti-D 250 IU אם Rh-neg מקבלת Rh-pos'},
+    {label:'זמן הכנה', value:'מיידי — לא דורש הפשרה'},
+    {label:'צורת הכנה', value:'מאוחסנות בטמפ\' חדר 20-24°C תחת אגיטציה רציפה · חיי מדף קצרים 5-7 ימים בלבד'},
+    {label:'חימום מנה', value:'<b>אסור לחמם!</b> · להישאר בטמפ\' חדר · להעביר בעדינות, ללא ערבוב'},
+    {label:'הערות חשובות', value:'Apheresis = 1 תורם → סיכון זיהומי נמוך · Pooled = 4-6 תורמים → סיכון גבוה יותר · רגישות אלרגית שכיחה · TRALI'}
+  ],
+  haemocomplettan: [
+    {label:'אינדיקציות', value:'פיברינוגן &lt;200 mg/dL בדימום פעיל — <b>קו ראשון אם זמין</b> · קונגניטל hypofibrinogenemia · חלופה מהירה ל-Cryo'},
+    {label:'יעד מטרה', value:'פיברינוגן ≥200 mg/dL · בדימום מסיבי: ≥300 mg/dL'},
+    {label:'תאימות ABO', value:'לא נדרשת — מוצר מסונתז ללא נוגדנים'},
+    {label:'זמן הכנה', value:'5-10 דק\' המסה · מוכן לשימוש מיד'},
+    {label:'צורת הכנה', value:'אבקה לייופילית בויאל (1g או 2g) · מומסת במים סטריליים (50 ml למ"מ של 1g) · IV עירוי'},
+    {label:'חימום מנה', value:'לא נדרש'},
+    {label:'הערות חשובות', value:'<b>יתרון משמעותי:</b> זמין מיידית · ללא הפשרה · מינון מדויק · pathogen-inactivated · ללא נפח עודף · עלות גבוהה מ-Cryo אך הצדקה ברורה ב-PPH'}
+  ],
+  pcc: [
+    {label:'אינדיקציות', value:'Warfarin reversal דחוף + INR&gt;1.5 + דימום · DOAC active bleeding (apixaban, rivaroxaban — חלקי) · קואגולופתיה כבדית עם דימום פעיל'},
+    {label:'יעד מטרה', value:'INR &lt;1.5 תוך 30 דק\''},
+    {label:'תאימות ABO', value:'לא נדרשת — מוצר מסונתז'},
+    {label:'זמן הכנה', value:'5-10 דק\' המסה'},
+    {label:'צורת הכנה', value:'אבקה לייופילית · מומסת במים סטריליים · IV לאט (עד 8 ml/דק\')'},
+    {label:'חימום מנה', value:'לא נדרש'},
+    {label:'הערות חשובות', value:'מכיל גורמים II, VII, IX, X · <b>לא קו ראשון ב-PPH אובסטטרי</b> · יש לשלב Vitamin K לטווח ארוך · סיכון טרומבוטי (DVT, MI)'}
+  ],
+  feiba: [
+    {label:'אינדיקציות', value:'דימום פעיל בהמופיליה A/B עם inhibitors · <b>נדיר ב-PPH</b> (רק מצבים בלתי שגרתיים)'},
+    {label:'יעד מטרה', value:'שליטה בדימום'},
+    {label:'תאימות ABO', value:'לא נדרשת'},
+    {label:'זמן הכנה', value:'5-10 דק\' המסה'},
+    {label:'צורת הכנה', value:'אבקה · מומסת במים סטריליים · IV באיטיות'},
+    {label:'חימום מנה', value:'לא נדרש'},
+    {label:'הערות חשובות', value:'מכיל גורמים מופעלים → <b>סיכון טרומבוטי גבוה</b> (MI, stroke, DIC) · ניטור D-dimer · מקסימום 200 U/kg/24 שעות', extraClass:'crit'}
+  ],
+  novoseven: [
+    {label:'אינדיקציות', value:'<b>מוצא אחרון</b> בדימום בלתי נשלט אחרי כל הסטנדרטיים · המופיליה עם inhibitors · "off-label" ב-PPH refractory'},
+    {label:'דרישות מוקדמות חובה', value:'פיברינוגן ≥150 mg/dL · Plt ≥50K · pH ≥7.2 · נורמותרמיה (&gt;35°C) · Ca יוני ≥1.1 mmol/L', extraClass:'crit'},
+    {label:'יעד מטרה', value:'שליטה בדימום'},
+    {label:'תאימות ABO', value:'לא נדרשת'},
+    {label:'זמן הכנה', value:'5 דק\' המסה'},
+    {label:'צורת הכנה', value:'אבקה לייופילית · מומסת במים סטריליים · IV bolus'},
+    {label:'חימום מנה', value:'לא נדרש'},
+    {label:'הערות חשובות', value:'<b>סיכונים:</b> MI, CVA, DIC, תמותה · אסור ב-DIC חמור עם פיברינוגן נמוך · מינון ניתן לחזור פעם אחת אחרי 2 שעות · מצריך אישור מהמטולוג', extraClass:'crit'}
+  ],
+  txa: [
+    {label:'אינדיקציות', value:'<b>כל PPH אוטומטית!</b> · טראומה עם דימום משמעותי · ניתוח אורתופדי/לב · מנורגיה'},
+    {label:'יעד מטרה', value:'הפסקת fibrinolysis · ייצוב קריש (LY30 &lt;3% ב-TEG)'},
+    {label:'זמן מתן', value:'<b>תוך 3 שעות מתחילת הדימום</b> (WOMAN trial) · אחרי 3 שעות — אפקט מופחת'},
+    {label:'תאימות', value:'לא רלוונטית'},
+    {label:'צורת הכנה', value:'אמפולה 1g/10ml · מוכן לשימוש · IV ב-10 דקות (לא bolus מהיר — בחילה, סחרחורת)'},
+    {label:'חימום מנה', value:'לא נדרש'},
+    {label:'הערות חשובות', value:'<b>הפחתת תמותה 31%</b> ב-PPH (WOMAN trial, n=20,060) · <b>לא מעלה סיכון VTE</b> בהריון/לאחר לידה · יכול לחזור 1g אחרי 30 דק\' אם דימום נמשך'}
+  ],
+  ca_gluconate: [
+    {label:'אינדיקציות', value:'היפוקלצמיה יונית ב-MTP · אחרי כל 4 יחידות דם/FFP · Ca יוני &lt;1.0 mmol/L'},
+    {label:'יעד מטרה', value:'Ca יוני ≥1.1 mmol/L (תקין 1.1-1.3) · קריטי לקרישה ולתפקוד שריר לב'},
+    {label:'תאימות', value:'לא רלוונטית'},
+    {label:'זמן הכנה', value:'מיידי'},
+    {label:'צורת הכנה', value:'אמפולה 10ml 10% (1g) · IV באיטיות (2-3 דק\') · עדיף לדאלל ב-50ml NS'},
+    {label:'חימום מנה', value:'לא נדרש'},
+    {label:'הערות חשובות', value:'<b>לא בקו פריפרי קטן</b> (סיכון נמק עורק) — קו מרכזי עדיף · ניטור ECG · <b>אסור בו-זמנית עם דיגוקסין</b> (אסיסטוליה) · אלטרנטיבה: CaCl2 (פי 3 חזק יותר, צריך קו מרכזי)'}
+  ],
+  ddavp: [
+    {label:'אינדיקציות', value:'vWD סוג 1 · uremic platelet dysfunction · המופיליה A קלה · לפני פעולה פולשנית באישה עם הפרעת קרישה ידועה'},
+    {label:'יעד מטרה', value:'שיפור תפקוד טסיות · שחרור F.VIII ו-vWF מהאנדותל (פי 2-4 ברמה)'},
+    {label:'תאימות', value:'לא רלוונטית'},
+    {label:'זמן הכנה', value:'30 דק\' עירוי איטי'},
+    {label:'צורת הכנה', value:'0.3 μg/kg ב-50ml NS · IV ב-30 דק\' (לא bolus — אדמדמות, כאב ראש)'},
+    {label:'חימום מנה', value:'לא נדרש'},
+    {label:'הערות חשובות', value:'<b>Tachyphylaxis</b> אחרי 2-3 מינונים · <b>היפונתרמיה</b> (להגביל נוזלים, ניטור Na) · לא יעיל ב-vWD type 2 או 3 · לא בילדים &lt;3 חודשים'}
+  ],
+  vitamin_k: [
+    {label:'אינדיקציות', value:'Warfarin reversal (איטי) · חוסר ויטמין K · מחלת כבד · נוטריציה פרנטרלית ממושכת'},
+    {label:'יעד מטרה', value:'נורמליזציה של INR (6-24 שעות)'},
+    {label:'תאימות', value:'לא רלוונטית'},
+    {label:'זמן השפעה', value:'IV: 6-12 שעות · PO: 12-24 שעות'},
+    {label:'צורת הכנה', value:'אמפולה 10mg/1ml · IV באיטיות ב-NS (לא bolus — אנפילקסיס) · אפשרי PO/SC'},
+    {label:'חימום מנה', value:'לא נדרש'},
+    {label:'הערות חשובות', value:'<b>IV bolus מהיר → אנפילקסיס</b> חמורה · השפעה לאחר 6+ שעות (לא לחירום מיידי) · בחירום משלבים עם 4F-PCC'}
+  ],
+  protamine: [
+    {label:'אינדיקציות', value:'Heparin reversal · אחרי CPB · דימום ב-LMWH (הפיכה חלקית בלבד)'},
+    {label:'יעד מטרה', value:'נטרול heparin · נורמליזציה של aPTT'},
+    {label:'תאימות', value:'לא רלוונטית'},
+    {label:'זמן הכנה', value:'מיידי'},
+    {label:'צורת הכנה', value:'תמיסה מוכנה · 1mg / 100U UFH (לאחרונה 2 שעות) · IV באיטיות 5 mg/דק\' מקסימום'},
+    {label:'חימום מנה', value:'לא נדרש'},
+    {label:'הערות חשובות', value:'<b>IV מהיר → היפוטנסיה חמורה</b>, ברדיקרדיה · <b>אלרגיה:</b> סוכרתיים על NPH insulin, אלרגיה לדגים, פוסט-vasectomy · LMWH: הפיכה חלקית בלבד (~60%)', extraClass:'crit'}
+  ],
+  praxbind: [
+    {label:'אינדיקציות', value:'Dabigatran-specific reversal · דימום מסכן חיים תחת Dabigatran · ניתוח דחוף בחולה Dabigatran'},
+    {label:'יעד מטרה', value:'ביטול פעולת Dabigatran תוך דקות (TT, ECT נורמליים)'},
+    {label:'תאימות', value:'לא רלוונטית'},
+    {label:'זמן הכנה', value:'מיידי — נוזל מוכן'},
+    {label:'צורת הכנה', value:'2 ויאלים של 2.5g/50ml · IV bolus או עירוי קצר 5-10 דק\''},
+    {label:'חימום מנה', value:'לא נדרש'},
+    {label:'הערות חשובות', value:'<b>רק ל-Dabigatran</b> (לא ל-Xa inhibitors) · עלות גבוהה · יכול לחזור אם דימום נמשך · אסור להיכנס מחדש ל-Dabigatran תוך 24 שעות'}
+  ],
+  andexxa: [
+    {label:'אינדיקציות', value:'Apixaban / Rivaroxaban reversal בדימום מסכן חיים (CNS, GI, retroperitoneal)'},
+    {label:'יעד מטרה', value:'ביטול פעולת Factor Xa inhibitor'},
+    {label:'תאימות', value:'לא רלוונטית'},
+    {label:'זמן הכנה', value:'הכנה בבית מרקחת — 30-60 דק\''},
+    {label:'מינון', value:'Low dose (Apixaban &lt;5mg / Rivaroxaban &lt;10mg + &gt;8 שעות): 400mg bolus + 4mg/דק\' × 120 דק\'<br>High dose: 800mg bolus + 8mg/דק\' × 120 דק\''},
+    {label:'חימום מנה', value:'לא נדרש'},
+    {label:'הערות חשובות', value:'<b>זמן חצי-חיים קצר</b> → סיכון רבאונד דימום · <b>אסור עם heparin</b> · עלות גבוהה מאוד · זמין רק במרכזים שלישוניים · התנגדות מסוימת ב-FDA על יעילות', extraClass:'crit'}
+  ],
+  albumin: [
+    {label:'אינדיקציות', value:'היפו-וולמיה אחרי 30ml/kg crystalloids · hypoalbuminemia &lt;2 g/dL · אחרי paracentesis גדול · החייאת SBP'},
+    {label:'יעד מטרה', value:'הרחבת נפח · שמירה על osmotic pressure'},
+    {label:'תאימות', value:'לא רלוונטית'},
+    {label:'זמן הכנה', value:'מיידי'},
+    {label:'צורת הכנה', value:'5% (ויאל 250ml) — איזוטוני · 20% (ויאל 50ml) — היפר-אונקוטי · IV עירוי איטי'},
+    {label:'חימום מנה', value:'לא נדרש'},
+    {label:'הערות חשובות', value:'<b>אינו מוצר קרישה</b> — רק להרחבת נפח · קו שני אחרי crystalloids · עלות גבוהה ללא יתרון מובהק ב-PPH · להימנע ב-TBI (סיכון מוגבר)'}
+  ]
+};
+
+function togglePphDetail(row){
+  const key = row.dataset.prod;
+  if (!key) return;
+  // If detail row already exists right after this row, just toggle visibility
+  const next = row.nextElementSibling;
+  if (next && next.classList && next.classList.contains('prod-detail') && next.dataset.detailFor === key) {
+    const hidden = next.hidden;
+    next.hidden = !hidden;
+    row.classList.toggle('expanded', hidden);
+    return;
+  }
+  // Create detail row
+  const data = PRODUCT_DETAILS[key];
+  if (!data) return;
+  const colCount = row.cells.length;
+  const detail = document.createElement('tr');
+  detail.className = 'prod-detail';
+  detail.dataset.detailFor = key;
+  detail.innerHTML = `<td colspan="${colCount}">
+    <div class="prod-detail-grid">
+      ${data.map(d => `<div${d.extraClass?' class="'+d.extraClass+'"':''}><b>${d.label}</b>${d.value}</div>`).join('')}
+    </div>
+  </td>`;
+  row.parentNode.insertBefore(detail, row.nextSibling);
+  row.classList.add('expanded');
+}
+
 // ─── PPH section card navigation ──────────────────────────────────────
 function showPphSection(id){
   document.querySelectorAll('.pph-card').forEach(c => c.classList.toggle('active', c.dataset.pph === id));
@@ -3823,13 +4072,13 @@ function showPphSection(id){
 // Each paper has: num, title, org, year, tags, keyPoints, relatedTabs
 const ISRAELI_PAPERS = [
   {num:'1', title:'לידה לדנית לאחר ניתוח קיסרי קודם (VBAC)', org:'איגוד מיילדות', year:'פברואר 2025', tags:['VBAC','TOLAC','ניתוח קיסרי'], relatedTabs:['tolac','rupture'],
-   keyPoints:['TOLAC מותר ב-1 ק"ק קודם עם חתך טרנסברסלי נמוך','סיכון לקרע רחם: 0.5–1% (חתך טרנסברסלי); 4–9% בחתך קלאסי','≥2 ניתוחים קיסריים — TOLAC לא מומלץ','שימוש בחישוב Grobman לחיזוי הצלחה','חתך אנכי / T / J — TOLAC אסור','השראה עם פרוסטגלנדינים מעלה סיכון לקרע משמעותית']},
+   keyPoints:['TOLAC מותר ב-1 קיסרי קודם עם חתך טרנסברסלי נמוך','סיכון לקרע רחם: 0.5–1% (חתך טרנסברסלי); 4–9% בחתך קלאסי','≥2 ניתוחים קיסריים — TOLAC לא מומלץ','שימוש בחישוב Grobman לחיזוי הצלחה','חתך אנכי / T / J — TOLAC אסור','השראה עם פרוסטגלנדינים מעלה סיכון לקרע משמעותית']},
   {num:'2', title:'לידת עכוז', org:'איגוד מיילדות', year:'פברואר 2025', tags:['עכוז','Breech','ECV'], relatedTabs:['delivery'],
-   keyPoints:['ECV מומלץ ב-36-37 שבועות (סיכוי הצלחה 50-60%)','התוויות נגד ל-ECV: דימום, היפרדות, מומים','לידה וגינלית של עכוז: רק במרכזים עם ניסיון, EFW 2.5-3.8 ק"ג','ק"ק מתוכנן ב-39+0 אם נכשל ECV / לא מתאים']},
+   keyPoints:['ECV מומלץ ב-36-37 שבועות (סיכוי הצלחה 50-60%)','התוויות נגד ל-ECV: דימום, היפרדות, מומים','לידה וגינלית של עכוז: רק במרכזים עם ניסיון, EFW 2.5-3.8 ק"ג','קיסרי מתוכנן ב-39+0 אם נכשל ECV / לא מתאים']},
   {num:'3', title:'ניהול היריון שלאחר המועד', org:'איגוד מיילדות', year:'פברואר 2022', tags:['Postterm','השראת לידה'], relatedTabs:['delivery','preg'],
    keyPoints:['41+0–41+6: שקול השראה','42+0 ומעלה: השראה מומלצת בחוזק','מ-40+0: NST + AFI בכל 2-3 ימים','דיון עם המטופלת על סיכונים (תמותה עוברית עולה אחרי 41+0)']},
   {num:'4', title:'יילוד עובר החשוד כמקרוזומי', org:'איגוד מיילדות', year:'יולי 2025', tags:['מקרוזומיה','Macrosomia','כליאת כתפיים'], relatedTabs:['delivery','efw'],
-   keyPoints:['EFW ≥4500g באישה לא סוכרתית — שקול ק"ק','EFW ≥4500g באישה סוכרתית — ק"ק מתוכנן (סיכון כליאת כתפיים)','EFW ≥5000g — ק"ק חזק לכל מקרה','לא מומלצת השראה לפני 39+0 רק על סמך חשד למקרוזומיה','דיוק אולטרסאונד ±15% — לא תחליף לשיקול קליני']},
+   keyPoints:['<b>הנחיה ישראלית 2025 — סף נמוך יותר מהאמריקאי:</b>','EFW ≥4250g באישה סוכרתית → להמליץ על ניתוח קיסרי','EFW ≥4500g באישה לא סוכרתית → להמליץ על ניתוח קיסרי','EFW ≥5000g — ניתוח קיסרי מתוכנן בכל מקרה','<b>סיכון לפרע כתפיים (Shoulder Dystocia):</b> במשקל 4000-4500g: ~3-5% · 4500-5000g: ~8-14% · &gt;5000g: ~25-40% · בסוכרת — סיכון פי 2-6','<b>נזק עצבי ברכיאלי קבוע (Brachial Plexus Injury):</b> בפרע כתפיים — סיכון 4-23% לנזק זמני · ~10% מהפגיעות הופכות קבועות (Erb\'s palsy) · סיכון מצטבר במשקל לידה: ~0.4% ב-4000-4500g, ~3% ב-&gt;5000g','לא מומלצת השראת לידה לפני 39+0 רק על סמך חשד למקרוזומיה (ACOG/SMFM)','דיוק אולטרסאונד ±15% — שיקול דעת קליני, גובה אם, פריות, היסטוריה ילדותית']},
   {num:'5', title:'יילוד לידני מכשירני', org:'איגוד מיילדות', year:'יולי 2023', tags:['Vacuum','Forceps','מכשירני'], relatedTabs:['delivery','tolac'],
    keyPoints:['אינדיקציות: שלב שני ממושך, NRFHR, אתי-עייפות אמהית','דרישות: שלפוחית ריקה, פתיחה מלאה, ראש בתחנה +2','כשלון אחרי 3 משיכות שואב = להפסיק','סיכון לקרע פרינאלי OASIS גבוה יותר ב-Forceps']},
   {num:'6', title:'ניהול מעקב אישה הרה בהריון בסיכון נמוך', org:'איגוד מיילדות', year:'דצמבר 2024', tags:['מעקב הריון','GBS'], relatedTabs:['pplan'],
@@ -3839,7 +4088,7 @@ const ISRAELI_PAPERS = [
   {num:'8', title:'הנחיות לביצוע אולטרה-סאונד בהיריון', org:'חברת אולטרסאונד + AAM', year:'ינואר 2026', tags:['US','סקירות','NT'], relatedTabs:['preg','efw','hc','fl','biom'],
    keyPoints:['סקירה ראשונה: 11-13+6 (NT, מומים גסים, מקום שליה)','סקירה מאוחרת: 19-23 שבועות (אנטומיה מקיפה, ביומטריה, שליה, UtA-PI)','סקירת גדילה: 30-32 שבועות (EFW, מי שפיר)','דרישות מינימום לכל סקירה — ראה נייר','דיוק EFW: ±15% (1 SD)','תיקון תאריך לפי CRL מותר עד 13+6']},
   {num:'9', title:'ניהול הלידה בהיריון רב-עוברים', org:'איגוד מיילדות', year:'ספטמבר 2023', tags:['תאומים','DCDA','MCDA'], relatedTabs:['twins','delivery'],
-   keyPoints:['DCDA לידה ב-38+0–38+6','MCDA לידה ב-36+0–37+6','MCMA ק"ק מתוכנן ב-32+0–34+0','עוקב ראשון (A) ראש: ניתן ניסיון לידה וגינלית','השני (B) עכוז אחרי הראשון: הוצאה ידנית או עכוז','ק"ק לכפתורה אם משקלים שונים בהרבה / מצב לא יציב']},
+   keyPoints:['DCDA לידה ב-38+0–38+6','MCDA לידה ב-36+0–37+6','MCMA קיסרי מתוכנן ב-32+0–34+0','עוקב ראשון (A) ראש: ניתן ניסיון לידה וגינלית','השני (B) עכוז אחרי הראשון: הוצאה ידנית או עכוז','קיסרי לכפתורה אם משקלים שונים בהרבה / מצב לא יציב']},
   {num:'10', title:'ניהול היריון עם עובר החשוד ב-IUGR / FGR', org:'AAM + אולטרסאונד', year:'ינואר 2025', tags:['IUGR','FGR','SGA','דופלר'], relatedTabs:['ua','efw','preg'],
    keyPoints:['EFW <אחוזון 10 = SGA · EFW <אחוזון 3 = FGR','דופלר UA חובה במעקב','AEDV → מעקב צמוד · REDV → לידה ב-30+0','דופלר MCA לתיעוד "brain sparing"','DV הפיך → לידה מיידית','לידה: FGR יציב 37+0; קומפלקס מוקדם יותר']},
   {num:'11', title:'השראת לידה והבשלת צוואר הרחם', org:'איגוד מיילדות', year:'נובמבר 2024', tags:['בישופ','Misoprostol','PGE2','אוקסיטוצין'], relatedTabs:['delivery','tolac'],
@@ -3861,23 +4110,23 @@ const ISRAELI_PAPERS = [
   {num:'19', title:'בחילות והקאות בהיריון (NVP)', org:'איגוד מיילדות', year:'2024', tags:['NVP','Hyperemesis','דוקסילמין'], relatedTabs:['pplan'],
    keyPoints:['קו 1: דוקסילמין-Pyridoxine (B6) — Diclectin','קו 2: Ondansetron 4-8mg, Metoclopramide','היפר-אמזיס: ירידה במשקל ≥5%, קטונוריה, הפרעות אלקטרוליטים','אשפוז ב-Wernicke risk — IV Thiamine לפני גלוקוז','חסר ויטמין B1 → אנצפלופתיית ורניקה']},
   {num:'20', title:'ניטור דופק לב העובר בזמן הלידה', org:'איגוד מיילדות', year:'2024', tags:['CTG','NICHD','NRFHR'], relatedTabs:['delivery'],
-   keyPoints:['קטגוריה I = תקין · II = לא ודאי · III = NRFHR','החלטה ב-NRFHR: שינוי תנוחה, חמצן, סטופ אוקסיטוצין, נוזלים','ניטור פנימי FSE/IUPC אם לא ברור חיצוני','קטגוריה III ממשיכה → לידה דחופה (ק"ק/ואקום)','דצלרציות מאוחרות: חמצן עוברי לקוי']},
+   keyPoints:['קטגוריה I = תקין · II = לא ודאי · III = NRFHR','החלטה ב-NRFHR: שינוי תנוחה, חמצן, סטופ אוקסיטוצין, נוזלים','ניטור פנימי FSE/IUPC אם לא ברור חיצוני','קטגוריה III ממשיכה → לידה דחופה (קיסרי/ואקום)','דצלרציות מאוחרות: חמצן עוברי לקוי']},
   {num:'21', title:'ייעוץ טרום-היריוני', org:'איגוד מיילדות', year:'2024', tags:['Preconception','חומצה פולית','חיסונים'], relatedTabs:['pplan'],
    keyPoints:['חומצה פולית 400 µg 3 חודשים לפני הריון','5 מ"ג בסיכון גבוה: NTD קודם, אפילפסיה, סוכרת, BMI≥30','עדכון חיסונים: MMR/Varicella → 1 חודש לפני','בדיקות נשאות: ציסטיק, פרגיל X, SMA, מחלות יהודי אשכנז','איזון מחלות כרוניות לפני הריון','ייעוץ גנטי בהתוויה']},
   {num:'22', title:'GBS — חיידק קבוצה B', org:'איגוד מיילדות', year:'2024', tags:['GBS','Penicillin','35-37 שבועות'], relatedTabs:['delivery','pplan'],
    keyPoints:['תרבית רקטו-וגינלית ב-35-37 שבועות','חיובי → פניצילין IV בלידה (5 mU בולוס, 2.5 mU/4 שעות)','אלרגיה: Cefazolin (קל) · Clindamycin/Vancomycin (חמור)','PPROM/לידה מוקדמת ללא תרבית — טפל אמפירית','GBS בשתן (כל ספירה) → טיפול בלידה גם בלי תרבית','אם לא ידוע + ≥38+0/≥18 שעות PPROM/חום → אמפירי']},
   {num:'23', title:'מוות עוברי (IUFD)', org:'איגוד מיילדות', year:'2024', tags:['IUFD','Stillbirth','בירור'], relatedTabs:['pplan'],
-   keyPoints:['בירור: שליה לפתולוגיה, אוטופסיה, קריוטיפ','APS/לופוס/טרומבופיליה — סקירה מורחבת','דיון על אופן הלידה (וגינלי או ק"ק לפי GA)','תמיכה רגשית + תכנון הריון הבא','סיכון חוזר תלוי בסיבה (1-2× ברוב המקרים)']},
+   keyPoints:['בירור: שליה לפתולוגיה, אוטופסיה, קריוטיפ','APS/לופוס/טרומבופיליה — סקירה מורחבת','דיון על אופן הלידה (וגינלי או קיסרי לפי GA)','תמיכה רגשית + תכנון הריון הבא','סיכון חוזר תלוי בסיבה (1-2× ברוב המקרים)']},
   {num:'24', title:'קרישיות בהריון (VTE)', org:'איגוד מיילדות', year:'2024', tags:['VTE','Thrombophilia','LMWH'], relatedTabs:['vte','pplan'],
-   keyPoints:['RCOG Green-top 37a הוא הסטנדרט הישראלי','LMWH פרופילקטי: 40mg Enoxaparin SC/יום (50-90 ק"ג)','התאמה לפי משקל: <50/50-90/91-130/131-170/>170','VTE קודם + תרומבופיליה → LMWH מלא הריון','ק"ק דחוף + 1 גורם → 10 ימים פוסט-פרטום','VTE קודם → 6 שבועות פוסט-פרטום']},
+   keyPoints:['RCOG Green-top 37a הוא הסטנדרט הישראלי','LMWH פרופילקטי: 40mg Enoxaparin SC/יום (50-90 ק"ג)','התאמה לפי משקל: <50/50-90/91-130/131-170/>170','VTE קודם + תרומבופיליה → LMWH מלא הריון','קיסרי דחוף + 1 גורם → 10 ימים פוסט-פרטום','VTE קודם → 6 שבועות פוסט-פרטום']},
   {num:'25', title:'HIV בהריון', org:'AAM + זיהומיות', year:'2024', tags:['HIV','ART','העברה ורטיקלית'], relatedTabs:['pplan'],
-   keyPoints:['ART לאורך כל ההריון (גם אם VL נמוך)','ק"ק אלקטיבי ב-38+0 אם VL >1000','VL <50 ב-36 שבועות → לידה וגינלית אפשרית','אסור הנקה בארץ עם חלופה מתאימה','Zidovudine IV בלידה אם VL גבוה']},
+   keyPoints:['ART לאורך כל ההריון (גם אם VL נמוך)','קיסרי אלקטיבי ב-38+0 אם VL >1000','VL <50 ב-36 שבועות → לידה וגינלית אפשרית','אסור הנקה בארץ עם חלופה מתאימה','Zidovudine IV בלידה אם VL גבוה']},
   {num:'26', title:'ליסטריה בהריון', org:'AAM + זיהומיות', year:'2024', tags:['Listeria','אמפיצילין'], relatedTabs:['pplan'],
    keyPoints:['סיכון פי 20 בהריון לזיהום ליסטריה','תסמינים: חום + תסמיני שפעת + symptoms','אבחון: תרבית דם · אנמולי שפיר אם המעבדה חיובית','טיפול: Ampicillin 2g IV × 4-6 לפחות 2 שבועות','אלרגיה: Trim/Sulfa','הימנעות: גבינות לא מפוסטרות, נקניקים, סלטי דלי']},
   {num:'27', title:'גיל החיות (Periviability)', org:'איגוד מיילדות', year:'2024', tags:['Periviable','23-24 שבועות','החייאת ילוד'], relatedTabs:['ptcomp'],
    keyPoints:['22-25+6 שבועות = "אזור החיות"','שרידות (Pagim 2023): 22w 5.9%, 23w 20%, 24w 52.5%, 25w 78%','החלטה משותפת עם המשפחה ו-NICU','סטרואידים מ-22+0 אם החלטה להתערב','התחלת החייאה תלוית מצב היילוד בלידה']},
   {num:'28', title:'גיל 45+ — מעקב הריון', org:'איגוד מיילדות', year:'2024', tags:['גיל מתקדם','45+','סיכון'], relatedTabs:['pplan'],
-   keyPoints:['סיכון מוגבר: GDM, רעלת, ק"ק, מומים כרומוזומליים','NIPT (אופציה פרטית) מומלץ בגיל זה','ASA 100mg מ-12 שבועות (סיכון רעלת)','אקו לב עוברי 22 שבועות','סקירת גדילה תכופה יותר בטרימסטר שלישי','שיקול לידה מתוכננת 39+0–40+0']},
+   keyPoints:['סיכון מוגבר: GDM, רעלת, קיסרי, מומים כרומוזומליים','NIPT (אופציה פרטית) מומלץ בגיל זה','ASA 100mg מ-12 שבועות (סיכון רעלת)','אקו לב עוברי 22 שבועות','סקירת גדילה תכופה יותר בטרימסטר שלישי','שיקול לידה מתוכננת 39+0–40+0']},
   {num:'29', title:'תוספי תזונה והרגלים בהיריון', org:'איגוד מיילדות', year:'2024', tags:['חומצה פולית','ויטמין D','אומגה 3'], relatedTabs:['pplan'],
    keyPoints:['חומצה פולית 400 µg ליום (פרה-קונספציה — 12 שבועות)','5 מ"ג: BMI≥30, סוכרת, אפילפסיה, NTD קודם','ויטמין D 600-1000 IU ליום (בארץ כל ההריון)','ברזל 27 mg ליום (משלב טרימסטר 2)','סידן 1000-1300 mg/יום (במזון או תוסף)','אומגה 3 (DHA) 200-300 mg/יום','להימנע: כוהל, סוקרלוז, מינונים יתרים של A','קפה: עד 200 mg/יום (כוס-שתיים)']},
   {num:'30', title:'סמנים רכים לדאון', org:'אולטרסאונד + AAM', year:'2024', tags:['Soft Markers','NF','EIF'], relatedTabs:['dsrisk','hc','biom'],
@@ -3887,9 +4136,9 @@ const ISRAELI_PAPERS = [
   {num:'32', title:'הנחיות להפניה ולביצוע אקו לב עובר', org:'אולטרסאונד + AAM', year:'2024', tags:['Echo','אקו לב','CHD'], relatedTabs:['biom'],
    keyPoints:['אינדיקציות: סוכרת קדם-הריון, סיפור משפחתי CHD, תרופות (לבית, פנט) ','אקו לב 22-24 שבועות (חלון אופטימלי)','סקירה בסיסית כוללת 4 חדרים + 3 כלים גדולים','חשד מ-NT >3.5 — אקו מוקדם 16-18','CHD חמור → ייעוץ קרדיולוגיה ילדים, תכנון לידה במרכז שלישוני']},
   {num:'33', title:'מעקב היריון תאומים', org:'AAM + אולטרסאונד', year:'2024', tags:['תאומים','MCDA','DCDA','TTTS'], relatedTabs:['twins'],
-   keyPoints:['קביעת כוריוניות עד 14 שבועות (חלון Lambda/T-sign)','MCDA: סקירת US כל 2 שבועות מ-16w (TTTS/TAPS)','DCDA: סקירת US כל 4 שבועות מ-20w','MCMA: אשפוז ב-26 שבועות, ק"ק 32-34+0','סקירה אנטומית מורחבת ב-19-22 שבועות','דופלר UA לכל ילד מ-24-26 שבועות']},
+   keyPoints:['קביעת כוריוניות עד 14 שבועות (חלון Lambda/T-sign)','MCDA: סקירת US כל 2 שבועות מ-16w (TTTS/TAPS)','DCDA: סקירת US כל 4 שבועות מ-20w','MCMA: אשפוז ב-26 שבועות, קיסרי 32-34+0','סקירה אנטומית מורחבת ב-19-22 שבועות','דופלר UA לכל ילד מ-24-26 שבועות']},
   {num:'34', title:'קרע מילדותי של שריר/סוגר/פי הטבעת (OASIS)', org:'איגוד מיילדות', year:'2024', tags:['OASIS','שלב שני','קרע 3-4'], relatedTabs:['delivery'],
-   keyPoints:['דרגות: 3a (<50% EAS), 3b (>50% EAS), 3c (EAS+IAS), 4 (פרינאום+רקטום)','תיקון בחדר ניתוח בהרדמה איפידורל/כללית','אנטיביוטיקה פרופילקטית (Augmentin / Metro)','שתן קטטר 24-48 שעות','משלשלים, מילון פרסי, מעקב כללי','הריון הבא: ייעוץ + שיקול ק"ק']},
+   keyPoints:['דרגות: 3a (<50% EAS), 3b (>50% EAS), 3c (EAS+IAS), 4 (פרינאום+רקטום)','תיקון בחדר ניתוח בהרדמה איפידורל/כללית','אנטיביוטיקה פרופילקטית (Augmentin / Metro)','שתן קטטר 24-48 שעות','משלשלים, מילון פרסי, מעקב כללי','הריון הבא: ייעוץ + שיקול קיסרי']},
   {num:'35', title:'חיסונים בהריון', org:'איגוד מיילדות', year:'2024', tags:['Tdap','שפעת','COVID','RSV'], relatedTabs:['pplan'],
    keyPoints:['Tdap: ב-27-36 שבועות לכל הריון (הגנה על תינוק)','שפעת עונתי: בכל GA בעונה (אוקטובר-מרץ)','COVID-19: לפי הנחיית משרד בריאות עדכנית','RSV (Abrysvo): ב-32-36 שבועות עונת RSV (ספטמבר-ינואר)','חיסונים אסורים: MMR, Varicella, BCG, HPV (חיים מוחלשים)','RhoGAM: 28 שבועות לכל Rh-negative + לאחר לידה']},
   {num:'36', title:'טיפול בכאב בהריון ובהנקה', org:'איגוד מיילדות', year:'2024', tags:['פרצטמול','NSAID','אופיואידים'], relatedTabs:['pplan'],
@@ -3915,7 +4164,7 @@ const ISRAELI_PAPERS = [
   {num:'47', title:'דלקות בדרכי השתן בהיריון (UTI)', org:'איגוד מיילדות', year:'2024', tags:['UTI','Pyelonephritis','אנטיביוטיקה'], relatedTabs:['pplan'],
    keyPoints:['סקר תרבית שתן בביקור ראשון','בקטריוריה אסימפטומטית — חובה לטפל','Nitrofurantoin 100mg ×4 (לא ב-T3)','Cefalexin / Augmentin אופציות','פיילונפריטיס: אשפוז, Ceftriaxone IV','חזרה תרבית 1-2 שבועות אחרי הטיפול']},
   {num:'48', title:'ניהול השלב השני של הלידה', org:'איגוד מיילדות', year:'2024', tags:['שלב שני','Pushing','מכשירני'], relatedTabs:['delivery'],
-   keyPoints:['פרים: ≤3 שעות (≤4 אם אפידורל)','מולטיפר: ≤2 שעות (≤3 אם אפידורל)','דחיפה: ספונטנית או "Valsalva" לפי תרבות','מצב אם: לא יושבת על גב — צד שמאל/כיריים','מכשירני אם דחיפה לא יעילה / NRFHR','מצוקה עוברית → ק"ק או מכשירני']},
+   keyPoints:['פרים: ≤3 שעות (≤4 אם אפידורל)','מולטיפר: ≤2 שעות (≤3 אם אפידורל)','דחיפה: ספונטנית או "Valsalva" לפי תרבות','מצב אם: לא יושבת על גב — צד שמאל/כיריים','מכשירני אם דחיפה לא יעילה / NRFHR','מצוקה עוברית → קיסרי או מכשירני']},
   {num:'49', title:'אנמיה בהריון', org:'איגוד מיילדות', year:'2024', tags:['Iron','ברזל','IV iron'], relatedTabs:['pplan'],
    keyPoints:['סף Hb לאבחנה: T1 <11, T2 <10.5, T3 <11','בירור: פריטין, ויטמין B12, פוליאט, MCV','ברזל פומי קו ראשון (60mg יסודי × 1-2 ליום)','אם פומי לא נסבל / Hb <9: ברזל IV (Ferrinject, Venofer)','עירוי דם רק ב-Hb <7 או תסמינים','חזרה בדיקה 2-4 שבועות אחרי תחילת טיפול']},
   {num:'50', title:'יתר לחץ דם כרוני בהיריון (CHTN)', org:'איגוד מיילדות', year:'2024', tags:['CHTN','CHAP','Labetalol'], relatedTabs:['peescreen'],
@@ -7049,7 +7298,7 @@ function calcRupture(){
   if(cfg.forbid){
     cls='bad'; decision='קונטר-אינדיקציה ל-TOLAC';
   } else if(risk >= 3){
-    cls='bad'; decision='סיכון גבוה — שקול ק"ק אלקטיבי';
+    cls='bad'; decision='סיכון גבוה — שקול קיסרי אלקטיבי';
   } else if(risk >= 1.5){
     cls='warn'; decision='סיכון מוגבר — דיון מאוזן';
   } else {
@@ -7063,8 +7312,8 @@ function calcRupture(){
     <div class="zscore">בסיס: ${cfg.base}% · ${cfg.label}</div>
     ${bar(Math.min(99,risk*15),cls)}
     ${badge(cls, decision)}
-    ${cfg.forbid ? '<div class="note" style="border-right-color:var(--red);background:var(--red-bg);margin-top:10px"><b>אזהרה:</b> חתך קלאסי / T-J — קונטר-אינדיקציה מוחלטת ל-TOLAC. סיכון לקרע 4–9% במהלך הריון/לידה. ק"ק אלקטיבי ב-36+0–37+6.</div>' : ''}
-    ${rupState.num>=3 ? '<div class="note" style="border-right-color:var(--red);background:var(--red-bg);margin-top:10px"><b>אזהרה:</b> ≥3 ניתוחים קיסריים — TOLAC לא מומלץ. תזמון ק"ק אלקטיבי ב-39+0.</div>' : ''}
+    ${cfg.forbid ? '<div class="note" style="border-right-color:var(--red);background:var(--red-bg);margin-top:10px"><b>אזהרה:</b> חתך קלאסי / T-J — קונטר-אינדיקציה מוחלטת ל-TOLAC. סיכון לקרע 4–9% במהלך הריון/לידה. קיסרי אלקטיבי ב-36+0–37+6.</div>' : ''}
+    ${rupState.num>=3 ? '<div class="note" style="border-right-color:var(--red);background:var(--red-bg);margin-top:10px"><b>אזהרה:</b> ≥3 ניתוחים קיסריים — TOLAC לא מומלץ. תזמון קיסרי אלקטיבי ב-39+0.</div>' : ''}
     ${rupState.labor==='prostaglandin' ? '<div class="note" style="border-right-color:var(--red);background:var(--red-bg);margin-top:10px"><b>אזהרה:</b> פרוסטגלנדינים (PGE2 dinoprostone, misoprostol) — קונטר-אינדיקציה ב-TOLAC. השראה רק עם בלון פולי / אוקסיטוצין בזהירות.</div>' : ''}
   </div>`;
 
@@ -7086,8 +7335,8 @@ function calcRupture(){
   let recList = [];
   if(cfg.forbid || rupState.num>=3){
     recList = [
-      '<b>TOLAC אסור</b> — תכנן ק"ק אלקטיבי',
-      cfg.forbid?'חתך קלאסי/T → ק"ק ב-36+0–37+6 לאחר סטרואידים':'≥3 ק"ק קודמים → ק"ק ב-39+0',
+      '<b>TOLAC אסור</b> — תכנן קיסרי אלקטיבי',
+      cfg.forbid?'חתך קלאסי/T → קיסרי ב-36+0–37+6 לאחר סטרואידים':'≥3 קיסרי קודמים → קיסרי ב-39+0',
       'מעקב אקרטה ב-T1 ובסקירה מאוחרת — סיכון מוגבר'
     ];
   } else if(rupState.labor==='prostaglandin'){
@@ -7098,7 +7347,7 @@ function calcRupture(){
     ];
   } else if(cls==='bad'){
     recList = [
-      '<b>שקול ק"ק אלקטיבי</b> — דיון מקיף עם המטופלת',
+      '<b>שקול קיסרי אלקטיבי</b> — דיון מקיף עם המטופלת',
       'אם TOLAC: בית חולים שלישוני · חדר ניתוח + צוות מיידי 24/7',
       'מעקב CTG רציף · אינפוזיה ורידית מוכנה',
       'הסכמה מודעת מתועדת על הסיכון'
@@ -7193,7 +7442,7 @@ const pphMeds = [
     class: 'פרוסטגלנדין F2α — קו שלישי',
     routes: [
       {route:'IM', dose:'0.25 mg (250 µg)', when:'חזרה כל 15–90 דקות'},
-      {route:'תוך-מיומטריאלי', dose:'0.25 mg', when:'ישירות לתוך הרחם בק"ק'},
+      {route:'תוך-מיומטריאלי', dose:'0.25 mg', when:'ישירות לתוך הרחם בקיסרי'},
     ],
     maxDose: '8 מנות / 2 mg',
     onset: '< 5 דקות IM',
@@ -7223,13 +7472,13 @@ const pphMeds = [
     nameHe: 'קרבטוצין',
     class: 'אנלוג ארוך-טווח של אוקסיטוצין · מניעה ב-CS',
     routes: [
-      {route:'IV', dose:'100 µg ב-1 דקה (בולוס איטי)', when:'מיד לאחר הוצאת התינוק בק"ק (מניעה) או PPH פעיל'},
+      {route:'IV', dose:'100 µg ב-1 דקה (בולוס איטי)', when:'מיד לאחר הוצאת התינוק בקיסרי (מניעה) או PPH פעיל'},
       {route:'IM', dose:'100 µg', when:'אם אין IV — לאחר לידה וגינלית'},
     ],
     maxDose: '<b>מנה יחידה בלבד</b> — אין לחזור (זמן חצי חיים 40 דקות, פי 10 מאוקסיטוצין)',
     onset: '1–2 דקות',
     ci: ['רגישות יתר ידועה לאוקסיטוצין/אנלוגיו', 'מחלת לב/כליה חמורה (זהירות)', 'אסטמה לא מאוזנת', 'יל"ד חמור (השפעה אנטי-דיורטית קלה)'],
-    notes: 'מקבילה לאוקסיטוצין אינפוזיה רציפה ל-2-6 שעות. WHO 2022: גרסה יציבה בחום מומלצת כקו ראשון למניעת PPH בק"ק. מחליפה את האוקסיטוצין לאחר ק"ק — לא להשתמש במקביל.',
+    notes: 'מקבילה לאוקסיטוצין אינפוזיה רציפה ל-2-6 שעות. WHO 2022: גרסה יציבה בחום מומלצת כקו ראשון למניעת PPH בקיסרי. מחליפה את האוקסיטוצין לאחר קיסרי — לא להשתמש במקביל.',
     color: 'teal'
   },
 ];
@@ -7318,7 +7567,7 @@ const deliveryTimings = {
     {v:'prior_myomectomy',      label:'מיומקטומיה עם חדירה לחלל',         ga:'37+0 – 38+6', src:'ACOG'},
     {v:'prior_uterine_rupture', label:'קרע רחם קודם',                    ga:'36+0 – 37+0', src:'ACOG'},
     {v:'prior_cesarean_2plus',  label:'≥2 ניתוחים קיסריים קודמים',       ga:'39+0',         src:'ACOG'},
-    {v:'prior_cesarean_1',      label:'1 ניתוח קיסרי קודם (ללא TOLAC)',  ga:'39+0',         src:'ACOG', note:'ק"ק מתוכנן ב-39+0 — אם לא בתהליך TOLAC'},
+    {v:'prior_cesarean_1',      label:'1 ניתוח קיסרי קודם (ללא TOLAC)',  ga:'39+0',         src:'ACOG', note:'קיסרי מתוכנן ב-39+0 — אם לא בתהליך TOLAC'},
   ],
   fgr: [
     {v:'fgr_uncomplicated',     label:'FGR ללא סיבוכי דופלר',            ga:'36+0 – 37+6', src:'SMFM Consult #44 (2020)'},
@@ -7344,7 +7593,7 @@ const deliveryTimings = {
     {v:'prior_stillbirth',      label:'לידת מת בהריון קודם',             ga:'39+0 – 40+0', src:'ACOG'},
     {v:'oligohydramnios',       label:'מיעוט מי שפיר מבודד (DVP <2)',    ga:'36+0 – 37+6', src:'ACOG'},
     {v:'pprom',                 label:'PPROM ללא זיהום',                  ga:'34+0',         src:'ACOG 2020 (PB 217)'},
-    {v:'macrosomia',            label:'מקרוזומיה (EFW ≥ 4500 גר\')',     ga:'39+0',         src:'ACOG/SMFM #52 (2020)', note:'יש לדון בק"ק אלקטיבי כאשר EFW ≥ 5000 (לא סוכרתית) או ≥ 4500 (סוכרתית)'},
+    {v:'macrosomia',            label:'מקרוזומיה (EFW ≥ 4500 גר\')',     ga:'39+0',         src:'ACOG/SMFM #52 (2020)', note:'יש לדון בקיסרי אלקטיבי כאשר EFW ≥ 5000 (לא סוכרתית) או ≥ 4500 (סוכרתית)'},
   ],
 };
 
@@ -7353,7 +7602,7 @@ const delCategoryMeta = {
   htn:      {name:'יל"ד / רעלת', icon:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14c2-1 4-1 6 0s4 1 6 0 4-1 2-2"/><path d="M3 10c2-1 4-1 6 0s4 1 6 0 4-1 2-2"/></svg>'},
   dm:       {name:'סוכרת', icon:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6"/><path d="M10 4v6l3 2"/></svg>'},
   placenta: {name:'שליה', icon:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7c0-2 2-3 4-3s3 1 3 3v6c0 2-1 3-3 3s-4-1-4-3V7Z"/><path d="M10 7c0-2 2-3 4-3s3 1 3 3v6c0 2-1 3-3 3s-4-1-4-3V7Z"/></svg>'},
-  prior:    {name:'ק"ק קודמים', icon:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l3 3-3 3M9 9h7"/><path d="M14 14c2 0 3-1 3-3s-1-3-3-3"/></svg>'},
+  prior:    {name:'קיסרי קודמים', icon:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l3 3-3 3M9 9h7"/><path d="M14 14c2 0 3-1 3-3s-1-3-3-3"/></svg>'},
   fgr:      {name:'FGR / IUGR', icon:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l4-4 3 2 7-7"/><path d="M13 8l4 0v4"/></svg>'},
   multi:    {name:'מרובה עוברים', icon:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="9" r="3.5"/><circle cx="13" cy="9" r="3.5"/><path d="M4 17c.5-2 1.5-3 3-3M16 17c-.5-2-1.5-3-3-3"/></svg>'},
   other:    {name:'מצבים אחרים', icon:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><circle cx="10" cy="14" r=".7" fill="currentColor"/><path d="M10 6v5"/></svg>'},
@@ -7534,7 +7783,7 @@ function calcTolac(){
     ${tolacFactor('BMI', bmi.toFixed(1) + ' kg/m²', -0.069*bmi, 'higher worse')}
     ${tolacFactor('לידה וגינלית קודמת', tolState.vag?'כן':'לא', 0.696*tolState.vag, 'protective')}
     ${tolacFactor('VBAC מוצלח קודם', tolState.vbac?'כן':'לא', 0.832*tolState.vbac, 'protective')}
-    ${tolacFactor('אינדיקציה חוזרת לק"ק', tolState.ind?'כן':'לא', -0.502*tolState.ind, 'reduces')}
+    ${tolacFactor('אינדיקציה חוזרת לקיסרי', tolState.ind?'כן':'לא', -0.502*tolState.ind, 'reduces')}
     ${tolacFactor('יל"ד כרוני מטופל', tolState.htn?'כן':'לא', -0.397*tolState.htn, 'reduces')}
   </div>`;
 
@@ -7548,10 +7797,10 @@ function calcTolac(){
       <ul class="rec-list">
         ${prob>=70 ? '<li><b>מועמדת טובה ל-TOLAC</b> — סיכויי הצלחה גבוהים בקבלת המלצה רפואית</li>' : ''}
         ${prob>=60 && prob<70 ? '<li>דיון מאוזן עם המטופלת על סיכויים, סיכונים, והעדפות אישיות</li>' : ''}
-        ${prob<60 ? '<li class="warn">סיכוי נמוך להצלחה — סיכון מוגבר לקרע רחם ולק"ק חירום</li>' : ''}
-        <li>סיכון לקרע רחם בTOLAC כללי: ~0.5% · עליה ב-1.5–3% עם מספר ק"ק קודמים</li>
+        ${prob<60 ? '<li class="warn">סיכוי נמוך להצלחה — סיכון מוגבר לקרע רחם ולקיסרי חירום</li>' : ''}
+        <li>סיכון לקרע רחם בTOLAC כללי: ~0.5% · עליה ב-1.5–3% עם מספר קיסרי קודמים</li>
         <li>נדרש: NICU/חדר ניתוח זמינים, מעקב CTG רציף, רופא מנוסה זמין</li>
-        <li>קונטר-אינדיקציות מוחלטות: חתך אופקי קלאסי, היפך T קודם, ≥2 ק"ק קודמים</li>
+        <li>קונטר-אינדיקציות מוחלטות: חתך אופקי קלאסי, היפך T קודם, ≥2 קיסרי קודמים</li>
       </ul>
       <div class="rec-src">Grobman WA et al. AJOG 2021;225:664 · ACOG Practice Bulletin 205 (2019)</div>
     </div>
@@ -8071,7 +8320,7 @@ function calcVte(){
       <div class="rec-section">
         <div class="rec-section-title">${postAction.label}</div>
         <ul class="rec-list">
-          <li>מנה ראשונה: 6–12 שעות לאחר לידה וגינלית · 12 שעות לאחר ק"ק (לאחר הוצאת אפידורל)</li>
+          <li>מנה ראשונה: 6–12 שעות לאחר לידה וגינלית · 12 שעות לאחר קיסרי (לאחר הוצאת אפידורל)</li>
           ${postScore >= 4 ? '<li class="warn">בקרת מעבדה: CBC + ספירת טסיות יום 5–7 (HIT שלילי) · anti-Xa אם נדרש ניטור</li>' : ''}
           <li>הוראות לאם: דווחי על קוצר נשימה, כאב חזה, נפיחות אסימטרית של רגל, כאב שוק</li>
           <li>LMWH בטוח להנקה — לא מופרש בחלב באופן משמעותי</li>
@@ -8194,17 +8443,17 @@ function getPpRiskItems(state){
   if(state.r_prior_cs || state.r_prior_cs2){
     items.push({fromW:11, toW:13, label:'סקירת מקום שליה — שליית פתח / אקרטה', cat:'us', priority:'high',
       tests:'הערכת מיקום שליה ביחס לצלקת — חשד לאקרטה',
-      reason:'ק"ק קודם'});
+      reason:'קיסרי קודם'});
     items.push({fromW:18, toW:22, label:'סקירה מאוחרת — דגש על שליה', cat:'us', priority:'high',
       tests:'הערכה מורחבת לאקרטה / פרקרטה / אינקרטה',
-      reason:'ק"ק קודם'});
+      reason:'קיסרי קודם'});
     items.push({fromW:28, toW:32, label:'דיון על מסלול לידה (TOLAC vs CS)', cat:'visit', priority:'high',
       tests:'הערכת התאמה ל-VBAC — חישוב Grobman',
-      reason:'ק"ק קודם'});
+      reason:'קיסרי קודם'});
     if(state.r_prior_cs2){
-      notes.push('≥2 ק"ק קודמים — TOLAC לא מומלץ. תזמון ק"ק אלקטיבי 39+0');
+      notes.push('≥2 קיסרי קודמים — TOLAC לא מומלץ. תזמון קיסרי אלקטיבי 39+0');
     } else {
-      notes.push('ק"ק אחד קודם — TOLAC אפשרי. שקול חישוב Grobman להחלטה');
+      notes.push('קיסרי אחד קודם — TOLAC אפשרי. שקול חישוב Grobman להחלטה');
     }
   }
 
