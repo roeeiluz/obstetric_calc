@@ -3822,14 +3822,14 @@ function openPaperModal(num){
   } else {
     related.style.display = 'none';
   }
+  document.getElementById('paper-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
 function jumpFromPaper(tid){
   closePaperModal();
   const btn = document.querySelector(`.tab[onclick*="showTab('${tid}'"]`);
   if (btn) showTab(tid, btn);
-  document.getElementById('paper-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
 }
 function closePaperModal(){
   document.getElementById('paper-overlay').classList.remove('open');
