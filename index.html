@@ -3899,7 +3899,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.13';
+const APP_VERSION = '3.14';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -8328,11 +8328,9 @@ function calcBreech(){
   const $ = id => document.getElementById(id);
   const chk = id => $(id)?.checked || false;
   const w = parseInt($('breech-w')?.value);
-  const d = parseInt($('breech-d')?.value)||0;
   const efw = parseFloat($('breech-efw')?.value);
-  const ga = !isNaN(w) ? w + d/7 : null;
 
-  // Progress: 4 steps
+  // Progress: 4 steps (kept for the progress bar at top)
   const step1 = !isNaN(w) && !isNaN(efw);
   const step2 = chk('breech_consent') && chk('breech_us_done');
   const step3 = chk('breech_senior');
@@ -8344,95 +8342,10 @@ function calcBreech(){
   const cnt = $('breech-step-count');
   if(cnt) cnt.textContent = `${done} / 4 שלבים`;
 
-  // Absolute contraindications per Israeli paper #2
-  const absolute = [];
-  const relative = [];
-  const conditional = [];
-
-  if (!chk('breech_consent')) absolute.push('היעדר הסכמה של היולדת ללידת עכוז לדנית');
-  if (!isNaN(efw)) {
-    if (efw > 4000) absolute.push(`EFW ${efw.toFixed(0)} גר' מעל 4000 — חורג מהקריטריון`);
-    else if (efw < 1500) absolute.push(`EFW ${efw.toFixed(0)} גר' מתחת ל-1500 — חורג מהקריטריון`);
-  } else {
-    conditional.push('יש להזין EFW (קריטריון: 1500–4000 גר\')');
-  }
-  if (breechState.type === 'footling') absolute.push('מצג רגליים (Footling)');
-  if (breechState.type === 'incomplete') absolute.push('מצג Incomplete');
-  if (breechState.head === 'extended') absolute.push('זקיפות ראש (Hyperextended)');
-  if (breechState.head === 'unknown') conditional.push('יש לוודא מצב ראש העובר ב-US (לא הוערך)');
-  if (!chk('breech_us_done')) conditional.push('יש לבצע בדיקת US (משקל + מצב ראש) לפני קבלת החלטה');
-  if (chk('breech_contra_vag')) absolute.push('קיימת התווית נגד נוספת ללידה נרתיקית');
-
-  // Team availability — required for any vaginal breech
-  if (!chk('breech_senior')) absolute.push('היעדר מיילד בכיר מנוסה בלידת עכוז לדנית');
-  if (!chk('breech_anesth')) relative.push('מרדים אינו זמין בחדר לידה');
-  if (!chk('breech_neonat')) relative.push('רופא ילדים/ניאונטולוג אינו זמין');
-
-  // ECV advice
-  if (ga !== null && ga >= 36 && ga < 38 && !chk('breech_ecv_tried')) {
-    conditional.push('שקול להציע ניסיון היפוך חיצוני (ECV) — נייר #45 ממליץ על ניסיון ב-37 שבועות');
-  }
-
-  const eligible = absolute.length === 0;
-
-  // Result
-  let cls, label;
-  if (eligible && relative.length === 0 && conditional.length === 0) {
-    cls = 'ok'; label = 'מתאימה ללידת עכוז לדנית';
-  } else if (eligible && (relative.length > 0 || conditional.length > 0)) {
-    cls = 'warn'; label = 'לידה לדנית אפשרית — דרושים תיקונים';
-  } else {
-    cls = 'bad'; label = 'לידה לדנית — התוויות נגד';
-  }
-
-  const color = cls==='ok'?'var(--green)':cls==='warn'?'var(--amber)':'var(--red)';
-  const bg = cls==='ok'?'var(--green-bg)':cls==='warn'?'var(--amber-bg)':'var(--red-bg)';
-
-  let html = `<div class="result">
-    <div class="result-label">המלצה — לידת עכוז</div>
-    <div class="big" style="color:${color}">${eligible ? '✓' : '✗'}<span style="font-size:18px;margin-right:8px">${label}</span></div>
-    ${badge(cls, eligible ? `${absolute.length === 0 ? 'אין התוויות נגד מוחלטות' : ''}` : `${absolute.length} התוויות נגד מוחלטות`)}
-  </div>`;
-
-  if (absolute.length > 0) {
-    html += `<div class="rec-box" style="border-color:var(--red)">
-      <div class="rec-head" style="background:var(--red-bg)">
-        <span style="color:var(--red-text)">התוויות נגד מוחלטות ללידת עכוז לדנית</span>
-        <span class="rec-tag rec-tag-bad">${absolute.length}</span>
-      </div>
-      <div class="rec-body">
-        <ul class="rec-list">${absolute.map(r => `<li class="crit"><b>${r}</b></li>`).join('')}</ul>
-        <div class="rec-src">לפי נייר עמדה ישראלי #2 (פברואר 2025)</div>
-      </div>
-    </div>`;
-  }
-
-  if (relative.length > 0) {
-    html += `<div class="rec-box" style="border-color:var(--amber)">
-      <div class="rec-head" style="background:var(--amber-bg)">
-        <span style="color:var(--amber-text)">הסתייגויות יחסיות — דורש השלמה</span>
-        <span class="rec-tag rec-tag-warn">${relative.length}</span>
-      </div>
-      <div class="rec-body">
-        <ul class="rec-list">${relative.map(r => `<li class="warn">${r}</li>`).join('')}</ul>
-      </div>
-    </div>`;
-  }
-
-  if (conditional.length > 0) {
-    html += `<div class="rec-box">
-      <div class="rec-head">
-        <span>פעולות הכנה נדרשות</span>
-        <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">${conditional.length}</span>
-      </div>
-      <div class="rec-body">
-        <ul class="rec-list">${conditional.map(r => `<li>${r}</li>`).join('')}</ul>
-      </div>
-    </div>`;
-  }
-
-  // Always show the protocol summary
-  html += `<div class="rec-box">
+  // Per user request: only show the protocol summary box, not the
+  // per-input contraindication breakdown. The checklist of criteria
+  // serves as the reference; the user infers eligibility from the form.
+  let html = `<div class="rec-box">
     <div class="rec-head">
       <span>פרוטוקול לידת עכוז — סיכום</span>
       <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">נייר #2</span>
