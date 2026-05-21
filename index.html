@@ -2270,136 +2270,132 @@
     </details>
 
     <div class="pplan-header">
-      <div class="pplan-step-count" id="breech-step-count">0 / 4 שלבים</div>
-      <div class="pplan-title">לידת עכוז — קבילות ללידה לדנית</div>
-      <div class="pplan-sub">סמני את הפרמטרים. המחשבון יקבע אם הלידה הלדנית מותרת לפי הנייר הישראלי #2.</div>
+      <div class="pplan-step-count" id="breech-step-count">0 / 8 בוצעו</div>
+      <div class="pplan-title">לידת עכוז — צ'ק-ליסט קליני</div>
+      <div class="pplan-sub">סמני כל פריט שאומת. כל הקריטריונים חובה לפי נייר עמדה ישראלי #2 (פברואר 2025).</div>
       <div class="pplan-progress" id="breech-progress">
-        <div></div><div></div><div></div><div></div>
+        <div></div><div></div>
       </div>
     </div>
 
-    <details class="pp-section" data-step="1" open>
+    <!-- Section 1: Patient eligibility checklist -->
+    <details class="pp-section" open>
       <summary>
         <div class="pp-sec-ico">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="13" rx="2"/><path d="M3 8.5h14M7 2.5v3M13 2.5v3"/></svg>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10l3 3 7-7"/><circle cx="10" cy="10" r="7.5"/></svg>
         </div>
         <div class="pp-sec-text">
-          <div class="pp-sec-title">פרטי הריון ועובר</div>
-          <div class="pp-sec-sub">גיל הריון, EFW, סוג עכוז, מצב ראש</div>
+          <div class="pp-sec-title">קריטריונים — היולדת והעובר</div>
+          <div class="pp-sec-sub">5 פריטים שיש לאמת לפני אישור לידה לדנית</div>
         </div>
+        <span class="pp-sec-count" id="breech-count-patient">5</span>
         <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="pp-sec-body">
-        <div class="row">
-          <label>גיל הריון</label>
-          <div class="ga-row">
-            <select id="breech-w" onchange="calcBreech()">
-              <option value="">שבועות</option>
-              <script>for(let i=24;i<=42;i++)document.write(`<option value="${i}">${i}</option>`)</script>
-            </select>
-            <span class="unit">+</span>
-            <select id="breech-d" style="width:80px" onchange="calcBreech()">
-              <option value="0">0 ימים</option><option value="1">1 יום</option>
-              <option value="2">2 ימים</option><option value="3">3 ימים</option>
-              <option value="4">4 ימים</option><option value="5">5 ימים</option>
-              <option value="6">6 ימים</option>
-            </select>
-          </div>
-        </div>
-        <div class="row">
-          <label>EFW (משקל מוערך)</label>
-          <input type="number" id="breech-efw" min="500" max="6000" step="10" placeholder="גרם" oninput="calcBreech()">
-          <span class="unit">גרם · קריטריון: 1500-4000g</span>
-        </div>
-        <div class="row">
-          <label>סוג מצג עכוז</label>
-          <div class="seg" id="breech-type">
-            <button data-v="frank" class="active" onclick="setBreechSeg(this,'type')">Frank<br><span style="font-size:10px;opacity:.7">עכוז שלם</span></button>
-            <button data-v="complete" onclick="setBreechSeg(this,'type')">Complete<br><span style="font-size:10px;opacity:.7">מקופל</span></button>
-            <button data-v="footling" onclick="setBreechSeg(this,'type')">Footling<br><span style="font-size:10px;opacity:.7">רגליים</span></button>
-            <button data-v="incomplete" onclick="setBreechSeg(this,'type')">Incomplete<br><span style="font-size:10px;opacity:.7">חלקי</span></button>
-          </div>
-        </div>
-        <div class="row">
-          <label>מצב ראש העובר ב-US</label>
-          <div class="seg" id="breech-head">
-            <button data-v="flexed" class="active" onclick="setBreechSeg(this,'head')">כפוף (תקין)</button>
-            <button data-v="extended" onclick="setBreechSeg(this,'head')">זקוף (Hyperextended)</button>
-            <button data-v="unknown" onclick="setBreechSeg(this,'head')">לא הוערך</button>
-          </div>
-        </div>
-        <div class="row">
-          <label>פריות (Parity)</label>
-          <div class="seg" id="breech-parity">
-            <button data-v="primip" class="active" onclick="setBreechSeg(this,'parity')">מבכירה</button>
-            <button data-v="multip" onclick="setBreechSeg(this,'parity')">מולטיפרה</button>
-          </div>
+        <div class="pp-grid" style="grid-template-columns:1fr">
+          <label class="pp-check"><input type="checkbox" id="breech_consent" onchange="updateBreechProgress()"> <span><b>הסכמת היולדת</b> ללידת עכוז לדנית לאחר הסבר מפורט · <i style="color:var(--text3)">מתועד בכתב</i></span></label>
+          <label class="pp-check"><input type="checkbox" id="breech_efw_ok" onchange="updateBreechProgress()"> <span><b>EFW בטווח 1500–4000 גרם</b> · הערכה קלינית או US</span></label>
+          <label class="pp-check"><input type="checkbox" id="breech_type_ok" onchange="updateBreechProgress()"> <span><b>מצג Frank או Complete</b> · לא Footling או Incomplete</span></label>
+          <label class="pp-check"><input type="checkbox" id="breech_head_ok" onchange="updateBreechProgress()"> <span><b>ראש העובר כפוף</b> · נשלל Hyperextension ב-US</span></label>
+          <label class="pp-check"><input type="checkbox" id="breech_no_other_contra" onchange="updateBreechProgress()"> <span><b>אין התווית נגד אחרת ללידה נרתיקית</b> · שליית פתח, NRFHR, וכו' נשללו</span></label>
         </div>
       </div>
     </details>
 
-    <details class="pp-section" data-step="2">
+    <!-- Section 2: Team availability checklist -->
+    <details class="pp-section" open>
       <summary>
         <div class="pp-sec-ico">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="7" r="3"/><path d="M4 17c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="8" r="2.5"/><circle cx="13" cy="8" r="2.5"/><path d="M3 16c0-2 2-3.5 4-3.5s4 1.5 4 3.5M9 16c0-2 2-3.5 4-3.5s4 1.5 4 3.5"/></svg>
         </div>
         <div class="pp-sec-text">
-          <div class="pp-sec-title">הסכמה והערכה</div>
-          <div class="pp-sec-sub">תיעוד הסבר, הסכמת היולדת, בדיקת US</div>
+          <div class="pp-sec-title">צוות וזמינות</div>
+          <div class="pp-sec-sub">3 אנשי צוות חובה בזמן הלידה</div>
         </div>
+        <span class="pp-sec-count" id="breech-count-team">3</span>
         <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="pp-sec-body">
-        <div class="pp-grid">
-          <label class="pp-check"><input type="checkbox" id="breech_consent" onchange="calcBreech()"> יולדת קיבלה הסבר מפורט והסכימה בכתב</label>
-          <label class="pp-check"><input type="checkbox" id="breech_us_done" onchange="calcBreech()"> בוצעה בדיקת US (EFW + מצב ראש)</label>
-          <label class="pp-check"><input type="checkbox" id="breech_ecv_tried" onchange="calcBreech()"> נשקל/נוסה היפוך חיצוני (ECV)</label>
+        <div class="pp-grid" style="grid-template-columns:1fr">
+          <label class="pp-check"><input type="checkbox" id="breech_senior" onchange="updateBreechProgress()"> <span><b>מיילד בכיר זמין</b> עם ניסיון בלידת עכוז לדנית · <i style="color:var(--text3)">מנהל את הלידה</i></span></label>
+          <label class="pp-check"><input type="checkbox" id="breech_anesth" onchange="updateBreechProgress()"> <span><b>מרדים זמין לחדר לידה</b> בזמן היילוד</span></label>
+          <label class="pp-check"><input type="checkbox" id="breech_neonat" onchange="updateBreechProgress()"> <span><b>רופא ילדים / ניאונטולוג זמין</b> בזמן היילוד</span></label>
         </div>
       </div>
     </details>
 
-    <details class="pp-section" data-step="3">
-      <summary>
-        <div class="pp-sec-ico">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2.5h7l3 3v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1Z"/><path d="M12 2.5v3h3"/><path d="M7 9h6M7 12h6"/></svg>
-        </div>
-        <div class="pp-sec-text">
-          <div class="pp-sec-title">תנאי צוות וזמינות</div>
-          <div class="pp-sec-sub">מיילד בכיר מנוסה, מרדים, רופא ילדים</div>
-        </div>
-        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
-      </summary>
-      <div class="pp-sec-body">
-        <div class="pp-grid">
-          <label class="pp-check"><input type="checkbox" id="breech_senior" onchange="calcBreech()"> מיילד בכיר זמין עם ניסיון בלידת עכוז לדנית</label>
-          <label class="pp-check"><input type="checkbox" id="breech_anesth" onchange="calcBreech()"> מרדים זמין לחדר לידה</label>
-          <label class="pp-check"><input type="checkbox" id="breech_neonat" onchange="calcBreech()"> רופא ילדים/ניאונטולוג זמין</label>
-        </div>
+    <!-- Section 3: Absolute contraindications (always shown — reference) -->
+    <div class="rec-box" style="margin-top:14px;border-color:var(--red)">
+      <div class="rec-head" style="background:var(--red-bg)">
+        <span style="color:var(--red-text)">התוויות נגד מוחלטות ללידת עכוז לדנית</span>
+        <span class="rec-tag rec-tag-bad">חובה לשלול</span>
       </div>
-    </details>
-
-    <details class="pp-section" data-step="4">
-      <summary>
-        <div class="pp-sec-ico">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M7 7l6 6M13 7l-6 6"/></svg>
-        </div>
-        <div class="pp-sec-text">
-          <div class="pp-sec-title">התוויות נגד אחרות ללידה נרתיקית</div>
-          <div class="pp-sec-sub">שליית פתח, NRFHR, סיבה מילדותית</div>
-        </div>
-        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
-      </summary>
-      <div class="pp-sec-body">
-        <div class="pp-grid">
-          <label class="pp-check"><input type="checkbox" id="breech_contra_vag" onchange="calcBreech()"> קיימת התווית נגד אחרת ללידה נרתיקית (שליית פתח, NRFHR, וכו')</label>
-        </div>
+      <div class="rec-body">
+        <ul class="rec-list">
+          <li class="crit"><b>היעדר הסכמת היולדת</b> ללידת עכוז לדנית</li>
+          <li class="crit"><b>EFW &gt; 4000 גרם או &lt; 1500 גרם</b> · הערכה קלינית או US</li>
+          <li class="crit"><b>מצג רגליים (Footling)</b> או <b>Incomplete</b></li>
+          <li class="crit"><b>זקיפות ראש העובר</b> (Hyperextended) ב-US</li>
+          <li class="crit">כל התווית נגד נוספת ללידה נרתיקית</li>
+        </ul>
+        <div class="rec-src">נייר עמדה ישראלי #2 · פברואר 2025</div>
       </div>
-    </details>
-
-    <div class="pp-cta-row">
-      <button class="btn btn-primary" onclick="calcBreech()">חשב התאמה ללידה לדנית</button>
     </div>
-    <div id="breech-res"></div>
+
+    <!-- Section 4: Team guidelines & clarifications -->
+    <div class="rec-box" style="margin-top:14px">
+      <div class="rec-head">
+        <span>הנחיות לצוות והבהרות</span>
+        <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">פרוטוקול</span>
+      </div>
+      <div class="rec-body">
+        <div class="rec-section">
+          <div class="rec-section-title">פעולות חובה לפני קבלת ההחלטה</div>
+          <ul class="rec-list">
+            <li>הצגת הנתונים ליולדת והסבר על האפשרויות (לידה לדנית מול קיסרי)</li>
+            <li>תיעוד בכתב של ההסבר והסכמת היולדת</li>
+            <li><b>בדיקת US</b> הכוללת הערכת משקל ועמדת ראש לפני ההחלטה</li>
+            <li>הרופא הבכיר חייב לבצע בדיקת ערכה ולוודא היעדר התוויות נגד</li>
+          </ul>
+        </div>
+        <div class="rec-section">
+          <div class="rec-section-title">היפוך חיצוני (ECV)</div>
+          <ul class="rec-list">
+            <li>יש <b>לשקול ECV</b> סביב <b>שבוע 37</b> ביולדת עם מצג עכוז</li>
+            <li>הצלחה: 50-60% · מצריך תנאים ספציפיים (ראה נייר #45)</li>
+          </ul>
+        </div>
+        <div class="rec-section">
+          <div class="rec-section-title">הבהרות נוספות</div>
+          <ul class="rec-list">
+            <li><b>אלחוש:</b> כל סוג מותר, כולל אפידוראלי</li>
+            <li><b>השראת לידה והחשת לידה:</b> אפשרי לפי שיקול הבכיר, בהתאם להתוויות מילדותיות רגילות</li>
+            <li><b>מבכירה:</b> לידת עכוז לדנית אפשרית בכפוף לעמידה בכל הקריטריונים</li>
+            <li><b>שלב לידה מתקדם:</b> הבכיר רשאי להחליט על יילוד לדני גם בקבלה בשלב מתקדם</li>
+            <li><b>הנייר אינו דן ב</b>תאומים ובעוברים בגבול גיל החיות</li>
+          </ul>
+        </div>
+        <div class="rec-src">נייר עמדה ישראלי #2 · האיגוד הישראלי למיילדות וגינקולוגיה + החברה לרפואת האם והעובר · פברואר 2025</div>
+      </div>
+    </div>
+
+    <!-- Section 5: Risk data -->
+    <div class="rec-box" style="margin-top:14px">
+      <div class="rec-head">
+        <span>נתוני סיכון — לרקע ולהסבר ליולדת</span>
+        <span class="rec-tag" style="background:var(--surface2);color:var(--text2)">סטטיסטיקה</span>
+      </div>
+      <div class="rec-body">
+        <ul class="rec-list">
+          <li><b>היארעות מצג עכוז במועד:</b> 3-4% · בשבוע 32: 7% · מתחת לשבוע 28: 25%</li>
+          <li><b>תמותה ותחלואה ניאונטלית:</b> 1.6% בניתוח קיסרי מתוכנן לעומת 5% בלידה לדנית (Hannah, Term Breech Trial 2000)</li>
+          <li><b>מעקב 2 שנים:</b> אין הבדל בתמותה או בעיכוב התפתחותי בין הקבוצות (Whyte 2004)</li>
+          <li><b>אחרי פרסום ה-TBT בהולנד:</b> שיעור ק"ק עלה מ-50% ל-80% · תמותה ניאונטלית ירדה מ-0.35% ל-0.18% · טראומה בלידה ירדה מ-0.29% ל-0.08% (Rietberg 2005)</li>
+          <li><b>תמותה פרינטלית בעכוז:</b> פי 3-5 מאשר מצג ראש — <b>ללא קשר לאופן הלידה</b></li>
+          <li>מחקרים רטרוספקטיביים במרכזים מנוסים עם פרוטוקולים מוגדרים — תוצאות מצוינות בלידה לדנית (Alarab 2004 · Guiliani 2002 · Berhan 2016)</li>
+        </ul>
+      </div>
+    </div>
   </div>
 
   <!-- ===== TOLAC / VBAC Calculator (Grobman 2021) ===== -->
@@ -3902,7 +3898,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.15';
+const APP_VERSION = '3.16';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -8316,88 +8312,37 @@ function calcDsRisk(){
   el.innerHTML = html;
 }
 
-// ─── BREECH VAGINAL DELIVERY ELIGIBILITY (Israeli Paper #2, Feb 2025) ──
-const breechState = { type:'frank', head:'flexed', parity:'primip' };
-function setBreechSeg(btn, group){
-  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  breechState[group] = btn.dataset.v;
-  calcBreech();
-}
+// ─── BREECH CHECKLIST (Israeli Paper #2, Feb 2025) ─────────────────────
+// Simple progress tracker for the breech checklist — no calculation, just
+// a count of checked items.
+function updateBreechProgress(){
+  const patientIds = ['breech_consent','breech_efw_ok','breech_type_ok','breech_head_ok','breech_no_other_contra'];
+  const teamIds = ['breech_senior','breech_anesth','breech_neonat'];
+  const allIds = patientIds.concat(teamIds);
+  const checked = allIds.filter(id => document.getElementById(id)?.checked).length;
+  const total = allIds.length;
+  const pChecked = patientIds.filter(id => document.getElementById(id)?.checked).length;
+  const tChecked = teamIds.filter(id => document.getElementById(id)?.checked).length;
 
-function calcBreech(){
-  const el = document.getElementById('breech-res');
-  if(!el) return;
-  const $ = id => document.getElementById(id);
-  const chk = id => $(id)?.checked || false;
-  const w = parseInt($('breech-w')?.value);
-  const efw = parseFloat($('breech-efw')?.value);
+  const cnt = document.getElementById('breech-step-count');
+  if (cnt) cnt.textContent = `${checked} / ${total} בוצעו`;
+  const pCount = document.getElementById('breech-count-patient');
+  if (pCount) pCount.textContent = pChecked > 0 ? `${pChecked}/${patientIds.length}` : `${patientIds.length}`;
+  const tCount = document.getElementById('breech-count-team');
+  if (tCount) tCount.textContent = tChecked > 0 ? `${tChecked}/${teamIds.length}` : `${teamIds.length}`;
 
-  // Progress: 4 steps (kept for the progress bar at top)
-  const step1 = !isNaN(w) && !isNaN(efw);
-  const step2 = chk('breech_consent') && chk('breech_us_done');
-  const step3 = chk('breech_senior');
-  const step4 = !chk('breech_contra_vag');
-  const states = [step1, step2, step3, step4];
+  // Progress bar: 2 segments — patient + team
   const bars = document.querySelectorAll('#breech-progress > div');
-  let done = 0;
-  bars.forEach((b,i)=>{ b.classList.toggle('done', states[i]); if(states[i]) done++; });
-  const cnt = $('breech-step-count');
-  if(cnt) cnt.textContent = `${done} / 4 שלבים`;
-
-  // Per user request: only show the protocol summary box, not the
-  // per-input contraindication breakdown. The checklist of criteria
-  // serves as the reference; the user infers eligibility from the form.
-  let html = `<div class="rec-box">
-    <div class="rec-head">
-      <span>פרוטוקול לידת עכוז — סיכום</span>
-      <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">נייר #2</span>
-    </div>
-    <div class="rec-body">
-      <div class="rec-section">
-        <div class="rec-section-title">קריטריונים ללידה לדנית</div>
-        <ul class="rec-list">
-          <li>הסכמת היולדת לאחר הסבר מלא (תיעוד בכתב)</li>
-          <li>EFW בין 1500 ל-4000 גרם</li>
-          <li>מצג עכוז Frank או Complete (לא Footling/Incomplete)</li>
-          <li>ראש העובר כפוף (לא Hyperextended)</li>
-          <li>אין התווית נגד אחרת ללידה נרתיקית</li>
-          <li>מיילד בכיר מנוסה בלידת עכוז זמין</li>
-          <li>מרדים ורופא ילדים זמינים בזמן היילוד</li>
-        </ul>
-      </div>
-      <div class="rec-section">
-        <div class="rec-section-title">נתוני סיכון (Term Breech Trial + מעקב)</div>
-        <ul class="rec-list">
-          <li>תמותה/תחלואה ניאונטלית: <b>1.6%</b> בק"ק לעומת <b>5%</b> בלידה לדנית (Hannah 2000)</li>
-          <li>מעקב 2 שנים: <b>אין הבדל</b> בתמותה או עיכוב התפתחותי (Whyte 2004)</li>
-          <li>תמותה פרינטלית במצג עכוז: <b>פי 3-5</b> ביחס למצג ראש (ללא קשר לאופן הלידה)</li>
-          <li>היארעות עכוז: 3-4% במועד · 7% בשבוע 32 · 25% מתחת ל-28</li>
-        </ul>
-      </div>
-      <div class="rec-section">
-        <div class="rec-section-title">הבהרות נוספות</div>
-        <ul class="rec-list">
-          <li>אפשרי בכל סוג אלחוש, כולל אפידוראלי</li>
-          <li>השראת לידה והחשת לידה אפשרית לפי שיקול הבכיר</li>
-          <li>לידה לדנית בעכוז אפשרית גם במבכירות (בכפוף לקריטריונים)</li>
-          <li>בשלב לידה מתקדם — המיילד הבכיר רשאי להחליט על יילוד לדני</li>
-          <li>הנייר אינו דן בתאומים או עוברים בגבול גיל החיות</li>
-        </ul>
-      </div>
-      <div class="rec-src">נייר עמדה ישראלי #2 · פברואר 2025 · החברה לרפואת האם והעובר + האיגוד הישראלי למיילדות וגינקולוגיה</div>
-    </div>
-  </div>`;
-
-  el.innerHTML = html;
+  if (bars[0]) bars[0].classList.toggle('done', pChecked === patientIds.length);
+  if (bars[1]) bars[1].classList.toggle('done', tChecked === teamIds.length);
 }
 
-(function bindBreechAuto(){
+(function bindBreechProgress(){
   const init = () => {
-    document.querySelectorAll('#breech input, #breech select').forEach(el => {
-      el.addEventListener('change', calcBreech);
-      if (el.tagName === 'INPUT' && el.type !== 'checkbox') el.addEventListener('input', calcBreech);
+    document.querySelectorAll('#breech input[type=checkbox]').forEach(el => {
+      el.addEventListener('change', updateBreechProgress);
     });
+    updateBreechProgress();
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
