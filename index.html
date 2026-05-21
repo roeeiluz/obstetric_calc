@@ -2855,7 +2855,7 @@
     </div>
   </div>
 
-  <!-- ===== VTE Risk Assessment (RCOG Green-top 37a, 2015) ===== -->
+  <!-- ===== VTE Postpartum Prophylaxis (JAMA 2024 selective protocol) ===== -->
   <div id="vte" class="panel">
     <details class="ref-wrap">
       <summary>
@@ -2864,141 +2864,139 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="ref">
-        <b>נייר עמדה ישראלי #24 (2024):</b> קרישיות בהריון — האיגוד הישראלי למיילדות וגינקולוגיה<br>
-        <b>RCOG Green-top Guideline 37a (2015):</b> Reducing the Risk of Venous Thromboembolism during Pregnancy and the Puerperium — מודל ניקוד אנטה-נטלי ופוסט-נטלי<br>
-        <b>ACOG Practice Bulletin 196 (2018, מאומץ 2023):</b> Thromboembolism in Pregnancy<br>
-        <b>ACCP Antithrombotic Therapy (Bates et al.) Chest 2018:</b> VTE in pregnancy<br>
-        <b>הנחיה:</b> סיכון VTE בהריון פי 4–5 מאוכלוסיה כללית · 65% מאירועי VTE קורים פוסט-פרטום · LMWH בטוח בהריון (לא חוצה שלייה)<br>
-        <b>מינון:</b> Enoxaparin פרופילקטי 40 mg SC/יום (משקל 50–90 ק"ג) · התאמות לפי משקל · ראה תוצאה אישית
+        <b>JAMA 2024:</b> Selective postpartum VTE prophylaxis protocol — הפחית שימוש LMWH מ-16% ל-8%, הפחית המטומות פצע ב-62% (aOR 0.38), <b>ללא עלייה ב-VTE</b> (aOR 0.40)<br>
+        <b>נייר עמדה ישראלי #24 (2024):</b> קרישיות בהריון<br>
+        <b>ACCP Antithrombotic Therapy (Bates et al.):</b> Chest 2018 — מסגרת גורמי סיכון מז'וריים/מינוריים<br>
+        <b>ACOG PB 196 (2018, מאומץ 2023):</b> Thromboembolism in Pregnancy<br>
+        <b>RCOG Green-top 37a (2015):</b> דליות ורידיות כגורם סיכון מינורי<br>
+        <b>סיכון VTE בהריון:</b> פי 4–5 מאוכלוסייה כללית · 65% מהאירועים — פוסט-פרטום · LMWH בטוח, לא חוצה שלייה, תואם הנקה<br>
+        <b>שיקול עקרוני:</b> פרוטוקול סלקטיבי — צמצום שימוש ב-LMWH לקבוצות בסיכון אמיתי, הפחתת סיבוכי דימום ללא עלייה ב-VTE
       </div>
     </details>
 
     <div class="pplan-header">
-      <div class="pplan-step-count" id="vte-step-count">0 / 3 שלבים</div>
-      <div class="pplan-title">סיכון VTE — אנטה-נטלי ופוסט-נטלי</div>
-      <div class="pplan-sub">סמני את גורמי הסיכון הרלוונטיים. הציון מחושב לפי RCOG Green-top 37a.</div>
+      <div class="pplan-step-count" id="vte-step-count">קבוצת סיכון: לא נקבעה</div>
+      <div class="pplan-title">פרוטוקול סלקטיבי VTE פוסט-פרטום</div>
+      <div class="pplan-sub">מבוסס JAMA 2024 · סמני גורמי סיכון; הקבוצה (גבוה / בינוני / נמוך) מחושבת אוטומטית.</div>
       <div class="pplan-progress" id="vte-progress">
         <div></div><div></div><div></div>
       </div>
     </div>
 
-    <details class="pp-section" data-step="1" open>
+    <!-- ============ Section 1: High-risk indicators ============ -->
+    <details class="pp-section" open>
       <summary>
         <div class="pp-sec-ico">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h14M3 10h14M3 15h10"/><circle cx="16" cy="15" r="2"/></svg>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2L18 17H2L10 2Z"/><path d="M10 8v4M10 14.5v.5"/></svg>
         </div>
         <div class="pp-sec-text">
-          <div class="pp-sec-title">גורמי סיכון קיימים (Pre-existing)</div>
-          <div class="pp-sec-sub">VTE קודם, תרומבופיליה, מחלות רקע</div>
+          <div class="pp-sec-title">גורמי סיכון גבוה — LMWH 6 שבועות</div>
+          <div class="pp-sec-sub">VTE קודם, תרומבופיליה גבוהה, APS, LMWH בהריון</div>
         </div>
-        <span class="pp-sec-count" id="vte-count-pre">—</span>
+        <span class="pp-sec-count" id="vte-count-high">5</span>
         <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="pp-sec-body">
-        <div class="row">
-          <label>VTE קודם</label>
-          <select id="vte-prior" onchange="calcVte()">
-            <option value="0">ללא</option>
-            <option value="4">חד-פעמי לא-מוגבל (ללא טריגר)</option>
-            <option value="3">חד-פעמי לאחר ניתוח גדול בלבד</option>
-            <option value="4">חד-פעמי עם תרומבופיליה / משפחתי</option>
-            <option value="4">VTE חוזר (≥2)</option>
-            <option value="4">VTE קשור הריון/אסטרוגן</option>
-          </select>
-        </div>
-        <div class="row">
-          <label>תרומבופיליה ידועה</label>
-          <select id="vte-thromb" onchange="calcVte()">
-            <option value="0">ללא / לא נבדק</option>
-            <option value="3">סיכון גבוה (AT/PC/PS deficiency, APS, FVL/PT homo, combined)</option>
-            <option value="1">סיכון נמוך (FVL hetero, PT hetero)</option>
-          </select>
-        </div>
-        <div class="row">
-          <label>מחלת רקע משמעותית</label>
-          <span class="unit" style="font-size:11px">SLE · IBD · נפרוטי · סוכרת+נפרופתיה · אנמיה חרמשית · מחלת לב · גידול פעיל</span>
-        </div>
-        <div class="pp-grid">
-          <label class="pp-check"><input type="checkbox" id="vte_comorb" onchange="calcVte()"> מחלת רקע משמעותית (3 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_family_hx" onchange="calcVte()"> סיפור משפחתי VTE בקרוב מדרגה ראשונה (1 נק')</label>
+        <div class="pp-grid" style="grid-template-columns:1fr">
+          <label class="pp-check"><input type="checkbox" id="vte_h_prior_vte" onchange="calcVte()"> <span><b>VTE קודם</b> בהיסטוריה (בכל זמן)</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_h_lmwh_pregnancy" onchange="calcVte()"> <span>קיבלה <b>LMWH במהלך ההריון</b></span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_h_high_thrombo" onchange="calcVte()"> <span><b>תרומבופיליה בסיכון גבוה:</b> AT III deficiency · Factor V Leiden הומוזיגוטי · G20210A הומוזיגוטי · הטרוזיגוטיות כפולה (FVL+G20210A)</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_h_low_thrombo_fam" onchange="calcVte()"> <span><b>תרומבופיליה בסיכון נמוך + סיפור משפחתי VTE</b> בקרוב מדרגה ראשונה</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_h_aps" onchange="calcVte()"> <span><b>תסמונת אנטיפוספוליפיד (APS)</b></span></label>
         </div>
       </div>
     </details>
 
-    <details class="pp-section" data-step="2">
+    <!-- ============ Section 2: Major risk factors (one = moderate) ============ -->
+    <details class="pp-section">
       <summary>
         <div class="pp-sec-ico">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="7" r="3"/><path d="M4 17c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="14" height="14" rx="2"/><path d="M7 10h6M10 7v6"/></svg>
         </div>
         <div class="pp-sec-text">
-          <div class="pp-sec-title">גורמי סיכון אישיים והריון נוכחי</div>
-          <div class="pp-sec-sub">גיל, BMI, פריות, עישון, רב-עוברי, רעלת, IVF...</div>
+          <div class="pp-sec-title">גורמי סיכון מז'וריים — אחד מספיק לבינוני</div>
+          <div class="pp-sec-sub">סיכון בינוני → LMWH 7–10 ימים</div>
         </div>
-        <span class="pp-sec-count" id="vte-count-pers">—</span>
+        <span class="pp-sec-count" id="vte-count-major">14</span>
         <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="pp-sec-body">
-        <div class="row">
-          <label>גיל אם</label>
-          <input type="number" id="vte-age" min="13" max="55" step="1" placeholder="שנים" oninput="calcVte()">
-        </div>
-        <div class="row">
-          <label>BMI</label>
-          <input type="number" id="vte-bmi" min="14" max="60" step="0.1" placeholder="kg/m²" oninput="calcVte()">
-          <span class="unit" style="font-size:11px">30–39 = 1 נק' · ≥40 = 2 נק'</span>
-        </div>
-        <div class="row">
-          <label>פריות (Parity)</label>
-          <input type="number" id="vte-parity" min="0" max="15" step="1" placeholder="לידות קודמות" oninput="calcVte()">
-        </div>
-        <div class="pp-grid">
-          <label class="pp-check"><input type="checkbox" id="vte_smoker" onchange="calcVte()"> מעשנת כעת (1 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_varicose" onchange="calcVte()"> דליות גסות סימפטומטיות (1 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_multifet" onchange="calcVte()"> הריון מרובה עוברים (1 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_pe" onchange="calcVte()"> רעלת הריון בהריון הנוכחי (1 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_ivf" onchange="calcVte()"> IVF/ART בהריון הנוכחי (1 נק')</label>
+        <div class="pp-grid" style="grid-template-columns:1fr">
+          <label class="pp-check"><input type="checkbox" id="vte_m_immobility" onchange="calcVte()"> <span>אי-ניידות לפחות שבוע לפני הלידה</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_m_pph_surgery" onchange="calcVte()"> <span>דימום פוסט-פרטום <b>+</b> ניתוח (כולל ניתוח קיסרי)</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_m_pe_iugr" onchange="calcVte()"> <span>פרה-אקלמפסיה <b>+</b> עיכוב גדילה תוך-רחמי</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_m_transfusion" onchange="calcVte()"> <span>עירוי דם</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_m_infection" onchange="calcVte()"> <span>זיהום פוסט-פרטום (אנדומטריטיס, זיהום פצע)</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_m_active_sle" onchange="calcVte()"> <span>זאבת פעילה (SLE active)</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_m_heart" onchange="calcVte()"> <span>מחלת לב</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_m_sickle" onchange="calcVte()"> <span>מחלת תאי חרמש</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_m_bmi40" onchange="calcVte()"> <span>BMI ≥ 40 kg/m²</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_m_cancer" onchange="calcVte()"> <span>סרטן פעיל</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_m_chf" onchange="calcVte()"> <span>אי-ספיקת לב</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_m_nephrotic" onchange="calcVte()"> <span>תסמונת נפרוטית</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_m_t1dm_neph" onchange="calcVte()"> <span>סוכרת סוג 1 עם נפרופתיה</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_m_ibd" onchange="calcVte()"> <span>מחלת מעי דלקתית (IBD)</span></label>
         </div>
       </div>
     </details>
 
-    <details class="pp-section" data-step="3">
+    <!-- ============ Section 3: Minor risk factors (≥2 = moderate, or 1 + emergency C/S) ============ -->
+    <details class="pp-section">
       <summary>
         <div class="pp-sec-ico">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 1.5"/></svg>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><circle cx="10" cy="10" r="2.5" fill="currentColor"/></svg>
         </div>
         <div class="pp-sec-text">
-          <div class="pp-sec-title">גורמים זמניים / פוסט-נטלי</div>
-          <div class="pp-sec-sub">היפר-אמזיס, אי-תנועה, ניתוח, OHSS, קיסרי, PPH...</div>
+          <div class="pp-sec-title">גורמי סיכון מינוריים — שניים מספיקים</div>
+          <div class="pp-sec-sub">או גורם 1 + ניתוח קיסרי דחוף בלידה</div>
         </div>
-        <span class="pp-sec-count" id="vte-count-trans">—</span>
+        <span class="pp-sec-count" id="vte-count-minor">8</span>
         <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="pp-sec-body">
-        <div class="sec" style="display:block;font-size:10.5px;color:var(--text3);margin:2px 0 10px;border:none;padding:0">זמניים אנטה-נטלי</div>
-        <div class="pp-grid">
-          <label class="pp-check"><input type="checkbox" id="vte_ohss" onchange="calcVte()"> OHSS — טרימסטר ראשון בלבד (4 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_surgery" onchange="calcVte()"> ניתוח בהריון (3 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_hyperemesis" onchange="calcVte()"> היפר-אמזיס פעיל (1 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_infection" onchange="calcVte()"> זיהום סיסטמי פעיל (1 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_immobile" onchange="calcVte()"> אי-תנועה / מיטה ≥3 ימים (1 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_travel" onchange="calcVte()"> נסיעה ארוכה &gt;4 שעות (1 נק')</label>
+        <div class="pp-grid" style="grid-template-columns:1fr">
+          <label class="pp-check"><input type="checkbox" id="vte_n_bmi3039" onchange="calcVte()"> <span>השמנה (BMI 30–39.9 kg/m²)</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_n_multifetal" onchange="calcVte()"> <span>הריון רב-עוברי</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_n_pph_no_surgery" onchange="calcVte()"> <span>דימום פוסט-פרטום (ללא ניתוח)</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_n_smoking" onchange="calcVte()"> <span>עישון</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_n_iugr" onchange="calcVte()"> <span>עיכוב גדילה תוך-רחמי (ללא פרה-אקלמפסיה)</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_n_pe_no_iugr" onchange="calcVte()"> <span>פרה-אקלמפסיה (ללא עיכוב גדילה)</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_n_pcs_def" onchange="calcVte()"> <span>מחסור בחלבון C או S</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_n_varicose" onchange="calcVte()"> <span>דליות ורידים משמעותיות (RCOG · לפי שיקול קליני)</span></label>
         </div>
+        <div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-top:12px;font-size:11.5px">
+          <b>גורם מינורי + ניתוח קיסרי דחוף בלידה</b> → סיכון בינוני (סמני בנוסף את התיבה למטה):
+        </div>
+        <div class="pp-grid" style="margin-top:8px">
+          <label class="pp-check"><input type="checkbox" id="vte_emergency_cs" onchange="calcVte()"> <span><b>ניתוח קיסרי דחוף</b> במהלך לידה</span></label>
+        </div>
+      </div>
+    </details>
 
-        <div class="sec" style="display:block;font-size:10.5px;color:var(--text3);margin:14px 0 10px;border:none;padding:0">פוסט-נטלי (אם ההערכה לאחר לידה)</div>
-        <div class="pp-grid">
-          <label class="pp-check"><input type="checkbox" id="vte_cs_emergency" onchange="calcVte()"> קיסרי דחוף בלידה (2 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_cs_elective" onchange="calcVte()"> קיסרי אלקטיבי (1 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_mid_forceps" onchange="calcVte()"> מילקדים סיבוביים/אמצע-אגן (1 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_prolonged" onchange="calcVte()"> לידה ממושכת &gt;24 שעות (1 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_pph" onchange="calcVte()"> PPH &gt;1L או עירוי (1 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_preterm" onchange="calcVte()"> לידה מוקדמת &lt;37 שבועות (1 נק')</label>
-          <label class="pp-check"><input type="checkbox" id="vte_stillbirth" onchange="calcVte()"> לידת מת בהריון נוכחי (1 נק')</label>
+    <!-- Active VTE override -->
+    <details class="pp-section">
+      <summary>
+        <div class="pp-sec-ico">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M7 7l6 6M13 7l-6 6"/></svg>
+        </div>
+        <div class="pp-sec-text">
+          <div class="pp-sec-title">VTE חריף בהריון</div>
+          <div class="pp-sec-sub">מצב מיוחד — אנטיקואגולציה טיפולית</div>
+        </div>
+        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="pp-sec-body">
+        <div class="pp-grid" style="grid-template-columns:1fr">
+          <label class="pp-check"><input type="checkbox" id="vte_acute_in_pregnancy" onchange="calcVte()"> <span><b>VTE חריף בהריון בטיפול אנטיקואגולנטי</b></span></label>
+        </div>
+        <div class="note" style="border-right-color:var(--amber);background:var(--amber-bg);margin-top:10px;font-size:11.5px">
+          <b>במקרה זה:</b> המשך אנטיקואגולציה טיפולית פוסט-פרטום למשך לפחות 6 שבועות (מינימום 3 חודשים סה"כ מתחילת הטיפול)
         </div>
       </div>
     </details>
 
     <div class="pp-cta-row">
-      <button class="btn btn-primary" onclick="calcVte()">חשב סיכון VTE</button>
+      <button class="btn btn-primary" onclick="calcVte()">חשב קבוצת סיכון והמלצה</button>
     </div>
     <div id="vte-res"></div>
   </div>
@@ -3665,7 +3663,6 @@
             <th>Product</th>
             <th>Volume / Composition</th>
             <th>Effect per unit</th>
-            <th>Dose in PPH</th>
             <th></th>
           </tr>
         </thead>
@@ -3674,35 +3671,24 @@
             <td class="product">PRBC<span class="abbr">Packed Red Cells</span></td>
             <td>~280 ml · Hct 55–65%</td>
             <td><span class="effect">↑ Hb 1.0 g/dL</span> · ↑ Hct 3%</td>
-            <td class="dose">1–2 units as needed</td>
             <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
           <tr class="prod-row" data-prod="ffp" onclick="togglePphDetail(this)">
             <td class="product">FFP<span class="abbr">Fresh Frozen Plasma</span></td>
             <td>200–250 ml · all clotting factors · fibrinogen ~400 mg</td>
             <td><span class="effect">↑ Clotting factors ~20%</span></td>
-            <td class="dose">15 ml/kg (≈ 4 units / 70 kg)</td>
-            <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
-          </tr>
-          <tr class="prod-row" data-prod="cryo_unit" onclick="togglePphDetail(this)">
-            <td class="product">Cryo (1 unit)<span class="abbr">Cryoprecipitate</span></td>
-            <td>10–15 ml · Fibrinogen 150–250 mg · Factor VIII 80 U · Factor XIII · vWF · Fibronectin</td>
-            <td>—</td>
-            <td class="dose">Not given as single unit</td>
             <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
           <tr class="prod-row" data-prod="cryo_pool" onclick="togglePphDetail(this)" style="background:var(--primary-bg)">
             <td class="product">Cryo (10-unit pool)<span class="abbr">Standard order</span></td>
             <td>~150 ml · Fibrinogen 1.5–2.5 g · multiple clotting factors</td>
             <td><span class="effect">↑ Fibrinogen 70–100 mg/dL</span></td>
-            <td class="dose">1 pool (10 units) if fibrinogen &lt; 200 mg/dL</td>
             <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
           <tr class="prod-row" data-prod="platelets" onclick="togglePphDetail(this)">
             <td class="product">Platelets<span class="abbr">Apheresis / Pooled</span></td>
             <td>Apheresis 250 ml = 1 donor · Pooled = 4–6 random units</td>
             <td><span class="effect">↑ Count 30,000/μL</span></td>
-            <td class="dose">1 unit if Plt &lt; 75K + active bleeding</td>
             <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
         </tbody>
@@ -3720,7 +3706,6 @@
             <th>Brand</th>
             <th>Generic / Class</th>
             <th>Effect</th>
-            <th>Dose</th>
             <th></th>
           </tr>
         </thead>
@@ -3729,28 +3714,24 @@
             <td class="product">Haemocomplettan<br>RiaSTAP · Fibryga</td>
             <td>Fibrinogen concentrate</td>
             <td><span class="effect">↑ Fibrinogen ~30 mg/dL per gram</span></td>
-            <td class="dose">25–50 mg/kg (≈ 2–4 g IV)</td>
             <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
           <tr class="prod-row" data-prod="pcc" onclick="togglePphDetail(this)">
             <td class="product">Octaplex<br>Beriplex · Kcentra<br>Confidex</td>
             <td>4-Factor PCC<br>(Factors II, VII, IX, X)</td>
             <td>Replaces vitamin-K-dependent factors</td>
-            <td class="dose">25–50 U/kg<br>(INR-guided)</td>
             <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
           <tr class="prod-row" data-prod="feiba" onclick="togglePphDetail(this)">
             <td class="product">FEIBA</td>
             <td>Activated PCC<br>(aPCC)</td>
             <td>Bypasses Factor VIII / IX inhibitors</td>
-            <td class="dose">50–100 U/kg<br>(max 200 U/kg/day)</td>
             <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
           <tr class="prod-row" data-prod="novoseven" onclick="togglePphDetail(this)">
             <td class="product crit">NovoSeven<br>NovoSeven RT</td>
             <td>Recombinant Factor VIIa<br>(rFVIIa)</td>
             <td>Activates extrinsic clotting pathway</td>
-            <td class="dose">90 μg/kg IV bolus<br>(may repeat ×1 after 2 h)</td>
             <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
         </tbody>
@@ -3767,7 +3748,6 @@
           <tr>
             <th>Agent</th>
             <th>Indication</th>
-            <th>Dose</th>
             <th></th>
           </tr>
         </thead>
@@ -3775,49 +3755,41 @@
           <tr class="prod-row" data-prod="txa" onclick="togglePphDetail(this)">
             <td class="product">TXA (Tranexamic acid)<br>Hexakapron · Cyklokapron</td>
             <td>Antifibrinolytic — every PPH</td>
-            <td class="dose">1 g IV over 10 min · repeat 1 g at 30 min if bleeding continues</td>
             <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
           <tr class="prod-row" data-prod="ca_gluconate" onclick="togglePphDetail(this)">
             <td class="product">Calcium Gluconate 10%</td>
             <td>Citrate toxicity in MTP (chelates ionized Ca)</td>
-            <td class="dose">10 ml IV per 4 units of blood</td>
             <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
           <tr class="prod-row" data-prod="ddavp" onclick="togglePphDetail(this)">
             <td class="product">DDAVP (Desmopressin)<br>Octostim</td>
             <td>vWD type 1 · uremic platelet dysfunction · mild hemophilia A</td>
-            <td class="dose">0.3 μg/kg IV over 30 min</td>
             <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
           <tr class="prod-row" data-prod="vitamin_k" onclick="togglePphDetail(this)">
             <td class="product">Vitamin K (Phytomenadione)<br>Konakion</td>
             <td>Warfarin reversal (slow)</td>
-            <td class="dose">5–10 mg IV / PO</td>
             <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
           <tr class="prod-row" data-prod="protamine" onclick="togglePphDetail(this)">
             <td class="product">Protamine Sulfate</td>
             <td>Heparin reversal</td>
-            <td class="dose">1 mg per 100 U unfractionated heparin (last 2 h)<br>LMWH: 1 mg per 100 anti-Xa units (partial only)</td>
             <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
           <tr class="prod-row" data-prod="praxbind" onclick="togglePphDetail(this)">
             <td class="product">Idarucizumab<br>Praxbind</td>
             <td>Dabigatran-specific reversal agent</td>
-            <td class="dose">5 g IV (two 2.5 g vials)</td>
             <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
           <tr class="prod-row" data-prod="andexxa" onclick="togglePphDetail(this)">
             <td class="product">Andexanet alfa<br>Andexxa</td>
             <td>Apixaban / Rivaroxaban reversal</td>
-            <td class="dose">Low dose: 400 mg bolus + 4 mg/min × 120 min<br>High dose: 800 mg bolus + 8 mg/min × 120 min</td>
             <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
           <tr class="prod-row" data-prod="albumin" onclick="togglePphDetail(this)">
             <td class="product">Albumin 5% / 20%</td>
             <td>Volume expansion in hypovolemia (not first-line)</td>
-            <td class="dose">250–500 ml IV</td>
             <td class="chev"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg></td>
           </tr>
         </tbody>
@@ -3898,7 +3870,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.16';
+const APP_VERSION = '3.17';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -4028,23 +4000,17 @@ const PRODUCT_DETAILS = {
     {label:'חימום מנה', value:'לא נדרש חימום נוסף (כבר 37°C לאחר הפשרה)'},
     {label:'הערות חשובות', value:'נפח גדול → סיכון לעומס נוזלים (TACO) · סיכון מוגבר ל-TRALI · רגישות אלרגית · להזמין יחד עם PRBC ב-MTP'}
   ],
-  cryo_unit: [
-    {label:'אינדיקציות', value:'יחידה בודדת לא ניתנת ולא מוזמנת — תמיד כצבר של 10 יחידות'},
-    {label:'תכולה ליחידה', value:'פיברינוגן 150-250 mg · Factor VIII ~80 U · Factor XIII · vWF · פיברונקטין · נפח 10-15 ml'},
-    {label:'תאימות ABO', value:'רצוי תואם · לא חובה (נפח קטן, פחות סיכון)'},
-    {label:'זמן הכנה', value:'15-30 דק\' הפשרה'},
-    {label:'צורת הכנה', value:'מאוחסן ב-(–18°C) · מופשר ב-37°C · יציב 4-6 שעות לאחר הפשרה'},
-    {label:'חימום מנה', value:'לא נדרש (מופשר ב-37°C)'},
-    {label:'הערות חשובות', value:'תמיד מוזמן ומנוהל כצבר של 10 יחידות — ראה השורה הבאה'}
-  ],
   cryo_pool: [
-    {label:'אינדיקציות', value:'פיברינוגן &lt;200 mg/dL בדימום פעיל · DIC עם hypofibrinogenemia · vWD ספציפי · המופיליה A קלה (אם אין F.VIII)'},
-    {label:'יעד מטרה', value:'פיברינוגן ≥200 mg/dL (≥2 g/L) — קריטי לדימום פעיל · ≥300 mg/dL במצב מסיבי'},
+    {label:'אינדיקציות', value:'פיברינוגן &lt;200 mg/dL בדימום פעיל · DIC עם hypofibrinogenemia · vWD ספציפי · המופיליה A קלה (כאשר F.VIII לא זמין)'},
+    {label:'תכולה בצבר (10 יחידות)', value:'<b>נפח:</b> ~150 ml · <b>Factor I (פיברינוגן):</b> 1500–2500 mg · <b>Factor VIII:</b> ~800 U · <b>Factor XIII:</b> רמה גבוהה (יציבות קריש) · <b>vWF:</b> פעילות מלאה · <b>פיברונקטין</b>'},
+    {label:'מינון ב-PPH', value:'<b>צבר אחד (10 יחידות)</b> אם פיברינוגן &lt;200 mg/dL בדימום פעיל · ניתן לחזור אם הפיברינוגן לא הגיע ליעד'},
+    {label:'השפעה', value:'מעלה פיברינוגן ב-<b>70–100 mg/dL</b> לכל צבר · משפר יציבות קריש דרך Factor XIII'},
+    {label:'יעד מטרה', value:'פיברינוגן ≥200 mg/dL (≥2 g/L) — קריטי בדימום פעיל · ≥300 mg/dL במצב מסיבי'},
     {label:'תאימות ABO', value:'רצוי תואם ABO (מכיל פלזמה שאריות) · לא חובה'},
-    {label:'זמן הכנה', value:'15-30 דק\' הפשרה של 10 יח\' יחד'},
-    {label:'צורת הכנה', value:'10 יחידות נמסות ומאוחדות בכלי אחד · ניתן IV ב-Y-set · להשתמש תוך 4-6 שעות מאיחוד'},
-    {label:'חימום מנה', value:'לא נדרש'},
-    {label:'הערות חשובות', value:'חלופה מועדפת אם זמינה: <b>Haemocomplettan / RiaSTAP</b> — קונצנטרט פיברינוגן מסונתז, זמין מיידית, מינון מדויק, ללא הפשרה, pathogen-inactivated'}
+    {label:'זמן הכנה', value:'15–30 דק\' הפשרה של 10 יחידות יחד'},
+    {label:'צורת הכנה', value:'10 יחידות נמסות ומאוחדות בכלי אחד · IV ב-Y-set · להשתמש תוך 4–6 שעות מהאיחוד'},
+    {label:'חימום מנה', value:'לא נדרש (מופשר ב-37°C)'},
+    {label:'הערות חשובות', value:'<b>חלופה מועדפת אם זמינה: Haemocomplettan / RiaSTAP</b> — קונצנטרט פיברינוגן מסונתז, זמין מיידית, מינון מדויק, ללא הפשרה, pathogen-inactivated · קריו עדיף כשנדרשים גם Factor XIII או vWF'}
   ],
   platelets: [
     {label:'אינדיקציות', value:'Plt &lt;75K + דימום פעיל · Plt &lt;50K ב-MTP · Plt &lt;100K עם דימום משמעותי או CNS · לפני ניתוח אם &lt;50K'},
@@ -8348,174 +8314,165 @@ function updateBreechProgress(){
   else init();
 })();
 
-// ─── VTE RISK ASSESSMENT (RCOG Green-top 37a, 2015) ────────────────────
+// ─── VTE POSTPARTUM PROPHYLAXIS (Selective protocol — JAMA 2024) ───────
+const VTE_HIGH_IDS  = ['vte_h_prior_vte','vte_h_lmwh_pregnancy','vte_h_high_thrombo','vte_h_low_thrombo_fam','vte_h_aps'];
+const VTE_MAJOR_IDS = ['vte_m_immobility','vte_m_pph_surgery','vte_m_pe_iugr','vte_m_transfusion','vte_m_infection','vte_m_active_sle','vte_m_heart','vte_m_sickle','vte_m_bmi40','vte_m_cancer','vte_m_chf','vte_m_nephrotic','vte_m_t1dm_neph','vte_m_ibd'];
+const VTE_MINOR_IDS = ['vte_n_bmi3039','vte_n_multifetal','vte_n_pph_no_surgery','vte_n_smoking','vte_n_iugr','vte_n_pe_no_iugr','vte_n_pcs_def','vte_n_varicose'];
+
 function calcVte(){
   const el = document.getElementById('vte-res');
   if(!el) return;
   const $ = id => document.getElementById(id);
-  const num = id => parseFloat($(id)?.value) || 0;
-  const sel = id => parseInt($(id)?.value, 10) || 0;
-  const chk = id => $(id)?.checked ? 1 : 0;
+  const chk = id => $(id)?.checked || false;
 
-  // Pre-existing
-  const prior = sel('vte-prior');
-  const thromb = sel('vte-thromb');
-  const comorb = chk('vte_comorb') * 3;
-  const famHx = chk('vte_family_hx');
-
-  // Personal / current pregnancy
-  const age = num('vte-age');
-  const ageScore = age >= 35 ? 1 : 0;
-  const bmi = num('vte-bmi');
-  const bmiScore = bmi >= 40 ? 2 : bmi >= 30 ? 1 : 0;
-  const parity = num('vte-parity');
-  const parityScore = parity >= 3 ? 1 : 0;
-  const smoker = chk('vte_smoker');
-  const varicose = chk('vte_varicose');
-  const multifet = chk('vte_multifet');
-  const pe = chk('vte_pe');
-  const ivf = chk('vte_ivf');
-
-  // Transient
-  const ohss = chk('vte_ohss') * 4;
-  const surgery = chk('vte_surgery') * 3;
-  const hyperemesis = chk('vte_hyperemesis');
-  const infection = chk('vte_infection');
-  const immobile = chk('vte_immobile');
-  const travel = chk('vte_travel');
-
-  // Postnatal
-  const csEm = chk('vte_cs_emergency') * 2;
-  const csEl = chk('vte_cs_elective');
-  const midForceps = chk('vte_mid_forceps');
-  const prolonged = chk('vte_prolonged');
-  const pph = chk('vte_pph');
-  const preterm = chk('vte_preterm');
-  const stillbirth = chk('vte_stillbirth');
-
-  const preScore = prior + thromb + comorb + famHx;
-  const persScore = ageScore + bmiScore + parityScore + smoker + varicose + multifet + pe + ivf;
-  const transAnte = ohss + surgery + hyperemesis + infection + immobile + travel;
-  const transPost = csEm + csEl + midForceps + prolonged + pph + preterm + stillbirth;
-
-  const anteScore = preScore + persScore + transAnte;
-  const postScore = preScore + persScore + transPost + (transAnte >= 0 ? 0 : 0);
+  const highChecked  = VTE_HIGH_IDS.filter(chk);
+  const majorChecked = VTE_MAJOR_IDS.filter(chk);
+  const minorChecked = VTE_MINOR_IDS.filter(chk);
+  const emergencyCS  = chk('vte_emergency_cs');
+  const acuteVte     = chk('vte_acute_in_pregnancy');
 
   // Update section badges
-  const setCount = (id, n) => { const e = $(id); if(e) e.textContent = n > 0 ? String(n) : '—'; };
-  setCount('vte-count-pre', preScore);
-  setCount('vte-count-pers', persScore);
-  setCount('vte-count-trans', transAnte + transPost);
+  const setCount = (id, n, total) => { const e = $(id); if (e) e.textContent = n > 0 ? `${n}/${total}` : `${total}`; };
+  setCount('vte-count-high',  highChecked.length,  VTE_HIGH_IDS.length);
+  setCount('vte-count-major', majorChecked.length, VTE_MAJOR_IDS.length);
+  setCount('vte-count-minor', minorChecked.length, VTE_MINOR_IDS.length);
 
-  // Progress
+  // Determine risk category per JAMA 2024
+  let category, durationLabel, color, badgeText;
+  if (acuteVte) {
+    category = 'therapeutic';
+    durationLabel = 'אנטיקואגולציה טיפולית למשך 6+ שבועות (מינימום 3 חודשים סה"כ)';
+    color = 'var(--red)'; badgeText = 'VTE חריף';
+  } else if (highChecked.length > 0) {
+    category = 'high';
+    durationLabel = 'LMWH למשך 6 שבועות פוסט-פרטום';
+    color = 'var(--red)'; badgeText = 'סיכון גבוה';
+  } else if (
+    majorChecked.length >= 1 ||
+    minorChecked.length >= 2 ||
+    (minorChecked.length >= 1 && emergencyCS)
+  ) {
+    category = 'moderate';
+    durationLabel = 'LMWH למשך 7–10 ימים פוסט-פרטום';
+    color = 'var(--amber)'; badgeText = 'סיכון בינוני';
+  } else {
+    category = 'low';
+    durationLabel = 'אין טיפול תרופתי · ניוד מוקדם, הידרציה, מכשירי לחץ פנאומטיים בניתוח';
+    color = 'var(--green)'; badgeText = 'סיכון נמוך';
+  }
+
+  // Progress bar (3 segments — low/moderate/high)
   const bars = document.querySelectorAll('#vte-progress > div');
-  let done = 0;
-  [preScore>0, persScore>0, (transAnte+transPost)>0].forEach((s,i)=>{
-    bars[i]?.classList.toggle('done', s);
-    if(s) done++;
-  });
+  if (bars.length === 3) {
+    const idx = category === 'high' || category === 'therapeutic' ? 2 : category === 'moderate' ? 1 : 0;
+    bars.forEach((b, i) => b.classList.toggle('done', i <= idx));
+  }
   const stepCount = $('vte-step-count');
-  if(stepCount) stepCount.textContent = `${done} / 3 שלבים`;
+  if (stepCount) stepCount.textContent = `קבוצת סיכון: ${badgeText}`;
 
-  // Recommendations — RCOG 37a
-  const anteAction = anteScore >= 4
-    ? { cls:'bad', label:'LMWH פרופילקטי מהטרימסטר הראשון, לאורך כל ההריון', priority:'גבוה מאוד' }
-    : anteScore === 3
-    ? { cls:'warn', label:'LMWH פרופילקטי החל משבוע 28', priority:'גבוה' }
-    : anteScore >= 1
-    ? { cls:'ok', label:'אין צורך ב-LMWH אנטה-נטלי שגרתי · עידוד תנועה, גרבי לחץ אם מאושפזת', priority:'נמוך–בינוני' }
-    : { cls:'ok', label:'אין סיכון מוגבר · המלצות כלליות', priority:'בסיסי' };
+  // Build summary of what triggered the category
+  const triggers = [];
+  if (acuteVte) triggers.push('<li class="crit"><b>VTE חריף בהריון</b> בטיפול אנטיקואגולנטי</li>');
+  if (highChecked.length > 0) triggers.push(`<li class="crit"><b>${highChecked.length} גורמי סיכון גבוה</b> מסומנים</li>`);
+  if (category === 'moderate') {
+    if (majorChecked.length >= 1) triggers.push(`<li class="warn"><b>${majorChecked.length} גורמי סיכון מז'וריים</b> מסומנים (אחד מספיק)</li>`);
+    else if (minorChecked.length >= 2) triggers.push(`<li class="warn"><b>${minorChecked.length} גורמי סיכון מינוריים</b> מסומנים (שניים מספיקים)</li>`);
+    else if (minorChecked.length >= 1 && emergencyCS) triggers.push(`<li class="warn">גורם מינורי <b>+</b> ניתוח קיסרי דחוף</li>`);
+  }
+  if (category === 'low' && minorChecked.length === 1 && !emergencyCS) {
+    triggers.push('<li>גורם סיכון מינורי בודד ללא ניתוח קיסרי דחוף → אינו מצדיק טיפול</li>');
+  }
+  if (triggers.length === 0) triggers.push('<li>אין גורמי סיכון מסומנים</li>');
 
-  const postAction = postScore >= 4 || prior >= 3
-    ? { cls:'bad', label:'LMWH ל-6 שבועות פוסט-פרטום', priority:'גבוה מאוד' }
-    : postScore >= 2
-    ? { cls:'warn', label:'LMWH ל-10 ימים פוסט-פרטום', priority:'גבוה' }
-    : postScore === 1
-    ? { cls:'ok', label:'שקלי LMWH ל-10 ימים אם מצטרפים גורמים בהמשך · עידוד תנועה מוקדמת', priority:'נמוך' }
-    : { cls:'ok', label:'אין צורך בפרופילקסיס · עידוד תנועה מוקדמת + הידרציה', priority:'בסיסי' };
+  // Result
+  let html = `<div class="result">
+    <div class="result-label">קבוצת סיכון VTE — JAMA 2024</div>
+    <div class="big" style="color:${color};font-size:34px">${badgeText}</div>
+    <div class="zscore" style="margin-top:8px">${durationLabel}</div>
+  </div>`;
 
-  // LMWH dose (Enoxaparin) by weight
-  let doseRow = '';
-  if (anteAction.cls !== 'ok' || postAction.cls !== 'ok') {
-    const wt = bmi && num('vte-age') ? null : null; // we don't have wt; show table
-    doseRow = `<div class="rec-section">
-      <div class="rec-section-title">מינון Enoxaparin פרופילקטי לפי משקל</div>
-      <ul class="rec-list">
-        <li><b>&lt; 50 ק"ג:</b> 20 mg SC × פעם ביום</li>
-        <li><b>50–90 ק"ג:</b> 40 mg SC × פעם ביום (סטנדרט)</li>
-        <li><b>91–130 ק"ג:</b> 60 mg SC × פעם ביום</li>
-        <li><b>131–170 ק"ג:</b> 80 mg SC × פעם ביום</li>
-        <li><b>&gt; 170 ק"ג:</b> 0.6 mg/kg × פעם ביום</li>
-      </ul>
-      <div class="rec-src">RCOG 37a · ACOG PB 196 · Bates et al. Chest 2018</div>
+  html += `<div class="rec-box">
+    <div class="rec-head">
+      <span>גורמים שקבעו את הקבוצה</span>
+      <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">${category === 'high' ? 'גבוה' : category === 'moderate' ? 'בינוני' : category === 'therapeutic' ? 'טיפולי' : 'נמוך'}</span>
+    </div>
+    <div class="rec-body">
+      <ul class="rec-list">${triggers.join('')}</ul>
+    </div>
+  </div>`;
+
+  // Dose & timing
+  if (category !== 'low') {
+    const doseLabel = category === 'therapeutic'
+      ? 'מינון טיפולי לפי משקל — ראה ייעוץ המטולוגיה'
+      : 'Enoxaparin 40 mg SC × פעם ביום (או Dalteparin 5000 IU SC × פעם ביום)';
+    html += `<div class="rec-box">
+      <div class="rec-head">
+        <span>מינון, התחלה ומשך טיפול</span>
+        <span class="rec-tag rec-tag-${category==='high'||category==='therapeutic'?'bad':'warn'}">${category === 'high' ? '6 שבועות' : category === 'therapeutic' ? '≥6 שבועות טיפולי' : '7–10 ימים'}</span>
+      </div>
+      <div class="rec-body">
+        <div class="rec-section">
+          <div class="rec-section-title">מינון</div>
+          <ul class="rec-list">
+            <li><b>${doseLabel}</b></li>
+            ${category !== 'therapeutic' ? `
+            <li>התאמות למשקל קיצוני:
+              &lt;50 ק"ג → 20mg ·
+              91-130 ק"ג → 60mg ·
+              131-170 ק"ג → 80mg ·
+              &gt;170 ק"ג → 0.6 mg/kg
+            </li>` : ''}
+          </ul>
+        </div>
+        <div class="rec-section">
+          <div class="rec-section-title">זמני התחלה</div>
+          <ul class="rec-list">
+            <li>התחלה <b>4–12 שעות לאחר הלידה</b></li>
+            <li>לאחר הסרת צנתר אפידורלי — לפחות <b>4 שעות</b></li>
+          </ul>
+        </div>
+        <div class="rec-section">
+          <div class="rec-section-title">משך הטיפול</div>
+          <ul class="rec-list">
+            <li><b>${durationLabel}</b></li>
+          </ul>
+        </div>
+        <div class="rec-src">JAMA 2024 · ACCP · נייר עמדה ישראלי #24</div>
+      </div>
     </div>`;
   }
 
-  let html = `<div class="result">
-    <div class="result-label">סיכון VTE — ניקוד RCOG</div>
-    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end">
-      <div>
-        <div class="big" style="font-size:38px;color:var(${anteAction.cls==='bad'?'--red':anteAction.cls==='warn'?'--amber':'--green'})">${anteScore}<span>אנטה-נטלי</span></div>
-        ${badge(anteAction.cls, anteAction.priority)}
-      </div>
-      <div>
-        <div class="big" style="font-size:38px;color:var(${postAction.cls==='bad'?'--red':postAction.cls==='warn'?'--amber':'--green'})">${postScore}<span>פוסט-נטלי</span></div>
-        ${badge(postAction.cls, postAction.priority)}
-      </div>
-    </div>
-  </div>`;
-
+  // General considerations
   html += `<div class="rec-box">
     <div class="rec-head">
-      <span>המלצה אנטה-נטלית</span>
-      <span class="rec-tag rec-tag-${anteAction.cls==='bad'?'bad':anteAction.cls==='warn'?'warn':'ok'}">${anteScore} נק'</span>
+      <span>שיקולים והנחיות כלליות</span>
+      <span class="rec-tag" style="background:var(--surface2);color:var(--text2)">בכל מקרה</span>
     </div>
     <div class="rec-body">
-      <div class="rec-section">
-        <div class="rec-section-title">${anteAction.label}</div>
-        <ul class="rec-list">
-          ${anteScore >= 3 ? '<li>בדיקות בסיסיות: CBC, תפקודי כליה, anti-Xa אם צריך ניטור</li>' : ''}
-          ${anteScore >= 4 ? '<li class="warn">שקלי הפניה למרפאת המטולוגיה במצב תרומבופיליה / VTE קודם</li>' : ''}
-          ${prior >= 3 ? '<li class="crit">VTE קודם — LMWH חובה לאורך כל ההריון + 6 שבועות פוסט-פרטום</li>' : ''}
-          <li>גרבי לחץ TED בכל אשפוז · מובילציה מוקדמת</li>
-        </ul>
-      </div>
-      ${doseRow}
-    </div>
-  </div>`;
-
-  html += `<div class="rec-box">
-    <div class="rec-head">
-      <span>המלצה פוסט-נטלית</span>
-      <span class="rec-tag rec-tag-${postAction.cls==='bad'?'bad':postAction.cls==='warn'?'warn':'ok'}">${postScore} נק'</span>
-    </div>
-    <div class="rec-body">
-      <div class="rec-section">
-        <div class="rec-section-title">${postAction.label}</div>
-        <ul class="rec-list">
-          <li>מנה ראשונה: 6–12 שעות לאחר לידה וגינלית · 12 שעות לאחר קיסרי (לאחר הוצאת אפידורל)</li>
-          ${postScore >= 4 ? '<li class="warn">בקרת מעבדה: CBC + ספירת טסיות יום 5–7 (HIT שלילי) · anti-Xa אם נדרש ניטור</li>' : ''}
-          <li>הוראות לאם: דווחי על קוצר נשימה, כאב חזה, נפיחות אסימטרית של רגל, כאב שוק</li>
-          <li>LMWH בטוח להנקה — לא מופרש בחלב באופן משמעותי</li>
-        </ul>
-      </div>
+      <ul class="rec-list">
+        <li><b>ניתוח קיסרי:</b> מכשירי לחץ פנאומטיים (IPC) במהלך הניתוח עד לניוד מלא — לכל הנשים</li>
+        <li><b>LMWH ⟷ הנקה:</b> בטוח, אינו עובר לחלב באופן משמעותי</li>
+        <li><b>התוויות נגד יחסיות:</b> דימום פעיל · CrCl &lt; 30 mL/min · טסיות &lt; 75K · רגישות / HIT</li>
+        <li><b>בקרת מעבדה:</b> CBC + טסיות ביום 5–7 (HIT שלילי) · anti-Xa רק במצב מסובך</li>
+        <li><b>סימנים לדווח לאם:</b> קוצר נשימה, כאב חזה, נפיחות אסימטרית/כאב בשוק, היפותרמיה</li>
+      </ul>
     </div>
   </div>`;
 
   html += `<div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-top:14px">
-    <b>הערה:</b> כלי זה הוא תומך החלטה — שיקול דעת קליני, התייעצות עם המטולוגיה, וקריאה ישירה ב-RCOG Green-top 37a (2015) נדרשים במצבים גבוליים, מצבי תרומבופיליה מורכבים, או VTE פעיל.
+    <b>הערת מקור:</b> פרוטוקול זה מבוסס JAMA 2024 — גישה סלקטיבית שהפחיתה שימוש LMWH מ-16% ל-8%, הפחיתה המטומות פצע ב-62% (aOR 0.38), <b>ללא עלייה ב-VTE</b> (aOR 0.40). דליות ורידיות כגורם מינורי הוא תוספת לפי RCOG (לא בפרוטוקול JAMA המקורי).
   </div>`;
 
   el.innerHTML = html;
 }
 
-// Auto-recalc on input change (debounced via native events)
 (function bindVteAuto(){
   const init = () => {
-    document.querySelectorAll('#vte input, #vte select').forEach(el => {
+    document.querySelectorAll('#vte input[type=checkbox]').forEach(el => {
       el.addEventListener('change', calcVte);
-      if (el.tagName === 'INPUT' && el.type !== 'checkbox') el.addEventListener('input', calcVte);
     });
+    calcVte();
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
