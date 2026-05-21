@@ -1412,6 +1412,14 @@
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v6M7 5l3-3 3 3"/><path d="M3 17l4-4 3 3 4-4 3 3"/><path d="M2 14h16"/></svg>
           <span>קרע רחם</span>
         </button>
+        <button class="tab" onclick="showTab('pec',this)" role="tab">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10.5" r="6.5"/><path d="M10 6.5v4l3 1.5"/><path d="M5 4l-2 2M15 4l2 2"/></svg>
+          <span>רעלת</span>
+        </button>
+        <button class="tab" onclick="showTab('infection',this)" role="tab">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="3"/><path d="M10 3v2M10 15v2M3 10h2M15 10h2M5.5 5.5l1.5 1.5M13 13l1.5 1.5M14.5 5.5L13 7M7 13l-1.5 1.5"/></svg>
+          <span>זיהומים</span>
+        </button>
         <button class="tab" onclick="showTab('pph',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5s5 4 5 8.5a5 5 0 0 1-10 0c0-4.5 5-8.5 5-8.5Z"/><path d="M8 11.5l1.5 1.5L13 9.5"/></svg>
           <span>PPH</span>
@@ -3806,6 +3814,833 @@
     </div>
   </div>
 
+  <!-- ===== Preeclampsia / Eclampsia / HELLP Protocol ===== -->
+  <div id="pec" class="panel">
+    <details class="ref-wrap">
+      <summary>
+        <svg class="ref-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5h7l3 3v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1Z"/><path d="M10 2.5v3h3"/><path d="M5 9h6M5 11.5h4"/></svg>
+        <span>מקורות וקריטריונים</span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="ref">
+        <b>נייר עמדה ישראלי #18 (2024):</b> יתר לחץ דם ורעלת בהיריון — האיגוד הישראלי למיילדות וגינקולוגיה<br>
+        <b>ACOG Practice Bulletin 222 (2020):</b> Gestational Hypertension and Preeclampsia<br>
+        <b>CHAP Trial 2022 (NEJM):</b> Active treatment of chronic HTN in pregnancy — יעד &lt;140/90<br>
+        <b>MAGPIE Trial:</b> MgSO4 מפחית סיכון לאקלמספיה ב-58% ברעלת חמורה<br>
+        <b>הגדרות:</b> רעלת = יל"ד חדש (&gt;140/90) + פרוטאינוריה / נזק איבר-מטרה אחרי 20w · רעלת חמורה = BP ≥160/110 או סיבוכים · HELLP = Hemolysis + Elevated LFTs + Low Platelets · אקלמספיה = פרכוסים
+      </div>
+    </details>
+
+    <div class="info-frame" style="margin-top:8px">
+      <div class="sec" style="margin-top:0">לחץ על קלף לפרוטוקול מפורט</div>
+      <div class="pph-cards" id="pec-cards-nav">
+        <button class="pph-card active" data-pph="diagnosis" onclick="showPphSection('diagnosis', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 1.5"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">הגדרות ואבחנה</div><div class="pph-card-sub">קריטריונים · רעלת קלה/חמורה</div></div>
+        </button>
+        <button class="pph-card" data-pph="bp-control" onclick="showPphSection('bp-control', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14a7 7 0 0 1 14 0"/><path d="M10 14V8M10 3v2"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">קוי טיפול ללחץ דם</div><div class="pph-card-sub">Labetalol · Hydralazine · Nifedipine</div></div>
+        </button>
+        <button class="pph-card" data-pph="mgso4" onclick="showPphSection('mgso4', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M7 10h6M10 7v6"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">MgSO4 — מניעת אקלמספיה</div><div class="pph-card-sub">פרוטוקול, ניטור, רעילות</div></div>
+        </button>
+        <button class="pph-card" data-pph="eclampsia" onclick="showPphSection('eclampsia', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l3-4 3 6 3-8 3 6 3-2"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">אקלמספיה</div><div class="pph-card-sub">ניהול פרכוסים · ABC · MgSO4</div></div>
+        </button>
+        <button class="pph-card" data-pph="hellp" onclick="showPphSection('hellp', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3l-7 14h14L10 3Z"/><path d="M10 9v4M10 14.5v.5"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">HELLP</div><div class="pph-card-sub">המוליזה · ↑LFT · טסיות נמוכות</div></div>
+        </button>
+        <button class="pph-card" data-pph="delivery" onclick="showPphSection('delivery', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="13" rx="2"/><path d="M3 8.5h14M7 2.5v3M13 2.5v3"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">תזמון לידה</div><div class="pph-card-sub">37+0/34+0 · אינדיקציות מיידיות</div></div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Section: Diagnosis -->
+    <div class="pph-detail-area" data-pph-sec="diagnosis">
+      <div class="sec" style="margin-top:0">הגדרות וקריטריונים אבחנתיים</div>
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>יל"ד הריוני · רעלת קלה · רעלת חמורה</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">ACOG / נייר #18</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">יל"ד הריוני (Gestational Hypertension)</div>
+            <ul class="rec-list">
+              <li>BP ≥140/90 בשתי מדידות במרחק ≥4 שעות, <b>אחרי שבוע 20</b></li>
+              <li>ללא פרוטאינוריה וללא נזק איבר-מטרה</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">רעלת ללא תסמינים חמורים (Preeclampsia without severe features)</div>
+            <ul class="rec-list">
+              <li>BP ≥140/90 + פרוטאינוריה (≥300 mg/24h · יחס P:Cr ≥0.3 · Dipstick ≥+2)</li>
+              <li>או BP ≥140/90 + נזק איבר-מטרה גם ללא פרוטאינוריה</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">רעלת חמורה (Severe features) — אחד מספיק</div>
+            <ul class="rec-list">
+              <li class="crit"><b>BP ≥160/110</b> (שתי מדידות בהפרש 4 שעות, או פעם אחת אם דורש טיפול)</li>
+              <li class="crit"><b>טסיות &lt;100K</b></li>
+              <li class="crit"><b>LFT (AST/ALT) פי 2× הנורמלי</b></li>
+              <li class="crit"><b>קריאטינין &gt;1.1 mg/dL</b> או הכפלה מבייסליין</li>
+              <li class="crit">בצקת ריאות</li>
+              <li class="crit"><b>תסמינים מוחיים:</b> כאב ראש קבוע, הפרעות ראיה, פגיעה במצב הכרה</li>
+              <li class="crit"><b>כאב אפיגסטרי/RUQ</b> שאינו מגיב לטיפול</li>
+            </ul>
+          </div>
+          <div class="rec-src">נייר עמדה ישראלי #18 · ACOG PB 222 (2020)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: BP control -->
+    <div class="pph-detail-area" data-pph-sec="bp-control" style="display:none">
+      <div class="sec" style="margin-top:0">קוי טיפול ללחץ דם</div>
+
+      <details class="rec-box pph-med" open>
+        <summary class="rec-head" style="cursor:pointer">
+          <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px">1</span><span><b style="font-size:13.5px">Labetalol — קו ראשון אקוטי</b></span></span>
+          <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>IV bolus:</b> 20 mg IV → אם לא ירד תוך 10 דק' → 40 mg → 80 mg → 80 mg (מקס' 220 mg סה"כ)</li>
+            <li><b>אינפוזיה:</b> 1–2 mg/min (אחרי בולוס)</li>
+            <li><b>PO:</b> 200 mg × 2–3 ליום (תחזוקה) · מקס' 2,400 mg/יום</li>
+            <li><b>התווית נגד:</b> אסטמה חמורה · ברדיקרדיה · אי-ספיקת לב לא מאוזנת</li>
+            <li><b>יעד:</b> BP 140-150/90-100 (לא לרדת חד מתחת — ירידה בפרפוזיה שלייתית)</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="rec-box pph-med">
+        <summary class="rec-head" style="cursor:pointer">
+          <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px">2</span><span><b style="font-size:13.5px">Hydralazine — קו שני אקוטי</b></span></span>
+          <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>IV bolus:</b> 5–10 mg IV → אם לא ירד תוך 20 דק' → 10 mg → 10 mg (מקס' 30 mg סה"כ)</li>
+            <li><b>תופעות לוואי:</b> כאב ראש, טכיקרדיה רפלקטיבית, היפוטנסיה</li>
+            <li><b>אם נכשל:</b> מעבר ל-Labetalol או Nifedipine</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="rec-box pph-med">
+        <summary class="rec-head" style="cursor:pointer">
+          <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px">3</span><span><b style="font-size:13.5px">Nifedipine — קו ראשון PO</b></span></span>
+          <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>Immediate release:</b> 10 mg PO → אם לא ירד תוך 20 דק' → 20 mg PO → 20 mg PO (מקס' 50 mg)</li>
+            <li><b>Sustained release:</b> 30–60 mg ליום (תחזוקה)</li>
+            <li><b>אסור IV / Sublingual</b> (היפוטנסיה חמורה)</li>
+            <li><b>אינטראקציה:</b> זהירות עם MgSO4 (היפוטנסיה משמעותית)</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="rec-box pph-med">
+        <summary class="rec-head" style="cursor:pointer">
+          <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><span style="width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font-weight:800;font-size:13px">4</span><span><b style="font-size:13.5px">Methyldopa — קו ראשון תחזוקה כרונית</b></span></span>
+          <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>מינון:</b> 250–500 mg × 2–3 ליום · מקס' 3 גרם/יום</li>
+            <li>קו ראשון ל-CHTN בהריון (CHAP trial — יעד &lt;140/90)</li>
+            <li>פעולה איטית — לא מתאים לחירום</li>
+            <li>תופעות לוואי: ישנוניות, דיכאון, אנמיה המוליטית (Coombs+)</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="note" style="border-right-color:var(--red);background:var(--red-bg);margin-top:14px">
+        <b>אסור בהריון:</b> ACE-inhibitors · ARB · Atenolol (FGR) · Direct renin inhibitors · Diuretics (לא כקו ראשון)
+      </div>
+    </div>
+
+    <!-- Section: MgSO4 -->
+    <div class="pph-detail-area" data-pph-sec="mgso4" style="display:none">
+      <div class="sec" style="margin-top:0">MgSO4 — מניעת אקלמספיה</div>
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>פרוטוקול MgSO4 IV</span><span class="rec-tag" style="background:var(--primary);color:#fff">MAGPIE</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">אינדיקציות</div>
+            <ul class="rec-list">
+              <li><b>רעלת חמורה</b> — חובה</li>
+              <li><b>אקלמספיה</b> — חובה (טיפול וגם מניעת התקפים חוזרים)</li>
+              <li>רעלת ללא תסמינים חמורים — שיקול קליני (לא חובה)</li>
+              <li>נוירופרוטקציה עוברית: &lt;32 שבועות בלידה צפויה</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">מינון IV</div>
+            <ul class="rec-list">
+              <li><b>בולוס:</b> 4–6 גרם IV ב-20 דקות (ב-100 ml NS)</li>
+              <li><b>תחזוקה:</b> 1–2 גרם/שעה (עירוי רציף)</li>
+              <li><b>אם פרכוס תחת MgSO4:</b> 2 גרם נוסף בולוס</li>
+              <li><b>משך:</b> עד 24 שעות אחרי הלידה (או 24 שעות אחרי האירוע האחרון)</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">ניטור לרעילות (כל 1–2 שעות)</div>
+            <ul class="rec-list">
+              <li><b>רפלקס פטלר (DTR):</b> חייב להיות נוכח — אם נעלם → רעילות</li>
+              <li><b>נשימות:</b> ≥12/דק' (פחות = דכאון נשימתי)</li>
+              <li><b>שתן:</b> ≥30 ml/שעה (פגיעה כלייתית → הצטברות)</li>
+              <li><b>סטורציה:</b> ≥95%</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">אנטידוט לרעילות</div>
+            <ul class="rec-list">
+              <li class="crit"><b>Calcium Gluconate 10% — 10 ml IV ב-3 דקות</b></li>
+              <li>הפסקת אינפוזיית MgSO4 מיידית</li>
+              <li>תמיכה נשימתית (intubation אם דכאון נשימתי חמור)</li>
+            </ul>
+          </div>
+          <div class="rec-src">MAGPIE Trial · ACOG PB 222 · נייר #18</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: Eclampsia -->
+    <div class="pph-detail-area" data-pph-sec="eclampsia" style="display:none">
+      <div class="sec" style="margin-top:0">אקלמספיה — ניהול פרכוסים</div>
+      <div class="rec-box" style="margin-top:0;border-color:var(--red)">
+        <div class="rec-head" style="background:var(--red-bg)"><span style="color:var(--red-text)">פרוטוקול חירום</span><span class="rec-tag rec-tag-bad">דקות ראשונות</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">פעולות מיידיות (ABC)</div>
+            <ul class="rec-list">
+              <li class="crit"><b>A — Airway:</b> שכיבה צד שמאל, מניעת שאיפה, פתיחת דרכי אוויר</li>
+              <li class="crit"><b>B — Breathing:</b> חמצן 8–10 ל'/דק' במסכה · מעקב סטורציה</li>
+              <li class="crit"><b>C — Circulation:</b> 2 IV venflons · ניטור לחץ דם, דופק רציף</li>
+              <li>לא להחזיק את היולדת במהלך הפרכוס — מניעת פגיעות</li>
+              <li>הסרת חפצים מסביב, הגנת הראש</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">טיפול תרופתי</div>
+            <ul class="rec-list">
+              <li><b>MgSO4 4–6 גרם IV ב-20 דקות</b> → ואז 1–2 גרם/שעה (קו ראשון)</li>
+              <li><b>אם פרכוס חוזר:</b> 2 גרם MgSO4 בולוס נוסף</li>
+              <li><b>אם MgSO4 לא יעיל / רעילות:</b> Diazepam 5–10 mg IV או Lorazepam 4 mg IV</li>
+              <li><b>Phenytoin:</b> מילואים (15–20 mg/kg IV) — נדיר</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">שליטה ב-BP</div>
+            <ul class="rec-list">
+              <li>Labetalol IV או Hydralazine IV (ראה קוי טיפול)</li>
+              <li>יעד: BP &lt;160/110 (לא חד — סיכון להיפוטנסיה ופרפוזיה)</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">המשך ניהול</div>
+            <ul class="rec-list">
+              <li><b>בירור:</b> CBC, LFT, קריאטינין, חומצה אורית, פרוטאין בשתן, קרישה</li>
+              <li><b>הערכת עובר:</b> CTG רציף · US לאחר ייצוב</li>
+              <li><b>תזמון לידה:</b> אחרי ייצוב אם — תוך שעות (לא לעכב)</li>
+              <li><b>הדמיה:</b> CT/MRI מוח אם תסמינים נוירולוגיים מתמשכים, פרכוס חוזר תחת MgSO4, או אבחנה לא ברורה</li>
+            </ul>
+          </div>
+          <div class="rec-src">נייר עמדה ישראלי #18 · ACOG PB 222</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: HELLP -->
+    <div class="pph-detail-area" data-pph-sec="hellp" style="display:none">
+      <div class="sec" style="margin-top:0">HELLP Syndrome</div>
+      <div class="rec-box" style="margin-top:0;border-color:var(--red)">
+        <div class="rec-head" style="background:var(--red-bg)"><span style="color:var(--red-text)">Hemolysis · Elevated LFTs · Low Platelets</span><span class="rec-tag rec-tag-bad">מיילדותי דחוף</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">קריטריונים אבחנתיים (Tennessee Classification)</div>
+            <ul class="rec-list">
+              <li><b>H — Hemolysis:</b> LDH ≥600 U/L · בילירובין ≥1.2 · משטח דם פתולוגי (סכיסטוציטים, helmet cells)</li>
+              <li><b>EL — Elevated LFTs:</b> AST ≥70 U/L (פי 2× נורמלי)</li>
+              <li><b>LP — Low Platelets:</b> ≤100,000/μL</li>
+              <li><b>HELLP חלקי (Partial):</b> 1–2 קריטריונים בלבד</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">תסמינים אופייניים</div>
+            <ul class="rec-list">
+              <li>כאב <b>RUQ / אפיגסטרי</b> (90%) — לא מגיב לתרופות סטנדרטיות</li>
+              <li>בחילה והקאות (50%)</li>
+              <li>כאב ראש (60%)</li>
+              <li>יל"ד (לא תמיד! עד 15% נורמוטנסיה)</li>
+              <li>פרוטאינוריה (80–90%)</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">ניהול מיידי</div>
+            <ul class="rec-list">
+              <li class="crit"><b>אשפוז מיידי</b> · בקרה צמודה · בית חולים שלישוני</li>
+              <li><b>MgSO4 פרופילקטי</b> — חובה (סיכון לאקלמספיה)</li>
+              <li><b>שליטה ב-BP</b> אם יל"ד</li>
+              <li><b>סטרואידים:</b> Betamethasone 12mg ×2 (24h apart) אם 24–34+6 שבועות — לעובר, לא משפר HELLP אמהי</li>
+              <li><b>עירוי טסיות:</b> אם &lt;20K (תמיד) · אם &lt;50K + דימום פעיל / לפני ניתוח</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">תזמון לידה — קריטי</div>
+            <ul class="rec-list">
+              <li class="crit"><b>≥34 שבועות:</b> לידה תוך 24 שעות (אחרי ייצוב)</li>
+              <li class="crit"><b>24–34 שבועות:</b> סטרואידים → לידה בעדיפות תוך 48 שעות</li>
+              <li class="crit"><b>הידרדרות חמורה / DIC / היפרדות שליה / מצוקה עוברית:</b> לידה דחופה ללא קשר ל-GA</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">סיבוכים חמורים</div>
+            <ul class="rec-list">
+              <li class="crit">DIC (15–30%) · קרע / המטומה כבדית · אי-ספיקת כליות חריפה · בצקת ריאות · ARDS</li>
+              <li>תמותה אמהית 1–25% (תלוי חומרה ומשאבים)</li>
+            </ul>
+          </div>
+          <div class="rec-src">Sibai BM et al. (Tennessee Classification) · ACOG PB 222 · נייר #18</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: Delivery timing -->
+    <div class="pph-detail-area" data-pph-sec="delivery" style="display:none">
+      <div class="sec" style="margin-top:0">תזמון לידה ברעלת</div>
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>אינדיקציות ולוחות זמנים</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">ACOG PB 222</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">תזמון מומלץ</div>
+            <ul class="rec-list">
+              <li><b>יל"ד הריוני / רעלת ללא תסמינים חמורים:</b> 37+0</li>
+              <li><b>רעלת חמורה ≥34+0:</b> לידה מיידית אחרי ייצוב</li>
+              <li><b>רעלת חמורה &lt;34+0 ויציבה:</b> ניהול שמרני + סטרואידים + ניטור צמוד · לידה ב-34+0 או אם הידרדרות</li>
+              <li><b>HELLP:</b> ראה סקציה ייעודית</li>
+              <li><b>אקלמספיה:</b> לידה תוך שעות אחרי ייצוב</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">אינדיקציות ללידה מיידית (ללא תלות ב-GA)</div>
+            <ul class="rec-list">
+              <li class="crit">אקלמספיה</li>
+              <li class="crit">בצקת ריאות</li>
+              <li class="crit">היפרדות שליה</li>
+              <li class="crit">DIC</li>
+              <li class="crit">אי-ספיקת כליות לא מגיבה</li>
+              <li class="crit">מצוקה עוברית קשה (NRFHR קטגוריה III)</li>
+              <li class="crit">מות עוברי</li>
+              <li class="crit">BP בלתי נשלט</li>
+              <li class="crit">תסמינים נוירולוגיים מתמשכים / שינוי במצב הכרה</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">אופן הלידה</div>
+            <ul class="rec-list">
+              <li>רעלת אינה אינדיקציה לק"ק לכשעצמה</li>
+              <li>השראת לידה אפשרית (PGE2/Misoprostol/בלון/אוקסיטוצין)</li>
+              <li>אפידוראלי בטוח (טסיות ≥75K · לא ב-DIC)</li>
+              <li>ק"ק לפי אינדיקציות מילדותיות סטנדרטיות + מצוקה עוברית / רעלת חמורה לא מגיבה</li>
+            </ul>
+          </div>
+          <div class="rec-src">ACOG PB 222 · נייר עמדה ישראלי #18 · HYPITAT trial</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Intrapartum Infection Protocols ===== -->
+  <div id="infection" class="panel">
+    <details class="ref-wrap">
+      <summary>
+        <svg class="ref-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5h7l3 3v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1Z"/><path d="M10 2.5v3h3"/><path d="M5 9h6M5 11.5h4"/></svg>
+        <span>מקורות וקריטריונים</span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="ref">
+        <b>נוהל רמב"ם — כוריואמניוניטיס (פברואר 2026):</b> ד"ר גלעד שחק, פרופ' עידו שולט · ניהול זיהום תוך-רחמי<br>
+        <b>נוהל רמב"ם 060.20 — HIV בהריון (יוני 2020):</b> ד"ר יחיאל בורק, ד"ר אנה פטרוסב<br>
+        <b>נוהל רמב"ם 059.20 — הרפס ואגינלי בהריון (יוני 2020):</b> ד"ר רוני אברהמי, ד"ר דיקלה בן צבי<br>
+        <b>נייר עמדה ישראלי #22 (2024):</b> GBS — תרבית 35-37w · פניצילין IV בלידה<br>
+        <b>ACOG Practice Update (2024):</b> Suspected Intraamniotic Infection · Triple I<br>
+        <b>CDC Perinatal HBV Prevention:</b> HBIG + Vaccine ליילוד · Tenofovir אם HBV DNA &gt;200,000 IU/mL<br>
+        <b>ACOG PB 207 (2019, מאומץ 2023):</b> Genital Herpes in Pregnancy
+      </div>
+    </details>
+
+    <div class="info-frame" style="margin-top:8px">
+      <div class="sec" style="margin-top:0">לחץ על קלף לפרוטוקול מפורט</div>
+      <div class="pph-cards" id="inf-cards-nav">
+        <button class="pph-card active" data-pph="amnion" onclick="showPphSection('amnion', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="11" rx="6" ry="7"/><circle cx="10" cy="11" r="2"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">אמניוניטיס (Triple I)</div><div class="pph-card-sub">אבחנה · אנטיביוטיקה · מעקב</div></div>
+        </button>
+        <button class="pph-card" data-pph="gbs" onclick="showPphSection('gbs', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="10" r="3"/><circle cx="13" cy="10" r="3"/><path d="M5 16h10"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">GBS פרופילקסיס</div><div class="pph-card-sub">פניצילין · אלרגיה · 35-37w</div></div>
+        </button>
+        <button class="pph-card" data-pph="hiv" onclick="showPphSection('hiv', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M7 7l6 6M13 7l-6 6"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">HIV</div><div class="pph-card-sub">ZDV IV · VL · ק"ק</div></div>
+        </button>
+        <button class="pph-card" data-pph="hbv" onclick="showPphSection('hbv', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3c-3 0-6 3-6 7s3 7 6 7 6-3 6-7-3-7-6-7Z"/><circle cx="10" cy="10" r="2"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">HBV (הפטיטיס B)</div><div class="pph-card-sub">HBIG ליילוד · Tenofovir</div></div>
+        </button>
+        <button class="pph-card" data-pph="hsv" onclick="showPphSection('hsv', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6"/><circle cx="6" cy="8" r="1.2"/><circle cx="13" cy="7" r="1.2"/><circle cx="9" cy="13" r="1.2"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">HSV (הרפס)</div><div class="pph-card-sub">Acyclovir · ק"ק אם נגעים</div></div>
+        </button>
+        <button class="pph-card" data-pph="hcv" onclick="showPphSection('hcv', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14l4-4 4 4 6-6"/><path d="M13 8h4v4"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">HCV (הפטיטיס C)</div><div class="pph-card-sub">מעקב יילוד · DAAs אחרי לידה</div></div>
+        </button>
+        <button class="pph-card" data-pph="syphilis" onclick="showPphSection('syphilis', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v14M3 10h14"/><circle cx="10" cy="10" r="4"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">סיפיליס</div><div class="pph-card-sub">פניצילין G · 3 מנות</div></div>
+        </button>
+        <button class="pph-card" data-pph="listeria" onclick="showPphSection('listeria', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="8" height="14" rx="2"/><path d="M9 7h2M9 10h2M9 13h2"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">ליסטריה</div><div class="pph-card-sub">Ampicillin IV · נייר #26</div></div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Section: Amnionitis (default open) -->
+    <div class="pph-detail-area" data-pph-sec="amnion">
+      <div class="sec" style="margin-top:0">אמניוניטיס (כוריואמניוניטיס) — נוהל רמב"ם</div>
+
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>קריטריונים אבחנתיים (ACOG 2024)</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">Triple I</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">חשד לזיהום (Suspected Intraamniotic Infection)</div>
+            <ul class="rec-list">
+              <li><b>חום 38.0–38.9°C</b> + <b>גורם סיכון קליני אחד</b> מהבאים:</li>
+              <li>טכיקרדיה עוברית: דופק בסיסי &gt;160 פעימות/דק' למשך 10 דק'</li>
+              <li>לויקוציטוזיס אמהי: WBC &gt;15,000 (בהיעדר סטרואידים)</li>
+              <li>הפרשה מוגלתית מהצוואר (בצפייה ישירה)</li>
+              <li>רגישות במגע על פני הרחם</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">חום אמהי בודד (Isolated Maternal Fever)</div>
+            <ul class="rec-list">
+              <li>מדידה אחת של חום ≥39.0°C</li>
+              <li>או 2 מדידות 38.0–38.9°C בהפרש חצי שעה ללא קריטריונים נוספים</li>
+              <li><b>יש לנהל באופן זהה לחשד מלא לזיהום</b> (תוצאים יילודים שליליים)</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">זיהום מוכח (Confirmed)</div>
+            <ul class="rec-list">
+              <li>תרבית מי שפיר חיובית · צביעת גראם חיובית · גלוקוז נמוך במי שפיר · היסטופתולוגיה</li>
+              <li>בפרקטיקה — לרוב אבחנה בדיעבד</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px;border-right:3px solid var(--red)">
+        <div class="rec-head"><span>טיפול אנטיביוטי לפי רגישות לפניצילין</span><span class="rec-tag rec-tag-bad">להתחיל מיד</span></div>
+        <div class="rec-body">
+          <div class="ref-table-wrap">
+            <table class="ref-table" aria-label="Amnionitis antibiotics">
+              <thead>
+                <tr><th>רגישות</th><th>טיפול ראשוני</th><th>טיפול תוסף</th></tr>
+              </thead>
+              <tbody>
+                <tr style="background:var(--primary-bg)">
+                  <td><b>ללא אלרגיה</b></td>
+                  <td><b>Ampicillin 2 g IV כל 6 שעות</b></td>
+                  <td>+ Gentamicin (לפי משקל, פעם אחת)</td>
+                </tr>
+                <tr>
+                  <td>אלרגיה לפניצילין<br>(ללא אנפילקסיס)</td>
+                  <td><b>Cefazolin 2 g IV כל 8 שעות</b></td>
+                  <td>+ Gentamicin (לפי משקל, פעם אחת)</td>
+                </tr>
+                <tr style="background:var(--red-bg)">
+                  <td>אנפילקסיס לפניצילין</td>
+                  <td><b>Clindamycin 900 mg IV כל 8 שעות</b></td>
+                  <td>+ Gentamicin (לפי משקל, פעם אחת)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="rec-section" style="margin-top:14px">
+            <div class="rec-section-title">מינון Gentamicin לפי משקל היולדת בקבלה</div>
+            <ul class="rec-list">
+              <li><b>50–60 ק"ג</b> → 240 mg IV</li>
+              <li><b>60–80 ק"ג</b> → 320 mg IV</li>
+              <li><b>&gt;80 ק"ג</b> → 400 mg IV</li>
+              <li>אין לעכב התחלת טיפול עקב המתנה לקריאטינין — התאם מינון בדיעבד באי-ספיקת כליות</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">בניתוח קיסרי — כיסוי אנאירובי</div>
+            <ul class="rec-list">
+              <li><b>הוסף Clindamycin 900 mg IV</b> מוקדם ככל הניתן</li>
+              <li><b>אין צורך לתת Cefazolin פרופילקטי</b> נוסף</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px">
+        <div class="rec-head"><span>ניהול תומך וניהול הלידה</span><span class="rec-tag" style="background:var(--surface2);color:var(--text2)">תוך לידה</span></div>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>סט תרביות דם + CBC</b> טרם התחלת טיפול</li>
+            <li><b>אנטיפירטיקה:</b> אקמול / אופטלגין — חשוב לעובר (מטבולית)</li>
+            <li><b>ניטור עוברי רציף</b></li>
+            <li>אופן הלידה — <b>אמניוניטיס לכשעצמה אינה אינדיקציה לק"ק</b></li>
+            <li>אין לדחות לידה להשלמת סטרואידים · אין נגד טוקוליטיקה כל עוד אין סימני זיהום</li>
+            <li>הרדמה אפידורלית/ספינלית — מותרת</li>
+            <li>יש להבטיח התקדמות לידה (אוגמנטציה בצורך)</li>
+            <li>תרבית מהשליה <b>סטרילית</b> לאחר לידה</li>
+            <li>עדכן רופא יילודים בהחלטה על לידה/ניתוח ובהעברת היילוד</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px">
+        <div class="rec-head"><span>טיפול אנטיביוטי לאחר לידה</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">Postpartum</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">לידה וגינלית</div>
+            <ul class="rec-list">
+              <li><b>מנה אחת נוספת</b> (next scheduled dose) — סיום טיפול</li>
+              <li>הארכה ל-24–48 שעות לפי שיקול קליני אם יש גורמי סיכון</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">ניתוח קיסרי</div>
+            <ul class="rec-list">
+              <li><b>המשך טיפול 24 שעות לאחר הניתוח</b></li>
+              <li>הארכה ל-48–72 שעות אם: BMI &gt;30 · ירידת מים &gt;24h · חום מתמשך · WBC &gt;20K · צמיחה בתרבית/גראם · צמיחה בתרבית דם</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">התייעצות עם מומחה לזיהומיות</div>
+            <ul class="rec-list">
+              <li>החמרה קלינית תחת טיפול</li>
+              <li>הישנות חומים</li>
+              <li>צמיחה בתרביות דם</li>
+              <li>רגישויות מורכבות שלא ניתנות לטיפול בפרוטוקול</li>
+            </ul>
+          </div>
+          <div class="rec-src">נוהל רמב"ם · ACOG Clinical Practice Update 2024 · Gibbs RS · Black LP 2012</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: GBS -->
+    <div class="pph-detail-area" data-pph-sec="gbs" style="display:none">
+      <div class="sec" style="margin-top:0">GBS — Streptococcus קבוצה B</div>
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>סקירה ופרופילקסיס בלידה</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">נייר #22</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">סקירה</div>
+            <ul class="rec-list">
+              <li><b>תרבית רקטו-וגינלית ב-35-37+6 שבועות</b> בכל אישה</li>
+              <li><b>GBS בשתן בכל ספירה</b> במהלך ההריון → טיפול בלידה (אין צורך בתרבית חוזרת)</li>
+              <li><b>תינוק קודם עם GBS אינווסיבי</b> → טיפול בלידה</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">אינדיקציות לטיפול בלידה</div>
+            <ul class="rec-list">
+              <li>תרבית חיובית בהריון נוכחי</li>
+              <li>GBS לא ידוע + אחד מאלה: PPROM, לידה מוקדמת &lt;37w, חום ≥38°C, ירידת מים ≥18 שעות</li>
+              <li>בקטריוריה GBS בהריון נוכחי</li>
+              <li>תינוק קודם עם GBS אינווסיבי</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">פרוטוקול ללא אלרגיה לפניצילין</div>
+            <ul class="rec-list">
+              <li><b>Penicillin G 5 million units IV bolus</b> → 2.5–3 million units IV כל 4 שעות עד לידה</li>
+              <li><b>חלופה:</b> Ampicillin 2 g IV bolus → 1 g IV כל 4 שעות</li>
+              <li><b>מינון נאות:</b> ≥4 שעות לפני לידה</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">פרוטוקול באלרגיה לפניצילין</div>
+            <ul class="rec-list">
+              <li><b>אלרגיה קלה (לא אנפילקסיס):</b> Cefazolin 2 g IV → 1 g IV כל 8 שעות</li>
+              <li><b>אנפילקסיס + GBS רגיש ל-Clindamycin:</b> Clindamycin 900 mg IV כל 8 שעות</li>
+              <li><b>אנפילקסיס + GBS עמיד / לא נבדקה רגישות:</b> Vancomycin 20 mg/kg IV (max 2g) כל 8 שעות</li>
+              <li>חובה: בדיקת רגישות ל-Clindamycin/Erythromycin בתרבית GBS אצל אלרגיות לפניצילין</li>
+            </ul>
+          </div>
+          <div class="rec-src">נייר עמדה ישראלי #22 · CDC 2019 · ACOG 797</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: HIV -->
+    <div class="pph-detail-area" data-pph-sec="hiv" style="display:none">
+      <div class="sec" style="margin-top:0">HIV בלידה — נוהל רמב"ם 060.20</div>
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>ניהול לידה לפי VL</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">מרפאת איידס</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">בקבלה לחדר לידה — חובה</div>
+            <ul class="rec-list">
+              <li>תיעוד סטטוס HIV ו-HBsAg לכל יולדת</li>
+              <li>אם לא ידוע — <b>בדיקת HIV דחופה</b> (השלכות מיידיות לטיפול ביילוד)</li>
+              <li>עדכון רופא יילודים בכל לידה של נשאית</li>
+              <li>אם אבחון לראשונה בלידה — לתת טיפול תרופתי לפי פרוטוקול (האבחנה לא ודאית עד אישור)</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">אופן היילוד לפי עומס נגיפי</div>
+            <ul class="rec-list">
+              <li><b>VL &gt; 1000 copies/mL</b> ב-3 חודשים אחרונים → <b>ניתוח קיסרי מתוכנן בשבוע 38</b></li>
+              <li><b>VL &lt; 1000 copies/mL</b> בעקביות → <b>לידה וגינלית אפשרית</b> · ZDV IV לא חובה</li>
+              <li><b>VL לא ידוע</b> בחודשים האחרונים → התייעצות מרפאת איידס</li>
+              <li><b>משך ירידת מים אינו משפיע על המעבר הוורטיקלי</b></li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">Zidovudine (ZDV) IV — אינדיקציות ומינון</div>
+            <ul class="rec-list">
+              <li>ל-VL &gt; 1000 לפני ק"ק מתוכנן — להתחיל <b>3 שעות לפני הניתוח</b> ועד סיומו</li>
+              <li><b>בולוס:</b> 2 mg/kg IV ב-1 שעה</li>
+              <li><b>תחזוקה:</b> 1 mg/kg/שעה IV עד סיום הלידה/הניתוח</li>
+              <li>ARV משולב — להמשיך כסדרו במהלך הלידה והניתוח</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">הנחיות ללידה וגינלית</div>
+            <ul class="rec-list">
+              <li><b>הימנעות מניטור פנימי</b> (אלקטרודה לקרקפת, IUPC)</li>
+              <li>במטופלות במעכבי פרוטאז — <b>אין להשתמש במטרגין</b> (וזוקונסטריקציה חמורה)</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">לאחר הלידה</div>
+            <ul class="rec-list">
+              <li class="crit"><b>אין הנקה</b></li>
+              <li>החלטה על המשך ARV — לפי רופא מרפאת איידס</li>
+              <li>הפניית האם והתינוק למרפאת איידס למעקב</li>
+            </ul>
+          </div>
+          <div class="rec-src">נוהל רמב"ם 060.20 · ACOG CO 234 · ACOG CO 418 · Briand N et al. Clin Infect Dis 2013</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: HBV -->
+    <div class="pph-detail-area" data-pph-sec="hbv" style="display:none">
+      <div class="sec" style="margin-top:0">HBV (הפטיטיס B) בהריון ובלידה</div>
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>פרופילקסיס ליילוד וטיפול אמהי</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">CDC / AASLD 2018</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">סקר אוניברסלי</div>
+            <ul class="rec-list">
+              <li><b>HBsAg</b> לכל אישה בהריון (ביקור ראשון, חזרה ב-T3 אם בסיכון)</li>
+              <li>אם חיובי: HBeAg, HBV DNA, ALT, אנטי-HBs, אנטי-HBc, HCV, HIV, סיפיליס</li>
+              <li>שיעור העברה ורטיקלית: 90% אם HBeAg חיובי · 10–20% אם HBeAg שלילי</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">טיפול תרופתי לאם (Tenofovir)</div>
+            <ul class="rec-list">
+              <li><b>אינדיקציה:</b> HBV DNA &gt; 200,000 IU/mL (≈ 10⁶ copies/mL) ב-T2/T3</li>
+              <li><b>Tenofovir disoproxil 300 mg PO/יום</b> מ-28 שבועות עד 4 שבועות אחרי לידה</li>
+              <li>מפחית סיכון העברה ורטיקלית פי 2–3 בנשים עם VL גבוה</li>
+              <li>בטוח בהריון ובהנקה</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">פרופילקסיס ליילוד — חובה</div>
+            <ul class="rec-list">
+              <li class="crit"><b>HBIG 0.5 ml IM</b> תוך 12 שעות מהלידה</li>
+              <li class="crit"><b>HBV vaccine</b> דחיפה ראשונה תוך 12 שעות + 2 דחיפות נוספות ב-1 ו-6 חודשים</li>
+              <li><b>יעילות:</b> מניעת העברה 85–95% (90%+ עם HBIG+חיסון)</li>
+              <li>בדיקת serology ביילוד ב-9–15 חודשים (HBsAg + anti-HBs)</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">אופן הלידה</div>
+            <ul class="rec-list">
+              <li><b>HBV לבדה אינה אינדיקציה לק"ק</b> — לידה וגינלית מקובלת</li>
+              <li>הימנע מניטור פנימי לקרקפת אם אפשר</li>
+              <li>טוב לחתוך חבל טבור מהר ולשטוף את היילוד</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">הנקה</div>
+            <ul class="rec-list">
+              <li><b>הנקה מותרת</b> ביילוד שקיבל HBIG+חיסון</li>
+              <li>הפסקה זמנית אם פצעי שדיים מדממים, עד החלמה</li>
+            </ul>
+          </div>
+          <div class="rec-src">CDC Perinatal HBV Prevention · AASLD 2018 · ACOG CO 822 (2021)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: HSV -->
+    <div class="pph-detail-area" data-pph-sec="hsv" style="display:none">
+      <div class="sec" style="margin-top:0">HSV (הרפס) ואגינלי בהריון — נוהל רמב"ם 059.20</div>
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>פרוטוקול ניהול</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">RCOG 2014 · ACOG 2020</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">סיכון העברה ליילוד</div>
+            <ul class="rec-list">
+              <li><b>זיהום ראשוני (Primary)</b> ב-T3 → סיכון <b>44%</b></li>
+              <li><b>Non-primary first episode</b> ב-T3 → סיכון <b>24%</b></li>
+              <li><b>זיהום חוזר (Reactivation)</b> → סיכון <b>2%</b></li>
+              <li>HSV-1 → סיכון העברה גבוה פי 34 מ-HSV-2 (אך פרוגנוזה טובה יותר ביילוד)</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">טיפול בזיהום פעיל בהריון</div>
+            <ul class="rec-list">
+              <li><b>זיהום ראשוני / ארוע ראשון:</b> Acyclovir 400 mg PO ×3/יום למשך 7-10 ימים · או Valacyclovir 1 g PO ×2/יום</li>
+              <li>בזיהום ראשוני ב-T3 — להמשיך טיפול עד הלידה</li>
+              <li><b>זיהום חוזר סימפטומטי:</b> Acyclovir 400 mg PO ×3/יום למשך 5 ימים · או Valacyclovir 500 mg PO ×2/יום</li>
+              <li>טיפול סימפטומטי: שטיפות, אקמול, ג'ל לידוקאין 2% מקומי</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">טיפול מדכא יומי מ-36+0</div>
+            <ul class="rec-list">
+              <li><b>Acyclovir 400 mg PO ×3/יום</b></li>
+              <li>בכל אישה עם היסטוריה של הרפס ואגינלי — להציע</li>
+              <li>בנגע ראשוני ב-T3 — להמשיך מהאבחנה עד הלידה</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">אינדיקציות לניתוח קיסרי</div>
+            <ul class="rec-list">
+              <li class="crit"><b>נגעים ואגינליים פעילים</b> או סימפטומים אופייניים בלידה (כולל ירידת מים)</li>
+              <li class="crit"><b>זיהום ראשוני / non-primary first בT3 שלא טופל</b> — דרושה סרולוגיה לאישוש</li>
+              <li>נגעים באזורים סמוכים (ירכיים, ישבן) — אינם אינדיקציה לק"ק, יש לכסות היטב</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">זיהום הרפטי סיסטמי</div>
+            <ul class="rec-list">
+              <li><b>Systemic HSV (CNS/hepatitis/pneumonitis):</b> Acyclovir 5-10 mg/kg IV ×3/יום למשך 2-7 ימים (עד שיפור) → המשך PO 400 mg ×3 עד 10 ימים סה"כ</li>
+              <li><b>HSV encephalitis:</b> Acyclovir 5-10 mg/kg IV ×3/יום למשך 21 ימים</li>
+              <li>התאמת מינון באי-ספיקת כליות</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">לאחר הלידה</div>
+            <ul class="rec-list">
+              <li>שטיפת ידיים לפני כל מגע עם היילוד</li>
+              <li>נגעי שפתיים — להימנע ממגע ישיר ומשיתוף רוק</li>
+              <li>נגעים על השדיים — להפסיק הנקה זמנית מהשד הפגוע</li>
+              <li>Acyclovir בטוח בהנקה</li>
+            </ul>
+          </div>
+          <div class="rec-src">נוהל רמב"ם 059.20 · ACOG PB MAY 2020 · RCOG 2014 · נייר עמדה ישראלי #25 (2013)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: HCV -->
+    <div class="pph-detail-area" data-pph-sec="hcv" style="display:none">
+      <div class="sec" style="margin-top:0">HCV (הפטיטיס C) בהריון</div>
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>סקירה וניהול</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">נייר #41 · ACOG 2021</span></div>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>סקר אוניברסלי</b> בהריון (HCV Ab)</li>
+            <li><b>שיעור העברה ורטיקלית:</b> 5–10% · עולה ל-15–25% אם HIV co-infection</li>
+            <li><b>אין טיפול תרופתי בהריון</b> — DAAs (Sofosbuvir, Ledipasvir, וכו') לא מומלצים בהריון, ידחה לאחר לידה</li>
+            <li><b>לידה וגינלית מקובלת</b> — HCV לבדה אינה אינדיקציה לק"ק</li>
+            <li>הימנע מניטור פנימי, ממכשירני בעור הקרקפת, מ-PROM ממושך אם אפשר</li>
+            <li><b>הנקה מותרת</b> · להימנע אם סדקים מדממים בפטמה</li>
+            <li>תינוק: בדיקה ב-2 ו-6 חודשים (HCV RNA) · אם חיובי — הפניה לרופא ילדים מומחה</li>
+          </ul>
+          <div class="rec-src">נייר עמדה ישראלי #41 · ACOG CO 723 (2017, מאומץ 2021)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: Syphilis -->
+    <div class="pph-detail-area" data-pph-sec="syphilis" style="display:none">
+      <div class="sec" style="margin-top:0">סיפיליס בהריון</div>
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>אבחנה וטיפול</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">CDC 2021</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">סקירה ואבחנה</div>
+            <ul class="rec-list">
+              <li>סקר VDRL בכל אישה בהריון · חזרה ב-T3 וב-לידה בסיכון גבוה</li>
+              <li><b>סקר חיובי:</b> RPR + TPHA / FTA-ABS לאישוש</li>
+              <li>סיווג: Primary · Secondary · Early latent (&lt;1 שנה) · Late latent · Tertiary</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">טיפול — פניצילין G הוא היחיד עם יעילות מוכחת ביילוד</div>
+            <ul class="rec-list">
+              <li><b>Primary / Secondary / Early latent:</b> Benzathine Penicillin G 2.4 million units IM × 1</li>
+              <li><b>Late latent / Tertiary / שלב לא ידוע:</b> Benzathine Penicillin G 2.4 million units IM ×3 (במרווחים של שבוע)</li>
+              <li><b>Neurosyphilis:</b> Aqueous crystalline Penicillin G 18-24 million units IV/יום × 10-14 ימים</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">אלרגיה לפניצילין</div>
+            <ul class="rec-list">
+              <li class="crit"><b>אסור — Doxycycline בהריון</b></li>
+              <li>חובה <b>דה-סנסיטיזציה</b> ומתן פניצילין (פניצילין הוא הטיפול היחיד היעיל ליילוד)</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">מעקב</div>
+            <ul class="rec-list">
+              <li>טיטרים סרולוגיים כל 4 שבועות אחרי טיפול · יעד: ירידה פי 4 ב-6 חודשים</li>
+              <li>Jarisch-Herxheimer reaction יכולה לקרות (חום, צירים, רפיון רחם) — לא נגד לטיפול</li>
+              <li>סקירה אנטומית של העובר — לחפש סימני סיפיליס מולד</li>
+            </ul>
+          </div>
+          <div class="rec-src">CDC STD Treatment Guidelines 2021 · ACOG CO 824</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: Listeria -->
+    <div class="pph-detail-area" data-pph-sec="listeria" style="display:none">
+      <div class="sec" style="margin-top:0">ליסטריה בהריון — נייר עמדה #26</div>
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>אבחנה וטיפול</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">איגוד זיהומיות</span></div>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>סיכון פי 20</b> בהריון לזיהום ליסטריה</li>
+            <li><b>תסמינים:</b> חום + תסמיני שפעת (מיאלגיה, כאב ראש) · יכול להיות עם תסמיני GI</li>
+            <li><b>אבחנה:</b> תרבית דם (חובה!) · אמניוצנטזה ותרבית מי שפיר אם דם חיובי</li>
+            <li><b>סיבוכים:</b> הפלה (15–25%) · IUFD · לידה מוקדמת · ספסיס נאונטלי · מנינגיטיס נאונטלית</li>
+            <li class="crit"><b>טיפול:</b> Ampicillin 2 g IV ×4–6 ליום למשך 2 שבועות לפחות (3 שבועות במנינגיטיס)</li>
+            <li><b>אלרגיה לפניצילין:</b> Trimethoprim-Sulfamethoxazole (TMP-SMX)</li>
+            <li><b>מניעה:</b> הימנעות מגבינות לא מפוסטרות, נקניקים לא מבושלים, סלטי דלי, פטה</li>
+          </ul>
+          <div class="rec-src">נייר עמדה ישראלי #26 · CDC Listeriosis · Mylonakis E et al. Medicine 2002</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== Israeli Position Papers Browser ===== -->
   <div id="papers" class="panel">
     <details class="ref-wrap">
@@ -3870,7 +4705,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.17';
+const APP_VERSION = '3.18';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -4159,14 +4994,18 @@ function togglePphDetail(row){
   row.classList.add('expanded');
 }
 
-// ─── PPH section card navigation ──────────────────────────────────────
-function showPphSection(id){
-  document.querySelectorAll('.pph-card').forEach(c => c.classList.toggle('active', c.dataset.pph === id));
-  document.querySelectorAll('[data-pph-sec]').forEach(s => {
+// ─── Generic card-section navigation (scoped to the closest panel) ─────
+// Used by PPH, Preeclampsia, and Infection tabs — all share the same
+// pph-card / pph-detail-area visual pattern. Passing `btn` scopes the
+// toggle to that panel; omitting it falls back to #pph (legacy calls).
+function showPphSection(id, btn){
+  const panel = btn?.closest('.panel') || document.getElementById('pph');
+  if (!panel) return;
+  panel.querySelectorAll('[data-pph]').forEach(c => c.classList.toggle('active', c.dataset.pph === id));
+  panel.querySelectorAll('[data-pph-sec]').forEach(s => {
     s.style.display = s.dataset.pphSec === id ? '' : 'none';
   });
-  // Scroll the detail into view smoothly
-  const detail = document.querySelector(`[data-pph-sec="${id}"]`);
+  const detail = panel.querySelector(`[data-pph-sec="${id}"]`);
   if (detail) detail.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 }
 
@@ -4396,6 +5235,8 @@ const TAB_KEYWORDS = {
   pplan:      ['תוכנית','plan','schedule','בדיקות','timing','moh','משרד הבריאות','nipt'],
   delivery:   ['delivery','תזמון','לידה','37','38','39','induction','השראה','smfm','acog','timing'],
   breech:     ['breech','עכוז','frank','complete','footling','ecv','היפוך','external cephalic','version','hannah','term breech trial'],
+  pec:        ['רעלת','preeclampsia','eclampsia','אקלמספיה','hellp','labetalol','hydralazine','nifedipine','mgso4','magnesium','מגנזיום','chap','seizure','פרכוסים','iyl','iyl"d','יל"ד'],
+  infection:  ['זיהום','infection','אמניוניטיס','chorioamnionitis','amnionitis','triple i','gbs','ampicillin','gentamicin','clindamycin','hiv','aids','zidovudine','azt','hbv','hepatitis b','tenofovir','hbig','hsv','herpes','acyclovir','valacyclovir','zovirax','valtrex','hcv','hepatitis c','סיפיליס','syphilis','penicillin','ליסטריה','listeria'],
   tolac:      ['tolac','vbac','grobman','קיסרי','cs','קיסרית','race-neutral'],
   rupture:    ['rupture','קרע','רחם','uterine','landon','bujold','gyamfi','interval'],
   pph:        ['pph','דימום','postpartum','tone','trauma','tissue','thrombin','txa','bakri','b-lynch','massive transfusion','mtp','woman','tranexamic','teg','rotem','cryo','קריו','ffp','פלזמה','פיברינוגן','fibrinogen','riastap','prbc','כדוריות','platelets','פלטליות','novoseven'],
