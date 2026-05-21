@@ -884,6 +884,197 @@
     .pp-grid { grid-template-columns: 1fr; }
   }
 
+  /* ── Israeli Position Papers ──────────────────────────────────────── */
+  .papers-toolbar {
+    display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    margin-bottom: 14px;
+  }
+  .papers-filter-input {
+    flex: 1; min-width: 200px;
+    background: var(--surface); border: 1px solid var(--border2);
+    border-radius: 10px; padding: 0 14px; height: 38px;
+    color: var(--text); font-size: 13.5px; font-family: inherit; outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .papers-filter-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--ring); }
+  .papers-chip {
+    font-size: 11.5px; padding: 5px 11px; border-radius: 999px;
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--text2); cursor: pointer; font-family: inherit;
+    font-weight: 500; transition: all .15s;
+  }
+  .papers-chip:hover { border-color: var(--primary); color: var(--primary); }
+  .papers-chip.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .papers-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+    gap: 12px;
+  }
+  .paper-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 14px 16px;
+    cursor: pointer; transition: all .15s;
+    box-shadow: var(--sh-sm); position: relative; overflow: hidden;
+    display: flex; flex-direction: column; gap: 6px;
+    text-align: right; font-family: inherit;
+  }
+  .paper-card::before {
+    content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 3px;
+    background: var(--primary); opacity: 0; transition: opacity .2s;
+  }
+  .paper-card:hover { transform: translateY(-1px); box-shadow: var(--sh-md); border-color: var(--text3); }
+  .paper-card:hover::before { opacity: 1; }
+  .paper-card .paper-num {
+    font-size: 10.5px; font-weight: 700; color: var(--primary);
+    letter-spacing: .05em; font-variant-numeric: tabular-nums;
+  }
+  .paper-card .paper-title {
+    font-size: 13.5px; font-weight: 600; color: var(--text); line-height: 1.4;
+  }
+  .paper-card .paper-meta {
+    font-size: 11.5px; color: var(--text3); margin-top: 2px;
+  }
+  .paper-card .paper-tags {
+    display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px;
+  }
+  .paper-card .paper-tag {
+    font-size: 10.5px; padding: 2px 8px; border-radius: 999px;
+    background: var(--surface2); color: var(--text2); white-space: nowrap;
+  }
+  .papers-count {
+    font-size: 12px; color: var(--text3); margin-bottom: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  /* Paper modal */
+  .paper-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(4px);
+    display: none; align-items: flex-start; justify-content: center;
+    padding: 28px 16px; z-index: 1000; overflow-y: auto;
+  }
+  .paper-overlay.open { display: flex; }
+  .paper-modal {
+    background: var(--surface-elev); border-radius: var(--radius-lg);
+    max-width: 680px; width: 100%; box-shadow: var(--sh-lg);
+    border: 1px solid var(--border);
+    padding: 24px;
+    direction: rtl; text-align: right;
+    animation: paperUp .25s cubic-bezier(.4,0,.2,1);
+  }
+  @keyframes paperUp { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
+  .paper-modal-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 14px; margin-bottom: 14px;
+  }
+  .paper-modal-num {
+    background: var(--primary); color: #fff; padding: 4px 10px;
+    border-radius: 6px; font-size: 11px; font-weight: 700;
+    letter-spacing: .02em; font-variant-numeric: tabular-nums;
+  }
+  .paper-modal-close {
+    border: none; background: var(--surface2); color: var(--text2);
+    width: 32px; height: 32px; border-radius: 999px; cursor: pointer;
+    display: grid; place-items: center; flex: 0 0 auto;
+    transition: background .15s, color .15s;
+  }
+  .paper-modal-close:hover { background: var(--red-bg); color: var(--red); }
+  .paper-modal h3 { font-size: 18px; font-weight: 600; color: var(--text); line-height: 1.35; }
+  .paper-modal-meta { font-size: 12.5px; color: var(--text3); margin: 6px 0 14px; }
+  .paper-modal-section { margin-top: 16px; }
+  .paper-modal-section h4 {
+    font-size: 11px; font-weight: 700; color: var(--text3);
+    text-transform: uppercase; letter-spacing: .07em; margin-bottom: 8px;
+  }
+  .paper-modal-section ul {
+    list-style: none; padding: 0;
+  }
+  .paper-modal-section li {
+    font-size: 13px; line-height: 1.6; padding: 4px 0;
+    padding-right: 16px; position: relative; color: var(--text2);
+  }
+  .paper-modal-section li::before {
+    content: ""; position: absolute; right: 4px; top: 11px;
+    width: 5px; height: 5px; border-radius: 50%; background: var(--primary);
+  }
+  .paper-modal-section li b { color: var(--text); font-weight: 600; }
+  .paper-related-tabs {
+    margin-top: 18px; padding-top: 14px;
+    border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+  .paper-related-tabs > span:first-child {
+    font-size: 11.5px; color: var(--text3); font-weight: 500;
+    align-self: center; margin-left: 4px;
+  }
+  .paper-related-link {
+    font-size: 12px; padding: 5px 12px; border-radius: 999px;
+    background: var(--primary-bg); color: var(--primary);
+    border: 1px solid var(--primary); cursor: pointer;
+    font-family: inherit; font-weight: 500;
+  }
+  .paper-related-link:hover { background: var(--primary); color: #fff; }
+
+  /* ── "Additional info" framed section style ─────────────────────────── */
+  /* Used to clearly separate additional information areas at the bottom of tabs.
+     Auto-applied via JS to .panel > .result + sibling content. */
+  .info-frame {
+    margin-top: 22px; padding: 18px 16px 4px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+    position: relative;
+  }
+  .info-frame::before {
+    content: "מידע נוסף"; position: absolute; top: -10px; right: 18px;
+    background: var(--bg); padding: 2px 12px;
+    font-size: 10.5px; font-weight: 700; color: var(--primary);
+    letter-spacing: .08em; text-transform: uppercase;
+    border: 1px solid var(--border); border-radius: 999px;
+  }
+  .info-frame.compact { margin-top: 14px; padding-top: 14px; }
+  .info-frame[data-label]::before { content: attr(data-label); }
+
+  /* ── PPH detail cards (replaces long scroll) ──────────────────────── */
+  .pph-cards {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px; margin-bottom: 14px;
+  }
+  .pph-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 14px 14px 12px;
+    cursor: pointer; transition: all .15s;
+    box-shadow: var(--sh-sm); text-align: right; font-family: inherit;
+    display: flex; align-items: flex-start; gap: 11px;
+    position: relative; overflow: hidden;
+  }
+  .pph-card::before {
+    content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 3px;
+    background: var(--primary); opacity: 0; transition: opacity .2s;
+  }
+  .pph-card:hover { transform: translateY(-1px); box-shadow: var(--sh-md); border-color: var(--text3); }
+  .pph-card:hover::before { opacity: 1; }
+  .pph-card.active { border-color: var(--primary); background: var(--primary-bg); }
+  .pph-card.active::before { opacity: 1; }
+  .pph-card-ico {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--surface2); color: var(--text3);
+    display: grid; place-items: center; flex: 0 0 auto;
+  }
+  .pph-card.active .pph-card-ico {
+    background: var(--primary); color: #fff;
+  }
+  .pph-card-ico svg { width: 16px; height: 16px; }
+  .pph-card-text { flex: 1; min-width: 0; }
+  .pph-card-title { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.3; }
+  .pph-card-sub { font-size: 11px; color: var(--text3); margin-top: 2px; line-height: 1.4; }
+  .pph-detail-area {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 18px;
+    margin-bottom: 18px; box-shadow: var(--sh-sm);
+    border-right: 3px solid var(--primary);
+    animation: fadeUp .25s cubic-bezier(.4,0,.2,1);
+  }
+  .pph-detail-area .sec:first-child { margin-top: 0; }
+
   /* ── Pregnancy Plan — stepped accordion design ─────────────────────── */
   .pplan-header {
     background: var(--surface-elev); border: 1px solid var(--border);
@@ -1047,6 +1238,10 @@
         <button class="tab" onclick="showTab('pplan',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="13" height="13.5" rx="1.5"/><path d="M6.5 7.5h7M6.5 10.5h7M6.5 13.5h4"/><path d="M5.5 7l.6.6L7.2 6.5"/></svg>
           <span>תוכנית הריון</span>
+        </button>
+        <button class="tab" onclick="showTab('papers',this)" role="tab">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2.5h7l3 3v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1Z"/><path d="M12 2.5v3h3"/><path d="M7 9h6M7 12h6M7 15h4"/></svg>
+          <span>ניירות עמדה</span>
         </button>
       </nav>
     </div>
@@ -1326,6 +1521,7 @@
       </summary>
     <div class="ref">
       <b>מקורות:</b><br>
+      &nbsp;&nbsp;<b>נייר עמדה ישראלי #14 (2024):</b> לידה מוקדמת — האיגוד הישראלי למיילדות (פרוגסטרון, צלסטון, MgSO4)<br>
       &nbsp;&nbsp;<b>Iams JD et al.</b> <i>NEJM</i> 1996;334:567–572 (NICHD MFMU, n=2,915, מדידה ב-24w)<br>
       &nbsp;&nbsp;<b>Hibbard JU et al.</b> <i>Obstet Gynecol</i> 2000;96:972–8 (16–22w, n=760)<br>
       &nbsp;&nbsp;<b>Liu L et al.</b> <i>Maternal-Fetal Medicine</i> 2020 (28–32w, n=14,953)<br>
@@ -1451,6 +1647,7 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
     <div class="ref">
+      <b>נייר עמדה ישראלי #10 (2025):</b> ניהול הריון עם עובר החשוד ב-IUGR — AAM + חברת אולטרסאונד<br>
       <b>UA PI ו-S/D:</b> Arduini D, Rizzo G. <i>J Perinat Med</i> 1990;18:165–172 (1556 עוברים)<br>
       &nbsp;&nbsp;<b>נכלל בחישוב:</b> Doppler מעורק טבורי ב-free loop — PSV (S), EDV (D), TAMax · PI=(S–D)/TAMax · S/D=S/D<br>
       <b>UtA-PI:</b> Gómez O et al. <i>UOG</i> 2008;32:128–132 (מאומץ ISUOG)<br>
@@ -1516,6 +1713,7 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
     <div class="ref">
+      <b>נייר עמדה ישראלי #39 (2024):</b> אלואיזואימוניזציה (Rh) — שימוש ב-MCA-PSV<br>
       <b>מקור:</b> Mari G et al. <i>N Engl J Med</i> 2000;342:9–14<br>
       <b>נכלל בחישוב:</b> MCA-PSV — Doppler מעורק מוחי אמצעי, בשליש הפרוקסימלי קרוב למוצא מ-Circle of Willis, זווית insonation 0° (קריטי לדיוק)<br>
       נוסחה: MCA-PSV median = e^(2.31 + 0.046 × GA) ס"מ/שנייה<br>
@@ -1555,6 +1753,8 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
     <div class="ref">
+      <b>נייר עמדה ישראלי #31 (2024):</b> מיקרוצפליה — חברת אולטרסאונד + AAM (חשד: HC≤-3SD · ודאי: HC≤-5SD)<br>
+      <b>נייר עמדה ישראלי #53 (2024):</b> נוירוסונוגרפיה עוברית — אינדיקציות, פרוטוקול, MRI משלים<br>
       <b>מקור:</b> Chervenak FA et al. <i>Am J Obstet Gynecol</i> 1984;149:512–517<br>
       <b>נכלל בחישוב:</b> HC בלבד — מדידת היקף ראש באליפסה סביב הגולגולת במישור transthalamic (תאלמי + CSP)<br>
       קריטריון מיקרוצפליה: HC ≤ −3 SD · פתולוגי ודאי: ≤ −5 SD (SMFM 2016)
@@ -1647,6 +1847,8 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="ref">
+        <b>נייר עמדה ישראלי #33 (2024):</b> מעקב היריון תאומים — AAM + חברת אולטרסאונד<br>
+        <b>נייר עמדה ישראלי #9 (2023):</b> ניהול הלידה בהיריון רב-עוברים<br>
         <b>ACOG Practice Bulletin 234 (2021):</b> Management of Twin Pregnancies<br>
         <b>SMFM Consult Series #55 (2020):</b> Twin Pregnancies — Management<br>
         <b>ISUOG Practice Guidelines (2016):</b> Role of US in Twin Pregnancy<br>
@@ -1873,6 +2075,9 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="ref">
+        <b>נייר עמדה ישראלי #11 (נובמבר 2024):</b> השראת לידה והבשלת צוואר הרחם<br>
+        <b>נייר עמדה ישראלי #46 (2024):</b> כולסטאזיס בהריון — חומצות מרה, UDCA, תזמון לידה<br>
+        <b>נייר עמדה ישראלי #16 (2024):</b> סוכרת הריונית · <b>#17 (2024):</b> סוכרת טרום-הריונית<br>
         <b>ACOG/SMFM Committee Opinion 764 (2019, מעודכן 2021):</b> Medically Indicated Late-Preterm and Early-Term Deliveries<br>
         <b>SMFM Consult Series:</b> #44 (FGR), #52 (Macrosomia), #54 (Periviability), #55 (Twin), #57 (Cesarean), #58 (PPROM)<br>
         <b>ACOG Practice Bulletin:</b> #222 (Hypertensive Disorders), #228 (Multifetal), #230 (Pregestational Diabetes), #190 (GDM)<br>
@@ -1991,6 +2196,7 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="ref">
+        <b>נייר עמדה ישראלי #18 (2024):</b> יתר לחץ דם ורעלת בהיריון — האיגוד הישראלי למיילדות<br>
         <b>ACOG Committee Opinion 743 (2018):</b> Low-Dose Aspirin Use During Pregnancy — Aspirin 81–162 mg יומי מ-12+0 עד 36+0<br>
         <b>USPSTF Recommendation 2021:</b> ASA למניעת רעלת בנשים עם ≥1 גורם סיכון גבוה או ≥2 גורמי סיכון בינוניים<br>
         <b>Zeisler H et al. (PROGNOSIS):</b> <i>NEJM</i> 2016;374:13–22 — sFlt-1/PlGF ≤38 שולל רעלת לשבוע הבא (NPV 99.3%)<br>
@@ -2097,6 +2303,8 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="ref">
+        <b>נייר עמדה ישראלי #30 (2024):</b> סמנים רכים לדאון — חברת אולטרסאונד + AAM<br>
+        <b>נייר עמדה ישראלי #51 (2024):</b> NIPT — בדיקת DNA חופשי<br>
         <b>FMF Combined Test:</b> Nicolaides KH. <i>AJOG</i> 2011;204:356 — שילוב גיל אם + NT + PAPP-A + βhCG · רגישות 90% ב-FPR 5%<br>
         <b>NT Reference:</b> Nicolaides KH. <i>UOG</i> 1996 — חציון NT עולה עם CRL<br>
         <b>Nasal Bone:</b> Cicero S et al. <i>Lancet</i> 2001;358:1665 — נעדר ב-60-70% מטריזומיה 21<br>
@@ -2356,10 +2564,10 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="ref">
+        <b>נייר עמדה ישראלי #24 (2024):</b> קרישיות בהריון — האיגוד הישראלי למיילדות וגינקולוגיה<br>
         <b>RCOG Green-top Guideline 37a (2015):</b> Reducing the Risk of Venous Thromboembolism during Pregnancy and the Puerperium — מודל ניקוד אנטה-נטלי ופוסט-נטלי<br>
         <b>ACOG Practice Bulletin 196 (2018, מאומץ 2023):</b> Thromboembolism in Pregnancy<br>
         <b>ACCP Antithrombotic Therapy (Bates et al.) Chest 2018:</b> VTE in pregnancy<br>
-        <b>נייר עמדה ישראלי 2019:</b> טרומבופרופילקסיס בהריון ולאחר לידה — האיגוד הישראלי למיילדות וגינקולוגיה<br>
         <b>הנחיה:</b> סיכון VTE בהריון פי 4–5 מאוכלוסיה כללית · 65% מאירועי VTE קורים פוסט-פרטום · LMWH בטוח בהריון (לא חוצה שלייה)<br>
         <b>מינון:</b> Enoxaparin פרופילקטי 40 mg SC/יום (משקל 50–90 ק"ג) · התאמות לפי משקל · ראה תוצאה אישית
       </div>
@@ -2659,6 +2867,7 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="ref">
+        <b>נייר עמדה ישראלי #1 (פברואר 2025):</b> לידה לדנית לאחר ניתוח קיסרי קודם (VBAC) — האיגוד הישראלי למיילדות<br>
         <b>ACOG Practice Bulletin 205 (2019):</b> Vaginal Birth After Cesarean Delivery — בסיס לחישוב<br>
         <b>SMFM Consult Series #54:</b> Counseling for VBAC<br>
         <b>Landon MB et al.</b> <i>NEJM</i> 2004;351:2581 — MFMU Network (n=33,699)<br>
@@ -2747,6 +2956,7 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="ref">
+        <b>נייר עמדה ישראלי #12 (2024):</b> PPH — דימום לאחר לידה — האיגוד הישראלי למיילדות<br>
         <b>ACOG Practice Bulletin 183 (2017, מאומץ 2023):</b> Postpartum Hemorrhage<br>
         <b>FIGO 2022:</b> Postpartum Hemorrhage Initiative · <b>RCOG Green-top Guideline 52</b><br>
         <b>WOMAN Trial (Shakur 2017, Lancet):</b> TXA 1g תוך 3 שעות — הפחתת תמותה מ-PPH ב-31% (Bleeding-related)<br>
@@ -2851,7 +3061,38 @@
       </div>
     </div>
 
-    <div class="sec">בלון באקרי (Bakri Balloon)</div>
+    <div class="info-frame">
+      <div class="sec" style="margin-top:0">המשך הטיפול — לחצי על הכרטיס לפרטים</div>
+      <div class="pph-cards" id="pph-cards-nav">
+        <button class="pph-card active" data-pph="bakri" onclick="showPphSection('bakri')">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="11" rx="5" ry="6"/><path d="M10 5V2M9 2h2"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">בלון באקרי</div><div class="pph-card-sub">טיפול שני · 250-500 מ"ל</div></div>
+        </button>
+        <button class="pph-card" data-pph="escalation" onclick="showPphSection('escalation')">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16l4-4 3 3 4-4 3 3"/><path d="M11 8h6V14"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">אסקלציה כירורגית</div><div class="pph-card-sub">B-Lynch · UAE · היסטרקטומיה</div></div>
+        </button>
+        <button class="pph-card" data-pph="mtp" onclick="showPphSection('mtp')">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2c-3 4-5 7-5 10a5 5 0 0 0 10 0c0-3-2-6-5-10Z"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">עירוי דם מסיבי (MTP)</div><div class="pph-card-sub">יחס 1:1:1 · TXA · פיברינוגן</div></div>
+        </button>
+        <button class="pph-card" data-pph="labs" onclick="showPphSection('labs')">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v6L4 14a2 2 0 0 0 2 3h8a2 2 0 0 0 2-3l-3-6V2"/><path d="M6 2h8"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">בדיקות מעבדה</div><div class="pph-card-sub">STAT · CBC · פיברינוגן · גזים</div></div>
+        </button>
+        <button class="pph-card" data-pph="teg" onclick="showPphSection('teg')">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c2-1 3-4 4-4s2 5 4 5 3-7 4-7 3 6 4 6"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">פיענוח TEG / ROTEM</div><div class="pph-card-sub">R · K · α · MA · LY30</div></div>
+        </button>
+        <button class="pph-card" data-pph="products" onclick="showPphSection('products')">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="11" r="6"/><path d="M10 5V2M8 2h4"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">מוצרי דם — מה כל מנה תורמת</div><div class="pph-card-sub">PRBC · FFP · קריו · פלטליות</div></div>
+        </button>
+      </div>
+    </div>
+
+    <div class="pph-detail-area" id="pph-sec-bakri" data-pph-sec="bakri">
+    <div class="sec" style="margin-top:0">בלון באקרי (Bakri Balloon)</div>
     <div class="rec-box" style="margin-top:0">
       <div class="rec-head">
         <span>הכנסה ושימוש בבלון באקרי</span>
@@ -2897,7 +3138,10 @@
       </div>
     </div>
 
-    <div class="sec">אסקלציה (אם נכשל טיפול שמרני)</div>
+    </div>
+
+    <div class="pph-detail-area" id="pph-sec-escalation" data-pph-sec="escalation" style="display:none">
+    <div class="sec" style="margin-top:0">אסקלציה (אם נכשל טיפול שמרני)</div>
     <div class="rec-box" style="margin-top:0">
       <div class="rec-head">
         <span>אפשרויות אסקלציה כירורגיות</span>
@@ -2912,8 +3156,10 @@
         </ul>
       </div>
     </div>
+    </div>
 
-    <div class="sec">פרוטוקול מתן דם מסיבי (MTP)</div>
+    <div class="pph-detail-area" id="pph-sec-mtp" data-pph-sec="mtp" style="display:none">
+    <div class="sec" style="margin-top:0">פרוטוקול מתן דם מסיבי (MTP)</div>
     <div class="rec-box" style="margin-top:0">
       <div class="rec-head">
         <span>Massive Transfusion Protocol</span>
@@ -2930,8 +3176,10 @@
         </ul>
       </div>
     </div>
+    </div>
 
-    <div class="sec">צ'ק-ליסט הערכה</div>
+    <div class="pph-detail-area" id="pph-sec-labs" data-pph-sec="labs" style="display:none">
+    <div class="sec" style="margin-top:0">בדיקות מעבדה ביקורת</div>
     <div class="rec-box" style="margin-top:0">
       <div class="rec-head">
         <span>בדיקות מעבדה דחופות</span>
@@ -2948,8 +3196,10 @@
         </ul>
       </div>
     </div>
+    </div>
 
-    <div class="sec">פיענוח TEG / ROTEM</div>
+    <div class="pph-detail-area" id="pph-sec-teg" data-pph-sec="teg" style="display:none">
+    <div class="sec" style="margin-top:0">פיענוח TEG / ROTEM</div>
     <div class="rec-box" style="margin-top:0">
       <div class="rec-head">
         <span>Thromboelastography — תוצאות, משמעות, פעולה</span>
@@ -2983,8 +3233,10 @@
         <div class="rec-src">Hagemo JS et al. <i>Crit Care</i> 2015 · Mallaiah S et al. <i>BJOG</i> 2018 (Liverpool ROTEM PPH algorithm) · Collins PW et al. <i>Br J Haematol</i> 2014</div>
       </div>
     </div>
+    </div>
 
-    <div class="sec">מוצרי דם — מה כל מנה תורמת</div>
+    <div class="pph-detail-area" id="pph-sec-products" data-pph-sec="products" style="display:none">
+    <div class="sec" style="margin-top:0">מוצרי דם — מה כל מנה תורמת</div>
     <div class="rec-box" style="margin-top:0">
       <div class="rec-head">
         <span>טבלת ייחוס מהירה למוצרי דם</span>
@@ -3047,12 +3299,56 @@
         <div class="rec-src">AABB Standards 2023 · BCSH (British Committee for Standards in Haematology) 2016 · ACOG PB 183 · Pacheco LD et al. <i>AJOG</i> 2016 (Massive Transfusion in OB)</div>
       </div>
     </div>
+    </div>
 
     <div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-top:14px">
       <b>עקרון מפתח:</b> ב-PPH פעיל, התחל MTP <b>אמפירית 1:1:1</b> (RBC:FFP:Plt) ואל תחכה למעבדה. הוסף TXA 1g מיידי, וכוון לפיברינוגן ≥2 g/L מוקדם — אם TEG/ROTEM זמין, הוא מנחה החלפת מוצרים מדויקת יותר תוך 10–15 דקות.
     </div>
   </div>
 
+  <!-- ===== Israeli Position Papers Browser ===== -->
+  <div id="papers" class="panel">
+    <details class="ref-wrap">
+      <summary>
+        <svg class="ref-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5h7l3 3v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1Z"/><path d="M10 2.5v3h3"/><path d="M5 9h6M5 11.5h4"/></svg>
+        <span>אודות הניירות</span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="ref">
+        <b>איגוד מיילדות (AAM):</b> ניירות עמדה רשמיים של האיגוד הישראלי למיילדות וגינקולוגיה<br>
+        <b>חברת אולטרסאונד:</b> ניירות בנושאי דימות ושימוש קליני<br>
+        <b>איגוד זיהומיות:</b> ניירות בנושאי CMV, ליסטריה, HIV<br>
+        <b>הערה:</b> תקצירי הניירות הם להתמצאות מהירה — לעיון מלא יש לקרוא את הנייר המקורי באתר האיגוד. כל המידע נכון לתאריך פרסום הנייר.
+      </div>
+    </details>
+
+    <div class="papers-toolbar">
+      <input type="search" id="papers-filter" class="papers-filter-input" placeholder="חיפוש בכותרת או בתגיות (לדוגמה: VBAC, CMV, חיסונים, סוכרת)..." autocomplete="off">
+    </div>
+    <div id="papers-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"></div>
+    <div class="papers-count" id="papers-count"></div>
+    <div class="papers-grid" id="papers-grid"></div>
+  </div>
+
+</div>
+
+<!-- Position Paper Modal -->
+<div class="paper-overlay" id="paper-overlay" onclick="if(event.target===this)closePaperModal()">
+  <div class="paper-modal" role="dialog" aria-modal="true" aria-labelledby="paper-modal-title">
+    <div class="paper-modal-head">
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;flex:1">
+        <span class="paper-modal-num" id="paper-modal-num"></span>
+        <span style="font-size:11.5px;color:var(--text3)" id="paper-modal-meta-inline"></span>
+      </div>
+      <button class="paper-modal-close" onclick="closePaperModal()" aria-label="סגור">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l8 8M11 3l-8 8"/></svg>
+      </button>
+    </div>
+    <h3 id="paper-modal-title"></h3>
+    <div class="paper-modal-meta" id="paper-modal-meta"></div>
+    <div id="paper-modal-body"></div>
+    <div class="paper-related-tabs" id="paper-modal-related" style="display:none"></div>
+  </div>
 </div>
 
 <footer style="max-width:560px;margin:0 auto;padding:16px 18px 48px;text-align:center;
@@ -3074,7 +3370,220 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.4';
+const APP_VERSION = '3.5';
+
+// ─── PPH section card navigation ──────────────────────────────────────
+function showPphSection(id){
+  document.querySelectorAll('.pph-card').forEach(c => c.classList.toggle('active', c.dataset.pph === id));
+  document.querySelectorAll('[data-pph-sec]').forEach(s => {
+    s.style.display = s.dataset.pphSec === id ? '' : 'none';
+  });
+  // Scroll the detail into view smoothly
+  const detail = document.querySelector(`[data-pph-sec="${id}"]`);
+  if (detail) detail.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+
+// ─── Israeli Position Papers (53 docs — AAM, US, Infectious Diseases) ──
+// Each paper has: num, title, org, year, tags, keyPoints, relatedTabs
+const ISRAELI_PAPERS = [
+  {num:'1', title:'לידה לדנית לאחר ניתוח קיסרי קודם (VBAC)', org:'איגוד מיילדות', year:'פברואר 2025', tags:['VBAC','TOLAC','ניתוח קיסרי'], relatedTabs:['tolac','rupture'],
+   keyPoints:['TOLAC מותר ב-1 ק"ק קודם עם חתך טרנסברסלי נמוך','סיכון לקרע רחם: 0.5–1% (חתך טרנסברסלי); 4–9% בחתך קלאסי','≥2 ניתוחים קיסריים — TOLAC לא מומלץ','שימוש בחישוב Grobman לחיזוי הצלחה','חתך אנכי / T / J — TOLAC אסור','השראה עם פרוסטגלנדינים מעלה סיכון לקרע משמעותית']},
+  {num:'2', title:'לידת עכוז', org:'איגוד מיילדות', year:'פברואר 2025', tags:['עכוז','Breech','ECV'], relatedTabs:['delivery'],
+   keyPoints:['ECV מומלץ ב-36-37 שבועות (סיכוי הצלחה 50-60%)','התוויות נגד ל-ECV: דימום, היפרדות, מומים','לידה וגינלית של עכוז: רק במרכזים עם ניסיון, EFW 2.5-3.8 ק"ג','ק"ק מתוכנן ב-39+0 אם נכשל ECV / לא מתאים']},
+  {num:'3', title:'ניהול היריון שלאחר המועד', org:'איגוד מיילדות', year:'פברואר 2022', tags:['Postterm','השראת לידה'], relatedTabs:['delivery','preg'],
+   keyPoints:['41+0–41+6: שקול השראה','42+0 ומעלה: השראה מומלצת בחוזק','מ-40+0: NST + AFI בכל 2-3 ימים','דיון עם המטופלת על סיכונים (תמותה עוברית עולה אחרי 41+0)']},
+  {num:'4', title:'יילוד עובר החשוד כמקרוזומי', org:'איגוד מיילדות', year:'יולי 2025', tags:['מקרוזומיה','Macrosomia','כליאת כתפיים'], relatedTabs:['delivery','efw'],
+   keyPoints:['EFW ≥4500g באישה לא סוכרתית — שקול ק"ק','EFW ≥4500g באישה סוכרתית — ק"ק מתוכנן (סיכון כליאת כתפיים)','EFW ≥5000g — ק"ק חזק לכל מקרה','לא מומלצת השראה לפני 39+0 רק על סמך חשד למקרוזומיה','דיוק אולטרסאונד ±15% — לא תחליף לשיקול קליני']},
+  {num:'5', title:'יילוד לידני מכשירני', org:'איגוד מיילדות', year:'יולי 2023', tags:['Vacuum','Forceps','מכשירני'], relatedTabs:['delivery','tolac'],
+   keyPoints:['אינדיקציות: שלב שני ממושך, NRFHR, אתי-עייפות אמהית','דרישות: שלפוחית ריקה, פתיחה מלאה, ראש בתחנה +2','כשלון אחרי 3 משיכות שואב = להפסיק','סיכון לקרע פרינאלי OASIS גבוה יותר ב-Forceps']},
+  {num:'6', title:'ניהול מעקב אישה הרה בהריון בסיכון נמוך', org:'איגוד מיילדות', year:'דצמבר 2024', tags:['מעקב הריון','GBS'], relatedTabs:['pplan'],
+   keyPoints:['ביקור ראשון לפני 10 שבועות','בדיקות ראשוניות: CBC, סוג דם, סרולוגיה, שתן','סקר משולב T1 (NT+PAPP-A+βhCG) ב-11-13+6','סקר ביוכימי T2 (Triple/Quad) ב-14-17','סקירה מאוחרת 19-23','GCT 24-28 שבועות']},
+  {num:'7', title:'CMV — מניעה, בירור וטיפול', org:'איגוד זיהומיות + AAM', year:'2025', tags:['CMV','Valaciclovir','Valganciclovir'], relatedTabs:['pplan'],
+   keyPoints:['סקר סרולוגי (IgG/IgM) בטרימסטר ראשון','סרוקונברסיה בהריון → Valaciclovir 8g/יום (4×2g)','אבחון בעובר: PCR במי שפיר אחרי 21 שבועות + 6 שבועות מהזיהום','MRI עוברי + נוירוסונוגרפיה בכל זיהום מאומת','Valganciclovir באם עם תסמינים/CMV ראשוני מוכח','הנחיות היגיינה: שטיפת ידיים אחרי מגע עם ילדים קטנים']},
+  {num:'8', title:'הנחיות לביצוע אולטרה-סאונד בהיריון', org:'חברת אולטרסאונד + AAM', year:'ינואר 2026', tags:['US','סקירות','NT'], relatedTabs:['preg','efw','hc','fl','biom'],
+   keyPoints:['סקירה ראשונה: 11-13+6 (NT, מומים גסים, מקום שליה)','סקירה מאוחרת: 19-23 שבועות (אנטומיה מקיפה, ביומטריה, שליה, UtA-PI)','סקירת גדילה: 30-32 שבועות (EFW, מי שפיר)','דרישות מינימום לכל סקירה — ראה נייר','דיוק EFW: ±15% (1 SD)','תיקון תאריך לפי CRL מותר עד 13+6']},
+  {num:'9', title:'ניהול הלידה בהיריון רב-עוברים', org:'איגוד מיילדות', year:'ספטמבר 2023', tags:['תאומים','DCDA','MCDA'], relatedTabs:['twins','delivery'],
+   keyPoints:['DCDA לידה ב-38+0–38+6','MCDA לידה ב-36+0–37+6','MCMA ק"ק מתוכנן ב-32+0–34+0','עוקב ראשון (A) ראש: ניתן ניסיון לידה וגינלית','השני (B) עכוז אחרי הראשון: הוצאה ידנית או עכוז','ק"ק לכפתורה אם משקלים שונים בהרבה / מצב לא יציב']},
+  {num:'10', title:'ניהול היריון עם עובר החשוד ב-IUGR / FGR', org:'AAM + אולטרסאונד', year:'ינואר 2025', tags:['IUGR','FGR','SGA','דופלר'], relatedTabs:['ua','efw','preg'],
+   keyPoints:['EFW <אחוזון 10 = SGA · EFW <אחוזון 3 = FGR','דופלר UA חובה במעקב','AEDV → מעקב צמוד · REDV → לידה ב-30+0','דופלר MCA לתיעוד "brain sparing"','DV הפיך → לידה מיידית','לידה: FGR יציב 37+0; קומפלקס מוקדם יותר']},
+  {num:'11', title:'השראת לידה והבשלת צוואר הרחם', org:'איגוד מיילדות', year:'נובמבר 2024', tags:['בישופ','Misoprostol','PGE2','אוקסיטוצין'], relatedTabs:['delivery','tolac'],
+   keyPoints:['בישופ <6 → הבשלת צוואר עם PGE2 או בלון','בישופ ≥6 → אוקסיטוצין IV','Misoprostol 25-50µg PV כל 4-6 שעות','Cervical Ripening Balloon (Foley/Cook) — בטוח גם ב-TOLAC','אוקסיטוצין: התחלה 1-2 mU/min, עליה כל 30 דק','קסליפ קליני (אוקסיטוצין + צירים פעילים) — מעקב CTG רציף']},
+  {num:'12', title:'PPH — דימום לאחר לידה', org:'איגוד מיילדות', year:'2024', tags:['PPH','דימום','אטוניה','קרע'], relatedTabs:['pph'],
+   keyPoints:['הגדרה: ≥1000ml בכל סוג לידה או עם תסמיני שוק','4 T\'s: Tone (70%), Trauma (20%), Tissue (10%), Thrombin (1%)','TXA 1g IV מיידי (WOMAN trial)','אוקסיטוצין 40U בליטר NS · מטרגין 0.2mg IM · המבייט 250µg IM','בלון באקרי 250-500ml · אם נכשל → MTP','MTP יחס 1:1:1 (RBC:FFP:Plt) · יעד פיברינוגן ≥2 g/L']},
+  {num:'13', title:'PPROM — פקיעת קרומים מוקדמת לפני המועד', org:'איגוד מיילדות', year:'2024', tags:['PPROM','צלסטון','Latency'], relatedTabs:['ptb'],
+   keyPoints:['אבחון: גיש אגן + Nitrazine + AmniSure','אנטיביוטיקה: Ampicillin + Azithromycin × 7 ימים','סטרואידים אם 24-34 שבועות','MgSO4 לנוירופרוטקציה אם <32 שבועות','לידה: 34+0 (אלא אם זיהום, NRFHR, היפרדות)','חקיקת כורליו: NICHD criteria']},
+  {num:'14', title:'לידה מוקדמת (PTB)', org:'איגוד מיילדות', year:'2024', tags:['PTL','פרוגסטרון','צלסטון','מגנזיום'], relatedTabs:['ptb','ptcomp'],
+   keyPoints:['CL <25mm באישה אסימפטומטית → פרוגסטרון 200mg PV','CL <25mm + לידה מוקדמת קודמת → שקול cerclage','טוקוליזה: Nifedipine קו ראשון (Atosiban אלטרנטיבה)','סטרואידים 24-34+6 שבועות (Betamethasone 12mg ×2)','MgSO4 לנוירופרוטקציה <32 שבועות','אנטיביוטיקה ל-GBS פרופילקטית']},
+  {num:'15', title:'הגישה לדימומים בהיריון בגיל החיות', org:'איגוד מיילדות', year:'2024', tags:['דימום','גבול חיות','שליה'], relatedTabs:['delivery'],
+   keyPoints:['22-25+6 שבועות = גיל החיות','סטרואידים מ-22+0 אם החלטה להתערב','החלטת המשפחה בשיתוף NICU','החייאת ילוד תלוית גיל ומשקל','שיעורי שרידות (Pagim 2023): 22w 5.9%, 24w 52.5%, 26w 78.6%']},
+  {num:'16', title:'סוכרת הריונית (GDM)', org:'איגוד מיילדות', year:'2024', tags:['GDM','OGTT','אינסולין'], relatedTabs:['pplan','delivery'],
+   keyPoints:['סקר ב-24-28 שבועות: GCT 50g · GDM אם ≥140','OGTT 100g (Carpenter-Coustan): 95/180/155/140 — 2+ חריגים = GDM','מעקב גלוקוז: בצום + שעה אחרי ארוחות','דיאטה ופעילות גופנית קו ראשון','אינסולין אם דיאטה לא מספיקה (Metformin אופציה)','לידה: 39+0–40+6 (מאוזן בדיאטה) · 39+0–39+6 (תרופות)']},
+  {num:'17', title:'סוכרת טרום-הריונית (PGDM)', org:'איגוד מיילדות', year:'2024', tags:['T1DM','T2DM','HbA1c','חומצה פולית 5מ"ג'], relatedTabs:['pplan','delivery','dka'],
+   keyPoints:['חומצה פולית 5 מ"ג ליום (NTD pre-conception)','יעד HbA1c <6.5% לפני הריון','ASA 75-150mg מ-12 שבועות (מניעת רעלת)','אקו לב עוברי 18-22 שבועות (CHD ×5)','סקר רטינופתיה ונפרופתיה בייסליין','לידה 39+0–39+6 אם מאוזנת']},
+  {num:'18', title:'יתר לחץ דם ורעלת בהיריון', org:'איגוד מיילדות', year:'2024', tags:['PEC','HTN','Labetalol','אספירין'], relatedTabs:['peescreen','delivery'],
+   keyPoints:['רעלת: יל"ד חדש + פרוטאינוריה/end-organ damage אחרי 20w','רעלת חמורה: BP ≥160/110 או סיבוכים','ASA 100-150mg ליום ב-12-36+0 לסיכון גבוה','Labetalol קו ראשון בהריון · Nifedipine/Methyldopa אלטרנטיבות','MgSO4 בהתקפים / רעלת חמורה (4-6g IV + 2g/שעה)','לידה: רעלת חמורה ≥34+0 · רעלת ללא תסמיני ≥37+0']},
+  {num:'19', title:'בחילות והקאות בהיריון (NVP)', org:'איגוד מיילדות', year:'2024', tags:['NVP','Hyperemesis','דוקסילמין'], relatedTabs:['pplan'],
+   keyPoints:['קו 1: דוקסילמין-Pyridoxine (B6) — Diclectin','קו 2: Ondansetron 4-8mg, Metoclopramide','היפר-אמזיס: ירידה במשקל ≥5%, קטונוריה, הפרעות אלקטרוליטים','אשפוז ב-Wernicke risk — IV Thiamine לפני גלוקוז','חסר ויטמין B1 → אנצפלופתיית ורניקה']},
+  {num:'20', title:'ניטור דופק לב העובר בזמן הלידה', org:'איגוד מיילדות', year:'2024', tags:['CTG','NICHD','NRFHR'], relatedTabs:['delivery'],
+   keyPoints:['קטגוריה I = תקין · II = לא ודאי · III = NRFHR','החלטה ב-NRFHR: שינוי תנוחה, חמצן, סטופ אוקסיטוצין, נוזלים','ניטור פנימי FSE/IUPC אם לא ברור חיצוני','קטגוריה III ממשיכה → לידה דחופה (ק"ק/ואקום)','דצלרציות מאוחרות: חמצן עוברי לקוי']},
+  {num:'21', title:'ייעוץ טרום-היריוני', org:'איגוד מיילדות', year:'2024', tags:['Preconception','חומצה פולית','חיסונים'], relatedTabs:['pplan'],
+   keyPoints:['חומצה פולית 400 µg 3 חודשים לפני הריון','5 מ"ג בסיכון גבוה: NTD קודם, אפילפסיה, סוכרת, BMI≥30','עדכון חיסונים: MMR/Varicella → 1 חודש לפני','בדיקות נשאות: ציסטיק, פרגיל X, SMA, מחלות יהודי אשכנז','איזון מחלות כרוניות לפני הריון','ייעוץ גנטי בהתוויה']},
+  {num:'22', title:'GBS — חיידק קבוצה B', org:'איגוד מיילדות', year:'2024', tags:['GBS','Penicillin','35-37 שבועות'], relatedTabs:['delivery','pplan'],
+   keyPoints:['תרבית רקטו-וגינלית ב-35-37 שבועות','חיובי → פניצילין IV בלידה (5 mU בולוס, 2.5 mU/4 שעות)','אלרגיה: Cefazolin (קל) · Clindamycin/Vancomycin (חמור)','PPROM/לידה מוקדמת ללא תרבית — טפל אמפירית','GBS בשתן (כל ספירה) → טיפול בלידה גם בלי תרבית','אם לא ידוע + ≥38+0/≥18 שעות PPROM/חום → אמפירי']},
+  {num:'23', title:'מוות עוברי (IUFD)', org:'איגוד מיילדות', year:'2024', tags:['IUFD','Stillbirth','בירור'], relatedTabs:['pplan'],
+   keyPoints:['בירור: שליה לפתולוגיה, אוטופסיה, קריוטיפ','APS/לופוס/טרומבופיליה — סקירה מורחבת','דיון על אופן הלידה (וגינלי או ק"ק לפי GA)','תמיכה רגשית + תכנון הריון הבא','סיכון חוזר תלוי בסיבה (1-2× ברוב המקרים)']},
+  {num:'24', title:'קרישיות בהריון (VTE)', org:'איגוד מיילדות', year:'2024', tags:['VTE','Thrombophilia','LMWH'], relatedTabs:['vte','pplan'],
+   keyPoints:['RCOG Green-top 37a הוא הסטנדרט הישראלי','LMWH פרופילקטי: 40mg Enoxaparin SC/יום (50-90 ק"ג)','התאמה לפי משקל: <50/50-90/91-130/131-170/>170','VTE קודם + תרומבופיליה → LMWH מלא הריון','ק"ק דחוף + 1 גורם → 10 ימים פוסט-פרטום','VTE קודם → 6 שבועות פוסט-פרטום']},
+  {num:'25', title:'HIV בהריון', org:'AAM + זיהומיות', year:'2024', tags:['HIV','ART','העברה ורטיקלית'], relatedTabs:['pplan'],
+   keyPoints:['ART לאורך כל ההריון (גם אם VL נמוך)','ק"ק אלקטיבי ב-38+0 אם VL >1000','VL <50 ב-36 שבועות → לידה וגינלית אפשרית','אסור הנקה בארץ עם חלופה מתאימה','Zidovudine IV בלידה אם VL גבוה']},
+  {num:'26', title:'ליסטריה בהריון', org:'AAM + זיהומיות', year:'2024', tags:['Listeria','אמפיצילין'], relatedTabs:['pplan'],
+   keyPoints:['סיכון פי 20 בהריון לזיהום ליסטריה','תסמינים: חום + תסמיני שפעת + symptoms','אבחון: תרבית דם · אנמולי שפיר אם המעבדה חיובית','טיפול: Ampicillin 2g IV × 4-6 לפחות 2 שבועות','אלרגיה: Trim/Sulfa','הימנעות: גבינות לא מפוסטרות, נקניקים, סלטי דלי']},
+  {num:'27', title:'גיל החיות (Periviability)', org:'איגוד מיילדות', year:'2024', tags:['Periviable','23-24 שבועות','החייאת ילוד'], relatedTabs:['ptcomp'],
+   keyPoints:['22-25+6 שבועות = "אזור החיות"','שרידות (Pagim 2023): 22w 5.9%, 23w 20%, 24w 52.5%, 25w 78%','החלטה משותפת עם המשפחה ו-NICU','סטרואידים מ-22+0 אם החלטה להתערב','התחלת החייאה תלוית מצב היילוד בלידה']},
+  {num:'28', title:'גיל 45+ — מעקב הריון', org:'איגוד מיילדות', year:'2024', tags:['גיל מתקדם','45+','סיכון'], relatedTabs:['pplan'],
+   keyPoints:['סיכון מוגבר: GDM, רעלת, ק"ק, מומים כרומוזומליים','NIPT (אופציה פרטית) מומלץ בגיל זה','ASA 100mg מ-12 שבועות (סיכון רעלת)','אקו לב עוברי 22 שבועות','סקירת גדילה תכופה יותר בטרימסטר שלישי','שיקול לידה מתוכננת 39+0–40+0']},
+  {num:'29', title:'תוספי תזונה והרגלים בהיריון', org:'איגוד מיילדות', year:'2024', tags:['חומצה פולית','ויטמין D','אומגה 3'], relatedTabs:['pplan'],
+   keyPoints:['חומצה פולית 400 µg ליום (פרה-קונספציה — 12 שבועות)','5 מ"ג: BMI≥30, סוכרת, אפילפסיה, NTD קודם','ויטמין D 600-1000 IU ליום (בארץ כל ההריון)','ברזל 27 mg ליום (משלב טרימסטר 2)','סידן 1000-1300 mg/יום (במזון או תוסף)','אומגה 3 (DHA) 200-300 mg/יום','להימנע: כוהל, סוקרלוז, מינונים יתרים של A','קפה: עד 200 mg/יום (כוס-שתיים)']},
+  {num:'30', title:'סמנים רכים לדאון', org:'אולטרסאונד + AAM', year:'2024', tags:['Soft Markers','NF','EIF'], relatedTabs:['dsrisk','hc','biom'],
+   keyPoints:['NF (Nuchal Fold) 16-22w: תקין <6mm','EIF (Echogenic Intracardiac Focus): סמן יחיד = LR×1, מנומק עם סקר לא תקין','חסר עצם אף (Nasal Bone Absence): LR×6-83','Pyelectasis ≥4mm: LR×1.5','ילד ארוך/קצר: לא להסתמך לבד','השפעה: הכי אינפורמטיבי כשמלווה לסקר ביוכימי לא תקין']},
+  {num:'31', title:'מיקרוצפליה', org:'אולטרסאונד + AAM', year:'2024', tags:['Microcephaly','HC','Zika','CMV'], relatedTabs:['hc','biom'],
+   keyPoints:['חשד: HC ≤ -3 SD','אבחנה ודאית: HC ≤ -5 SD','בירור: Zika, CMV, Toxoplasma, גנטיקה (Array, WES)','MRI עוברי מומלץ בכל חשד','אקו לב + סקירה אנטומית מורחבת','ייעוץ גנטי + נוירולוגיה עוברית','שקילת סיום הריון לפי חומרה']},
+  {num:'32', title:'הנחיות להפניה ולביצוע אקו לב עובר', org:'אולטרסאונד + AAM', year:'2024', tags:['Echo','אקו לב','CHD'], relatedTabs:['biom'],
+   keyPoints:['אינדיקציות: סוכרת קדם-הריון, סיפור משפחתי CHD, תרופות (לבית, פנט) ','אקו לב 22-24 שבועות (חלון אופטימלי)','סקירה בסיסית כוללת 4 חדרים + 3 כלים גדולים','חשד מ-NT >3.5 — אקו מוקדם 16-18','CHD חמור → ייעוץ קרדיולוגיה ילדים, תכנון לידה במרכז שלישוני']},
+  {num:'33', title:'מעקב היריון תאומים', org:'AAM + אולטרסאונד', year:'2024', tags:['תאומים','MCDA','DCDA','TTTS'], relatedTabs:['twins'],
+   keyPoints:['קביעת כוריוניות עד 14 שבועות (חלון Lambda/T-sign)','MCDA: סקירת US כל 2 שבועות מ-16w (TTTS/TAPS)','DCDA: סקירת US כל 4 שבועות מ-20w','MCMA: אשפוז ב-26 שבועות, ק"ק 32-34+0','סקירה אנטומית מורחבת ב-19-22 שבועות','דופלר UA לכל ילד מ-24-26 שבועות']},
+  {num:'34', title:'קרע מילדותי של שריר/סוגר/פי הטבעת (OASIS)', org:'איגוד מיילדות', year:'2024', tags:['OASIS','שלב שני','קרע 3-4'], relatedTabs:['delivery'],
+   keyPoints:['דרגות: 3a (<50% EAS), 3b (>50% EAS), 3c (EAS+IAS), 4 (פרינאום+רקטום)','תיקון בחדר ניתוח בהרדמה איפידורל/כללית','אנטיביוטיקה פרופילקטית (Augmentin / Metro)','שתן קטטר 24-48 שעות','משלשלים, מילון פרסי, מעקב כללי','הריון הבא: ייעוץ + שיקול ק"ק']},
+  {num:'35', title:'חיסונים בהריון', org:'איגוד מיילדות', year:'2024', tags:['Tdap','שפעת','COVID','RSV'], relatedTabs:['pplan'],
+   keyPoints:['Tdap: ב-27-36 שבועות לכל הריון (הגנה על תינוק)','שפעת עונתי: בכל GA בעונה (אוקטובר-מרץ)','COVID-19: לפי הנחיית משרד בריאות עדכנית','RSV (Abrysvo): ב-32-36 שבועות עונת RSV (ספטמבר-ינואר)','חיסונים אסורים: MMR, Varicella, BCG, HPV (חיים מוחלשים)','RhoGAM: 28 שבועות לכל Rh-negative + לאחר לידה']},
+  {num:'36', title:'טיפול בכאב בהריון ובהנקה', org:'איגוד מיילדות', year:'2024', tags:['פרצטמול','NSAID','אופיואידים'], relatedTabs:['pplan'],
+   keyPoints:['Paracetamol קו ראשון בכל GA','NSAID אסור אחרי 30 שבועות (סגירת DA)','Tramadol/קודאין — שימוש מוגבל','חידוש למטרגין בהנקה: בטוח לטווח קצר','מורפין/אופיואידים: בטוחים בהנקה (זמן קצר)','להימנע: NSAID זמן רב, אספירין מינון גבוה']},
+  {num:'37', title:'ניהול ומעקב הריון בנוכחות ריבוי/מיעוט מי שפיר', org:'AAM + אולטרסאונד', year:'2024', tags:['Polyhydramnios','Oligohydramnios','AFI','DVP'], relatedTabs:['biom','delivery'],
+   keyPoints:['פולי-הידרמניוס: AFI ≥24 או DVP ≥8cm','אוליגו-הידרמניוס: AFI ≤5 או DVP ≤2cm','בירור: סוכרת, מומים, זיהומים, TTTS','פולי חמור → דקיר מי שפיר','אוליגו → מעקב צמוד, שלילת PPROM, סיכון פגות','לידה: לפי חומרה ו-GA']},
+  {num:'38', title:'בדיקות דימות בהיריון', org:'איגוד מיילדות', year:'2024', tags:['MRI','CT','Imaging','קרינה'], relatedTabs:['pplan'],
+   keyPoints:['US — בטוח בכל GA','MRI — בטוח, ללא גדוליניום','CT — שימוש מוגבל, מנה <50 mGy בטוחה','קרינה <50 mGy → ללא סיכון מובחן','מעבר 100 mGy → סיכון לעובר','חומר ניגוד: יוד — בטוח · גדוליניום — להימנע']},
+  {num:'39', title:'אלואיזואימוניזציה (ריגוש Rh)', org:'איגוד מיילדות', year:'2024', tags:['Anti-D','Rh','Coombs','MCA-PSV'], relatedTabs:['mca','pplan'],
+   keyPoints:['Anti-D 300 µg ב-28 שבועות לכל Rh-negative','Anti-D 300 µg בכל אירוע "רגיש" (CVS, דמום, טראומה)','Anti-D 300 µg בלידה אם תינוק Rh+','Coombs חיובי + IgG ≥1:8 → מעקב MCA-PSV','MCA-PSV ≥1.5 MoM → אנמיה מתונה-קשה → דקירת אם שפיר/דם תוך-רחמי']},
+  {num:'40', title:'טראומה בהיריון', org:'איגוד מיילדות', year:'2024', tags:['טראומה','תאונה','Kleihauer'], relatedTabs:['pplan'],
+   keyPoints:['הערכה: A-B-C + סקירה אבסטטרית','CTG ≥4 שעות (≥20 שבועות) — אחרי כל טראומה','Anti-D אם Rh-negative ופציעה משמעותית','Kleihauer-Betke לכימות העברה דם עוברי','שלילת היפרדות שליה (טכוסטיגרפיה, סימני חיים)','שלילת PPROM, פתיחת צוואר']},
+  {num:'41', title:'צהבת נגיפית C בהריון', org:'AAM + זיהומיות', year:'2024', tags:['HCV','Hepatitis C'], relatedTabs:['pplan'],
+   keyPoints:['סקר אוניברסלי בהריון','שיעור העברה ורטיקלית 5-10%','אין טיפול בהריון (DAAs אסורים) — דחיית עד אחרי לידה','לידה וגינלית בטוחה','הנקה מותרת אם אין סדקים מדממים','תינוק: בדיקות הא AAA ב-2-6 חודשים']},
+  {num:'42', title:'מעקב במהלך משכב לידה', org:'איגוד מיילדות', year:'2024', tags:['Postpartum','משכב לידה'], relatedTabs:[],
+   keyPoints:['מעקב BP/דופק/שתן 24-48 שעות','כאבים, רחם, איטוסיות, פציעות','דיכאון פוסט-פרטום: EPDS ב-6 שבועות','בדיקה רפואית 6 שבועות (תפר, רחם, מצב נפשי)','חיסונים פוסט-לידה: MMR, Varicella אם חסר','תכנון מניעת הריון לפני קיום מינית']},
+  {num:'43', title:'ניתוחים בריאטריים — הריון ומניעת הריון', org:'איגוד מיילדות', year:'2024', tags:['Bariatric','שרוול','מעקף'], relatedTabs:['pplan'],
+   keyPoints:['המתנה 12-18 חודשים אחרי ניתוח','חסרים תזונתיים: B12, ויטמין D, ברזל, חומצה פולית 1mg+','GTT לא אמין — סקר GDM עם פרופיל גלוקוז יומי','סיכון מוגבר ל-FGR אם מעקף חמור','התאמת ניטור מאוזן עם אנדוקרינולוגיה תזונתי']},
+  {num:'45', title:'היפוך חיצוני (ECV)', org:'איגוד מיילדות', year:'2024', tags:['ECV','עכוז','37 שבועות'], relatedTabs:['delivery'],
+   keyPoints:['ביצוע ב-36-37 שבועות (לפני זה — עוד יחזור לבד)','סיכוי הצלחה: 50-60%','התוויות נגד: דימום, מומים, שליית פתח, היפרדות','טוקוליזה: Terbutaline 250µg SC','אנטי-D 300µg אם Rh-negative','מעקב CTG אחרי']},
+  {num:'46', title:'כולסטאזיס בהריון (ICP)', org:'איגוד מיילדות', year:'2024', tags:['ICP','חומצות מרה','UDCA'], relatedTabs:['delivery','pplan'],
+   keyPoints:['אבחנה: גרד + חומצות מרה ≥10 µmol/L','BA 10-39: מעקב + UDCA, לידה 37+0','BA 40-99: לידה ב-36+0–37+0','BA ≥100: לידה ב-34-36 שבועות (סיכון IUFD גבוה)','UDCA 10-15 mg/kg/יום (15 mg/kg אם BA גבוה)','מעקב BA ו-LFT שבועי']},
+  {num:'47', title:'דלקות בדרכי השתן בהיריון (UTI)', org:'איגוד מיילדות', year:'2024', tags:['UTI','Pyelonephritis','אנטיביוטיקה'], relatedTabs:['pplan'],
+   keyPoints:['סקר תרבית שתן בביקור ראשון','בקטריוריה אסימפטומטית — חובה לטפל','Nitrofurantoin 100mg ×4 (לא ב-T3)','Cefalexin / Augmentin אופציות','פיילונפריטיס: אשפוז, Ceftriaxone IV','חזרה תרבית 1-2 שבועות אחרי הטיפול']},
+  {num:'48', title:'ניהול השלב השני של הלידה', org:'איגוד מיילדות', year:'2024', tags:['שלב שני','Pushing','מכשירני'], relatedTabs:['delivery'],
+   keyPoints:['פרים: ≤3 שעות (≤4 אם אפידורל)','מולטיפר: ≤2 שעות (≤3 אם אפידורל)','דחיפה: ספונטנית או "Valsalva" לפי תרבות','מצב אם: לא יושבת על גב — צד שמאל/כיריים','מכשירני אם דחיפה לא יעילה / NRFHR','מצוקה עוברית → ק"ק או מכשירני']},
+  {num:'49', title:'אנמיה בהריון', org:'איגוד מיילדות', year:'2024', tags:['Iron','ברזל','IV iron'], relatedTabs:['pplan'],
+   keyPoints:['סף Hb לאבחנה: T1 <11, T2 <10.5, T3 <11','בירור: פריטין, ויטמין B12, פוליאט, MCV','ברזל פומי קו ראשון (60mg יסודי × 1-2 ליום)','אם פומי לא נסבל / Hb <9: ברזל IV (Ferrinject, Venofer)','עירוי דם רק ב-Hb <7 או תסמינים','חזרה בדיקה 2-4 שבועות אחרי תחילת טיפול']},
+  {num:'50', title:'יתר לחץ דם כרוני בהיריון (CHTN)', org:'איגוד מיילדות', year:'2024', tags:['CHTN','CHAP','Labetalol'], relatedTabs:['peescreen'],
+   keyPoints:['CHAP trial 2022 — יעד <140/90 בכל ההריון','קו 1: Labetalol · קו 2: Nifedipine / Methyldopa','אסור: ACEI, ARB, Atenolol','ASA 100mg מ-12 שבועות (סיכון רעלת מוסף)','סקירה לרעלת בכל ביקור','לידה: ללא רעלת — 38+0–39+6']},
+  {num:'51', title:'NIPT (בדיקת DNA חופשי)', org:'איגוד מיילדות', year:'2024', tags:['NIPT','cfDNA','טריזומיה 21'], relatedTabs:['dsrisk','pplan'],
+   keyPoints:['רגישות 99% לטריזומיה 21','אפשרי מ-10 שבועות','אינו בסל הבריאות — תשלום פרטי או ביטוח משלים','המלצה: גיל אמהי ≥35, סקר משולב חיובי, סיפור משפחתי','חיוב NIPT → CVS/אמניוצנטזה לאישור (אינו אבחנתי)','אינו שולל את כל המומים — סקירה אנטומית עדיין נדרשת']},
+  {num:'52', title:'פרע כתפיים (Shoulder Dystocia)', org:'איגוד מיילדות', year:'2024', tags:['Shoulder Dystocia','McRoberts','HELPERR'], relatedTabs:['delivery'],
+   keyPoints:['פרוטוקול HELPERR:','H — Help (קריאה לעזרה)','E — Episiotomy (אם נדרש)','L — Legs (McRoberts maneuver)','P — Pressure suprapubic','E — Enter (Rubin, Wood\'s screw)','R — Remove posterior arm','R — Roll (Gaskin)','סיבוכים: שיתוק עצב ברכיאלי, שבר עצם בריח, היפוקסיה']},
+  {num:'53', title:'נוירוסונוגרפיה עוברית', org:'אולטרסאונד + AAM', year:'2024', tags:['נוירוסונוגרפיה','מוח עוברי','MRI'], relatedTabs:['hc','biom'],
+   keyPoints:['אינדיקציות: HC לא תקין, ventriculomegaly, מומי מוח, סקר חיובי','בדיקה מורחבת: corpus callosum, vermis, cortex, ventricles','MRI עוברי משלים — אחרי 24 שבועות','חיתוכים סטנדרטיים: axial, coronal, sagittal','התייעצות עם נוירולוגיה עוברית במקרים מורכבים','חזרה ב-32 שבועות לעקיבת התפתחות']}
+];
+
+// Render papers grid
+function renderPapers(filter='', activeChip='all'){
+  const grid = document.getElementById('papers-grid');
+  const countEl = document.getElementById('papers-count');
+  if(!grid) return;
+  const q = filter.trim().toLowerCase();
+  const filtered = ISRAELI_PAPERS.filter(p => {
+    if (activeChip !== 'all' && !p.org.includes(activeChip)) return false;
+    if (!q) return true;
+    const hay = `${p.num} ${p.title} ${p.tags.join(' ')} ${(p.keyPoints||[]).join(' ')}`.toLowerCase();
+    return hay.includes(q);
+  });
+  countEl.textContent = `${filtered.length} מתוך ${ISRAELI_PAPERS.length} ניירות`;
+  grid.innerHTML = filtered.map(p => `
+    <button class="paper-card" onclick="openPaperModal('${p.num}')">
+      <div class="paper-num">נייר #${p.num} · ${p.year}</div>
+      <div class="paper-title">${p.title}</div>
+      <div class="paper-meta">${p.org}</div>
+      <div class="paper-tags">${p.tags.slice(0,4).map(t=>`<span class="paper-tag">${t}</span>`).join('')}</div>
+    </button>
+  `).join('');
+}
+
+function openPaperModal(num){
+  const p = ISRAELI_PAPERS.find(x => x.num === String(num));
+  if(!p) return;
+  document.getElementById('paper-modal-num').textContent = `נייר #${p.num}`;
+  document.getElementById('paper-modal-meta-inline').textContent = `${p.year}`;
+  document.getElementById('paper-modal-title').textContent = p.title;
+  document.getElementById('paper-modal-meta').textContent = p.org;
+  document.getElementById('paper-modal-body').innerHTML = `
+    <div class="paper-modal-section">
+      <h4>נקודות מפתח קליניות</h4>
+      <ul>${(p.keyPoints||[]).map(k=>`<li>${k}</li>`).join('')}</ul>
+    </div>
+    <div class="paper-modal-section">
+      <h4>תגיות</h4>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">${p.tags.map(t=>`<span class="paper-tag" style="font-size:11px;padding:3px 9px">${t}</span>`).join('')}</div>
+    </div>`;
+  // Related tabs
+  const related = document.getElementById('paper-modal-related');
+  if (p.relatedTabs && p.relatedTabs.length) {
+    related.innerHTML = `<span>קפיצה לטאב:</span>` + p.relatedTabs.map(tid => {
+      const tabBtn = document.querySelector(`.tab[onclick*="showTab('${tid}'"] span`);
+      const label = tabBtn ? tabBtn.textContent : tid;
+      return `<button class="paper-related-link" onclick="jumpFromPaper('${tid}')">${label}</button>`;
+    }).join('');
+    related.style.display = 'flex';
+  } else {
+    related.style.display = 'none';
+  }
+}
+
+function jumpFromPaper(tid){
+  closePaperModal();
+  const btn = document.querySelector(`.tab[onclick*="showTab('${tid}'"]`);
+  if (btn) showTab(tid, btn);
+  document.getElementById('paper-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closePaperModal(){
+  document.getElementById('paper-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+(function initPapers(){
+  const init = () => {
+    // Build org chips
+    const chipsEl = document.getElementById('papers-chips');
+    if (!chipsEl) return;
+    const orgs = ['all', 'איגוד מיילדות', 'אולטרסאונד', 'זיהומיות'];
+    let active = 'all';
+    chipsEl.innerHTML = orgs.map(o => `<button class="papers-chip${o===active?' active':''}" data-org="${o}">${o==='all'?'הכל':o}</button>`).join('');
+    chipsEl.addEventListener('click', e => {
+      const btn = e.target.closest('.papers-chip');
+      if (!btn) return;
+      active = btn.dataset.org;
+      chipsEl.querySelectorAll('.papers-chip').forEach(b => b.classList.toggle('active', b.dataset.org === active));
+      renderPapers(document.getElementById('papers-filter').value, active);
+    });
+    document.getElementById('papers-filter').addEventListener('input', e => {
+      renderPapers(e.target.value, active);
+    });
+    // Esc closes modal
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && document.getElementById('paper-overlay').classList.contains('open')) closePaperModal();
+    });
+    renderPapers('', 'all');
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
 
 // ─── Global search (filter tabs by text + keyword aliases) ────────────────
 const TAB_KEYWORDS = {
@@ -3091,6 +3600,7 @@ const TAB_KEYWORDS = {
   twins:      ['twins','תאומים','dcda','mcda','mcma','ttts','taps','siugr','trap','quintero','slaghekke','gratacos'],
   peescreen:  ['רעלת','preeclampsia','pe','aspirin','asa','sflt','plgf','fmf','prognosis','uspstf'],
   vte:        ['vte','dvt','pe','pulmonary embolism','טרומבואמבולי','קרישיות','rcog','lmwh','enoxaparin','קלקסן','thrombophilia','APS','factor v leiden','thrombosis'],
+  papers:     ['ניירות','עמדה','position','paper','הנחיות','guidelines','aam','איגוד','מיילדות','אולטרסאונד','רישומי','ranking'],
   pplan:      ['תוכנית','plan','schedule','בדיקות','timing','moh','משרד הבריאות','nipt'],
   delivery:   ['delivery','תזמון','לידה','37','38','39','induction','השראה','smfm','acog','timing'],
   tolac:      ['tolac','vbac','grobman','קיסרי','cs','קיסרית','race-neutral'],
@@ -3121,9 +3631,44 @@ const TAB_KEYWORDS = {
       return emptyEl;
     };
 
+    // Container for matching position-paper results that appears under tab filter
+    let papersEl = null;
+    const ensurePapersBox = () => {
+      if (papersEl) return papersEl;
+      papersEl = document.createElement('div');
+      papersEl.id = 'search-papers';
+      papersEl.style.cssText = 'margin: 4px 0 18px; display:none;';
+      document.querySelector('.tab-groups').after(papersEl);
+      return papersEl;
+    };
+    const renderSearchPaperResults = (q) => {
+      if (!q || typeof ISRAELI_PAPERS === 'undefined') { if(papersEl) papersEl.style.display='none'; return; }
+      const lq = q.toLowerCase();
+      const hits = ISRAELI_PAPERS.filter(p => {
+        const hay = `${p.num} ${p.title} ${p.tags.join(' ')} ${(p.keyPoints||[]).join(' ')}`.toLowerCase();
+        return hay.includes(lq);
+      }).slice(0, 6);
+      const box = ensurePapersBox();
+      if (!hits.length) { box.style.display = 'none'; return; }
+      box.style.display = '';
+      box.innerHTML = `
+        <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;padding:0 2px">
+          ${hits.length} ניירות עמדה תואמים
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px">
+          ${hits.map(p => `
+            <button onclick="openPaperModal('${p.num}')" style="text-align:right;font-family:inherit;cursor:pointer;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;display:flex;flex-direction:column;gap:3px;box-shadow:var(--sh-sm)">
+              <div style="font-size:10.5px;font-weight:700;color:var(--primary);font-variant-numeric:tabular-nums">נייר #${p.num}</div>
+              <div style="font-size:12.5px;font-weight:600;color:var(--text);line-height:1.35">${p.title}</div>
+              <div style="font-size:11px;color:var(--text3)">${p.org} · ${p.year}</div>
+            </button>`).join('')}
+        </div>`;
+    };
+
     const applyFilter = (raw) => {
       const q = (raw || '').trim().toLowerCase();
       wrap.classList.toggle('has-query', q.length > 0);
+      renderSearchPaperResults(q);
       if (!q) {
         allTabs.forEach(t => { t.classList.remove('search-hide','search-match'); });
         allGroups.forEach(g => g.classList.remove('search-hide'));
@@ -3927,7 +4472,7 @@ function recBox(category, ctx){
       tag={c:'ok', t:'תקין'};
       sections.push({title:'HC תקין', items:[{t:'המשך מעקב לפי פרוטוקול היריון רגיל', c:''}]});
     }
-    sources=['SMFM 2016 Microcephaly Statement', 'SOGC #380', 'Chervenak FA AJOG 1984'];
+    sources=['נייר עמדה ישראלי #31 (מיקרוצפליה, 2024)', 'נייר עמדה ישראלי #53 (נוירוסונוגרפיה, 2024)', 'SMFM 2016 Microcephaly Statement', 'SOGC #380', 'Chervenak FA AJOG 1984'];
   }
   else if(category==='fl'){
     const {z, flAc, ga} = ctx;
@@ -6349,9 +6894,9 @@ const deliveryTimings = {
     {v:'twins_discordant',      label:'תאומים עם FGR/discordance >25%',  ga:'36+0 – 37+6', src:'SMFM'},
   ],
   other: [
-    {v:'cholestasis_mild',      label:'כולסטזיס הריוני (BA <40 µmol/L)', ga:'36+0 – 39+0', src:'SMFM #53 (2021)'},
-    {v:'cholestasis_mod',       label:'כולסטזיס בינוני (BA 40–99)',       ga:'36+0 – 37+0', src:'SMFM 2021'},
-    {v:'cholestasis_severe',    label:'כולסטזיס חמור (BA ≥100)',          ga:'36+0',         src:'SMFM 2021'},
+    {v:'cholestasis_mild',      label:'כולסטזיס הריוני (BA 10–39 µmol/L)', ga:'37+0', src:'נייר עמדה ישראלי #46 (2024) · SMFM 2021', note:'UDCA 10-15 mg/kg/יום · מעקב BA + LFT שבועי'},
+    {v:'cholestasis_mod',       label:'כולסטזיס בינוני (BA 40–99)',       ga:'36+0 – 37+0', src:'נייר עמדה ישראלי #46 (2024)', note:'UDCA 15 mg/kg/יום · מעקב צמוד · להימנע מהריון מעבר 37w'},
+    {v:'cholestasis_severe',    label:'כולסטזיס חמור (BA ≥100)',          ga:'34+0 – 36+0', src:'נייר עמדה ישראלי #46 (2024)', note:'סיכון מוגבר ל-IUFD — לידה מוקדמת. סטרואידים לפני 34+0'},
     {v:'sle_stable',            label:'לופוס יציב, ללא נוגדנים פעילים',   ga:'39+0 – 40+0', src:'ACOG'},
     {v:'sle_active',            label:'לופוס פעיל / נפרופתיה',            ga:'36+0 – 38+6', src:'ACOG'},
     {v:'aps',                   label:'תסמונת אנטיפוספוליפיד (APS)',     ga:'36+0 – 38+6', src:'ACOG 2018 (PB 132)'},
@@ -7443,9 +7988,17 @@ function getPpRiskItems(state){
 // ── Standard schedule (Israeli MOH baseline)
 const ppStandardSchedule = [
   {fromW:5,  toW:8,  label:'ביקור ראשון', cat:'visit',
-   tests:'אנמנזה · אומדן סיכון · BMI · לחץ דם · תרבית שתן · <b>חומצה פולית 400 µg/יום</b> (5 מ"ג ביום אם BMI≥30 · סוכרת · אפילפסיה · NTD קודם)'},
+   tests:'אנמנזה · אומדן סיכון · BMI · לחץ דם · תרבית שתן · <b>חומצה פולית 400 µg/יום</b> (5 מ"ג ביום אם BMI≥30 · סוכרת · אפילפסיה · NTD קודם)',
+   src:'נייר עמדה ישראלי #6 (מעקב הריון בסיכון נמוך)'},
+  {fromW:5,  toW:12, label:'תוספים מומלצים', cat:'lab',
+   tests:'<b>חומצה פולית 400 µg</b> (פרה-קונספציה — 12w) · <b>ויטמין D 600-1000 IU</b> · <b>אומגה 3 (DHA) 200-300 mg</b> · <b>ברזל 27 mg</b> (מ-T2) · <b>סידן 1000-1300 mg</b> · להימנע: כוהל, מינון יתר ויטמין A',
+   src:'נייר עמדה ישראלי #29 (תוספי תזונה והרגלים)'},
   {fromW:8,  toW:10, label:'מעבדה ראשונית', cat:'lab',
-   tests:'CBC · סוג דם + Rh · TSH · HIV · VDRL · HBsAg · HCV · Rubella IgG · Varicella IgG · CMV · גלוקוז בצום · שתן'},
+   tests:'CBC · סוג דם + Rh · TSH · HIV · VDRL · HBsAg · HCV · Rubella IgG · Varicella IgG · CMV IgG/IgM · גלוקוז בצום · שתן',
+   src:'נייר עמדה #6 · #7 (CMV) · #41 (HCV)'},
+  {fromW:8,  toW:14, label:'CMV — סרולוגיה ומעקב', cat:'lab',
+   tests:'IgG/IgM בטרימסטר ראשון · אם סרוקונברסיה → <b>Valaciclovir 8g/יום</b> (4×2g) · PCR במי שפיר אחרי 21w (+6w מהזיהום) · MRI עוברי + נוירוסונוגרפיה',
+   src:'נייר עמדה ישראלי #7 (CMV — 2025)'},
   {fromW:10, toW:13, label:'שקיפות עורפית (NT) + סקר משולב', cat:'us',
    tests:'NT + PAPP-A + free βhCG · חישוב סיכון לטריזומיות · אישור גיל הריון'},
   {fromW:10, toW:22, label:'NIPT (אופציה פרטית)', cat:'optional',
@@ -7461,13 +8014,28 @@ const ppStandardSchedule = [
   {fromW:19, toW:23, label:'סקירה מאוחרת (סקירת מערכות)', cat:'us',
    tests:'אנטומיה מקיפה · ביומטריה · שליה · מי שפיר · UtA-PI'},
   {fromW:24, toW:28, label:'GCT 50g (סקר GDM)', cat:'lab',
-   tests:'בדיקת העמסה 50 גרם · GTT 100g אם חיובי'},
+   tests:'בדיקת העמסה 50 גרם · GTT 100g אם חיובי',
+   src:'נייר עמדה ישראלי #16 (GDM)'},
+  {fromW:27, toW:36, label:'חיסון Tdap', cat:'lab',
+   tests:'<b>חיסון Tdap לכל הריון</b> ב-27-36 שבועות · מקסם נוגדנים לתינוק נגד שעלת',
+   src:'נייר עמדה ישראלי #35 (חיסונים בהריון)'},
+  {fromW:0, toW:42, label:'חיסון שפעת עונתי', cat:'lab',
+   tests:'בכל גיל הריון בעונה (אוקטובר-מרץ) · בטוח ויעיל · מומלץ אוניברסלי',
+   src:'נייר עמדה ישראלי #35 (חיסונים בהריון)'},
+  {fromW:32, toW:36, label:'חיסון RSV (Abrysvo)', cat:'lab',
+   tests:'חיסון אם בעונת RSV (ספטמבר-ינואר) · 32-36w · הגנה ליילוד 6 חודשים ראשונים',
+   src:'נייר עמדה ישראלי #35 (חיסונים בהריון)'},
   {fromW:28, toW:28, label:'ספירת דם + אנטי-D', cat:'lab',
-   tests:'CBC · Coombs · Anti-D 300 µg לסוג דם Rh שלילי'},
+   tests:'CBC · Coombs · Anti-D 300 µg לסוג דם Rh שלילי',
+   src:'נייר עמדה ישראלי #39 (אלואיזואימוניזציה)'},
+  {fromW:28, toW:34, label:'סקר אנמיה (T3)', cat:'lab',
+   tests:'Hb · פריטין · MCV · אם Hb<11 (T3) → ברזל פומי 60mg יסודי × 1-2/יום · אם Hb<9 או פומי לא נסבל → ברזל IV',
+   src:'נייר עמדה ישראלי #49 (אנמיה בהריון)'},
   {fromW:30, toW:32, label:'סקירת גדילה / סקירה שלישית', cat:'us',
    tests:'EFW אחוזון · שליה · מי שפיר · ביומטריה · מנח'},
   {fromW:35, toW:37, label:'GBS', cat:'lab',
-   tests:'תרבית רקטו-וגינלית · פניצילין IV בלידה אם חיובי'},
+   tests:'תרבית רקטו-וגינלית · פניצילין IV בלידה אם חיובי (5 mU bolus, 2.5 mU/4h) · אלרגיה: Cefazolin / Clindamycin',
+   src:'נייר עמדה ישראלי #22 (GBS)'},
   {fromW:36, toW:40, label:'מעקב הריון מאוחר', cat:'visit',
    tests:'מעקב שבועי · NST · ניטור · מנח · הערכת לידה'},
   {fromW:41, toW:42, label:'מעקב פוסט-תרם', cat:'visit',
