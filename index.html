@@ -1167,7 +1167,7 @@
 
   <div class="app-search" id="app-search" role="search">
     <svg class="search-ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6"/><path d="M14 14l3.5 3.5"/></svg>
-    <input type="search" id="app-search-input" placeholder="חיפוש מחשבון (לדוגמה: EFW, רעלת, TOLAC, PPH...)" autocomplete="off" spellcheck="false" aria-label="חיפוש באפליקציה">
+    <input type="search" id="app-search-input" placeholder="חיפוש מחשבון, חיפוש נייר עמדה, PPH, TOLAC, CMV, רעלת..." autocomplete="off" spellcheck="false" aria-label="חיפוש באפליקציה">
     <span class="search-hint" id="app-search-count" aria-live="polite" style="display:none"></span>
     <button class="clear-btn" id="app-search-clear" aria-label="נקה חיפוש" type="button">
       <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l8 8M11 3l-8 8"/></svg>
@@ -1254,11 +1254,11 @@
         </button>
         <button class="tab" onclick="showTab('tolac',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a7 7 0 1 1 14 0"/><path d="M3 11v3M17 11v3"/><path d="M6.5 14.5l1.5 1.5 4-4"/></svg>
-          <span>TOLAC (VBAC)</span>
+          <span>TOLAC</span>
         </button>
         <button class="tab" onclick="showTab('rupture',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v6M7 5l3-3 3 3"/><path d="M3 17l4-4 3 3 4-4 3 3"/><path d="M2 14h16"/></svg>
-          <span>סיכון לקרע רחם</span>
+          <span>קרע רחם</span>
         </button>
         <button class="tab" onclick="showTab('pph',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5s5 4 5 8.5a5 5 0 0 1-10 0c0-4.5 5-8.5 5-8.5Z"/><path d="M8 11.5l1.5 1.5L13 9.5"/></svg>
@@ -1863,9 +1863,9 @@
     <div class="row">
       <label>סוג ההריון</label>
       <div class="seg" id="tw-type">
-        <button data-v="dcda" class="active" onclick="setTwinType(this)">DCDA (דו-כוריון)</button>
-        <button data-v="mcda" onclick="setTwinType(this)">MCDA (חד-כוריון, דו-מי)</button>
-        <button data-v="mcma" onclick="setTwinType(this)">MCMA (חד-כוריון, חד-מי)</button>
+        <button data-v="dcda" class="active" onclick="setTwinType(this)">DCDA</button>
+        <button data-v="mcda" onclick="setTwinType(this)">MCDA</button>
+        <button data-v="mcma" onclick="setTwinType(this)">MCMA</button>
       </div>
     </div>
 
@@ -2813,7 +2813,7 @@
           <label class="pp-check"><input type="checkbox" id="r_prior_ptb"> לידה מוקדמת קודמת</label>
           <label class="pp-check"><input type="checkbox" id="r_prior_fgr"> FGR בהריון קודם</label>
           <label class="pp-check"><input type="checkbox" id="r_prior_pe"> רעלת הריון קודמת</label>
-          <label class="pp-check"><input type="checkbox" id="r_prior_macro"> מקרוזומיה קודמת (&gt;4500 גר')</label>
+          <label class="pp-check"><input type="checkbox" id="r_prior_macro"> מקרוזומיה קודמת (&gt;4000 גר')</label>
           <label class="pp-check"><input type="checkbox" id="r_prior_gdm"> GDM קודם</label>
           <label class="pp-check"><input type="checkbox" id="r_prior_stillbirth"> לידת מת קודמת</label>
           <label class="pp-check"><input type="checkbox" id="r_recurrent_misc"> הפלות חוזרות (≥2)</label>
@@ -3322,8 +3322,8 @@
       </div>
     </details>
 
-    <div class="papers-toolbar">
-      <input type="search" id="papers-filter" class="papers-filter-input" placeholder="חיפוש בכותרת או בתגיות (לדוגמה: VBAC, CMV, חיסונים, סוכרת)..." autocomplete="off">
+    <div style="font-size:12px;color:var(--text3);padding:10px 12px;background:var(--surface2);border-radius:var(--radius);margin-bottom:14px">
+      💡 לחיפוש מהיר — השתמש בשורת החיפוש בראש האפליקציה (תוצאות מציגות גם מחשבונים וגם ניירות עמדה).
     </div>
     <div id="papers-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px"></div>
     <div class="papers-count" id="papers-count"></div>
@@ -3370,7 +3370,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.5';
+const APP_VERSION = '3.6';
 
 // ─── PPH section card navigation ──────────────────────────────────────
 function showPphSection(id){
@@ -3570,10 +3570,7 @@ function closePaperModal(){
       if (!btn) return;
       active = btn.dataset.org;
       chipsEl.querySelectorAll('.papers-chip').forEach(b => b.classList.toggle('active', b.dataset.org === active));
-      renderPapers(document.getElementById('papers-filter').value, active);
-    });
-    document.getElementById('papers-filter').addEventListener('input', e => {
-      renderPapers(e.target.value, active);
+      renderPapers('', active);
     });
     // Esc closes modal
     document.addEventListener('keydown', e => {
