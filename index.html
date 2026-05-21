@@ -145,6 +145,51 @@
   .app-title { font-size: 26px; font-weight: 700; letter-spacing: -0.015em; line-height: 1.15; }
   .app-sub { font-size: 13.5px; color: var(--text3); margin-top: 4px; line-height: 1.5; }
 
+  /* ── Global search + papers button row ─────────────────────────────── */
+  .search-row {
+    display: flex; align-items: stretch; gap: 10px;
+    margin: 8px 0 18px;
+  }
+  .search-row .app-search { flex: 1; margin: 0; min-width: 0; }
+  .papers-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 0 16px; height: 44px;
+    background: var(--primary-bg); color: var(--primary);
+    border: 1px solid var(--primary); border-radius: 12px;
+    font-family: inherit; font-size: 13.5px; font-weight: 600;
+    cursor: pointer; box-shadow: var(--sh-sm);
+    transition: all .15s; white-space: nowrap; flex: 0 0 auto;
+  }
+  .papers-btn:hover { background: var(--primary); color: #fff; transform: translateY(-1px); box-shadow: var(--sh-md); }
+  .papers-btn:active { transform: translateY(0); }
+  .papers-btn svg { width: 16px; height: 16px; }
+  @media (max-width: 480px) {
+    .papers-btn span { display: none; }
+    .papers-btn { padding: 0 12px; width: 44px; justify-content: center; }
+  }
+
+  /* ── Calculator input form card — clearly framed, blue border ──────── */
+  .calc-form {
+    background: var(--surface);
+    border: 1.5px solid var(--primary);
+    border-radius: var(--radius-lg);
+    padding: 18px 18px 8px;
+    margin: 6px 0 18px;
+    box-shadow: 0 0 0 4px var(--ring), var(--sh-sm);
+    position: relative;
+  }
+  .calc-form::before {
+    content: "פרטי הבדיקה"; position: absolute; top: -10px; right: 18px;
+    background: var(--bg); padding: 2px 12px;
+    font-size: 10.5px; font-weight: 700; color: var(--primary);
+    letter-spacing: .08em; text-transform: uppercase;
+    border: 1px solid var(--primary); border-radius: 999px;
+  }
+  .calc-form[data-label]::before { content: attr(data-label); }
+  .calc-form .sec:first-child { margin-top: 0; }
+  .calc-form .sec { font-size: 10.5px; padding-bottom: 6px; margin: 14px 0 10px; }
+  .calc-form .btn-primary { margin-top: 6px; }
+
   /* ── Global search ──────────────────────────────────────────────────── */
   .app-search {
     position: relative; margin: 8px 0 18px;
@@ -1165,12 +1210,18 @@
     </div>
   </div>
 
-  <div class="app-search" id="app-search" role="search">
-    <svg class="search-ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6"/><path d="M14 14l3.5 3.5"/></svg>
-    <input type="search" id="app-search-input" placeholder="חיפוש מחשבון, חיפוש נייר עמדה, PPH, TOLAC, CMV, רעלת..." autocomplete="off" spellcheck="false" aria-label="חיפוש באפליקציה">
-    <span class="search-hint" id="app-search-count" aria-live="polite" style="display:none"></span>
-    <button class="clear-btn" id="app-search-clear" aria-label="נקה חיפוש" type="button">
-      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l8 8M11 3l-8 8"/></svg>
+  <div class="search-row">
+    <div class="app-search" id="app-search" role="search">
+      <svg class="search-ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6"/><path d="M14 14l3.5 3.5"/></svg>
+      <input type="search" id="app-search-input" placeholder="חיפוש מחשבון, חיפוש נייר עמדה, PPH, TOLAC, CMV, רעלת..." autocomplete="off" spellcheck="false" aria-label="חיפוש באפליקציה">
+      <span class="search-hint" id="app-search-count" aria-live="polite" style="display:none"></span>
+      <button class="clear-btn" id="app-search-clear" aria-label="נקה חיפוש" type="button">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l8 8M11 3l-8 8"/></svg>
+      </button>
+    </div>
+    <button class="papers-btn" type="button" onclick="openPapersPanel()" aria-label="פתח ניירות עמדה">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2.5h7l3 3v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1Z"/><path d="M12 2.5v3h3"/><path d="M7 9h6M7 12h6M7 15h4"/></svg>
+      <span>ניירות עמדה</span>
     </button>
   </div>
 
@@ -1239,7 +1290,7 @@
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="13" height="13.5" rx="1.5"/><path d="M6.5 7.5h7M6.5 10.5h7M6.5 13.5h4"/><path d="M5.5 7l.6.6L7.2 6.5"/></svg>
           <span>תוכנית הריון</span>
         </button>
-        <button class="tab" onclick="showTab('papers',this)" role="tab">
+        <button class="tab hidden-tab" onclick="showTab('papers',this)" role="tab" id="tab-papers">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2.5h7l3 3v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1Z"/><path d="M12 2.5v3h3"/><path d="M7 9h6M7 12h6M7 15h4"/></svg>
           <span>ניירות עמדה</span>
         </button>
@@ -3370,7 +3421,114 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.6';
+const APP_VERSION = '3.7';
+
+// ─── Helper: open Papers panel (from header button) ───────────────────
+function openPapersPanel(){
+  const tab = document.getElementById('tab-papers');
+  if (tab) showTab('papers', tab);
+}
+
+// ─── Auto-wrap input rows of major calculator panels in a framed card ──
+// This gives each calculator a clearly visible blue-bordered input area,
+// visually separated from the references at top and results at bottom.
+(function autoWrapCalcForms(){
+  const init = () => {
+    // Panels that have a simple "ref-wrap → inputs → button → result" structure.
+    // We skip panels with custom designs (pplan/vte already use pp-section accordion;
+    // pph/dka are protocol panels; papers/biom have their own layouts).
+    const targets = [
+      {id:'preg', resultId:'preg-res', label:'פרטי הבדיקה'},
+      {id:'efw',  resultId:'efw-res',  label:'פרטי הבדיקה'},
+      {id:'hc',   resultId:'hc-res',   label:'פרטי הבדיקה'},
+      {id:'fl',   resultId:'fl-res',   label:'פרטי הבדיקה'},
+      {id:'ua',   resultId:'ua-res',   label:'פרטי הבדיקה'},
+      {id:'mca',  resultId:'mca-res',  label:'פרטי הבדיקה'},
+      {id:'ptb',  resultId:'ptb-res',  label:'פרטי הבדיקה'},
+      {id:'ptcomp',resultId:'pt-res',  label:'פרטי הבדיקה'},
+      {id:'twins',resultId:'tw-res',   label:'פרטי הבדיקה'},
+      {id:'peescreen', resultId:'pee-res', label:'פרטי הבדיקה'},
+      {id:'dsrisk', resultId:'ds-res', label:'פרטי הבדיקה'},
+      {id:'delivery', resultId:'delivery-res', label:'פרטי הבדיקה'},
+      {id:'tolac', resultId:'tolac-res', label:'פרטי הבדיקה'},
+      {id:'rupture', resultId:'rupture-res', label:'פרטי הבדיקה'},
+    ];
+    targets.forEach(t => {
+      const panel = document.getElementById(t.id);
+      if (!panel) return;
+      // Skip if already wrapped
+      if (panel.querySelector('.calc-form')) return;
+      const ref = panel.querySelector('details.ref-wrap');
+      const resultEl = document.getElementById(t.resultId);
+      if (!ref) return;
+      // Determine where the input area starts (after ref-wrap) and ends (at result or button)
+      const card = document.createElement('div');
+      card.className = 'calc-form';
+      if (t.label) card.setAttribute('data-label', t.label);
+      // Move siblings between ref-wrap and result into the card
+      let n = ref.nextElementSibling;
+      while (n) {
+        if (n === resultEl) break;
+        // Stop wrapping when we hit something that is clearly NOT part of the input form
+        // (e.g., dynamic result containers, redate cards added after submit). The first
+        // such occurrence ends the wrapping.
+        if (n.id && (n.id.endsWith('-res') || n.id === t.resultId)) break;
+        const next = n.nextElementSibling;
+        card.appendChild(n);
+        n = next;
+      }
+      ref.parentNode.insertBefore(card, n || null);
+    });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+
+// ─── Position paper PDF access (lazy fetch from high_risk_combined.html) ─
+let _pdfDataCache = null;
+let _pdfDataLoading = null;
+async function loadPdfData(){
+  if (_pdfDataCache) return _pdfDataCache;
+  if (_pdfDataLoading) return _pdfDataLoading;
+  _pdfDataLoading = (async () => {
+    const res = await fetch('high_risk_combined.html');
+    if (!res.ok) throw new Error('לא הצלחתי לטעון את קובץ הניירות');
+    const html = await res.text();
+    // Parse pdfData object — each entry is: "N": "data:application/pdf;base64,..."
+    const obj = {};
+    const regex = /"(\d+)":\s*"(data:application\/pdf;base64,[^"]+)"/g;
+    let m;
+    while ((m = regex.exec(html)) !== null) {
+      obj[m[1]] = m[2];
+    }
+    _pdfDataCache = obj;
+    return obj;
+  })();
+  return _pdfDataLoading;
+}
+
+async function openPaperPdf(num){
+  const btn = document.getElementById('paper-open-pdf');
+  if (btn) { btn.disabled = true; btn.textContent = 'טוען נייר...'; }
+  try {
+    const data = await loadPdfData();
+    const url = data[String(num)];
+    if (!url) {
+      alert('הנייר המלא אינו זמין כקובץ — מוצגים תקצירים בלבד.');
+      return;
+    }
+    // Convert data URL to blob URL for reliable cross-browser viewing
+    const blob = await (await fetch(url)).blob();
+    const blobUrl = URL.createObjectURL(blob);
+    window.open(blobUrl, '_blank', 'noopener');
+    // Revoke after a delay to let the new window load
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 60000);
+  } catch (e) {
+    alert('שגיאה בטעינת הנייר: ' + e.message);
+  } finally {
+    if (btn) { btn.disabled = false; btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:6px"><path d="M2 7h10M8 3l4 4-4 4"/></svg>צפה בנייר המלא (PDF)'; }
+  }
+}
 
 // ─── PPH section card navigation ──────────────────────────────────────
 function showPphSection(id){
@@ -3530,6 +3688,14 @@ function openPaperModal(num){
     <div class="paper-modal-section">
       <h4>תגיות</h4>
       <div style="display:flex;flex-wrap:wrap;gap:6px">${p.tags.map(t=>`<span class="paper-tag" style="font-size:11px;padding:3px 9px">${t}</span>`).join('')}</div>
+    </div>
+    <div class="paper-modal-section">
+      <button id="paper-open-pdf" type="button" onclick="openPaperPdf('${p.num}')"
+        style="width:100%;background:var(--primary);color:#fff;border:none;padding:12px;border-radius:var(--radius);font-family:inherit;font-size:13.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;box-shadow:var(--sh-sm)">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:6px"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+        צפה בנייר המלא (PDF)
+      </button>
+      <div style="font-size:11px;color:var(--text3);text-align:center;margin-top:8px">ייפתח בטאב חדש</div>
     </div>`;
   // Related tabs
   const related = document.getElementById('paper-modal-related');
