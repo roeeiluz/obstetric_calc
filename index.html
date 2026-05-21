@@ -3251,6 +3251,119 @@
 
     <div class="pph-detail-area" id="pph-sec-teg" data-pph-sec="teg" style="display:none">
     <div class="sec" style="margin-top:0">פיענוח TEG / ROTEM</div>
+
+    <!-- TEG trace diagram (inline SVG, theme-aware) -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;margin-bottom:14px;box-shadow:var(--sh-sm)">
+      <div style="font-size:11.5px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;text-align:center">
+        עקומת TEG טיפוסית — איפה כל פרמטר נמדד
+      </div>
+      <svg viewBox="0 0 740 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="תרשים TEG עם תיוגי R, K, α-angle, MA, LY30" style="width:100%;height:auto;display:block;direction:ltr">
+        <defs>
+          <linearGradient id="tegFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="var(--primary)" stop-opacity="0.22"/>
+            <stop offset="100%" stop-color="var(--primary)" stop-opacity="0.22"/>
+          </linearGradient>
+        </defs>
+        <!-- Grid -->
+        <g stroke="var(--border)" stroke-width="0.6" opacity="0.5">
+          <line x1="60" y1="40" x2="60" y2="320"/>
+          <line x1="60" y1="180" x2="710" y2="180"/>
+          <line x1="60" y1="80"  x2="710" y2="80"  stroke-dasharray="2,4"/>
+          <line x1="60" y1="280" x2="710" y2="280" stroke-dasharray="2,4"/>
+        </g>
+        <!-- Axes labels -->
+        <text x="30" y="184" fill="var(--text3)" font-size="11" text-anchor="middle">0</text>
+        <text x="30" y="84"  fill="var(--text3)" font-size="11" text-anchor="middle">+MA</text>
+        <text x="30" y="284" fill="var(--text3)" font-size="11" text-anchor="middle">−MA</text>
+        <text x="385" y="345" fill="var(--text3)" font-size="11" text-anchor="middle">זמן (דקות) →</text>
+        <text x="20" y="30"  fill="var(--text3)" font-size="11" text-anchor="middle">mm</text>
+
+        <!-- TEG trace fill -->
+        <path d="M 60 180
+                 L 140 178
+                 Q 175 177 200 165
+                 Q 250 135 320 100
+                 Q 400 75 470 72
+                 Q 540 80 600 110
+                 Q 650 135 700 165
+                 L 700 195
+                 Q 650 225 600 250
+                 Q 540 280 470 288
+                 Q 400 285 320 260
+                 Q 250 225 200 195
+                 Q 175 183 140 182
+                 L 60 180 Z"
+              fill="url(#tegFill)" stroke="none"/>
+        <!-- TEG trace outline (top) -->
+        <path d="M 60 180 L 140 178 Q 175 177 200 165 Q 250 135 320 100 Q 400 75 470 72 Q 540 80 600 110 Q 650 135 700 165"
+              fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- TEG trace outline (bottom mirror) -->
+        <path d="M 60 180 L 140 182 Q 175 183 200 195 Q 250 225 320 260 Q 400 285 470 288 Q 540 280 600 250 Q 650 225 700 195"
+              fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round"/>
+
+        <!-- R time annotation: from x=60 to x=200 (where amplitude reaches 2mm) -->
+        <g>
+          <line x1="60" y1="318" x2="60" y2="335" stroke="var(--amber)" stroke-width="1.2"/>
+          <line x1="200" y1="318" x2="200" y2="335" stroke="var(--amber)" stroke-width="1.2"/>
+          <line x1="60" y1="328" x2="200" y2="328" stroke="var(--amber)" stroke-width="1.5"/>
+          <rect x="115" y="316" width="34" height="20" fill="var(--bg)" rx="3"/>
+          <text x="132" y="330" fill="var(--amber)" font-size="14" font-weight="700" text-anchor="middle">R</text>
+          <text x="132" y="356" fill="var(--text2)" font-size="11" text-anchor="middle">זמן עד תחילת קריש</text>
+          <text x="132" y="370" fill="var(--text3)" font-size="10.5" text-anchor="middle">תקין: 4–8 דק'</text>
+        </g>
+
+        <!-- K time annotation: from R end (200) to where amplitude = 20mm (320) -->
+        <g>
+          <line x1="200" y1="22" x2="200" y2="38" stroke="var(--teal)" stroke-width="1.2"/>
+          <line x1="320" y1="22" x2="320" y2="38" stroke="var(--teal)" stroke-width="1.2"/>
+          <line x1="200" y1="30" x2="320" y2="30" stroke="var(--teal)" stroke-width="1.5"/>
+          <rect x="246" y="18" width="34" height="20" fill="var(--bg)" rx="3"/>
+          <text x="263" y="32" fill="var(--teal)" font-size="14" font-weight="700" text-anchor="middle">K</text>
+        </g>
+        <text x="263" y="13" fill="var(--text2)" font-size="11" text-anchor="middle">זמן ל-20mm קריש</text>
+
+        <!-- α-angle: arc at point 200,165 indicating angle of curve rise -->
+        <g>
+          <line x1="200" y1="180" x2="320" y2="180" stroke="var(--purple)" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
+          <line x1="200" y1="180" x2="290" y2="115" stroke="var(--purple)" stroke-width="1.5" opacity="0.8"/>
+          <path d="M 240 180 A 40 40 0 0 0 220 154" fill="none" stroke="var(--purple)" stroke-width="1.8"/>
+          <text x="245" y="170" fill="var(--purple)" font-size="14" font-weight="700">α</text>
+          <text x="265" y="175" fill="var(--text2)" font-size="10">תקין: 47–74°</text>
+        </g>
+
+        <!-- MA: vertical line at peak (x=470), with double-headed arrow showing max amplitude -->
+        <g>
+          <line x1="470" y1="72" x2="470" y2="288" stroke="var(--red)" stroke-width="1.2" stroke-dasharray="4,3" opacity="0.7"/>
+          <line x1="720" y1="72" x2="720" y2="288" stroke="var(--red)" stroke-width="1.5"/>
+          <line x1="715" y1="72" x2="725" y2="72" stroke="var(--red)" stroke-width="1.5"/>
+          <line x1="715" y1="288" x2="725" y2="288" stroke="var(--red)" stroke-width="1.5"/>
+          <rect x="699" y="170" width="42" height="20" fill="var(--bg)" rx="3"/>
+          <text x="720" y="184" fill="var(--red)" font-size="14" font-weight="700" text-anchor="middle">MA</text>
+          <text x="490" y="65" fill="var(--text2)" font-size="11">חוזק קריש מירבי</text>
+          <text x="490" y="79" fill="var(--text3)" font-size="10.5">תקין: 54–72mm</text>
+        </g>
+
+        <!-- LY30: shaded region after MA showing lysis -->
+        <g>
+          <line x1="600" y1="40" x2="600" y2="320" stroke="var(--text3)" stroke-width="0.8" stroke-dasharray="2,3" opacity="0.5"/>
+          <text x="615" y="50" fill="var(--text3)" font-size="10.5">+30 דק'</text>
+          <line x1="660" y1="172" x2="660" y2="200" stroke="var(--pink)" stroke-width="1.8"/>
+          <line x1="655" y1="172" x2="665" y2="172" stroke="var(--pink)" stroke-width="1.5"/>
+          <line x1="655" y1="200" x2="665" y2="200" stroke="var(--pink)" stroke-width="1.5"/>
+          <text x="670" y="195" fill="var(--pink)" font-size="13" font-weight="700">LY30</text>
+          <text x="540" y="335" fill="var(--text2)" font-size="11">% ליזיס ב-30 דק' אחרי MA</text>
+          <text x="540" y="349" fill="var(--text3)" font-size="10.5">תקין: &lt;3% · &gt;7.5% → היפר-פיברינוליזה</text>
+        </g>
+      </svg>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:12px;font-size:11.5px;color:var(--text2)">
+        <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:3px;background:var(--amber);border-radius:2px"></span>R · גורמי קרישה (FFP)</span>
+        <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:3px;background:var(--teal);border-radius:2px"></span>K · פיברינוגן (קריו)</span>
+        <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:3px;background:var(--purple);border-radius:2px"></span>α · פיברינוגן/פלטליות</span>
+        <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:3px;background:var(--red);border-radius:2px"></span>MA · פלטליות + פיברינוגן</span>
+        <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:10px;height:3px;background:var(--pink);border-radius:2px"></span>LY30 · פיברינוליזה (TXA)</span>
+      </div>
+    </div>
+
     <div class="rec-box" style="margin-top:0">
       <div class="rec-head">
         <span>Thromboelastography — תוצאות, משמעות, פעולה</span>
@@ -3421,7 +3534,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.7';
+const APP_VERSION = '3.8';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
