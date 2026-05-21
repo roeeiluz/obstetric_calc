@@ -1,0 +1,24 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Duplicate upload bundles (keep only files in repo root)
+_obstetrics_calculator_v3.1_upload/
+_obstetrics_calculator_v*_upload/
+*_upload.zip
+
+# Logs
+*.log
+
+# OS / system
+Thumbs.db
+ehthumbs.db
+Desktop.ini
