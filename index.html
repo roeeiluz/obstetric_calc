@@ -145,6 +145,47 @@
   .app-title { font-size: 26px; font-weight: 700; letter-spacing: -0.015em; line-height: 1.15; }
   .app-sub { font-size: 13.5px; color: var(--text3); margin-top: 4px; line-height: 1.5; }
 
+  /* ── Global search ──────────────────────────────────────────────────── */
+  .app-search {
+    position: relative; margin: 8px 0 18px;
+    background: var(--surface); border: 1px solid var(--border2);
+    border-radius: 12px; box-shadow: var(--sh-sm);
+    display: flex; align-items: center; gap: 10px; padding: 0 14px;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .app-search:focus-within { border-color: var(--primary); box-shadow: 0 0 0 4px var(--ring); }
+  .app-search svg.search-ico { width: 16px; height: 16px; color: var(--text3); flex: 0 0 auto; }
+  .app-search input {
+    flex: 1; height: 42px; border: none !important; background: transparent !important;
+    color: var(--text); font-size: 14px; font-family: inherit; outline: none;
+    box-shadow: none !important; padding: 0 !important;
+  }
+  .app-search input::placeholder { color: var(--text3); }
+  .app-search .clear-btn {
+    border: none; background: transparent; color: var(--text3); cursor: pointer;
+    width: 26px; height: 26px; border-radius: 6px; display: none;
+    align-items: center; justify-content: center; transition: background .15s, color .15s;
+    flex: 0 0 auto;
+  }
+  .app-search .clear-btn:hover { background: var(--surface2); color: var(--text); }
+  .app-search.has-query .clear-btn { display: inline-flex; }
+  .app-search .search-hint {
+    font-size: 11px; color: var(--text3); flex: 0 0 auto;
+    border: 1px solid var(--border); padding: 2px 6px; border-radius: 5px;
+    font-variant-numeric: tabular-nums;
+  }
+  /* Hidden tabs / groups when filtering */
+  .tab.search-hide { display: none !important; }
+  .tab-group.search-hide { display: none !important; }
+  .tab.search-match {
+    background: var(--primary-bg); border-color: var(--primary); color: var(--text);
+  }
+  .search-empty {
+    text-align: center; padding: 28px 16px; color: var(--text3);
+    border: 1px dashed var(--border2); border-radius: var(--radius-lg);
+    margin-bottom: 18px; font-size: 13px;
+  }
+
   /* ── Tab groups (grouped pills in cards) ──────────────────────────── */
   .tab-groups {
     display: flex; flex-direction: column; gap: 10px;
@@ -929,6 +970,15 @@
     </div>
   </div>
 
+  <div class="app-search" id="app-search" role="search">
+    <svg class="search-ico" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="6"/><path d="M14 14l3.5 3.5"/></svg>
+    <input type="search" id="app-search-input" placeholder="חיפוש מחשבון (לדוגמה: EFW, רעלת, TOLAC, PPH...)" autocomplete="off" spellcheck="false" aria-label="חיפוש באפליקציה">
+    <span class="search-hint" id="app-search-count" aria-live="polite" style="display:none"></span>
+    <button class="clear-btn" id="app-search-clear" aria-label="נקה חיפוש" type="button">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l8 8M11 3l-8 8"/></svg>
+    </button>
+  </div>
+
   <div class="tab-groups">
     <div class="tab-group biometry">
       <div class="tab-group-title">ביומטריה ודופלר</div>
@@ -961,7 +1011,7 @@
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="6" r="2.5"/><path d="M10 8.5v3M7 11h6M6 17l2-5M14 17l-2-5"/></svg>
           <span>ביומטריה</span>
         </button>
-        <button class="tab" onclick="showTab('dsrisk',this)" role="tab">
+        <button class="tab" onclick="showTab('dsrisk',this)" role="tab" id="tab-dsrisk" style="display:none">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="4"/><path d="M5 17c0-3 2-5 5-5s5 2 5 5"/><circle cx="8" cy="7.5" r=".7" fill="currentColor"/><circle cx="12" cy="7.5" r=".7" fill="currentColor"/></svg>
           <span>סקר DS</span>
         </button>
@@ -985,6 +1035,10 @@
         <button class="tab" onclick="showTab('peescreen',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10.5" r="6.5"/><path d="M10 6.5v4l3 1.5"/><path d="M10 17.5v-.5"/></svg>
           <span>רעלת</span>
+        </button>
+        <button class="tab" onclick="showTab('vte',this)" role="tab">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v8M10 11l-3 3M10 11l3 3M10 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/><circle cx="10" cy="6" r="1.2" fill="currentColor"/></svg>
+          <span>VTE</span>
         </button>
         <button class="tab" onclick="showTab('pplan',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="13" height="13.5" rx="1.5"/><path d="M6.5 7.5h7M6.5 10.5h7M6.5 13.5h4"/><path d="M5.5 7l.6.6L7.2 6.5"/></svg>
@@ -1038,11 +1092,11 @@
     <div class="row">
       <label>חשב מתוך</label>
       <div class="seg" id="preg-mode">
-        <button data-v="lmp" class="active" onclick="setPregMode(this)">LMP (וסת אחרון)</button>
+        <button data-v="lmp" class="active" onclick="setPregMode(this)">LMP</button>
         <button data-v="crl" onclick="setPregMode(this)">CRL</button>
-        <button data-v="us" onclick="setPregMode(this)">בדיקת US קודמת</button>
+        <button data-v="us" onclick="setPregMode(this)">US קודם</button>
         <button data-v="ivf" onclick="setPregMode(this)">IVF</button>
-        <button data-v="edd" onclick="setPregMode(this)">EDD ידוע</button>
+        <button data-v="edd" onclick="setPregMode(this)">EDD</button>
       </div>
     </div>
 
@@ -1163,7 +1217,7 @@
       <label>גיל הריון מתוך</label>
       <div class="seg" id="e-ga-mode">
         <button data-v="weeks" class="active" onclick="setEfwGaMode(this)">שבועות + ימים</button>
-        <button data-v="lmp" onclick="setEfwGaMode(this)">תאריך וסת (LMP)</button>
+        <button data-v="lmp" onclick="setEfwGaMode(this)">LMP</button>
       </div>
     </div>
 
@@ -2026,6 +2080,12 @@
 
   <!-- ===== Down Syndrome Risk Assessment (FMF First-Trimester Combined Test) ===== -->
   <div id="dsrisk" class="panel">
+    <button type="button" onclick="(function(){var b=document.querySelector(&quot;.tab[onclick*=\&quot;showTab('biom'\&quot;]&quot;);if(b)showTab('biom',b);})()"
+      style="display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:999px;color:var(--text2);font-size:12px;font-family:inherit;cursor:pointer">
+      <svg viewBox="0 0 14 14" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3l-4 4 4 4"/></svg>
+      חזרה לביומטריה
+    </button>
+
     <details class="ref-wrap">
       <summary>
         <svg class="ref-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5h7l3 3v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1Z"/><path d="M10 2.5v3h3"/><path d="M5 9h6M5 11.5h4"/></svg>
@@ -2281,6 +2341,154 @@
         <div class="rec-src">ADA 2023 · Sibai 2014</div>
       </div>
     </div>
+  </div>
+
+  <!-- ===== VTE Risk Assessment (RCOG Green-top 37a, 2015) ===== -->
+  <div id="vte" class="panel">
+    <details class="ref-wrap">
+      <summary>
+        <svg class="ref-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5h7l3 3v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1Z"/><path d="M10 2.5v3h3"/><path d="M5 9h6M5 11.5h4"/></svg>
+        <span>מקורות וקריטריונים</span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="ref">
+        <b>RCOG Green-top Guideline 37a (2015):</b> Reducing the Risk of Venous Thromboembolism during Pregnancy and the Puerperium — מודל ניקוד אנטה-נטלי ופוסט-נטלי<br>
+        <b>ACOG Practice Bulletin 196 (2018, מאומץ 2023):</b> Thromboembolism in Pregnancy<br>
+        <b>ACCP Antithrombotic Therapy (Bates et al.) Chest 2018:</b> VTE in pregnancy<br>
+        <b>נייר עמדה ישראלי 2019:</b> טרומבופרופילקסיס בהריון ולאחר לידה — האיגוד הישראלי למיילדות וגינקולוגיה<br>
+        <b>הנחיה:</b> סיכון VTE בהריון פי 4–5 מאוכלוסיה כללית · 65% מאירועי VTE קורים פוסט-פרטום · LMWH בטוח בהריון (לא חוצה שלייה)<br>
+        <b>מינון:</b> Enoxaparin פרופילקטי 40 mg SC/יום (משקל 50–90 ק"ג) · התאמות לפי משקל · ראה תוצאה אישית
+      </div>
+    </details>
+
+    <div class="pplan-header">
+      <div class="pplan-step-count" id="vte-step-count">0 / 3 שלבים</div>
+      <div class="pplan-title">סיכון VTE — אנטה-נטלי ופוסט-נטלי</div>
+      <div class="pplan-sub">סמני את גורמי הסיכון הרלוונטיים. הציון מחושב לפי RCOG Green-top 37a.</div>
+      <div class="pplan-progress" id="vte-progress">
+        <div></div><div></div><div></div>
+      </div>
+    </div>
+
+    <details class="pp-section" data-step="1" open>
+      <summary>
+        <div class="pp-sec-ico">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h14M3 10h14M3 15h10"/><circle cx="16" cy="15" r="2"/></svg>
+        </div>
+        <div class="pp-sec-text">
+          <div class="pp-sec-title">גורמי סיכון קיימים (Pre-existing)</div>
+          <div class="pp-sec-sub">VTE קודם, תרומבופיליה, מחלות רקע</div>
+        </div>
+        <span class="pp-sec-count" id="vte-count-pre">—</span>
+        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="pp-sec-body">
+        <div class="row">
+          <label>VTE קודם</label>
+          <select id="vte-prior" onchange="calcVte()">
+            <option value="0">ללא</option>
+            <option value="4">חד-פעמי לא-מוגבל (ללא טריגר)</option>
+            <option value="3">חד-פעמי לאחר ניתוח גדול בלבד</option>
+            <option value="4">חד-פעמי עם תרומבופיליה / משפחתי</option>
+            <option value="4">VTE חוזר (≥2)</option>
+            <option value="4">VTE קשור הריון/אסטרוגן</option>
+          </select>
+        </div>
+        <div class="row">
+          <label>תרומבופיליה ידועה</label>
+          <select id="vte-thromb" onchange="calcVte()">
+            <option value="0">ללא / לא נבדק</option>
+            <option value="3">סיכון גבוה (AT/PC/PS deficiency, APS, FVL/PT homo, combined)</option>
+            <option value="1">סיכון נמוך (FVL hetero, PT hetero)</option>
+          </select>
+        </div>
+        <div class="row">
+          <label>מחלת רקע משמעותית</label>
+          <span class="unit" style="font-size:11px">SLE · IBD · נפרוטי · סוכרת+נפרופתיה · אנמיה חרמשית · מחלת לב · גידול פעיל</span>
+        </div>
+        <div class="pp-grid">
+          <label class="pp-check"><input type="checkbox" id="vte_comorb" onchange="calcVte()"> מחלת רקע משמעותית (3 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_family_hx" onchange="calcVte()"> סיפור משפחתי VTE בקרוב מדרגה ראשונה (1 נק')</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="pp-section" data-step="2">
+      <summary>
+        <div class="pp-sec-ico">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="7" r="3"/><path d="M4 17c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
+        </div>
+        <div class="pp-sec-text">
+          <div class="pp-sec-title">גורמי סיכון אישיים והריון נוכחי</div>
+          <div class="pp-sec-sub">גיל, BMI, פריות, עישון, רב-עוברי, רעלת, IVF...</div>
+        </div>
+        <span class="pp-sec-count" id="vte-count-pers">—</span>
+        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="pp-sec-body">
+        <div class="row">
+          <label>גיל אם</label>
+          <input type="number" id="vte-age" min="13" max="55" step="1" placeholder="שנים" oninput="calcVte()">
+        </div>
+        <div class="row">
+          <label>BMI</label>
+          <input type="number" id="vte-bmi" min="14" max="60" step="0.1" placeholder="kg/m²" oninput="calcVte()">
+          <span class="unit" style="font-size:11px">30–39 = 1 נק' · ≥40 = 2 נק'</span>
+        </div>
+        <div class="row">
+          <label>פריות (Parity)</label>
+          <input type="number" id="vte-parity" min="0" max="15" step="1" placeholder="לידות קודמות" oninput="calcVte()">
+        </div>
+        <div class="pp-grid">
+          <label class="pp-check"><input type="checkbox" id="vte_smoker" onchange="calcVte()"> מעשנת כעת (1 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_varicose" onchange="calcVte()"> דליות גסות סימפטומטיות (1 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_multifet" onchange="calcVte()"> הריון מרובה עוברים (1 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_pe" onchange="calcVte()"> רעלת הריון בהריון הנוכחי (1 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_ivf" onchange="calcVte()"> IVF/ART בהריון הנוכחי (1 נק')</label>
+        </div>
+      </div>
+    </details>
+
+    <details class="pp-section" data-step="3">
+      <summary>
+        <div class="pp-sec-ico">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 1.5"/></svg>
+        </div>
+        <div class="pp-sec-text">
+          <div class="pp-sec-title">גורמים זמניים / פוסט-נטלי</div>
+          <div class="pp-sec-sub">היפר-אמזיס, אי-תנועה, ניתוח, OHSS, ק"ק, PPH...</div>
+        </div>
+        <span class="pp-sec-count" id="vte-count-trans">—</span>
+        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="pp-sec-body">
+        <div class="sec" style="display:block;font-size:10.5px;color:var(--text3);margin:2px 0 10px;border:none;padding:0">זמניים אנטה-נטלי</div>
+        <div class="pp-grid">
+          <label class="pp-check"><input type="checkbox" id="vte_ohss" onchange="calcVte()"> OHSS — טרימסטר ראשון בלבד (4 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_surgery" onchange="calcVte()"> ניתוח בהריון (3 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_hyperemesis" onchange="calcVte()"> היפר-אמזיס פעיל (1 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_infection" onchange="calcVte()"> זיהום סיסטמי פעיל (1 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_immobile" onchange="calcVte()"> אי-תנועה / מיטה ≥3 ימים (1 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_travel" onchange="calcVte()"> נסיעה ארוכה &gt;4 שעות (1 נק')</label>
+        </div>
+
+        <div class="sec" style="display:block;font-size:10.5px;color:var(--text3);margin:14px 0 10px;border:none;padding:0">פוסט-נטלי (אם ההערכה לאחר לידה)</div>
+        <div class="pp-grid">
+          <label class="pp-check"><input type="checkbox" id="vte_cs_emergency" onchange="calcVte()"> ק"ק דחוף בלידה (2 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_cs_elective" onchange="calcVte()"> ק"ק אלקטיבי (1 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_mid_forceps" onchange="calcVte()"> מילקדים סיבוביים/אמצע-אגן (1 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_prolonged" onchange="calcVte()"> לידה ממושכת &gt;24 שעות (1 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_pph" onchange="calcVte()"> PPH &gt;1L או עירוי (1 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_preterm" onchange="calcVte()"> לידה מוקדמת &lt;37 שבועות (1 נק')</label>
+          <label class="pp-check"><input type="checkbox" id="vte_stillbirth" onchange="calcVte()"> לידת מת בהריון נוכחי (1 נק')</label>
+        </div>
+      </div>
+    </details>
+
+    <div class="pp-cta-row">
+      <button class="btn btn-primary" onclick="calcVte()">חשב סיכון VTE</button>
+    </div>
+    <div id="vte-res"></div>
   </div>
 
   <!-- ===== Pregnancy Plan / Personalized Test Timing ===== -->
@@ -2736,6 +2944,109 @@
         </ul>
       </div>
     </div>
+
+    <div class="sec">פיענוח TEG / ROTEM</div>
+    <div class="rec-box" style="margin-top:0">
+      <div class="rec-head">
+        <span>Thromboelastography — תוצאות, משמעות, פעולה</span>
+        <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">Point of Care</span>
+      </div>
+      <div class="rec-body">
+        <div class="rec-section">
+          <div class="rec-section-title">פרמטרים עיקריים</div>
+          <ul class="rec-list">
+            <li><b>R time (TEG) / CT (ROTEM):</b> זמן עד התחלת קרישה — תלוי בגורמי קרישה.
+              <br><b>תקין:</b> R = 4–8 דקות · <b>מוארך → FFP</b> (10–15 ml/kg).</li>
+            <li><b>K time (TEG) / CFT (ROTEM):</b> זמן להגעה לחוזק קריש 20 מ"מ — תלוי בפיברינוגן.
+              <br><b>תקין:</b> K = 1–3 דקות · <b>מוארך → קריו / קונצנטרט פיברינוגן.</b></li>
+            <li><b>α-angle:</b> קצב היווצרות קריש — פיברינוגן/פלטליות.
+              <br><b>תקין:</b> 47–74° · <b>נמוך → קריו או פלטליות.</b></li>
+            <li><b>MA (TEG) / MCF (ROTEM):</b> חוזק קריש מירבי — פלטליות (80%) + פיברינוגן (20%).
+              <br><b>תקין:</b> MA = 54–72 מ"מ · <b>נמוך → פלטליות</b> (1 unit), אם נמוך מאוד שקול פיברינוגן.</li>
+            <li><b>LY30 / ML:</b> אחוז ליזיס ב-30 דקות — היפר-פיברינוליזה.
+              <br><b>תקין:</b> LY30 &lt; 3% · <b>גבוה (&gt;7.5%) → TXA 1g IV (חזרה אם נדרש).</b></li>
+          </ul>
+        </div>
+        <div class="rec-section">
+          <div class="rec-section-title">דפוסים אופייניים ב-PPH</div>
+          <ul class="rec-list">
+            <li class="warn"><b>היפו-פיברינוגנמיה:</b> K מוארך + α-angle נמוך + MA נמוך → <b>קריו 10 מנות</b></li>
+            <li class="warn"><b>תרומבוציטופניה:</b> MA נמוך עם α-angle תקין → <b>פלטליות 1 unit</b></li>
+            <li class="crit"><b>היפר-פיברינוליזה:</b> LY30 &gt;7.5% או צורת "אגס" → <b>TXA 1g IV מיידי</b></li>
+            <li class="crit"><b>קואגולופתיה משולבת:</b> R מוארך + MA נמוך + LY30 גבוה → <b>MTP מלא + TXA</b></li>
+          </ul>
+        </div>
+        <div class="rec-src">Hagemo JS et al. <i>Crit Care</i> 2015 · Mallaiah S et al. <i>BJOG</i> 2018 (Liverpool ROTEM PPH algorithm) · Collins PW et al. <i>Br J Haematol</i> 2014</div>
+      </div>
+    </div>
+
+    <div class="sec">מוצרי דם — מה כל מנה תורמת</div>
+    <div class="rec-box" style="margin-top:0">
+      <div class="rec-head">
+        <span>טבלת ייחוס מהירה למוצרי דם</span>
+        <span class="rec-tag" style="background:var(--surface2);color:var(--text2)">לכל יחידה ב-70 ק"ג</span>
+      </div>
+      <div class="rec-body">
+        <div class="rec-section">
+          <div class="rec-section-title">תרכיז כדוריות אדומות (PRBC)</div>
+          <ul class="rec-list">
+            <li><b>נפח:</b> ~280 ml · <b>המטוקריט:</b> 55–65%</li>
+            <li><b>השפעה:</b> מעלה Hb ב-<b>~1.0 g/dL</b> ו-Hct ב-<b>~3%</b> לכל יחידה</li>
+            <li><b>אינדיקציה ב-PPH:</b> Hb &lt; 7 g/dL · Hb &lt; 8 עם תסמינים · אובדן דם פעיל ניכר</li>
+            <li><b>תאימות:</b> חוצה-תאימות אם זמן · O-negative חירום (לפני סיום צלב-תאימות)</li>
+            <li><b>קריריות:</b> חמם אם &gt;1 יחידה ב-15 דקות · הימנע מהיפותרמיה</li>
+          </ul>
+        </div>
+        <div class="rec-section">
+          <div class="rec-section-title">פלזמה טרייה קפואה (FFP)</div>
+          <ul class="rec-list">
+            <li><b>נפח:</b> 200–250 ml · <b>תכולה:</b> כל גורמי הקרישה ב-1 U/ml · פיברינוגן ~400 mg ליחידה</li>
+            <li><b>מינון פרופילקטי:</b> <b>15 ml/kg</b> (≈ 4 יחידות ב-70 ק"ג) — בעדיפות יחס 1:1 ל-PRBC</li>
+            <li><b>השפעה:</b> מעלה גורמי קרישה ב-<b>~20%</b> · משפר PT/PTT ב-<b>~30%</b></li>
+            <li><b>אינדיקציה:</b> PT/PTT &gt;1.5× נורמלי · INR &gt;1.5 + דימום פעיל · MTP</li>
+            <li><b>זמן הפשרה:</b> 20–30 דקות — להזמין מוקדם!</li>
+          </ul>
+        </div>
+        <div class="rec-section">
+          <div class="rec-section-title">קריופרציפיטט (Cryo)</div>
+          <ul class="rec-list">
+            <li><b>נפח:</b> 10–15 ml ליחידה · <b>בריכה:</b> בדרך כלל 10 יחידות יחד</li>
+            <li><b>תכולה ל-יחידה:</b> פיברינוגן ~150–250 mg · Factor VIII ~80 U · Factor XIII · vWF · פיברונקטין</li>
+            <li><b>השפעה:</b> בריכה של 10 יחידות (~150 ml) → פיברינוגן עולה ב-<b>~70–100 mg/dL</b></li>
+            <li><b>מינון מומלץ ב-PPH:</b> <b>10 יחידות (1 בריכה)</b> ב-פיברינוגן &lt; 200 mg/dL ו-דימום פעיל</li>
+            <li><b>יעד:</b> פיברינוגן ≥ 200 mg/dL (≥ 2 g/L) — קריטי במהלך דימום פעיל</li>
+            <li><b>אם זמין:</b> <b>קונצנטרט פיברינוגן (RiaSTAP/Haemocomplettan)</b> — 2–4 גרם IV, מהיר ויעיל יותר</li>
+          </ul>
+        </div>
+        <div class="rec-section">
+          <div class="rec-section-title">פלטליות (Platelets)</div>
+          <ul class="rec-list">
+            <li><b>סוגים:</b> Apheresis (1 יחידה = 1 תורם, ~250 ml) · Pooled random (4–6 יחידות בריכה)</li>
+            <li><b>השפעה:</b> 1 unit (apheresis או pooled) → ספירה עולה ב-<b>~30,000/μL</b></li>
+            <li><b>מינון ב-PPH:</b> <b>1 unit</b> אם פלטליות &lt; 75K עם דימום פעיל · &lt; 50K אם MTP</li>
+            <li><b>יעד:</b> ≥ 75,000/μL בדימום פעיל · ≥ 50,000/μL אחרי שליטה</li>
+            <li><b>תאימות:</b> ABO-תואם רצוי · נשים בגיל פוריות → Rh-תואם או anti-D אם Rh-</li>
+          </ul>
+        </div>
+        <div class="rec-section">
+          <div class="rec-section-title">קונצנטרטים מיוחדים</div>
+          <ul class="rec-list">
+            <li><b>קונצנטרט פיברינוגן (RiaSTAP):</b> 1 גרם → פיברינוגן +30 mg/dL · מינון: 25–50 mg/kg
+              <br><i>מהיר וזמין מיידית — אין צורך בהפשרה. לרוב 2–4 גרם ב-PPH משמעותי.</i></li>
+            <li><b>PCC (Prothrombin Complex):</b> 4 גורמים (II, VII, IX, X) · מינון: 25–50 U/kg
+              <br><i>שמור למצב חירום עם warfarin / DOAC active bleeding · לא קו ראשון ב-PPH אובסטטרי.</i></li>
+            <li><b>Factor VIIa (NovoSeven):</b> 90 μg/kg IV
+              <br><i>"מוצא אחרון" — רק לאחר שכל מוצרי הדם הסטנדרטיים נכשלו, פיברינוגן ≥150, פלטליות ≥50K, pH ≥7.2, חימום. סיכון טרומבוטי.</i></li>
+            <li><b>Calcium Gluconate 10%:</b> 10 ml IV לכל 4 יחידות דם · ציטראט מציגזיון Ca יוני</li>
+          </ul>
+        </div>
+        <div class="rec-src">AABB Standards 2023 · BCSH (British Committee for Standards in Haematology) 2016 · ACOG PB 183 · Pacheco LD et al. <i>AJOG</i> 2016 (Massive Transfusion in OB)</div>
+      </div>
+    </div>
+
+    <div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-top:14px">
+      <b>עקרון מפתח:</b> ב-PPH פעיל, התחל MTP <b>אמפירית 1:1:1</b> (RBC:FFP:Plt) ואל תחכה למעבדה. הוסף TXA 1g מיידי, וכוון לפיברינוגן ≥2 g/L מוקדם — אם TEG/ROTEM זמין, הוא מנחה החלפת מוצרים מדויקת יותר תוך 10–15 דקות.
+    </div>
   </div>
 
 </div>
@@ -2759,7 +3070,97 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.2';
+const APP_VERSION = '3.3';
+
+// ─── Global search (filter tabs by text + keyword aliases) ────────────────
+const TAB_KEYWORDS = {
+  preg:       ['ga','גיל','הריון','lmp','crl','edd','ivf','obwheel','wheel','dating'],
+  efw:        ['efw','משקל','hadlock','dollberg','אחוזון','percentile','ביומטריה','biometry'],
+  hc:         ['hc','ראש','head','microcephaly','מיקרוצפליה','chervenak'],
+  fl:         ['fl','femur','ירך','עצם','dwarfism','גמדות'],
+  ua:         ['ua','fgr','iugr','umbilical','doppler','דופלר','טבורי','cpr','utra','rizzo'],
+  mca:        ['mca','אנמיה','anemia','psv','mom','mari'],
+  biom:       ['biom','ביומטריה','מוח','tcd','ventricle','קורפוס','חזה','כליה','עין','הומרוס','tibia','radius','ulna'],
+  dsrisk:     ['ds','down','דאון','t1','nt','שקיפות','nasal','dv','ductus','tricuspid','tr','papp','hcg','fmf'],
+  ptcomp:     ['פגות','prematurity','rds','bpd','ivh','nec','שרידות','survival','pagim','פגים','steroids','סטרואידים'],
+  ptb:        ['ptb','cervical','length','cl','צוואר','לידה מוקדמת','iams'],
+  twins:      ['twins','תאומים','dcda','mcda','mcma','ttts','taps','siugr','trap','quintero','slaghekke','gratacos'],
+  peescreen:  ['רעלת','preeclampsia','pe','aspirin','asa','sflt','plgf','fmf','prognosis','uspstf'],
+  vte:        ['vte','dvt','pe','pulmonary embolism','טרומבואמבולי','קרישיות','rcog','lmwh','enoxaparin','קלקסן','thrombophilia','APS','factor v leiden','thrombosis'],
+  pplan:      ['תוכנית','plan','schedule','בדיקות','timing','moh','משרד הבריאות','nipt'],
+  delivery:   ['delivery','תזמון','לידה','37','38','39','induction','השראה','smfm','acog','timing'],
+  tolac:      ['tolac','vbac','grobman','קיסרי','cs','קיסרית','race-neutral'],
+  rupture:    ['rupture','קרע','רחם','uterine','landon','bujold','gyamfi','interval'],
+  pph:        ['pph','דימום','postpartum','tone','trauma','tissue','thrombin','txa','bakri','b-lynch','massive transfusion','mtp','woman','tranexamic','teg','rotem','cryo','קריו','ffp','פלזמה','פיברינוגן','fibrinogen','riastap','prbc','כדוריות','platelets','פלטליות','novoseven'],
+  dka:        ['dka','ketoacidosis','ketoacidoze','חמצת','קטוזיס','euglycemic','אינסולין','insulin','sibai']
+};
+
+(function initSearch(){
+  const init = () => {
+    const wrap = document.getElementById('app-search');
+    const input = document.getElementById('app-search-input');
+    const clear = document.getElementById('app-search-clear');
+    const count = document.getElementById('app-search-count');
+    if (!wrap || !input) return;
+
+    const allTabs = Array.from(document.querySelectorAll('.tab[onclick^="showTab("]'));
+    const allGroups = Array.from(document.querySelectorAll('.tab-group'));
+
+    let emptyEl = null;
+    const ensureEmpty = () => {
+      if (emptyEl) return emptyEl;
+      emptyEl = document.createElement('div');
+      emptyEl.className = 'search-empty';
+      emptyEl.id = 'search-empty';
+      emptyEl.textContent = 'לא נמצאו מחשבונים תואמים — נסה מילת מפתח אחרת';
+      document.querySelector('.tab-groups').after(emptyEl);
+      return emptyEl;
+    };
+
+    const applyFilter = (raw) => {
+      const q = (raw || '').trim().toLowerCase();
+      wrap.classList.toggle('has-query', q.length > 0);
+      if (!q) {
+        allTabs.forEach(t => { t.classList.remove('search-hide','search-match'); });
+        allGroups.forEach(g => g.classList.remove('search-hide'));
+        if (emptyEl) emptyEl.style.display = 'none';
+        count.style.display = 'none';
+        return;
+      }
+      let matches = 0;
+      allTabs.forEach(t => {
+        const m = t.getAttribute('onclick').match(/showTab\('([^']+)'/);
+        const id = m ? m[1] : '';
+        const txt = (t.textContent || '').toLowerCase();
+        const kw = (TAB_KEYWORDS[id] || []).join(' ').toLowerCase();
+        const hit = txt.includes(q) || kw.includes(q) || id.toLowerCase().includes(q);
+        t.classList.toggle('search-hide', !hit);
+        t.classList.toggle('search-match', hit);
+        if (hit) matches++;
+      });
+      allGroups.forEach(g => {
+        const anyVisible = g.querySelectorAll('.tab:not(.search-hide)').length > 0;
+        g.classList.toggle('search-hide', !anyVisible);
+      });
+      count.style.display = '';
+      count.textContent = matches === 0 ? '0' : `${matches}`;
+      const empty = ensureEmpty();
+      empty.style.display = matches === 0 ? '' : 'none';
+    };
+
+    input.addEventListener('input', e => applyFilter(e.target.value));
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { input.value = ''; applyFilter(''); input.blur(); }
+      if (e.key === 'Enter') {
+        const first = document.querySelector('.tab.search-match:not(.search-hide)');
+        if (first) { first.click(); input.value = ''; applyFilter(''); input.blur(); }
+      }
+    });
+    clear.addEventListener('click', () => { input.value = ''; applyFilter(''); input.focus(); });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
 
 (function initVersion(){
   try {
@@ -2816,8 +3217,11 @@ function todayDate(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
 function showTab(id,el){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  el.classList.add('active');
+  const panel = document.getElementById(id);
+  if (panel) panel.classList.add('active');
+  if (el && el.classList) el.classList.add('active');
+  // Scroll to top of new panel for clarity (especially when triggered from a nested card)
+  if (panel) window.scrollTo({ top: panel.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
 }
 
 // ─── PREGNANCY CALCULATOR ─────────────────────────────────────────────────
@@ -5388,6 +5792,11 @@ const biomSystems = {
     icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16c-1.5-.5-1.5-2.5 0-3 .5-1.5 2.5-1.5 3 0l6-6c-1.5-.5-1.5-2.5 0-3s2.5 1.5 3 0c1.5.5 1.5 2.5 0 3 .5 1.5-1.5 2.5-3 3l-6 6c1.5.5 1.5 2.5 0 3s-2.5-1.5-3 0Z"/></svg>',
     items: ['hl','tib','rad','uln','foot']
   },
+  dsrisk_t1: {
+    name: 'סקר DS T1', color: 'var(--green)',
+    icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="4"/><path d="M5 17c0-3 2-5 5-5s5 2 5 5"/><circle cx="8" cy="7.5" r=".7" fill="currentColor"/><circle cx="12" cy="7.5" r=".7" fill="currentColor"/></svg>',
+    items: [], external: 'dsrisk', subtitle: 'NT + βhCG + PAPP-A · FMF'
+  },
 };
 
 (function renderBiomSystems(){
@@ -5395,11 +5804,13 @@ const biomSystems = {
   if(!grid) return;
   let html = '';
   for(const [sysId, sys] of Object.entries(biomSystems)){
-    html += `<button class="biom-sys-card" type="button" data-sys="${sysId}" onclick="selectBiomSystem('${sysId}')">
+    const subtitle = sys.subtitle || `${sys.items.length} מדידות`;
+    const extraStyle = sys.external ? ' style="grid-column:1/-1;border:1px dashed var(--border2)"' : '';
+    html += `<button class="biom-sys-card" type="button" data-sys="${sysId}" onclick="selectBiomSystem('${sysId}')"${extraStyle}>
       <span class="biom-sys-icon" style="background:${sys.color}">${sys.icon}</span>
       <span class="biom-sys-body">
-        <div class="biom-sys-name">${sys.name}</div>
-        <div class="biom-sys-count">${sys.items.length} מדידות</div>
+        <div class="biom-sys-name">${sys.name}${sys.external?' →':''}</div>
+        <div class="biom-sys-count">${subtitle}</div>
       </span>
     </button>`;
   }
@@ -5407,10 +5818,16 @@ const biomSystems = {
 })();
 
 function selectBiomSystem(sysId){
+  const sys = biomSystems[sysId];
+  // External target: navigate to a different panel rather than render measurements inline.
+  if (sys && sys.external) {
+    const tabBtn = document.querySelector(`.tab[onclick*="showTab('${sys.external}'"]`);
+    if (tabBtn) showTab(sys.external, tabBtn);
+    return;
+  }
   document.querySelectorAll('.biom-sys-card').forEach(c => {
     c.classList.toggle('active', c.dataset.sys === sysId);
   });
-  const sys = biomSystems[sysId];
   const list = document.getElementById('biom-meas-list');
   document.getElementById('biom-system-title').textContent = `מדידות — ${sys.name}`;
   let html = '';
@@ -6028,6 +6445,12 @@ function calcDelivery(){
     html += `<div class="note" style="border-right-color:var(--primary);background:var(--primary-bg)"><b>הערה:</b> ${cond.note}</div>`;
   }
 
+  // Steroid cutoff derived from the recommended GA — early-term conditions (e.g., placenta previa @ 36–37+6)
+  // use 37+0 not 39+0 because by the time the planned delivery window opens, preterm steroid coverage is moot.
+  const gaMatch = cond.ga.match(/(\d+)\+/);
+  const cutoffWeek = gaMatch ? parseInt(gaMatch[1], 10) : 39;
+  const steroidCutoff = cutoffWeek <= 37 ? '37+0' : '39+0';
+
   // Source
   html += `<div class="rec-box">
     <div class="rec-head">
@@ -6037,7 +6460,7 @@ function calcDelivery(){
     <div class="rec-body">
       <ul class="rec-list">
         <li>ההמלצה לזמן <b>לידה מתוכננת</b> במצב יציב — לא במצב לידה ספונטנית או הידרדרות</li>
-        <li>לפני 39+0 — שקול סטרואידים טרום־לידתיים אם פגות צפויה</li>
+        <li>אם צפויה לידה לפני ${steroidCutoff} — שקול סטרואידים טרום־לידתיים</li>
         ${timingClass==='bad'?'<li class="crit">לידה מאוחרת-מוקדמת מצריכה בית חולים שלישוני עם NICU מתאים</li>':''}
         <li>החלטה סופית — בהתאם לחומרת המצב, מצב האם, ניטור עוברי</li>
       </ul>
@@ -6512,6 +6935,179 @@ function calcDsRisk(){
 
   el.innerHTML = html;
 }
+
+// ─── VTE RISK ASSESSMENT (RCOG Green-top 37a, 2015) ────────────────────
+function calcVte(){
+  const el = document.getElementById('vte-res');
+  if(!el) return;
+  const $ = id => document.getElementById(id);
+  const num = id => parseFloat($(id)?.value) || 0;
+  const sel = id => parseInt($(id)?.value, 10) || 0;
+  const chk = id => $(id)?.checked ? 1 : 0;
+
+  // Pre-existing
+  const prior = sel('vte-prior');
+  const thromb = sel('vte-thromb');
+  const comorb = chk('vte_comorb') * 3;
+  const famHx = chk('vte_family_hx');
+
+  // Personal / current pregnancy
+  const age = num('vte-age');
+  const ageScore = age >= 35 ? 1 : 0;
+  const bmi = num('vte-bmi');
+  const bmiScore = bmi >= 40 ? 2 : bmi >= 30 ? 1 : 0;
+  const parity = num('vte-parity');
+  const parityScore = parity >= 3 ? 1 : 0;
+  const smoker = chk('vte_smoker');
+  const varicose = chk('vte_varicose');
+  const multifet = chk('vte_multifet');
+  const pe = chk('vte_pe');
+  const ivf = chk('vte_ivf');
+
+  // Transient
+  const ohss = chk('vte_ohss') * 4;
+  const surgery = chk('vte_surgery') * 3;
+  const hyperemesis = chk('vte_hyperemesis');
+  const infection = chk('vte_infection');
+  const immobile = chk('vte_immobile');
+  const travel = chk('vte_travel');
+
+  // Postnatal
+  const csEm = chk('vte_cs_emergency') * 2;
+  const csEl = chk('vte_cs_elective');
+  const midForceps = chk('vte_mid_forceps');
+  const prolonged = chk('vte_prolonged');
+  const pph = chk('vte_pph');
+  const preterm = chk('vte_preterm');
+  const stillbirth = chk('vte_stillbirth');
+
+  const preScore = prior + thromb + comorb + famHx;
+  const persScore = ageScore + bmiScore + parityScore + smoker + varicose + multifet + pe + ivf;
+  const transAnte = ohss + surgery + hyperemesis + infection + immobile + travel;
+  const transPost = csEm + csEl + midForceps + prolonged + pph + preterm + stillbirth;
+
+  const anteScore = preScore + persScore + transAnte;
+  const postScore = preScore + persScore + transPost + (transAnte >= 0 ? 0 : 0);
+
+  // Update section badges
+  const setCount = (id, n) => { const e = $(id); if(e) e.textContent = n > 0 ? String(n) : '—'; };
+  setCount('vte-count-pre', preScore);
+  setCount('vte-count-pers', persScore);
+  setCount('vte-count-trans', transAnte + transPost);
+
+  // Progress
+  const bars = document.querySelectorAll('#vte-progress > div');
+  let done = 0;
+  [preScore>0, persScore>0, (transAnte+transPost)>0].forEach((s,i)=>{
+    bars[i]?.classList.toggle('done', s);
+    if(s) done++;
+  });
+  const stepCount = $('vte-step-count');
+  if(stepCount) stepCount.textContent = `${done} / 3 שלבים`;
+
+  // Recommendations — RCOG 37a
+  const anteAction = anteScore >= 4
+    ? { cls:'bad', label:'LMWH פרופילקטי מהטרימסטר הראשון, לאורך כל ההריון', priority:'גבוה מאוד' }
+    : anteScore === 3
+    ? { cls:'warn', label:'LMWH פרופילקטי החל משבוע 28', priority:'גבוה' }
+    : anteScore >= 1
+    ? { cls:'ok', label:'אין צורך ב-LMWH אנטה-נטלי שגרתי · עידוד תנועה, גרבי לחץ אם מאושפזת', priority:'נמוך–בינוני' }
+    : { cls:'ok', label:'אין סיכון מוגבר · המלצות כלליות', priority:'בסיסי' };
+
+  const postAction = postScore >= 4 || prior >= 3
+    ? { cls:'bad', label:'LMWH ל-6 שבועות פוסט-פרטום', priority:'גבוה מאוד' }
+    : postScore >= 2
+    ? { cls:'warn', label:'LMWH ל-10 ימים פוסט-פרטום', priority:'גבוה' }
+    : postScore === 1
+    ? { cls:'ok', label:'שקלי LMWH ל-10 ימים אם מצטרפים גורמים בהמשך · עידוד תנועה מוקדמת', priority:'נמוך' }
+    : { cls:'ok', label:'אין צורך בפרופילקסיס · עידוד תנועה מוקדמת + הידרציה', priority:'בסיסי' };
+
+  // LMWH dose (Enoxaparin) by weight
+  let doseRow = '';
+  if (anteAction.cls !== 'ok' || postAction.cls !== 'ok') {
+    const wt = bmi && num('vte-age') ? null : null; // we don't have wt; show table
+    doseRow = `<div class="rec-section">
+      <div class="rec-section-title">מינון Enoxaparin פרופילקטי לפי משקל</div>
+      <ul class="rec-list">
+        <li><b>&lt; 50 ק"ג:</b> 20 mg SC × פעם ביום</li>
+        <li><b>50–90 ק"ג:</b> 40 mg SC × פעם ביום (סטנדרט)</li>
+        <li><b>91–130 ק"ג:</b> 60 mg SC × פעם ביום</li>
+        <li><b>131–170 ק"ג:</b> 80 mg SC × פעם ביום</li>
+        <li><b>&gt; 170 ק"ג:</b> 0.6 mg/kg × פעם ביום</li>
+      </ul>
+      <div class="rec-src">RCOG 37a · ACOG PB 196 · Bates et al. Chest 2018</div>
+    </div>`;
+  }
+
+  let html = `<div class="result">
+    <div class="result-label">סיכון VTE — ניקוד RCOG</div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end">
+      <div>
+        <div class="big" style="font-size:38px;color:var(${anteAction.cls==='bad'?'--red':anteAction.cls==='warn'?'--amber':'--green'})">${anteScore}<span>אנטה-נטלי</span></div>
+        ${badge(anteAction.cls, anteAction.priority)}
+      </div>
+      <div>
+        <div class="big" style="font-size:38px;color:var(${postAction.cls==='bad'?'--red':postAction.cls==='warn'?'--amber':'--green'})">${postScore}<span>פוסט-נטלי</span></div>
+        ${badge(postAction.cls, postAction.priority)}
+      </div>
+    </div>
+  </div>`;
+
+  html += `<div class="rec-box">
+    <div class="rec-head">
+      <span>המלצה אנטה-נטלית</span>
+      <span class="rec-tag rec-tag-${anteAction.cls==='bad'?'bad':anteAction.cls==='warn'?'warn':'ok'}">${anteScore} נק'</span>
+    </div>
+    <div class="rec-body">
+      <div class="rec-section">
+        <div class="rec-section-title">${anteAction.label}</div>
+        <ul class="rec-list">
+          ${anteScore >= 3 ? '<li>בדיקות בסיסיות: CBC, תפקודי כליה, anti-Xa אם צריך ניטור</li>' : ''}
+          ${anteScore >= 4 ? '<li class="warn">שקלי הפניה למרפאת המטולוגיה במצב תרומבופיליה / VTE קודם</li>' : ''}
+          ${prior >= 3 ? '<li class="crit">VTE קודם — LMWH חובה לאורך כל ההריון + 6 שבועות פוסט-פרטום</li>' : ''}
+          <li>גרבי לחץ TED בכל אשפוז · מובילציה מוקדמת</li>
+        </ul>
+      </div>
+      ${doseRow}
+    </div>
+  </div>`;
+
+  html += `<div class="rec-box">
+    <div class="rec-head">
+      <span>המלצה פוסט-נטלית</span>
+      <span class="rec-tag rec-tag-${postAction.cls==='bad'?'bad':postAction.cls==='warn'?'warn':'ok'}">${postScore} נק'</span>
+    </div>
+    <div class="rec-body">
+      <div class="rec-section">
+        <div class="rec-section-title">${postAction.label}</div>
+        <ul class="rec-list">
+          <li>מנה ראשונה: 6–12 שעות לאחר לידה וגינלית · 12 שעות לאחר ק"ק (לאחר הוצאת אפידורל)</li>
+          ${postScore >= 4 ? '<li class="warn">בקרת מעבדה: CBC + ספירת טסיות יום 5–7 (HIT שלילי) · anti-Xa אם נדרש ניטור</li>' : ''}
+          <li>הוראות לאם: דווחי על קוצר נשימה, כאב חזה, נפיחות אסימטרית של רגל, כאב שוק</li>
+          <li>LMWH בטוח להנקה — לא מופרש בחלב באופן משמעותי</li>
+        </ul>
+      </div>
+    </div>
+  </div>`;
+
+  html += `<div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-top:14px">
+    <b>הערה:</b> כלי זה הוא תומך החלטה — שיקול דעת קליני, התייעצות עם המטולוגיה, וקריאה ישירה ב-RCOG Green-top 37a (2015) נדרשים במצבים גבוליים, מצבי תרומבופיליה מורכבים, או VTE פעיל.
+  </div>`;
+
+  el.innerHTML = html;
+}
+
+// Auto-recalc on input change (debounced via native events)
+(function bindVteAuto(){
+  const init = () => {
+    document.querySelectorAll('#vte input, #vte select').forEach(el => {
+      el.addEventListener('change', calcVte);
+      if (el.tagName === 'INPUT' && el.type !== 'checkbox') el.addEventListener('input', calcVte);
+    });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
 
 // ─── PERSONALIZED PREGNANCY PLAN (Israeli MOH + risk-based add-ons) ──
 let ppMode = 'lmp', ppType = 'single';
