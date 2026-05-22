@@ -1027,48 +1027,93 @@
   .paper-modal-close:hover { background: var(--red-bg); color: var(--red); }
   .paper-modal h3 { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.35; margin-bottom: 4px; }
   .paper-modal-meta { font-size: 12.5px; color: var(--text3); margin: 6px 0 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-  .paper-modal-section { margin-top: 18px; }
+  .paper-modal-section { margin-top: 14px; }
   .paper-modal-section h4 {
     font-size: 13px; font-weight: 700; color: var(--text);
-    margin-bottom: 12px; padding: 6px 10px; background: var(--primary-bg);
+    margin-bottom: 10px; padding: 6px 10px; background: var(--primary-bg);
     border-right: 3px solid var(--primary); border-radius: 6px;
   }
+  /* Compact, organized bullet list (v4.4 redesign) */
   .paper-modal-section ul {
-    list-style: none; padding: 0; margin: 0;
+    list-style: none;
+    padding: 0; margin: 0;
   }
-  /* Each list item — card-like with subtle background */
   .paper-modal-section li {
-    font-size: 13.5px; line-height: 1.75; padding: 9px 16px 9px 12px;
-    position: relative; color: var(--text2);
-    border-radius: 8px;
-    margin-bottom: 4px;
-    transition: background 0.15s ease;
+    font-size: 13px; line-height: 1.55;
+    padding: 3px 16px 3px 6px;
+    color: var(--text2);
+    position: relative;
+    margin: 0;
   }
-  .paper-modal-section li:hover { background: var(--surface2); }
-  /* Section dividers (━━━ blocks become real visual dividers) */
-  .paper-modal-section li:has(b:only-child) b,
-  .paper-modal-section li > b:first-child:last-child {
-    display: block;
+  /* Real bullet markers */
+  .paper-modal-section li:not(.pm-divider):not(.pm-station):not(.pm-stage)::before {
+    content: '•';
+    color: var(--primary);
+    font-weight: 700;
+    position: absolute;
+    right: 4px;
+    top: 3px;
+    font-size: 13px;
   }
-  /* Items that start with ━━ become section headers */
-  .paper-modal-section li b {
-    color: var(--text); font-weight: 700;
+  .paper-modal-section li b { color: var(--text); font-weight: 700; }
+  /* Section divider — gradient pill, dense */
+  .paper-modal-section li.pm-divider {
+    background: linear-gradient(to left, var(--surface2), var(--primary-bg));
+    border-right: 3px solid var(--primary);
+    border-radius: 6px;
+    padding: 7px 12px;
+    margin: 12px 0 6px;
+    font-weight: 700; color: var(--text); font-size: 13px;
+    line-height: 1.4;
   }
-  /* Emoji prefix styling — make headers stand out */
-  .paper-modal-section li:has(b) {
-    background: linear-gradient(to left, transparent, rgba(0,0,0,0.01));
+  .paper-modal-section li.pm-divider::before { display: none; }
+  /* Station row — bullet with inline colored category chip */
+  .paper-modal-section li.pm-station {
+    padding-right: 18px;
   }
+  .paper-modal-section li.pm-station::before {
+    content: '•';
+    color: var(--primary);
+    font-weight: 700;
+    position: absolute;
+    right: 4px;
+    top: 3px;
+    font-size: 13px;
+  }
+  .pm-chip {
+    display: inline-block;
+    font-size: 10.5px; font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 5px;
+    margin-left: 6px;
+    vertical-align: 1px;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+  }
+  /* Color-coded stage rows (🟢🟡🟠🔴) */
+  .paper-modal-section li.pm-stage {
+    background: var(--surface2);
+    padding: 6px 12px 6px 12px;
+    border-radius: 6px;
+    margin: 4px 0;
+    font-weight: 500;
+    line-height: 1.55;
+  }
+  .paper-modal-section li.pm-stage::before { display: none; }
   /* Improve readability for nested content */
   .paper-modal-section li br + br { display: none; }
   /* Numbered lists */
   .paper-modal-section ol {
     list-style: decimal inside; padding-right: 4px;
+    margin: 0;
   }
   .paper-modal-section ol li::before { display: none; }
   /* Better mobile spacing */
   @media (max-width: 640px) {
     .paper-modal h3 { font-size: 17px; }
-    .paper-modal-section li { font-size: 12.5px; padding: 7px 12px 7px 10px; }
+    .paper-modal-section li { font-size: 12.5px; padding: 3px 14px 3px 6px; }
+    .paper-modal-section li.pm-divider { padding: 6px 10px; font-size: 12.5px; }
+    .pm-chip { font-size: 10px; padding: 1px 6px; }
   }
   .paper-related-tabs {
     margin-top: 18px; padding-top: 14px;
@@ -1237,6 +1282,11 @@
   .pph-card-text { flex: 1; min-width: 0; }
   .pph-card-title { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.3; }
   .pph-card-sub { font-size: 11px; color: var(--text3); margin-top: 2px; line-height: 1.4; }
+  /* Collapsible "additional infections" group */
+  details.inf-extra-group > summary::-webkit-details-marker { display: none; }
+  details.inf-extra-group[open] > summary .inf-extra-caret { transform: rotate(-180deg); }
+  details.inf-extra-group[open] > summary { border-bottom: 1px solid var(--border); }
+  details.inf-extra-group > summary:hover { background: var(--primary-bg); }
   .pph-detail-area {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius-lg); padding: 18px;
@@ -1245,6 +1295,21 @@
     animation: fadeUp .25s cubic-bezier(.4,0,.2,1);
   }
   .pph-detail-area .sec:first-child { margin-top: 0; }
+  /* Infection tab — prominent blue framing on detail panels (v4.4) */
+  #infection .pph-detail-area {
+    border: 1.5px solid var(--primary);
+    background: linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+    position: relative;
+    margin-top: 28px;
+  }
+  #infection .pph-detail-area::before {
+    content: "פרוטוקול מפורט";
+    position: absolute; top: -11px; right: 18px;
+    background: var(--bg); padding: 3px 12px;
+    font-size: 10.5px; font-weight: 700; color: var(--primary);
+    letter-spacing: 0.08em;
+    border: 1.5px solid var(--primary); border-radius: 999px;
+  }
 
   /* ── Pregnancy Plan — stepped accordion design ─────────────────────── */
   .pplan-header {
@@ -1284,6 +1349,24 @@
   }
   details.pp-section > summary::-webkit-details-marker { display: none; }
   details.pp-section > summary:hover { background: var(--surface2); }
+  /* SD/NRP — diagrams stack below text (no 2-col split), wrapped in collapsed accordions */
+  .sd-maneuver-grid { grid-template-columns: 1fr !important; }
+  details.diagram-accordion > summary::-webkit-details-marker { display: none; }
+  details.diagram-accordion[open] > summary .diagram-caret { transform: rotate(-180deg); }
+  details.diagram-accordion > summary:hover { background: var(--primary-bg); }
+  details.diagram-inline {
+    margin-top: 8px; border: 1px solid var(--border);
+    border-radius: 10px; overflow: hidden; background: var(--surface);
+  }
+  details.diagram-inline > summary {
+    cursor: pointer; padding: 8px 12px; background: var(--surface2);
+    font-weight: 600; font-size: 12.5px; color: var(--text);
+    list-style: none; display: flex; align-items: center; gap: 6px;
+  }
+  details.diagram-inline > summary::-webkit-details-marker { display: none; }
+  details.diagram-inline[open] > summary .diagram-inline-caret { transform: rotate(-180deg); }
+  details.diagram-inline > summary:hover { background: var(--primary-bg); }
+  details.diagram-inline > div { padding: 10px; text-align: center; }
   details.pp-section .pp-sec-ico {
     width: 34px; height: 34px; border-radius: 9px;
     background: var(--surface2); color: var(--text3);
@@ -3402,9 +3485,16 @@
       </div>
     </details>
 
-    <!-- ═══ Decision Tree visual ═══ -->
-    <div class="rec-box" style="margin-top:14px">
-      <div class="rec-head">
+    <!-- ═══ Decision Tree visual — collapsed accordion (mobile-friendly) ═══ -->
+    <details class="diagram-accordion" style="margin-top:14px;border:1.5px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;background:var(--surface)">
+      <summary style="cursor:pointer;padding:12px 16px;background:linear-gradient(to left,var(--surface2),var(--primary-bg));font-weight:700;color:var(--text);font-size:13.5px;display:flex;align-items:center;gap:8px;list-style:none">
+        <svg class="diagram-caret" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s"><path d="M3 5l4 4 4-4"/></svg>
+        📐 אלגוריתם NRP — סיכום ויזואלי
+        <span style="font-size:10.5px;color:var(--text3);font-weight:400;margin-right:auto">לחץ להרחבה</span>
+      </summary>
+      <div style="padding:14px 16px">
+      <div class="rec-box" style="margin-top:0;border:none;padding:0;box-shadow:none">
+      <div class="rec-head" style="margin-bottom:8px">
         <span>אלגוריתם NRP — סיכום ויזואלי</span>
         <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">לעיון מהיר</span>
       </div>
@@ -3436,7 +3526,9 @@
         </div>
         <div class="rec-src">NRP 8th Ed. (2021) · AAP/AHA · ILCOR 2020</div>
       </div>
-    </div>
+      </div>
+      </div>
+    </details>
 
     <!-- Result display -->
     <div id="nrp-res" style="margin-top:14px"></div>
@@ -4977,11 +5069,33 @@
           <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v14M3 10h14"/><circle cx="10" cy="10" r="4"/></svg></div>
           <div class="pph-card-text"><div class="pph-card-title">סיפיליס</div><div class="pph-card-sub">פניצילין G · 3 מנות</div></div>
         </button>
-        <button class="pph-card" data-pph="listeria" onclick="showPphSection('listeria', this)">
-          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="8" height="14" rx="2"/><path d="M9 7h2M9 10h2M9 13h2"/></svg></div>
-          <div class="pph-card-text"><div class="pph-card-title">ליסטריה</div><div class="pph-card-sub">Ampicillin IV · נייר #26</div></div>
-        </button>
       </div>
+
+      <details class="inf-extra-group" style="margin-top:14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);overflow:hidden">
+        <summary style="list-style:none;cursor:pointer;padding:12px 14px;display:flex;align-items:center;gap:10px;font-weight:600;color:var(--text);font-size:13.5px;background:var(--surface2);user-select:none">
+          <svg class="inf-extra-caret" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s"><path d="M3 5l4 4 4-4"/></svg>
+          <span>זיהומים נוספים — לא בלידה</span>
+          <span style="font-size:11px;color:var(--text3);font-weight:400;margin-right:auto">לחץ להרחבה</span>
+        </summary>
+        <div class="pph-cards" id="inf-extra-cards" style="padding:12px 12px 4px;margin-bottom:0">
+          <button class="pph-card" data-pph="listeria" onclick="showPphSection('listeria', this)">
+            <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="8" height="14" rx="2"/><path d="M9 7h2M9 10h2M9 13h2"/></svg></div>
+            <div class="pph-card-text"><div class="pph-card-title">ליסטריה</div><div class="pph-card-sub">Ampicillin IV · נייר #26</div></div>
+          </button>
+          <button class="pph-card" data-pph="uti" onclick="showPphSection('uti', this)">
+            <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v6M7 9h6M5 9c0 4 2 7 5 8 3-1 5-4 5-8"/></svg></div>
+            <div class="pph-card-text"><div class="pph-card-title">UTI / פיילו</div><div class="pph-card-sub">Nitrofurantoin · Ceftriaxone · נייר #47</div></div>
+          </button>
+          <button class="pph-card" data-pph="cmv" onclick="showPphSection('cmv', this)">
+            <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6"/><circle cx="10" cy="10" r="2.2"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2"/></svg></div>
+            <div class="pph-card-text"><div class="pph-card-title">CMV</div><div class="pph-card-sub">Valaciclovir · אמניוצנטזה · נייר #7</div></div>
+          </button>
+          <button class="pph-card" data-pph="toxo" onclick="showPphSection('toxo', this)">
+            <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3c-3 0-5 2-5 5 0 4 5 9 5 9s5-5 5-9c0-3-2-5-5-5Z"/><circle cx="10" cy="8" r="1.5"/></svg></div>
+            <div class="pph-card-text"><div class="pph-card-title">טוקסופלסמה</div><div class="pph-card-sub">Spiramycin · אמניוצנטזה · נייר #25</div></div>
+          </button>
+        </div>
+      </details>
     </div>
 
     <!-- Section: Amnionitis (default open) -->
@@ -5407,6 +5521,308 @@
         </div>
       </div>
     </div>
+
+    <!-- Section: UTI / Pyelonephritis -->
+    <div class="pph-detail-area" data-pph-sec="uti" style="display:none">
+      <div class="sec" style="margin-top:0">UTI / Pyelonephritis בלידה ובהריון — נייר #47</div>
+
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>סקר וזיהוי</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">איגוד מיילדות 2023</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">סקר אוניברסלי</div>
+            <ul class="rec-list">
+              <li><b>תרבית שתן בביקור ראשון</b> לכל הרה — מזהה <b>ASB (בקטריוריה אסימפטומטית)</b> ב-2–10% מההריונות</li>
+              <li>חזרה ב-T3 אם: היסטוריה של UTI חוזר · סוכרת · חצץ · סטריקטורה</li>
+              <li><b>20–30% מנשים עם ASB</b> שלא טופלו → פיילונפריטיס</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">קריטריונים לאבחנה</div>
+            <ul class="rec-list">
+              <li><b>ASB:</b> ≥10⁵ CFU/mL של אותו מיקרואורגניזם, ללא תסמינים</li>
+              <li><b>Cystitis:</b> תסמיני שלפוחית (דיסוריה, תכיפות) ± חום נמוך</li>
+              <li><b>פיילונפריטיס:</b> חום ≥38°C · כאב פלאנקים · בחילה/הקאות · CVA tenderness</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px">
+        <div class="rec-head"><span>טיפול ASB / Cystitis</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">אמבולטורי</span></div>
+        <div class="rec-body">
+          <div class="ref-table-wrap">
+            <table class="ref-table" aria-label="ASB/Cystitis antibiotics">
+              <thead>
+                <tr><th>תרופה</th><th>מינון</th><th>זהירות</th></tr>
+              </thead>
+              <tbody>
+                <tr style="background:var(--primary-bg)">
+                  <td><b>Nitrofurantoin</b></td>
+                  <td>100 mg ×4/יום ×5–7 ימים</td>
+                  <td>הימנע ב-T1 ובסוף הריון (אנמיה המוליטית בילוד G6PD)</td>
+                </tr>
+                <tr>
+                  <td><b>Cephalexin</b></td>
+                  <td>500 mg ×4/יום ×7 ימים</td>
+                  <td>בטוח כל ההריון</td>
+                </tr>
+                <tr>
+                  <td><b>Amoxicillin-Clavulanate</b></td>
+                  <td>875/125 mg ×2/יום ×5–7 ימים</td>
+                  <td>בטוח כל ההריון</td>
+                </tr>
+                <tr>
+                  <td><b>Fosfomycin</b></td>
+                  <td>3 g PO חד-פעמי</td>
+                  <td>מתאים ל-ASB · לא לפיילונפריטיס</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="rec-section" style="margin-top:14px">
+            <div class="rec-section-title">אסור בהריון</div>
+            <ul class="rec-list">
+              <li class="crit"><b>TMP-SMX</b> — אסור ב-T1 (פגיעה בצינור עצבי) ובסוף הריון (קרניקטרוס)</li>
+              <li class="crit"><b>Fluoroquinolones</b> (Ciprofloxacin, Levofloxacin) — נזק לסחוס</li>
+              <li class="crit"><b>Tetracyclines</b> (Doxycycline) — שיניים, עצמות</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px;border-right:3px solid var(--red)">
+        <div class="rec-head"><span>פיילונפריטיס — אשפוז</span><span class="rec-tag rec-tag-bad">דחוף</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">הערכה ראשונית</div>
+            <ul class="rec-list">
+              <li><b>תרבית שתן + תרבית דם</b> לפני אנטיביוטיקה</li>
+              <li>CBC · ק"ל · LFT · CRP · גלוקוז</li>
+              <li><b>ניטור עוברי</b> אם GA ≥24w · US לכליות אם חשד לסיבוך</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">טיפול אנטיביוטי IV</div>
+            <ul class="rec-list">
+              <li class="crit"><b>Ceftriaxone 1–2 g IV/יום</b> — הבחירה הראשונה</li>
+              <li>חלופות: <b>Cefepime 1 g IV q8h</b> · <b>Piperacillin-Tazobactam 3.375 g IV q6h</b> אם חשד לעמיד</li>
+              <li><b>מעבר לפומי 48 שעות ללא חום</b> · השלמת קורס ל-10–14 ימים (לפי תרבית)</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">סיבוכים לזהות</div>
+            <ul class="rec-list">
+              <li><b>ARDS / ספסיס</b> (15% מפיילונפריטיס בהריון) — ניטור סטוריאון, רוויה</li>
+              <li><b>אבסס כלייתי / פייונפרוזיס</b> — US/CT אם אין שיפור ב-48–72 שעות</li>
+              <li><b>לידה מוקדמת</b> — מעקב צירים, CTG · שקול בטא-מטזון אם 24–34w</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">מניעה לאחר אפיזודה</div>
+            <ul class="rec-list">
+              <li><b>פרופילקסיס יומי</b> אחרי 2 UTIs או 1 פיילונפריטיס: <b>Nitrofurantoin 50 mg</b> או <b>Cephalexin 250 mg</b> לפני שינה עד לידה</li>
+              <li>תרבית שתן חודשית עד סוף הריון</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px">
+        <div class="rec-head"><span>GBS בשתן</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">לידה</span></div>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>GBS בשתן בכל ספירה</b> בהריון → טיפול אנטיביוטי בלידה (אין צורך בתרבית רקטו-וגינלית חוזרת)</li>
+            <li>טפל ב-ASB GBS עם <b>Amoxicillin 500 mg ×3/יום ×7 ימים</b></li>
+          </ul>
+          <div class="rec-src">נייר עמדה ישראלי #47 (פברואר 2023) · IDSA 2019 · ACOG CO 717</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: CMV -->
+    <div class="pph-detail-area" data-pph-sec="cmv" style="display:none">
+      <div class="sec" style="margin-top:0">CMV (Cytomegalovirus) בהריון ובלידה — נייר #7</div>
+
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>אפידמיולוגיה ומשמעות</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">איגוד זיהומיות 2025</span></div>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>סיבה #1 לחרשות מולדת לא-גנטית</b></li>
+            <li>0.5–1% מהילודים נולדים עם CMV מולד</li>
+            <li>~20% מהנשים בגיל הפריון בישראל סרונגטיביות · 1–4% מהן עוברות סרוקונברסיה בהריון</li>
+            <li>העברה ורטיקלית: 30–40% בזיהום ראשוני אימהי · 1–2% בזיהום משני</li>
+            <li>~10% מילודים נגועים — סימפטומטיים בלידה · 50% מהסימפטומטיים — נזק נוירולוגי מתמיד</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px">
+        <div class="rec-head"><span>סקר אימהי</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">משרד הבריאות</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">סדרת בדיקות</div>
+            <ul class="rec-list">
+              <li><b>CMV IgG + IgM בביקור ראשון</b> (חלק מסל בדיקות פתיחת הריון)</li>
+              <li>אם <b>IgG שלילית</b> (סרונגטיבית) — <b>חזרה בשבועות 11–14 ו-16–19</b> לזיהוי סרוקונברסיה</li>
+              <li>אם <b>IgM חיובי</b> — בדיקת <b>אבידיטי IgG</b> מיידית (אבידיטי גבוה = הדבקה ישנה)</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">פירוש תוצאות</div>
+            <ul class="rec-list">
+              <li><b>IgG+ IgM- (אבידיטי גבוה):</b> חסינה — אין צורך במעקב</li>
+              <li><b>IgG- IgM-:</b> סרונגטיבית — חזרה בשבועות 11–14 ו-16–19</li>
+              <li class="crit"><b>סרוקונברסיה (IgG-→+) / IgM+ אבידיטי נמוך:</b> זיהום ראשוני — דרוש טיפול ובירור עוברי</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px;border-right:3px solid var(--amber)">
+        <div class="rec-head"><span>טיפול אימהי במניעת העברה</span><span class="rec-tag" style="background:var(--amber-bg);color:var(--amber)">Valaciclovir</span></div>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li class="crit"><b>Valaciclovir 8 g/יום</b> (4×500 mg ×4 ביום)</li>
+            <li>להתחיל <b>מיד עם זיהוי ההדבקה</b> ועד לאמניוצנטזה (≥21w + ≥7 שב' מההדבקה)</li>
+            <li><b>מפחית העברה ורטיקלית ב-71%</b> (Shahar-Nissan, Obstet Gynecol 2020)</li>
+            <li>בטוח בהריון · ניטור קריאטינין · יידוע על אבחנה</li>
+            <li>אם PCR עוברי שלילי — להפסיק טיפול</li>
+            <li>אם PCR עוברי חיובי + ילוד אסימפטומטי — להמשיך עד לידה</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px">
+        <div class="rec-head"><span>אבחנה עוברית</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">אמניוצנטזה + הדמיה</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">אמניוצנטזה PCR ל-CMV</div>
+            <ul class="rec-list">
+              <li><b>תזמון:</b> אחרי <b>שבוע 21</b> וגם <b>≥7 שבועות מההדבקה המשוערת</b> (שני התנאים חייבים להתקיים)</li>
+              <li>רגישות 90–98% · ספציפיות 98%</li>
+              <li>שלילי = שולל זיהום עוברי · חיובי = מאשר העברה ורטיקלית</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">US מפורט (חודשי) + Fetal MRI</div>
+            <ul class="rec-list">
+              <li><b>US מפורט בכל חודש</b> מהזיהוי ועד הלידה — ventriculomegaly, calcifications, hyperechoic bowel, hepatomegaly, IUGR, microcephaly</li>
+              <li class="crit"><b>Fetal MRI בשבועות 28–32</b> — אם PCR חיובי או חשד ב-US (רגיש יותר מ-US לנגעים מוחיים: polymicrogyria, white matter abnormalities)</li>
+              <li>ייעוץ <b>פדיאטריה זיהומיות + נוירולוגיה ילדים + פגיה</b> אם ממצא ב-MRI</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px">
+        <div class="rec-head"><span>אופן לידה ויילוד</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">פוסט-לידה</span></div>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>אופן לידה:</b> CMV <b>לא</b> אינדיקציה לק"ק · לידה וגינלית מקובלת</li>
+            <li class="crit"><b>בדיקת שתן ילוד ל-CMV-PCR תוך 21 ימים</b> מהלידה — חלון אבחנת זיהום מולד</li>
+            <li><b>ילוד סימפטומטי</b> (CNS, hearing loss, hepatosplenomegaly, petechiae): <b>Valganciclovir פומי 16 mg/kg ×2/יום ×6 חודשים</b> — מפחית פגיעה שמיעתית והתפתחותית</li>
+            <li><b>בדיקות יילוד:</b> ABR (שמיעה) · אופטלמולוגיה · US מוח · CBC · LFT · מעקב התפתחותי</li>
+            <li><b>הנקה:</b> מותרת לרוב — אך באולטרא-פג (≤32w) שקול פסטור</li>
+          </ul>
+          <div class="rec-src">נייר עמדה ישראלי #7 (2025) · Shahar-Nissan Obstet Gynecol 2020 · ISUOG 2024</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: TOXO -->
+    <div class="pph-detail-area" data-pph-sec="toxo" style="display:none">
+      <div class="sec" style="margin-top:0">טוקסופלסמוזיס בהריון — נייר #25</div>
+
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>אפידמיולוגיה והעברה</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">איגוד מיילדות + זיהומיות</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">שכיחות והעברה</div>
+            <ul class="rec-list">
+              <li>1–8 ל-1,000 הריונות בישראל</li>
+              <li><b>סיכון העברה עולה עם GA:</b> T1 ≈15% · T2 ≈30% · T3 ≈60%</li>
+              <li><b>חומרה הפוכה:</b> T1 — נזק מוחי קשה, חמור · T3 — קל לרוב, אסימפטומטי</li>
+              <li>תוצאות מולדות: chorioretinitis · הסתיידויות מוחיות · hydrocephalus · IUGR</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">מקורות הדבקה</div>
+            <ul class="rec-list">
+              <li>בשר נא / לא-מבושל (כבש, חזיר, צבי) · ירקות לא רחוצים · חול / גן</li>
+              <li>חתולים — צואת חתול (lit. box) · חלב לא מפוסטר</li>
+              <li><b>מניעה:</b> בישול בשר ל-≥70°C · שטיפת ירקות · כפפות בגן · אחר מטפל בקופסת חתול</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px">
+        <div class="rec-head"><span>סקר ואבחנה אימהית</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">סרולוגיה</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">בדיקות</div>
+            <ul class="rec-list">
+              <li><b>IgG + IgM בתחילת הריון</b> — לא חובה לפי משרד הבריאות, אך מקובל בקהילה</li>
+              <li>אם סרונגטיבית — חזרה בכל טרימסטר</li>
+              <li>אם IgM חיובי — בדיקת <b>אבידיטי IgG</b> (אבידיטי גבוה = הדבקה ישנה, מסיר חשד)</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">קריטריונים להדבקה אימהית</div>
+            <ul class="rec-list">
+              <li class="crit"><b>סרוקונברסיה IgG (-→+)</b> במהלך ההריון</li>
+              <li class="crit"><b>IgM חיובי + אבידיטי IgG נמוך</b> (זיהום עדכני, פחות מ-4 חודשים)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px;border-right:3px solid var(--amber)">
+        <div class="rec-head"><span>אלגוריתם טיפול — 3 שלבים</span><span class="rec-tag" style="background:var(--amber-bg);color:var(--amber)">פרוטוקול</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">שלב 1 — חשד להדבקה אימהית</div>
+            <ul class="rec-list">
+              <li class="crit"><b>Spiramycin 1 g PO ×3/יום</b> — מיד עם זיהוי החשד</li>
+              <li><b>מפחית העברה ורטיקלית ~50%</b> (לא חוצה את השליה — מונע התיישבות עוברית)</li>
+              <li>להמשיך עד אמניוצנטזה ותוצאת PCR</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">שלב 2 — אבחנה עוברית</div>
+            <ul class="rec-list">
+              <li><b>אמניוצנטזה PCR לטוקסופלסמה</b> — <b>≥שבוע 18</b> וגם <b>≥4–6 שבועות מההדבקה</b></li>
+              <li>רגישות 64–92% (תלוי GA) · ספציפיות &gt;95%</li>
+              <li><b>US מפורט חודשי:</b> ventriculomegaly · הסתיידויות מוחיות (סימן קלאסי) · hydrocephalus · hepatomegaly · ascites</li>
+              <li><b>Fetal MRI בשבועות 30–32</b> אם PCR חיובי או חשד ב-US — לאיתור נזקים מוחיים</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">שלב 3 — זיהום עוברי מאומת</div>
+            <ul class="rec-list">
+              <li class="crit"><b>Pyrimethamine 50 mg/יום + Sulfadiazine 3 g/יום + Folinic acid 15 mg/שבוע</b></li>
+              <li><b>חובה Folinic acid</b> (לא Folic) — מונע ציטופניה מ-Pyrimethamine</li>
+              <li><b>רק מ-T2</b> — Pyrimethamine טרטוגני ב-T1 (החלף ל-Spiramycin ב-T1)</li>
+              <li>מעקב CBC שבועי לאם · ייעוץ פדיאטריה זיהומיות + נוירולוגיה ילדים</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px">
+        <div class="rec-head"><span>לידה ויילוד</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">פוסט-לידה</span></div>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>אופן לידה:</b> טוקסו <b>לא</b> אינדיקציה לק"ק · לידה וגינלית מקובלת</li>
+            <li><b>בדיקות יילוד:</b> סרולוגיה (IgG, IgM, IgA) + PCR דם + שליה לתרבית · בדיקת CT/MRI מוח · פונדוסקופיה · ABR</li>
+            <li><b>ילוד עם זיהום מולד:</b> Pyrimethamine + Sulfadiazine + Folinic ×12 חודשים</li>
+            <li>מעקב התפתחותי לטווח ארוך — chorioretinitis יכולה להופיע בילדות</li>
+          </ul>
+          <div class="rec-src">נייר עמדה ישראלי #25 (אוגוסט 2025) · SYROCOT meta-analysis · Cortina-Borja PLoS Med 2010</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ===== Israeli Position Papers Browser ===== -->
@@ -5473,7 +5889,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.2';
+const APP_VERSION = '4.4';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -6390,68 +6806,53 @@ const ISRAELI_PAPERS = [
      '<b>הופעת אבעבועות סביב לידה (5 ימים לפני - 2 ימים אחרי):</b> סיכון לוורצלה ניאונטלי קשה → VZIG לילוד + Acyclovir',
      '<b>טיפול לאם:</b> Acyclovir 800 מ"ג ×5/יום (הריון מתקדם) או IV אם פניאומוניה',
      '<b>━━━━━━ 🦠 CMV (Cytomegalovirus) — סיכום והפניה ━━━━━━</b>',
-     '<b>סיבה ראשונה לחרשות מולדת לא-גנטית</b> · 0.5-1% מהילודים · ~20% מהנשים בגיל הפריון בישראל סרונגטיביות',
-     '<b>סקר רוטיני (לפי נייר #7):</b> IgG/IgM בתחילת הריון · אם שלילית — חזרה בשב׳ 11-14 ו-16-19',
-     '<b>סרוקונברסיה / IgM+ + Avidity נמוך:</b> שקול Valaciclovir 8g/יום',
-     '<b>אבחנה עוברית:</b> אמניוצנטזה PCR אחרי 21 שב׳ + 7 שב׳ מהדבקה',
-     '<b>→ ראה נייר #7 לאלגוריתם החלטות מלא</b>',
+     '◆רקע◆ סיבה <b>#1</b> לחרשות מולדת לא-גנטית · 0.5–1% מהילודים · ~20% מהנשים בגיל הפריון בישראל סרונגטיביות · 1–4% מהן עוברות סרוקונברסיה',
+     '◆סקר◆ IgG/IgM בביקור ראשון · אם שלילית — <b>חזרה בשב׳ 11–14 ו-16–19</b> (לפי נייר #7)',
+     '◆סרוקונברסיה◆ IgM+ + Avidity נמוך / IgG seroconversion → <b>Valaciclovir 8 g/יום</b> (4×500 mg ×4) מההדבקה ועד אמניוצנטזה · מפחית העברה כ-71% (Shahar-Nissan 2020)',
+     '◆אבחנה עוברית◆ <b>אמניוצנטזה CMV-PCR</b> — אחרי <b>שב׳ 21</b> וגם <b>≥7 שב׳ מההדבקה המשוערת</b> · US מפורט (חודשי) · <b>fetal MRI ב-28–32 שב׳</b> אם PCR חיובי או ממצא ב-US',
+     '◆טיפול עוברי◆ עובר עם זיהום מאומת אסימפטומטי — <b>Valaciclovir 8 g/יום</b> מאמא · עובר עם נזק מוחי קשה → ייעוץ הפסקת הריון',
+     '◆יילוד◆ <b>שתן ל-PCR תוך 21 ימים</b> מהלידה (חלון לאבחנת זיהום מולד) · ילוד סימפטומטי → <b>Valganciclovir אורלי 6 חודשים</b> · בדיקת שמיעה (ABR) ומעקב התפתחותי',
+     '◆→ הרחבה◆ <b>ראה נייר #7</b> — אלגוריתם החלטות מלא, ייעוץ הורים, פרוגנוזה',
      '<b>━━━━━━ 🦠 UTI / Pyelonephritis בהריון ━━━━━━</b>',
-     '<b>בקטריוריה אסימפטומטית (ASB):</b> 2-10% מההריונות · 20-30% מפתחות פיילונפריטיס אם לא מטופל!',
-     '<b>סקר:</b> תרבית שתן בביקור ראשון לכל הרה',
-     '<b>טיפול ASB / Cystitis:</b>',
-     '• Nitrofurantoin 100 מ"ג ×4/יום × 5-7 ימים (לא לפני לידה — אנמיה G6PD)',
-     '• Cephalexin 500 מ"ג ×4/יום × 7 ימים',
-     '• Augmentin · Fosfomycin 3g חד-פעמי',
-     '<b>אסור בהריון:</b> TMP-SMX (T1+T3), Fluoroquinolones, Tetracyclines',
-     '<b>פיילונפריטיס:</b> אשפוז + Ceftriaxone 1-2 גרם IV/יום',
-     '<b>→ ראה נייר #47 למידע מלא + סיבוכים</b>',
+     '◆למה חשוב◆ ASB: <b>2–10%</b> מההריונות · <b>20–30%</b> מפתחות פיילונפריטיס אם לא מטופל · קשור ללידה מוקדמת ו-LBW',
+     '◆סקר◆ <b>תרבית שתן בביקור ראשון</b> לכל הרה · חזרה ב-T3 בסיכון (Hx UTI חוזר, סוכרת, חצץ)',
+     '◆טיפול ASB/Cystitis◆ <span dir="ltr" style="display:inline-block;background:#E1F5EE;color:#085041;padding:3px 9px;border-radius:6px;margin:2px 0;font-size:12px"><b>בטוח:</b> Nitrofurantoin 100 mg ×4/d ×5–7d (לא ב-T1 או סוף הריון) · Cephalexin 500 mg ×4/d ×7d · Augmentin · Fosfomycin 3 g ×1</span><br><span dir="ltr" style="display:inline-block;background:#FCEBEB;color:#791F1F;padding:3px 9px;border-radius:6px;margin-top:4px;font-size:12px"><b>אסור:</b> TMP-SMX (T1, סוף הריון) · Fluoroquinolones · Tetracyclines</span>',
+     '◆פיילונפריטיס◆ <b>אשפוז</b> · <b>Ceftriaxone 1–2 g IV/יום</b> (חלופה: Cefepime / Pip-Tazo) · CTG אם ≥24w · ניטור חום, BP, סטוריאון · IV-fluids · להפוך לפומי 48h ללא חום, להשלים 10–14 ימים',
+     '◆מניעה◆ אחרי 2 UTIs בהריון → <b>פרופילקסיס</b> Nitrofurantoin 50 mg/לילה או Cephalexin 250 mg/לילה עד לידה',
+     '◆לידה◆ פיילונפריטיס לא-מטופלת = <b>סיבה להאריך אשפוז ולעכב לידה אלקטיבית</b> עד תיקון · אם GBS בשתן בכל ספירה → טיפול אנטיביוטי בלידה',
+     '◆→ הרחבה◆ <b>ראה נייר #47</b> — UTI חוזר, GBS בשתן, פרופילקסיס מורחב',
      '<b>━━━━━━ 🦠 TOXO (טוקסופלסמוזיס) — סיכום מהיר ━━━━━━</b>',
-     '<b>אפידמיולוגיה:</b> 1-8 ל-1000 הריונות · העברה עוברית עולה עם GA: T1 15%, T2 30%, T3 60% (חומרה הפוכה — קל בסוף)',
-     '<b>מקור:</b> בשר נא, חתולים, ירקות לא רחוצים, חול',
-     '<b>סקר אימהי:</b> IgG/IgM בתחילת הריון (לא חובה לפי משרד הבריאות, אך מקובל)',
-     '<b>אבחנה ראשונית:</b> סרוקונברסיה IgG / IgM חיובי + אבידיטי נמוך',
-     '<b>טיפול:</b>',
-     '• <b>Spiramycin 1 גרם ×3/יום</b> — אם הדבקה אימהית בלי הוכחת זיהום עוברי (מניעת העברה)',
-     '• <b>אמניוצנטזה PCR אחרי שבוע 18 + 4-6 שבועות מההדבקה</b>',
-     '• <b>אם זיהום עוברי מאומת → Pyrimethamine + Sulfadiazine + Folinic acid</b> (מ-T2)',
+     '◆אפידמיולוגיה◆ 1–8 ל-1,000 הריונות · העברה עוברית עולה עם GA: <b>T1 15% · T2 30% · T3 60%</b> · חומרה הפוכה — קשה יותר ב-T1, קל בסוף',
+     '◆מקור◆ בשר נא/לא מבושל · חתולים (lit. box) · ירקות לא רחוצים · חול · חלב לא מפוסטר',
+     '◆סקר אימהית◆ IgG/IgM בתחילת הריון (לא חובה לפי משרד הבריאות, אך מקובל) · חזרה בכל טרימסטר אם סרונגטיבית',
+     '◆אבחנה ראשונית◆ <b>סרוקונברסיה IgG</b> או <b>IgM חיובי + אבידיטי IgG נמוך</b> (חיוני להבדיל מהדבקה ישנה!)',
+     '◆טיפול◆ <b>שלב 1 (חשד אימהי):</b> Spiramycin 1 g ×3/יום מיד · מפחית העברה ~50% (ללא חציית שליה)',
+     '◆אבחנה עוברית◆ <b>אמניוצנטזה PCR לטוקסופלסמה</b> — ≥<b>שב׳ 18</b> וגם <b>≥4–6 שב׳ מההדבקה</b> · US מפורט (חודרים/הסתיידויות מוחיות, hydrocephalus, hepatomegaly) · <b>fetal MRI ב-30–32 שב׳</b> אם PCR+',
+     '◆זיהום עוברי מאומת◆ <b>Pyrimethamine 50 mg/יום + Sulfadiazine 3 g/יום + Folinic acid 15 mg/שבוע</b> (לא Folic acid!) · מ-T2 בלבד (Pyrimethamine טרטוגני ב-T1) · החליפו ל-Spiramycin בסוף הריון אם נדרש',
+     '◆יילוד◆ סרולוגיה ו-PCR בלידה · ילוד סימפטומטי → Pyrimethamine + Sulfadiazine + Folinic ×12 חודשים · CT/MRI מוח, פונדוסקופיה, ABR',
+     '◆→ הרחבה◆ נייר #25 (אוגוסט 2025) — סעיף טוקסו הוא החלק המפורט בנייר עצמו',
      '<b>━━━━━━ 🦠 LISTERIA — אלגוריתם החלטות מורחב ━━━━━━</b>',
-     '<b>Listeria monocytogenes</b> — באקטריה תוך-תאית · <b>סיכון בהריון ×20</b>',
-     '<b>שלבים קליניים:</b>',
-     '<b>🟢 חשיפה ללא תסמינים:</b>',
-     '• אם חשיפה לגביש/מזון בסיכון • <b>אין צורך בטיפול מונע רוטיני</b>',
-     '• הסבר על תסמינים — לחזור אם חום',
-     '<b>🟡 חום ללא ממצא מוקדי:</b>',
-     '• תרבית דם × 2 · ספירת דם · CRP · LFT',
-     '• <b>טיפול אמפירי מיידי: Ampicillin 2 גרם IV q6h</b> (גם לפני תוצאת תרבית)',
-     '• אם תרבית שלילית — להפסיק אנטיביוטיקה',
-     '• אם תרבית חיובית — להמשיך טיפול מלא (ראה למטה)',
-     '<b>🟠 חום + תסמיני שפעת / GI / אלח דם:</b>',
-     '• <b>אשפוז + תרבית דם + Ampicillin 2 גרם IV q4-6h + Gentamicin 5 מ"ג/ק"ג/יום</b>',
-     '• <b>אמניוצנטזה PCR ליסטריה</b> אם תרבית דם חיובית · בדיקת מי שפיר לסימני חורליואמניוניטיס',
-     '• מעקב CTG + US לעובר',
-     '<b>🔴 ליסטריוזיס מאומתת (תרבית חיובית):</b>',
-     '• <b>Ampicillin 2 גרם IV q4-6h × לפחות 14 ימים</b> (חורליואמניוניטיס: 21 ימים)',
-     '• <b>+ Gentamicin 5 מ"ג/ק"ג/יום</b> ב-7 ימים הראשונים (סינרגיה)',
-     '• <b>אלרגיה לפניצילין:</b> TMP-SMX 5 מ"ג/ק"ג IV q8h (אלא ב-T1)',
-     '• <b>החלטה על תזמון לידה:</b> לפי גיל הריון + מצב עוברי + תגובה לטיפול',
-     '• <b>אם NRFHR / חורליואמניוניטיס מאומת / סטטוס עוברי מחמיר:</b> לידה דחופה',
-     '<b>━━ סיבוכים עובריים אפשריים ━━</b>',
-     '<b>IUFD (~20-30%)</b> · <b>לידה מוקדמת</b> · <b>Granulomatosis infantiseptica</b> (יילוד עם מורסות מפושטות, תמותה ~50%) · <b>מנינגיטיס מאוחר</b> (שבוע-90 יום)',
-     '<b>━━ הילוד אחרי לידה ━━</b>',
-     '<b>תרבית דם + LP אם תסמיני CNS</b> · <b>Ampicillin + Gentamicin</b> ליילוד בכל ילוד עם חשד · <b>פלצנטה לתרבית</b>',
-     '<b>━━ מניעה (חינוך) ━━</b>',
-     'הימנעות ממזונות בסיכון: גבינות לא מפוסטרות (Brie, Feta, Camembert), נקניקים מעובדים, סלטי דלי, דגים מעושנים, ביצים נא, פירות וירקות לא רחוצים (במיוחד מלון!), בשר נא · בישול בשר ל-≥70°C · שטיפת ידיים אחרי טיפול במזון נא',
-     '<b>→ ראה נייר #26 (פברואר 2020) למידע מלא</b>',
+     '◆רקע◆ <i>Listeria monocytogenes</i> — באקטריה תוך-תאית · <b>סיכון בהריון ×20</b> · אינקובציה 1–10 שבועות',
+     '🟢 <b>שלב 1 — חשיפה ללא תסמינים:</b> חשיפה למזון בסיכון · <b>אין צורך בטיפול מונע רוטיני</b> · הסבר תסמינים — לחזור אם חום',
+     '🟡 <b>שלב 2 — חום ללא ממצא מוקדי:</b> תרבית דם ×2 · CBC · CRP · LFT · <b>Ampicillin 2 g IV q6h אמפירי מיד</b> (לפני תוצאות) · תרבית שלילית → הפסק · תרבית חיובית → מעבר לשלב 4',
+     '🟠 <b>שלב 3 — חום + תסמיני שפעת/GI/אלח דם:</b> <b>אשפוז</b> · תרבית דם · <b>Ampicillin 2 g IV q4–6h + Gentamicin 5 mg/kg/יום</b> · <b>אמניוצנטזה PCR ליסטריה</b> אם דם חיובי · CTG + US עוברי',
+     '🔴 <b>שלב 4 — ליסטריוזיס מאומתת:</b> <b>Ampicillin 2 g IV q4–6h ×≥14 ימים</b> (כוריואמניוניטיס: 21 ימים) · <b>+ Gentamicin 5 mg/kg/יום ×7 ימים</b> (סינרגיה) · אלרגיה: <b>TMP-SMX 5/25 mg/kg IV q8h</b> (לא T1) · NRFHR/כוריואמניוניטיס/החמרה → <b>לידה דחופה</b>',
+     '◆סיבוכים עובריים◆ <b>IUFD ~20–30%</b> · לידה מוקדמת · <b>Granulomatosis infantiseptica</b> (מורסות מפושטות, תמותה ~50%) · מנינגיטיס מאוחר (שבוע–90 יום)',
+     '◆יילוד◆ תרבית דם + LP אם תסמיני CNS · <b>Ampicillin + Gentamicin</b> לכל ילוד חשוד · <b>שליה לתרבית</b> · בדיקת התפתחות',
+     '◆מניעה◆ הימנעות: גבינות לא-מפוסטרות (Brie, Feta, Camembert) · נקניקים · סלטי דלי · דגים מעושנים · ביצים נא · פירות/ירקות לא-רחוצים (<b>מלון!</b>) · בשר נא · <b>בישול ל-≥70°C</b> · שטיפת ידיים',
+     '◆→ הרחבה◆ <b>ראה נייר #26 (פברואר 2020)</b> — אלגוריתם מלא, מינונים, ניהול יילוד',
      '<b>━━━━━━ 🦠 GBS (Group B Streptococcus) — סיכום מהיר ━━━━━━</b>',
-     '<b>תרבית סקר ב-36+0–37+6 שב׳</b> (עדכון משרד הבריאות ינואר 2026)',
-     '<b>טיפול בלידה (Penicillin 5 mU IV → 2.5 mU q4h)</b> · אלרגיה: Cefazolin / Clindamycin / Vancomycin',
-     '<b>→ ראה נייר #22 (ינואר 2026) למידע מלא + טבלת מינונים</b>',
+     '◆סקר◆ <b>תרבית רקטו-וגינלית 36+0–37+6 שב׳</b> (עדכון משרד הבריאות ינואר 2026) · GBS בשתן בכל ספירה → טיפול בלידה ללא תרבית',
+     '◆טיפול בלידה◆ <b>Penicillin G 5 mU IV bolus → 2.5–3 mU q4h</b> עד לידה · ≥4 שעות לפני לידה = מינון נאות · חלופה: Ampicillin 2 g → 1 g q4h',
+     '◆אלרגיה◆ קלה: <b>Cefazolin 2 g → 1 g q8h</b> · אנפילקסיס + רגיש: <b>Clindamycin 900 mg q8h</b> · אנפילקסיס + עמיד/לא נבדק: <b>Vancomycin 20 mg/kg q8h</b>',
+     '◆→ הרחבה◆ <b>ראה נייר #22 (ינואר 2026)</b> — אינדיקציות מלאות, יילוד, טבלת מינונים',
      '<b>━━━━━━ 🦠 HBV / HCV — סיכום מהיר ━━━━━━</b>',
-     '<b>סקר HBsAg + HCV-Ab בכל הריון</b>',
-     '<b>HBV חיובי + DNA >200,000:</b> Tenofovir מ-28 שב׳ (מניעת העברה)',
-     '<b>יילוד:</b> HBIG + חיסון HBV תוך 12 שעות',
-     '<b>HCV:</b> אין טיפול בהריון. הימנע מאמניוצנטזה/FSE/מכשירני. הנקה בטוחה. → DAA לאחר לידה',
-     '<b>→ ראה נייר #41 לפרטים</b>',
+     '◆סקר◆ <b>HBsAg + HCV-Ab</b> בביקור ראשון לכל הרה · אם HBV+: HBeAg, HBV DNA, ALT, אנטי-HBs, HIV, סיפיליס',
+     '◆HBV טיפול◆ <b>HBV DNA >200,000 IU/mL</b> ב-T2/T3 → <b>Tenofovir TDF 300 mg/יום מ-28w עד 4w פוסט-לידה</b> · ניטור ALT, קריאטינין · מפחית העברה ורטיקלית',
+     '◆HBV לידה+יילוד◆ <b>לידה וגינלית מקובלת</b> (לא אינדיקציה לק"ק) · <b>HBIG 0.5 mL IM + חיסון HBV תוך 12 שעות</b> · השלמת חיסון ב-1 ו-6 חודשים · בדיקת HBsAg + anti-HBs ב-9–12 חודשים · <b>הנקה בטוחה</b>',
+     '◆HCV אבחנה◆ HCV-Ab + אם חיובי → <b>HCV-RNA PCR</b> · אין טיפול DAA בהריון · יזיק לעובר',
+     '◆HCV לידה+יילוד◆ <b>לידה וגינלית מקובלת</b> · <b>הימנע מ-FSE, אמניוצנטזה, מכשירני (במיוחד forceps)</b> · קיסרי רק אם HIV מצורף · <b>הנקה בטוחה</b> · HCV-Ab לילד בגיל 18 חודשים → אם חיובי → <b>DAA מגיל 3</b>',
+     '◆→ הרחבה◆ <b>ראה נייר #41 (יולי 2021)</b> — HCV מפורט · CDC + AASLD 2018 ל-HBV',
      '<b>━━━━━━ ⓘ מה כן בנייר #25 הזה ━━━━━━</b>',
      'הנייר עצמו (אוגוסט 2025) ממקד את החלקים המפורטים ב: HIV, HSV, עגבת, טוקסו, VZV. שאר הנושאים — בניירות הנפרדים המפורטים לעיל'
    ]},
@@ -7338,17 +7739,42 @@ function openPaperModal(num){
   document.getElementById('paper-modal-meta-inline').textContent = `${p.year}`;
   document.getElementById('paper-modal-title').textContent = p.title;
   document.getElementById('paper-modal-meta').textContent = p.org;
-  // Smart keyPoints renderer — detect section headers and apply special styling
+  // Smart keyPoints renderer — compact bulleted layout (v4.4)
+  // Patterns:
+  //   '<b>━━━ HEADER ━━━</b>' → section divider (gradient strip)
+  //   '◆label◆ content'       → bullet + inline colored category chip + text
+  //   '🟢/🟡/🟠/🔴 ...'        → colored stage row (subtle bg, no bullet)
+  //   default                  → standard bullet
+  const stationColorFor = (label) => {
+    const L = label.replace(/<\/?b>/g, '');
+    if (/רקע|למה חשוב|אפידמיולוגיה|מקור/.test(L))                return ['#EEEDFE', '#3C3489'];
+    if (/סקר|סרולוגיה|בדיקה ראשונית/.test(L))                   return ['#E6F1FB', '#0C447C'];
+    if (/אבחנה עוברית|US|MRI|אמניוצנטזה|הדמיה/.test(L))         return ['#E1F5EE', '#085041'];
+    if (/סרוקונברסיה|חשד|זיהום אקטיבי|אבחנה ראשונית|אבחנה אימהית/.test(L)) return ['#FAEEDA', '#854F0B'];
+    if (/טיפול|אנטיביוטיקה|תרופה|פרוטוקול/.test(L))              return ['#FAEEDA', '#633806'];
+    if (/לידה|יילוד|פוסט|הנקה|אופן/.test(L))                    return ['#FCEBEB', '#791F1F'];
+    if (/מניעה|חינוך|הימנעות/.test(L))                          return ['#E1F5EE', '#085041'];
+    if (/הפניה|הרחבה|נייר|→/.test(L))                          return ['#F1EFE8', '#444441'];
+    return ['#F1EFE8', '#444441'];
+  };
   const renderKeyPoint = (k) => {
     // Section header: starts with ━━━ or is wrapped in single <b>
     const isSectionHeader = /━━+/.test(k) || /^<b>━+|━+<\/b>$/.test(k.trim());
     if (isSectionHeader) {
       const cleanText = k.replace(/━+/g, '').replace(/<\/?b>/g, '').trim();
-      return `<li style="background:linear-gradient(to left,var(--surface2),var(--primary-bg));border-right:3px solid var(--primary);margin-top:14px;margin-bottom:8px;padding:10px 14px;font-weight:700;color:var(--text);font-size:13.5px;letter-spacing:0.01em">${cleanText}</li>`;
+      return `<li class="pm-divider">${cleanText}</li>`;
     }
-    // Single-line emphasis (starts with emoji marker like 🟢🟡🔴⚠️📐⚡)
-    if (/^[⚠️⚡🟢🟡🔴🟠🔵🧬📐📋🦠❤️🔬🤰💰🧭🏥]/u.test(k)) {
-      return `<li style="background:var(--surface2);padding:8px 12px;border-radius:8px;margin:6px 0;font-weight:500;line-height:1.7">${k}</li>`;
+    // Station row: '◆label◆ content' → bullet with inline category chip
+    const stn = k.match(/^◆([^◆]+)◆\s*([\s\S]+)$/);
+    if (stn) {
+      const label = stn[1].trim();
+      const content = stn[2].trim();
+      const [bg, fg] = stationColorFor(label);
+      return `<li class="pm-station"><span class="pm-chip" style="background:${bg};color:${fg}">${label}</span>${content}</li>`;
+    }
+    // Colored stage row (🟢🟡🟠🔴 — Listeria stages, severity)
+    if (/^[🟢🟡🟠🔴🔵]/u.test(k)) {
+      return `<li class="pm-stage">${k}</li>`;
     }
     return `<li>${k}</li>`;
   };
@@ -7395,6 +7821,50 @@ function closePaperModal(){
   document.getElementById('paper-overlay').classList.remove('open');
   document.body.style.overflow = '';
 }
+
+// ─── Wrap SD/NRP inline SVG diagrams in collapsed accordions (mobile-friendly) ──
+(function initDiagramAccordions(){
+  const wrap = () => {
+    // Each .sd-maneuver-grid has 2 children: text/checkboxes (first) + diagram box (second)
+    document.querySelectorAll('.sd-maneuver-grid').forEach(grid => {
+      const kids = grid.children;
+      if (kids.length < 2) return;
+      const diag = kids[1];
+      // Skip if already wrapped
+      if (diag.dataset.wrapped === '1') return;
+      // Skip if this isn't a diagram container (heuristic: has SVG)
+      if (!diag.querySelector('svg')) return;
+      diag.dataset.wrapped = '1';
+      // Extract a label from the SVG <text> elements (last one is usually the title)
+      const texts = diag.querySelectorAll('svg text');
+      let label = 'תרשים';
+      if (texts.length) {
+        // Prefer the last text element with reasonable length
+        for (let i = texts.length - 1; i >= 0; i--) {
+          const t = (texts[i].textContent || '').trim();
+          if (t && t.length >= 4 && t.length <= 50) { label = t; break; }
+        }
+      }
+      // Build the details
+      const inner = document.createElement('div');
+      while (diag.firstChild) inner.appendChild(diag.firstChild);
+      const summary = document.createElement('summary');
+      summary.innerHTML = `<svg class="diagram-inline-caret" width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .2s"><path d="M3 5l4 4 4-4"/></svg>📐 הצג תרשים — ${label}`;
+      const details = document.createElement('details');
+      details.className = 'diagram-inline';
+      details.appendChild(summary);
+      details.appendChild(inner);
+      // Clear the outer diag div's inline style (bg, padding) — now lives on details
+      diag.removeAttribute('style');
+      diag.appendChild(details);
+    });
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', wrap);
+  } else {
+    wrap();
+  }
+})();
 
 (function initPapers(){
   const init = () => {
@@ -10224,6 +10694,80 @@ const biomSystems = {
   },
 };
 
+// ─── Neurosonography Info Accordion (Israeli #53 מרץ 2026) ──
+// Returns HTML for a collapsed accordion shown above CNS measurement cards
+function renderNeurosonoAccordion(){
+  return `
+    <details style="margin-bottom:8px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+      <summary style="cursor:pointer;padding:11px 14px;font-weight:700;color:var(--text);font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:linear-gradient(to left,var(--surface2),var(--primary-bg))">
+        <span style="display:flex;align-items:center;gap:8px">
+          <span style="background:var(--purple);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700">נייר #53</span>
+          🧠 נוירוסונוגרפיה עוברית — מתי, מה, איך
+        </span>
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div style="padding:12px 14px;font-size:12.5px;line-height:1.6;color:var(--text2)">
+        <div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-bottom:10px">
+          <b style="color:var(--primary);font-size:13px">⚡ הגדרה</b><br>
+          בדיקה ייעודית ומורחבת למוח העובר · <b>אינה תחליף</b> לסקירת מערכות (נייר #8)
+        </div>
+
+        <div style="margin-bottom:10px">
+          <div style="font-weight:700;color:var(--text);margin-bottom:4px;font-size:13px">📋 אינדיקציות</div>
+          <ul style="margin:0;padding-right:18px;font-size:12.5px;line-height:1.65">
+            <li><b>אימהיות:</b> זיהומים (CMV, Toxo, Zika) · תרופות טרטוגניות · רקע גנטי משפחתי · אקסום+ במשפחה</li>
+            <li><b>עובריות:</b> חשד לחריגות בסקירה · HC חריג · ventriculomegaly · מומים נלווים · IUGR סימטרי קשה · NIPT חיובי</li>
+          </ul>
+        </div>
+
+        <div style="margin-bottom:10px">
+          <div style="font-weight:700;color:var(--text);margin-bottom:4px;font-size:13px">🔬 מרכיבי הבדיקה — 3 חתכים סטנדרטיים</div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;font-size:12px">
+            <div style="background:var(--surface2);padding:6px 10px;border-radius:6px"><b>Axial:</b> חדרים, atrium, חלל cisterna magna</div>
+            <div style="background:var(--surface2);padding:6px 10px;border-radius:6px"><b>Coronal:</b> CSP, CC, sylvian fissure</div>
+            <div style="background:var(--surface2);padding:6px 10px;border-radius:6px"><b>Sagittal:</b> Corpus callosum, vermis cerebelli</div>
+            <div style="background:var(--surface2);padding:6px 10px;border-radius:6px"><b>Doppler:</b> MCA-PI (cerebroplacental ratio)</div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:10px">
+          <div style="font-weight:700;color:var(--text);margin-bottom:4px;font-size:13px">🧬 מבנים מודגמים</div>
+          <ul style="margin:0;padding-right:18px;font-size:12px;line-height:1.6">
+            <li>Lateral ventricles (atrium width)</li>
+            <li>Corpus callosum (CC) — sagittal + coronal</li>
+            <li>Cerebellar vermis</li>
+            <li>Cisterna magna</li>
+            <li>Cortical development (gyration patterns לפי GA)</li>
+            <li>Sylvian fissure (operculization)</li>
+            <li>Cavum septi pellucidi (CSP)</li>
+          </ul>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;font-size:12px">
+          <div style="background:var(--green-bg);padding:8px 10px;border-radius:6px;border-right:3px solid var(--green)">
+            <b style="color:var(--green-text)">📅 מועד אופטימלי</b><br>
+            28–32 שב׳ · אפשרי 20–22 כסקירה מוקדמת
+          </div>
+          <div style="background:var(--amber-bg);padding:8px 10px;border-radius:6px;border-right:3px solid var(--amber)">
+            <b style="color:var(--amber-text)">⚠️ מגבלות</b><br>
+            ראש קטן (T2): דיוק מוגבל · תנוחה לא אופטימלית ב-T3
+          </div>
+        </div>
+
+        <div class="note" style="border-right-color:var(--purple);background:var(--purple-bg, #F4F0FB);margin-bottom:0">
+          <b style="color:#5A3A91;font-size:13px">🧲 MRI עוברי משלים</b><br>
+          <b>אחרי שב׳ 24–28</b> — מומלץ במצבים מורכבים (ventriculomegaly, חשד ל-cortical malformation, polymicrogyria) · רגיש יותר ל-white matter
+        </div>
+
+        <div style="margin-top:10px;font-size:11.5px;color:var(--text3);line-height:1.55;padding-top:8px;border-top:1px dashed var(--border)">
+          <b>ניהול:</b> ייעוץ נוירולוג עוברי + גנטיקה + פדיאטריה · דיון משפחתי על תוצא ותכנון · מעקב חוזר ב-32 שב׳ אם ממצא בגבול
+          <br><b>מקור:</b> נייר עמדה ישראלי #53 (איגוד אולטרסאונד + AAM, מרץ 2026) · ISUOG Practice Guidelines 2007/2024
+        </div>
+      </div>
+    </details>
+  `;
+}
+
 // ─── Soft Markers Info Panel (Israeli #30 ינואר 2026 + MoH 13/2014) ──
 function showSoftMarkersInfo(){
   const list = document.getElementById('biom-meas-list');
@@ -10262,7 +10806,7 @@ function showSoftMarkersInfo(){
         </div>
       </div>
 
-      <!-- TABLE 1: Soft Markers with LR -->
+      <!-- TABLE 1: Soft Markers with LR — wide single-column -->
       <details style="margin-bottom:14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
         <summary style="cursor:pointer;padding:12px 14px;font-weight:700;color:var(--text);font-size:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:var(--amber-bg)">
           <span style="display:flex;align-items:center;gap:8px">
@@ -10272,7 +10816,7 @@ function showSoftMarkersInfo(){
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s"><path d="M3 5l4 4 4-4"/></svg>
         </summary>
         <div style="padding:10px;overflow-x:auto">
-          <table style="width:100%;border-collapse:collapse;font-size:12px;background:var(--surface)">
+          <table style="width:100%;border-collapse:collapse;font-size:12px;background:var(--surface);table-layout:fixed">
             <thead style="background:var(--surface2)">
               <tr style="text-align:right">
                 <th style="padding:8px;border-bottom:1px solid var(--border);font-weight:700;color:var(--text2)">ממצא</th>
@@ -10333,17 +10877,16 @@ function showSoftMarkersInfo(){
               </tr>
             </tbody>
           </table>
-        </div>
-        <div style="font-size:11px;color:var(--text3);margin-top:6px;line-height:1.5">
-          <b>LR צבעוני:</b>
-          <span style="color:var(--green-text)">●</span> 1.0 = ללא שינוי בסיכון ·
-          <span style="color:var(--amber-text)">●</span> 1.5-6 = סיכון מוגבר ·
-          <span style="color:var(--red-text)">●</span> ≥10 = סיכון משמעותי
-        </div>
+          <div style="font-size:11px;color:var(--text3);margin-top:8px;line-height:1.5;padding:0 2px">
+            <b>LR צבעוני:</b>
+            <span style="color:var(--green-text)">●</span> 1.0 = ללא שינוי בסיכון ·
+            <span style="color:var(--amber-text)">●</span> 1.5-6 = סיכון מוגבר ·
+            <span style="color:var(--red-text)">●</span> ≥10 = סיכון משמעותי
+          </div>
         </div>
       </details>
 
-      <!-- TABLE 2: Variants of normal -->
+      <!-- TABLE 2: Variants of normal — 2-column grid -->
       <details style="margin-bottom:14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
         <summary style="cursor:pointer;padding:12px 14px;font-weight:700;color:var(--text);font-size:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:var(--green-bg)">
           <span style="display:flex;align-items:center;gap:8px">
@@ -10353,10 +10896,10 @@ function showSoftMarkersInfo(){
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s"><path d="M3 5l4 4 4-4"/></svg>
         </summary>
         <div style="padding:10px">
-        <div style="background:var(--green-bg);padding:10px;border-radius:8px;border-right:3px solid var(--green);font-size:12px">
-          <b>אין חובה לאתר או לדווח</b> · אם אותר — לציין בדוח שאין משמעות קלינית ואין צורך בבירור גנטי
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin-top:8px;font-size:12px">
+          <div style="background:var(--green-bg);padding:10px;border-radius:8px;border-right:3px solid var(--green);font-size:12px">
+            <b>אין חובה לאתר או לדווח</b> · אם אותר — לציין בדוח שאין משמעות קלינית ואין צורך בבירור גנטי
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:8px;font-size:12px">
           <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">Persistent Left SVC (PLSVC)</div>
           <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">PRUV (Right Umbilical Vein)</div>
           <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">ARSA (Aberrant R. Subclavian)</div>
@@ -10381,7 +10924,7 @@ function showSoftMarkersInfo(){
         </div>
       </details>
 
-      <!-- TABLE 3: Anatomic anomalies -->
+      <!-- TABLE 3: Anatomic anomalies — 2-column grid -->
       <details style="margin-bottom:14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
         <summary style="cursor:pointer;padding:12px 14px;font-weight:700;color:var(--text);font-size:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:var(--red-bg)">
           <span style="display:flex;align-items:center;gap:8px">
@@ -10391,20 +10934,20 @@ function showSoftMarkersInfo(){
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s"><path d="M3 5l4 4 4-4"/></svg>
         </summary>
         <div style="padding:10px">
-        <div style="background:var(--red-bg);padding:10px;border-radius:8px;border-right:3px solid var(--red);font-size:12px;margin-bottom:8px">
-          <b>חובת הפניה לייעוץ גנטי</b> · במידה ויוחלט על דיקור — מימון בסל הבריאות
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px;font-size:12px">
-          <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">אגנזיס Ductus Venosus</div>
-          <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">Perimembranous VSD</div>
-          <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">אגנזיס עצם אף</div>
-          <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">NF פתולוגי (≥5/6 מ"מ)</div>
-          <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">מעי היפראקוגני בדרגת עצם</div>
-          <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">קיצור פמור משמעותי</div>
-        </div>
-        <div style="font-size:11.5px;color:var(--text3);margin-top:6px">
-          הרשימה אינה ממצה — קיימים מומים נוספים שמחייבים ייעוץ
-        </div>
+          <div style="background:var(--red-bg);padding:10px;border-radius:8px;border-right:3px solid var(--red);font-size:12px;margin-bottom:8px">
+            <b>חובת הפניה לייעוץ גנטי</b> · במידה ויוחלט על דיקור — מימון בסל הבריאות
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;font-size:12px">
+            <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">אגנזיס Ductus Venosus</div>
+            <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">Perimembranous VSD</div>
+            <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">אגנזיס עצם אף</div>
+            <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">NF פתולוגי (≥5/6 מ"מ)</div>
+            <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">מעי היפראקוגני בדרגת עצם</div>
+            <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">קיצור פמור משמעותי</div>
+          </div>
+          <div style="font-size:11.5px;color:var(--text3);margin-top:6px">
+            הרשימה אינה ממצה — קיימים מומים נוספים שמחייבים ייעוץ
+          </div>
         </div>
       </details>
 
@@ -10605,6 +11148,10 @@ function selectBiomSystem(sysId){
   const list = document.getElementById('biom-meas-list');
   document.getElementById('biom-system-title').textContent = `מדידות — ${sys.name}`;
   let html = '';
+  // CNS-specific: prepend neurosonography position paper accordion (#53) — spans full row
+  if (sysId === 'cns') {
+    html += `<div style="grid-column:1/-1">${renderNeurosonoAccordion()}</div>`;
+  }
   for(const k of sys.items){
     const m = biomMeasurements[k];
     if(!m) continue;
