@@ -1878,23 +1878,6 @@
       </div>
     </details>
 
-    <!-- ═══ Soft Markers Alert (per Israeli paper #30 — ינואר 2026 + חוזר 31.03.2025) ═══ -->
-    <div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-bottom:14px">
-      <div style="font-weight:700;font-size:14px;color:var(--primary);margin-bottom:6px">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px;margin-left:4px"><circle cx="8" cy="8" r="6.5"/><path d="M8 5v3.5M8 11h.01"/></svg>
-        ממצאים, סמנים רכים ווריאנטים — חוזר משותף 31.03.2025
-      </div>
-      <div style="font-size:12.5px;color:var(--text2);line-height:1.55">
-        בעת בדיקת ביומטריה, ייתכן ויאותרו ממצאים שאינם מומים. <b>הסיווג מתחלק ל-3 קבוצות</b>:
-        <ul style="margin:6px 0 6px 18px;padding:0">
-          <li><b>סמן רך (Soft Marker)</b> — בודד: <span style="color:var(--green-text);font-weight:600">LR=1 → אין אינדיקציה לייעוץ/דיקור</span>. ≥2 סמנים → ייעוץ + דיקור במימון סל</li>
-          <li><b>וריאנט של הנורמה</b> — אין משמעות קלינית, אין חובה לדווח</li>
-          <li><b>מום אנטומי</b> — התוויה לייעוץ גנטי + דיקור במימון סל</li>
-        </ul>
-        <b>סיכון רקע ללידת תינוק עם ממצאים גנטיים בכל הריון: 2-3%</b>. לסיווג מלא של כל ממצא לפי קטגוריה — ראה <b>נייר עמדה #30</b> (פתח דף הניירות).
-      </div>
-    </div>
-
     <!-- Group 1: Anatomic systems (selection) -->
     <div class="calc-form" data-label="בחר מערכת" style="padding-bottom:14px">
       <div class="biom-systems" id="biom-systems-grid-main"></div>
@@ -5490,7 +5473,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.1';
+const APP_VERSION = '4.2';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -10280,9 +10263,15 @@ function showSoftMarkersInfo(){
       </div>
 
       <!-- TABLE 1: Soft Markers with LR -->
-      <div style="margin-bottom:18px">
-        <div style="font-weight:700;color:var(--text);margin-bottom:8px;font-size:14px">🟡 טבלה 1: סמנים רכים — LR + המלצות (חוזר 13/2014)</div>
-        <div style="overflow-x:auto;border:1px solid var(--border);border-radius:8px">
+      <details style="margin-bottom:14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:12px 14px;font-weight:700;color:var(--text);font-size:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:var(--amber-bg)">
+          <span style="display:flex;align-items:center;gap:8px">
+            <span style="background:var(--amber);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700">טבלה 1</span>
+            🟡 סמנים רכים — LR + המלצות (חוזר 13/2014) · 7 ממצאים
+          </span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:10px;overflow-x:auto">
           <table style="width:100%;border-collapse:collapse;font-size:12px;background:var(--surface)">
             <thead style="background:var(--surface2)">
               <tr style="text-align:right">
@@ -10351,11 +10340,19 @@ function showSoftMarkersInfo(){
           <span style="color:var(--amber-text)">●</span> 1.5-6 = סיכון מוגבר ·
           <span style="color:var(--red-text)">●</span> ≥10 = סיכון משמעותי
         </div>
-      </div>
+        </div>
+      </details>
 
       <!-- TABLE 2: Variants of normal -->
-      <div style="margin-bottom:18px">
-        <div style="font-weight:700;color:var(--text);margin-bottom:8px;font-size:14px">🟢 טבלה 2: וריאנטים של הנורמה (ללא משמעות קלינית)</div>
+      <details style="margin-bottom:14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:12px 14px;font-weight:700;color:var(--text);font-size:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:var(--green-bg)">
+          <span style="display:flex;align-items:center;gap:8px">
+            <span style="background:var(--green);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700">טבלה 2</span>
+            🟢 וריאנטים של הנורמה (ללא משמעות קלינית) · 20 פריטים
+          </span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:10px">
         <div style="background:var(--green-bg);padding:10px;border-radius:8px;border-right:3px solid var(--green);font-size:12px">
           <b>אין חובה לאתר או לדווח</b> · אם אותר — לציין בדוח שאין משמעות קלינית ואין צורך בבירור גנטי
         </div>
@@ -10381,11 +10378,19 @@ function showSoftMarkersInfo(){
           <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">אוליגו (AFI<5) >28w</div>
           <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">אסימטריית חדרים <10mm</div>
         </div>
-      </div>
+        </div>
+      </details>
 
       <!-- TABLE 3: Anatomic anomalies -->
-      <div style="margin-bottom:18px">
-        <div style="font-weight:700;color:var(--text);margin-bottom:8px;font-size:14px">🔴 טבלה 3: מומים אנטומיים — התוויה לדיקור (מימון בסל הבריאות)</div>
+      <details style="margin-bottom:14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:12px 14px;font-weight:700;color:var(--text);font-size:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:var(--red-bg)">
+          <span style="display:flex;align-items:center;gap:8px">
+            <span style="background:var(--red);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700">טבלה 3</span>
+            🔴 מומים אנטומיים — התוויה לדיקור (מימון בסל הבריאות) · 6 ממצאים
+          </span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:10px">
         <div style="background:var(--red-bg);padding:10px;border-radius:8px;border-right:3px solid var(--red);font-size:12px;margin-bottom:8px">
           <b>חובת הפניה לייעוץ גנטי</b> · במידה ויוחלט על דיקור — מימון בסל הבריאות
         </div>
@@ -10400,7 +10405,8 @@ function showSoftMarkersInfo(){
         <div style="font-size:11.5px;color:var(--text3);margin-top:6px">
           הרשימה אינה ממצה — קיימים מומים נוספים שמחייבים ייעוץ
         </div>
-      </div>
+        </div>
+      </details>
 
       <!-- Decision algorithm -->
       <div style="margin-bottom:14px">
