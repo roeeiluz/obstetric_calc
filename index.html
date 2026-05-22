@@ -653,6 +653,9 @@
   .rec-list li b { color: var(--text); font-weight: 600; }
   .rec-list li.crit::before { background: var(--red); }
   .rec-list li.warn::before { background: var(--amber); }
+  /* LTR variant — bullets on the left for English content */
+  .rec-list[dir="ltr"] li { padding-right: 0; padding-left: 18px; }
+  .rec-list[dir="ltr"] li::before { right: auto; left: 4px; }
   .rec-src {
     font-size: 10.5px; color: var(--text3);
     margin-top: 10px; padding-top: 10px;
@@ -4709,7 +4712,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.20';
+const APP_VERSION = '3.21';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
