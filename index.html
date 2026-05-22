@@ -1025,25 +1025,51 @@
     transition: background .15s, color .15s;
   }
   .paper-modal-close:hover { background: var(--red-bg); color: var(--red); }
-  .paper-modal h3 { font-size: 18px; font-weight: 600; color: var(--text); line-height: 1.35; }
-  .paper-modal-meta { font-size: 12.5px; color: var(--text3); margin: 6px 0 14px; }
-  .paper-modal-section { margin-top: 16px; }
+  .paper-modal h3 { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.35; margin-bottom: 4px; }
+  .paper-modal-meta { font-size: 12.5px; color: var(--text3); margin: 6px 0 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .paper-modal-section { margin-top: 18px; }
   .paper-modal-section h4 {
-    font-size: 11px; font-weight: 700; color: var(--text3);
-    text-transform: uppercase; letter-spacing: .07em; margin-bottom: 8px;
+    font-size: 13px; font-weight: 700; color: var(--text);
+    margin-bottom: 12px; padding: 6px 10px; background: var(--primary-bg);
+    border-right: 3px solid var(--primary); border-radius: 6px;
   }
   .paper-modal-section ul {
-    list-style: none; padding: 0;
+    list-style: none; padding: 0; margin: 0;
   }
+  /* Each list item — card-like with subtle background */
   .paper-modal-section li {
-    font-size: 13px; line-height: 1.6; padding: 4px 0;
-    padding-right: 16px; position: relative; color: var(--text2);
+    font-size: 13.5px; line-height: 1.75; padding: 9px 16px 9px 12px;
+    position: relative; color: var(--text2);
+    border-radius: 8px;
+    margin-bottom: 4px;
+    transition: background 0.15s ease;
   }
-  .paper-modal-section li::before {
-    content: ""; position: absolute; right: 4px; top: 11px;
-    width: 5px; height: 5px; border-radius: 50%; background: var(--primary);
+  .paper-modal-section li:hover { background: var(--surface2); }
+  /* Section dividers (━━━ blocks become real visual dividers) */
+  .paper-modal-section li:has(b:only-child) b,
+  .paper-modal-section li > b:first-child:last-child {
+    display: block;
   }
-  .paper-modal-section li b { color: var(--text); font-weight: 600; }
+  /* Items that start with ━━ become section headers */
+  .paper-modal-section li b {
+    color: var(--text); font-weight: 700;
+  }
+  /* Emoji prefix styling — make headers stand out */
+  .paper-modal-section li:has(b) {
+    background: linear-gradient(to left, transparent, rgba(0,0,0,0.01));
+  }
+  /* Improve readability for nested content */
+  .paper-modal-section li br + br { display: none; }
+  /* Numbered lists */
+  .paper-modal-section ol {
+    list-style: decimal inside; padding-right: 4px;
+  }
+  .paper-modal-section ol li::before { display: none; }
+  /* Better mobile spacing */
+  @media (max-width: 640px) {
+    .paper-modal h3 { font-size: 17px; }
+    .paper-modal-section li { font-size: 12.5px; padding: 7px 12px 7px 10px; }
+  }
   .paper-related-tabs {
     margin-top: 18px; padding-top: 14px;
     border-top: 1px solid var(--border);
@@ -1511,6 +1537,10 @@
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="6" r="2.5"/><path d="M5 18c1-3 3-5 5-5s4 2 5 5"/><path d="M3 11l3 1M17 11l-3 1"/></svg>
           <span>פרע כתפיים</span>
         </button>
+        <button class="tab" onclick="showTab('nrp',this)" role="tab">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="6" r="3"/><path d="M5 18c1-3 3-5 5-5s4 2 5 5"/><path d="M10 9v3M8 12h4"/></svg>
+          <span>NRP החייאת ילוד</span>
+        </button>
         <button class="tab" onclick="showTab('dka',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v6M7 5l3-3 3 3"/><circle cx="10" cy="13" r="5"/><path d="M10 11v3M10 16v.5"/></svg>
           <span>DKA</span>
@@ -1768,7 +1798,7 @@
       </summary>
     <div class="ref">
       <b>מקורות:</b><br>
-      &nbsp;&nbsp;<b>נייר עמדה ישראלי #14 (2024):</b> לידה מוקדמת — האיגוד הישראלי למיילדות (פרוגסטרון, צלסטון, MgSO4)<br>
+      &nbsp;&nbsp;<b>נייר עמדה ישראלי #14 (אוגוסט 2021):</b> לידה מוקדמת — האיגוד הישראלי למיילדות (פרוגסטרון, צלסטון, MgSO4)<br>
       &nbsp;&nbsp;<b>Iams JD et al.</b> <i>NEJM</i> 1996;334:567–572 (NICHD MFMU, n=2,915, מדידה ב-24w)<br>
       &nbsp;&nbsp;<b>Hibbard JU et al.</b> <i>Obstet Gynecol</i> 2000;96:972–8 (16–22w, n=760)<br>
       &nbsp;&nbsp;<b>Liu L et al.</b> <i>Maternal-Fetal Medicine</i> 2020 (28–32w, n=14,953)<br>
@@ -1978,7 +2008,7 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
     <div class="ref">
-      <b>נייר עמדה ישראלי #39 (2024):</b> אלואיזואימוניזציה (Rh) — שימוש ב-MCA-PSV<br>
+      <b>נייר עמדה ישראלי #39 (אפריל 2025):</b> אלואיזואימוניזציה (Rh) — שימוש ב-MCA-PSV<br>
       <b>מקור:</b> Mari G et al. <i>N Engl J Med</i> 2000;342:9–14<br>
       <b>נכלל בחישוב:</b> MCA-PSV — Doppler מעורק מוחי אמצעי, בשליש הפרוקסימלי קרוב למוצא מ-Circle of Willis, זווית insonation 0° (קריטי לדיוק)<br>
       נוסחה: MCA-PSV median = e^(2.31 + 0.046 × GA) ס"מ/שנייה<br>
@@ -2018,8 +2048,8 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
     <div class="ref">
-      <b>נייר עמדה ישראלי #31 (2024):</b> מיקרוצפליה — חברת אולטרסאונד + AAM (חשד: HC≤-3SD · ודאי: HC≤-5SD)<br>
-      <b>נייר עמדה ישראלי #53 (2024):</b> נוירוסונוגרפיה עוברית — אינדיקציות, פרוטוקול, MRI משלים<br>
+      <b>נייר עמדה ישראלי #31 (2015):</b> מיקרוצפליה — חברת אולטרסאונד + AAM (חשד: HC≤-3SD · ודאי: HC≤-5SD)<br>
+      <b>נייר עמדה ישראלי #53 (מרץ 2026):</b> נוירוסונוגרפיה עוברית — אינדיקציות, פרוטוקול, MRI משלים<br>
       <b>מקור:</b> Chervenak FA et al. <i>Am J Obstet Gynecol</i> 1984;149:512–517<br>
       <b>נכלל בחישוב:</b> HC בלבד — מדידת היקף ראש באליפסה סביב הגולגולת במישור transthalamic (תאלמי + CSP)<br>
       קריטריון מיקרוצפליה: HC ≤ −3 SD · פתולוגי ודאי: ≤ −5 SD (SMFM 2016)
@@ -2112,7 +2142,7 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="ref">
-        <b>נייר עמדה ישראלי #33 (2024):</b> מעקב היריון תאומים — AAM + חברת אולטרסאונד<br>
+        <b>נייר עמדה ישראלי #33 (יולי 2023):</b> מעקב היריון תאומים — AAM + חברת אולטרסאונד<br>
         <b>נייר עמדה ישראלי #9 (2023):</b> ניהול הלידה בהיריון רב-עוברים<br>
         <b>ACOG Practice Bulletin 234 (2021):</b> Management of Twin Pregnancies<br>
         <b>SMFM Consult Series #55 (2020):</b> Twin Pregnancies — Management<br>
@@ -2341,8 +2371,8 @@
       </summary>
       <div class="ref">
         <b>נייר עמדה ישראלי #11 (נובמבר 2024):</b> השראת לידה והבשלת צוואר הרחם<br>
-        <b>נייר עמדה ישראלי #46 (2024):</b> כולסטאזיס בהריון — חומצות מרה, UDCA, תזמון לידה<br>
-        <b>נייר עמדה ישראלי #16 (2024):</b> סוכרת הריונית · <b>#17 (2024):</b> סוכרת טרום-הריונית<br>
+        <b>נייר עמדה ישראלי #46 (פברואר 2023):</b> כולסטאזיס בהריון — חומצות מרה, UDCA, תזמון לידה<br>
+        <b>נייר עמדה ישראלי #16 (יולי 2023):</b> סוכרת הריונית · <b>#17 (דצמבר 2024):</b> סוכרת טרום-הריונית<br>
         <b>ACOG/SMFM Committee Opinion 764 (2019, מעודכן 2021):</b> Medically Indicated Late-Preterm and Early-Term Deliveries<br>
         <b>SMFM Consult Series:</b> #44 (FGR), #52 (Macrosomia), #54 (Periviability), #55 (Twin), #57 (Cesarean), #58 (PPROM)<br>
         <b>ACOG Practice Bulletin:</b> #222 (Hypertensive Disorders), #228 (Multifetal), #230 (Pregestational Diabetes), #190 (GDM)<br>
@@ -2609,7 +2639,7 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="ref">
-        <b>נייר עמדה ישראלי #18 (2024):</b> יתר לחץ דם ורעלת בהיריון — האיגוד הישראלי למיילדות<br>
+        <b>נייר עמדה ישראלי #18 (מהדורת 2025):</b> יתר לחץ דם ורעלת בהיריון — האיגוד הישראלי למיילדות<br>
         <b>ACOG Committee Opinion 743 (2018):</b> Low-Dose Aspirin Use During Pregnancy — Aspirin 81–162 mg יומי מ-12+0 עד 36+0<br>
         <b>USPSTF Recommendation 2021:</b> ASA למניעת רעלת בנשים עם ≥1 גורם סיכון גבוה או ≥2 גורמי סיכון בינוניים<br>
         <b>Zeisler H et al. (PROGNOSIS):</b> <i>NEJM</i> 2016;374:13–22 — sFlt-1/PlGF ≤38 שולל רעלת לשבוע הבא (NPV 99.3%)<br>
@@ -2716,8 +2746,8 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="ref">
-        <b>נייר עמדה ישראלי #30 (2024):</b> סמנים רכים לדאון — חברת אולטרסאונד + AAM<br>
-        <b>נייר עמדה ישראלי #51 (2024):</b> NIPT — בדיקת DNA חופשי<br>
+        <b>נייר עמדה ישראלי #30 (ינואר 2026):</b> סמנים רכים לדאון — חברת אולטרסאונד + AAM<br>
+        <b>נייר עמדה ישראלי #51 (אוגוסט 2023):</b> NIPT — בדיקת DNA חופשי<br>
         <b>FMF Combined Test:</b> Nicolaides KH. <i>AJOG</i> 2011;204:356 — שילוב גיל אם + NT + PAPP-A + βhCG · רגישות 90% ב-FPR 5%<br>
         <b>NT Reference:</b> Nicolaides KH. <i>UOG</i> 1996 — חציון NT עולה עם CRL<br>
         <b>Nasal Bone:</b> Cicero S et al. <i>Lancet</i> 2001;358:1665 — נעדר ב-60-70% מטריזומיה 21<br>
@@ -3110,6 +3140,318 @@
     </div>
   </div>
 
+  <!-- ===== NRP — Neonatal Resuscitation Program (AAP/AHA 8th ed., 2021) ===== -->
+  <div id="nrp" class="panel">
+    <details class="ref-wrap">
+      <summary>
+        <svg class="ref-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5h7l3 3v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1Z"/><path d="M10 2.5v3h3"/><path d="M5 9h6M5 11.5h4"/></svg>
+        <span>מקורות וקריטריונים</span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="ref">
+        <b>NRP 8th Edition (2021):</b> AAP/AHA — Neonatal Resuscitation Textbook<br>
+        <b>ILCOR 2020:</b> International Liaison Committee on Resuscitation — Neonatal Life Support Consensus<br>
+        <b>נייר עמדה ישראלי #27 (יולי 2025):</b> גיל החיות — קווים מנחים לניהול<br>
+        <b>2024 NRP Updates:</b> Cord management, oxygen blender, SpO2 targets per Apgar timing<br>
+        <b>זכויות יוצרים תמונות:</b> דיאגרמות סכמטיות מקוריות; מקור רעיוני: obgynkey.com/neonatal-resuscitation
+      </div>
+    </details>
+
+    <div class="pplan-header">
+      <div class="pplan-step-count" id="nrp-step-count">0 / 0 בוצעו</div>
+      <div class="pplan-title">NRP — החייאת ילוד (AAP/AHA 8th ed., 2021)</div>
+      <div class="pplan-sub">פרוטוקול 4 שלבים. <b>הזמן קריטי</b> — נקוט בכל פעולה תוך 30-60 שניות. תיעוד שעה לכל מנחה.</div>
+      <div class="pplan-progress" id="nrp-progress">
+        <div></div><div></div>
+      </div>
+    </div>
+
+    <!-- ═══ Pre-resuscitation prep ═══ -->
+    <details class="pp-section" open>
+      <summary>
+        <div class="pp-sec-ico" style="background:var(--primary-bg);color:var(--primary)">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="13" rx="2"/><path d="M3 8h14M7 2.5v3M13 2.5v3"/></svg>
+        </div>
+        <div class="pp-sec-text">
+          <div class="pp-sec-title">0. הכנה לפני לידה (לכל לידה!)</div>
+          <div class="pp-sec-sub">3 שאלות + ציוד + צוות</div>
+        </div>
+        <span class="pp-sec-count" id="nrp-count-prep">5</span>
+        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="pp-sec-body">
+        <div class="pp-grid" style="grid-template-columns:1fr">
+          <label class="pp-check"><input type="checkbox" id="nrp_prep_3q" onchange="updateNrpProgress()"> <span><b>3 שאלות מקדימות:</b> גיל הריון? מי שפיר נקיים? כמה עוברים? · גורמי סיכון נוספים?</span></label>
+          <label class="pp-check"><input type="checkbox" id="nrp_prep_warmer" onchange="updateNrpProgress()"> <span><b>חימום:</b> Warmer דולק + מגבות חמות + שמיכת פלסטיק (אם <32 שב׳)</span></label>
+          <label class="pp-check"><input type="checkbox" id="nrp_prep_equip" onchange="updateNrpProgress()"> <span><b>ציוד:</b> סקשן + BVM/T-piece (מקור חמצן) + ETT 2.5/3.0/3.5 + לרינגוסקופ + LMA + EKG leads + Pulse Ox</span></label>
+          <label class="pp-check"><input type="checkbox" id="nrp_prep_team" onchange="updateNrpProgress()"> <span><b>צוות:</b> לפחות 1 מיומן ב-PPV. בסיכון גבוה: ≥2 אנשים מיומנים + צוות אינטובציה</span></label>
+          <label class="pp-check"><input type="checkbox" id="nrp_prep_briefing" onchange="updateNrpProgress()"> <span><b>תדריך צוות (Team Huddle):</b> תפקידים, תוכנית, גורמי סיכון</span></label>
+        </div>
+      </div>
+    </details>
+
+    <!-- ═══ Initial Steps ═══ -->
+    <details class="pp-section" open>
+      <summary>
+        <div class="pp-sec-ico" style="background:var(--amber-bg);color:var(--amber-text)">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.5"/><path d="M10 6.5v4l2.5 2.5"/></svg>
+        </div>
+        <div class="pp-sec-text">
+          <div class="pp-sec-title">1. שלבים ראשונים (30 שניות ראשונות)</div>
+          <div class="pp-sec-sub">חימום · מנח · יבוש · גירוי · הערכה</div>
+        </div>
+        <span class="pp-sec-count" id="nrp-count-initial">7</span>
+        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="pp-sec-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start" class="sd-maneuver-grid">
+          <div>
+            <div class="pp-grid" style="grid-template-columns:1fr">
+              <label class="pp-check"><input type="checkbox" id="nrp_cord" onchange="updateNrpProgress()"> <span><b>חבל טבור:</b> Delayed cord clamping ≥60 שניות (פגות 30-60s) אם יציב; חיתוך מיידי אם דורש החייאה</span></label>
+              <label class="pp-check"><input type="checkbox" id="nrp_warm" onchange="updateNrpProgress()"> <span><b>חימום:</b> Skin-to-skin אם יציב · אחרת Warmer + יבוש (פגות: שמיכת פלסטיק ללא יבוש)</span></label>
+              <label class="pp-check"><input type="checkbox" id="nrp_position" onchange="updateNrpProgress()"> <span><b>מנח:</b> "Sniffing position" — צוואר מורם קלות (מגבת תחת הכתפיים)</span></label>
+              <label class="pp-check"><input type="checkbox" id="nrp_suction" onchange="updateNrpProgress()"> <span><b>סקשן:</b> <b>רק אם חסימה</b> (מקוניום עבה + לא נושם, או הפרשות מרובות) · פה לפני אף · לחץ נמוך 80-100 mmHg</span></label>
+              <label class="pp-check"><input type="checkbox" id="nrp_dry" onchange="updateNrpProgress()"> <span><b>יבוש + גירוי:</b> עיסוי גב/כפות רגליים (לא בטן, לא ראש)</span></label>
+              <label class="pp-check"><input type="checkbox" id="nrp_assess_30s" onchange="updateNrpProgress()"> <span><b>הערכה ב-30 שניות:</b> נשימה? דופק? צבע?</span></label>
+              <label class="pp-check"><input type="checkbox" id="nrp_apgar" onchange="updateNrpProgress()"> <span><b>Apgar score</b> ב-1 ו-5 דקות (לא חלק מהחלטת החייאה!)</span></label>
+            </div>
+          </div>
+          <div style="background:var(--surface2);border-radius:10px;padding:10px;text-align:center">
+            <svg viewBox="0 0 220 160" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto">
+              <!-- Warmer table -->
+              <rect x="10" y="100" width="200" height="40" fill="#fde68a" stroke="#d97706" stroke-width="1.5" rx="4"/>
+              <!-- Warmer head -->
+              <rect x="20" y="40" width="180" height="50" fill="#dc2626" stroke="#991b1b" stroke-width="1.5" rx="6"/>
+              <text x="110" y="68" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#fff" font-weight="700">Radiant Warmer</text>
+              <text x="110" y="82" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#fff">🔥 36.5–37.5°C</text>
+              <!-- Baby silhouette -->
+              <ellipse cx="100" cy="125" rx="28" ry="9" fill="#fed7aa" stroke="#9a3412" stroke-width="1.2"/>
+              <circle cx="78" cy="125" r="10" fill="#fed7aa" stroke="#9a3412" stroke-width="1.2"/>
+              <!-- Sniffing position arrow -->
+              <line x1="78" y1="115" x2="78" y2="105" stroke="#2D7FEA" stroke-width="2" stroke-linecap="round" marker-end="url(#nrpArrow)"/>
+              <defs>
+                <marker id="nrpArrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 Z" fill="#2D7FEA"/>
+                </marker>
+              </defs>
+              <text x="60" y="100" font-family="sans-serif" font-size="9" fill="#2D7FEA" font-weight="600">Sniffing</text>
+              <text x="110" y="155" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#374151" font-weight="600">Initial Steps Setup</text>
+            </svg>
+            <div style="font-size:10.5px;color:var(--text3);margin-top:4px">חימום + מנח אופטימלי לאינטובציה אם נדרש</div>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- ═══ PPV ═══ -->
+    <details class="pp-section" open>
+      <summary>
+        <div class="pp-sec-ico" style="background:var(--red-bg);color:var(--red-text)">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 Q6 6 10 6 T17 10"/><path d="M3 13 Q6 9 10 9 T17 13"/></svg>
+        </div>
+        <div class="pp-sec-text">
+          <div class="pp-sec-title">2. PPV — הנשמה בלחץ חיובי <span style="background:var(--red);color:#fff;font-size:10px;padding:2px 7px;border-radius:999px;margin-right:6px">השלב הקריטי ביותר</span></div>
+          <div class="pp-sec-sub">אינדיקציה: גאספ / אפניאה / HR <100. תוך 60 שניות מלידה</div>
+        </div>
+        <span class="pp-sec-count" id="nrp-count-ppv">6</span>
+        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="pp-sec-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start" class="sd-maneuver-grid">
+          <div>
+            <div class="pp-grid" style="grid-template-columns:1fr">
+              <label class="pp-check"><input type="checkbox" id="nrp_ppv_start" onchange="updateNrpProgress()"> <span><b>התחל PPV:</b> 40-60 נשימות/דקה · "Breathe-2-3" קצב · BVM או T-piece</span></label>
+              <label class="pp-check"><input type="checkbox" id="nrp_ppv_o2" onchange="updateNrpProgress()"> <span><b>חמצן:</b> בלנדר! <b>≥35w: 21% (אוויר חדר)</b> · <b><35w: 21-30%</b> · עלייה לפי SpO2 (יעדים בטבלה)</span></label>
+              <label class="pp-check"><input type="checkbox" id="nrp_ppv_pressure" onchange="updateNrpProgress()"> <span><b>לחץ:</b> ראשון 20-25 cmH2O · עד 30 בנשימה ראשונה · PEEP 5 cmH2O (T-piece)</span></label>
+              <label class="pp-check"><input type="checkbox" id="nrp_ppv_check" onchange="updateNrpProgress()"> <span><b>הערכה אחרי 15 שניות:</b> HR עולה? חזה זז?</span></label>
+              <label class="pp-check"><input type="checkbox" id="nrp_ppv_mrsopa" onchange="updateNrpProgress()"> <span><b>אם לא משתפר → MR. SOPA:</b> <b>M</b>ask · <b>R</b>eposition · <b>S</b>uction · <b>O</b>pen mouth · <b>P</b>ressure ↑ · <b>A</b>irway alternative (ETT/LMA)</span></label>
+              <label class="pp-check"><input type="checkbox" id="nrp_ppv_intubate" onchange="updateNrpProgress()"> <span><b>אינטובציה / LMA</b> אם MR SOPA נכשל · ETT לפי משקל: <1kg → 2.5; 1-2kg → 3.0; 2-3kg → 3.5; >3kg → 3.5-4.0</span></label>
+            </div>
+          </div>
+          <div style="background:var(--surface2);border-radius:10px;padding:10px">
+            <div style="font-weight:700;color:var(--text);font-size:12.5px;margin-bottom:6px;text-align:center">יעדי SpO2 (יד ימין preductal)</div>
+            <table style="width:100%;border-collapse:collapse;font-size:11.5px">
+              <thead>
+                <tr style="background:var(--surface)">
+                  <th style="padding:5px;border-bottom:1px solid var(--border)">דקה</th>
+                  <th style="padding:5px;border-bottom:1px solid var(--border)">SpO2 יעד</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td style="padding:4px;text-align:center;font-weight:600">1 דק</td><td style="padding:4px;text-align:center">60-65%</td></tr>
+                <tr style="background:var(--surface)"><td style="padding:4px;text-align:center;font-weight:600">2 דק</td><td style="padding:4px;text-align:center">65-70%</td></tr>
+                <tr><td style="padding:4px;text-align:center;font-weight:600">3 דק</td><td style="padding:4px;text-align:center">70-75%</td></tr>
+                <tr style="background:var(--surface)"><td style="padding:4px;text-align:center;font-weight:600">4 דק</td><td style="padding:4px;text-align:center">75-80%</td></tr>
+                <tr><td style="padding:4px;text-align:center;font-weight:600">5 דק</td><td style="padding:4px;text-align:center">80-85%</td></tr>
+                <tr style="background:var(--surface)"><td style="padding:4px;text-align:center;font-weight:600">10 דק</td><td style="padding:4px;text-align:center">85-95%</td></tr>
+              </tbody>
+            </table>
+            <div style="font-size:10.5px;color:var(--text3);margin-top:6px;text-align:center">SpO2 על <b>יד ימין</b> (preductal)</div>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- ═══ Chest Compressions ═══ -->
+    <details class="pp-section" open>
+      <summary>
+        <div class="pp-sec-ico" style="background:var(--red-bg);color:var(--red-text)">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17.5s-6-3.5-6-8.5a3.5 3.5 0 0 1 6-2.5 3.5 3.5 0 0 1 6 2.5c0 5-6 8.5-6 8.5Z"/></svg>
+        </div>
+        <div class="pp-sec-text">
+          <div class="pp-sec-title">3. עיסויי לב (Chest Compressions)</div>
+          <div class="pp-sec-sub">אינדיקציה: HR <60 אחרי 30 שניות PPV יעיל</div>
+        </div>
+        <span class="pp-sec-count" id="nrp-count-cc">5</span>
+        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="pp-sec-body">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start" class="sd-maneuver-grid">
+          <div>
+            <div class="pp-grid" style="grid-template-columns:1fr">
+              <label class="pp-check"><input type="checkbox" id="nrp_cc_intubate" onchange="updateNrpProgress()"> <span><b>אינטובציה לפני CC (אם לא בוצעה)</b> + הגברת חמצן ל-100%</span></label>
+              <label class="pp-check"><input type="checkbox" id="nrp_cc_ratio" onchange="updateNrpProgress()"> <span><b>יחס 3:1</b> (3 עיסויים + 1 נשימה) — <b>120 אירועים/דקה</b> (90 CC + 30 breaths)</span></label>
+              <label class="pp-check"><input type="checkbox" id="nrp_cc_technique" onchange="updateNrpProgress()"> <span><b>טכניקה — 2 אגודלים (Two-thumb):</b> אגודלים על השליש התחתון של עצם החזה, ידיים מקיפות את החזה. עומק: <b>1/3 מעובי החזה</b></span></label>
+              <label class="pp-check"><input type="checkbox" id="nrp_cc_reassess" onchange="updateNrpProgress()"> <span><b>הערכה כל 60 שניות:</b> HR עולה ≥60? → הפסק CC, המשך PPV</span></label>
+              <label class="pp-check"><input type="checkbox" id="nrp_cc_ekg" onchange="updateNrpProgress()"> <span><b>EKG leads</b> — הערכת HR מדויקת (פחות אומדן ידני)</span></label>
+            </div>
+          </div>
+          <div style="background:var(--surface2);border-radius:10px;padding:10px;text-align:center">
+            <svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto">
+              <!-- Baby chest -->
+              <ellipse cx="100" cy="65" rx="40" ry="28" fill="#fed7aa" stroke="#9a3412" stroke-width="1.5"/>
+              <!-- Sternum -->
+              <line x1="100" y1="45" x2="100" y2="85" stroke="#dc2626" stroke-width="2" stroke-dasharray="2,2"/>
+              <!-- Two-thumb position -->
+              <ellipse cx="95" cy="78" rx="6" ry="4" fill="#2D7FEA" stroke="#1e40af" stroke-width="1"/>
+              <ellipse cx="105" cy="78" rx="6" ry="4" fill="#2D7FEA" stroke="#1e40af" stroke-width="1"/>
+              <!-- Hands wrapping -->
+              <path d="M60 65 Q75 90 95 80" stroke="#2D7FEA" stroke-width="2" fill="none"/>
+              <path d="M140 65 Q125 90 105 80" stroke="#2D7FEA" stroke-width="2" fill="none"/>
+              <text x="100" y="115" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#374151" font-weight="600">Two-Thumb Technique</text>
+              <text x="100" y="127" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#6b7280">3:1 ratio · 1/3 chest depth</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- ═══ Medications / Advanced ═══ -->
+    <details class="pp-section" open>
+      <summary>
+        <div class="pp-sec-ico" style="background:var(--purple);color:#fff">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.5"/><path d="M7 10h6M10 7v6"/></svg>
+        </div>
+        <div class="pp-sec-text">
+          <div class="pp-sec-title">4. תרופות (HR <60 למרות PPV + CC)</div>
+          <div class="pp-sec-sub">אדרנלין · נוזלים · UVC</div>
+        </div>
+        <span class="pp-sec-count" id="nrp-count-meds">4</span>
+        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="pp-sec-body">
+        <div class="pp-grid" style="grid-template-columns:1fr">
+          <label class="pp-check"><input type="checkbox" id="nrp_med_uvc" onchange="updateNrpProgress()"> <span><b>גישה ורידית — UVC (Umbilical Venous Catheter)</b> — הגישה המועדפת. אלטרנטיבה: IO</span></label>
+          <label class="pp-check"><input type="checkbox" id="nrp_med_epi" onchange="updateNrpProgress()"> <span><b>אדרנלין (1:10,000 = 0.1 mg/mL):</b><br>
+            • <b>IV/IO:</b> 0.02 mg/kg (0.2 mL/kg) — מועדף<br>
+            • <b>ETT:</b> 0.1 mg/kg (1 mL/kg) — אם אין גישה IV<br>
+            • <b>חזור כל 3-5 דקות</b> · עליה במינון IV עד 0.03 mg/kg</span></label>
+          <label class="pp-check"><input type="checkbox" id="nrp_med_volume" onchange="updateNrpProgress()"> <span><b>נוזלים (אם איבוד דם / שוק):</b> NS 10 mL/kg IV ב-5-10 דקות · O-neg blood אם דימום מוכח</span></label>
+          <label class="pp-check"><input type="checkbox" id="nrp_med_glucose" onchange="updateNrpProgress()"> <span><b>גלוקוז:</b> D10W 2 mL/kg bolus + drip 6 mg/kg/min — אם היפוגליקמיה מוכחת</span></label>
+        </div>
+      </div>
+    </details>
+
+    <!-- ═══ Post-resuscitation ═══ -->
+    <details class="pp-section" open>
+      <summary>
+        <div class="pp-sec-ico" style="background:var(--green-bg);color:var(--green-text)">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10l3 3 7-7"/></svg>
+        </div>
+        <div class="pp-sec-text">
+          <div class="pp-sec-title">5. אחרי החייאה — Post-resuscitation Care</div>
+          <div class="pp-sec-sub">מעקב · קירור · תיעוד</div>
+        </div>
+        <span class="pp-sec-count" id="nrp-count-post">5</span>
+        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="pp-sec-body">
+        <div class="pp-grid" style="grid-template-columns:1fr">
+          <label class="pp-check"><input type="checkbox" id="nrp_post_transfer" onchange="updateNrpProgress()"> <span><b>העברה ל-NICU</b> בשמירה על חום (Transport Incubator/skin-to-skin)</span></label>
+          <label class="pp-check"><input type="checkbox" id="nrp_post_hie" onchange="updateNrpProgress()"> <span><b>הערכת HIE</b> (Hypoxic-Ischemic Encephalopathy): pH ≤7.0 / BE ≤−16 / Apgar ≤5 ב-10 דק / החייאה ≥10 דק → שקול <b>Therapeutic Hypothermia (33.5°C × 72h)</b> אם ≥36 שב׳ ופחות מ-6 שעות מהלידה</span></label>
+          <label class="pp-check"><input type="checkbox" id="nrp_post_glucose" onchange="updateNrpProgress()"> <span><b>גלוקוז:</b> בדיקה תוך 30-60 דק · יעד ≥45 mg/dL</span></label>
+          <label class="pp-check"><input type="checkbox" id="nrp_post_temp" onchange="updateNrpProgress()"> <span><b>טמפ׳ אקסילרית:</b> 36.5-37.5°C (אלא אם בקירור טיפולי)</span></label>
+          <label class="pp-check"><input type="checkbox" id="nrp_post_doc" onchange="updateNrpProgress()"> <span><b>תיעוד מלא:</b> Apgar 1+5+10 דק · כל פעולה + שעה · גזים מחבל טבור (UA+UV) · צוות נוכח · הסבר להורים</span></label>
+        </div>
+      </div>
+    </details>
+
+    <!-- ═══ Discontinuation criteria ═══ -->
+    <details class="pp-section" open>
+      <summary>
+        <div class="pp-sec-ico" style="background:var(--text3);color:#fff">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.5"/><path d="M6 10h8"/></svg>
+        </div>
+        <div class="pp-sec-text">
+          <div class="pp-sec-title">6. הפסקת החייאה</div>
+          <div class="pp-sec-sub">קריטריונים — דיון משותף עם המשפחה</div>
+        </div>
+        <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="pp-sec-body">
+        <div class="note" style="border-right-color:var(--text3);background:var(--surface2);font-size:12.5px">
+          <b>NRP מנחה לדיון הפסקת החייאה אם HR בלתי ניתן לזיהוי לאחר 20 דקות של החייאה אפקטיבית מלאה</b> (PPV + CC + Epi + ETT).<br>
+          <br>
+          <b>שיקולים:</b><br>
+          • איכות ההחייאה (האם כל הצעדים בוצעו אופטימלית?)<br>
+          • גורמים הפיכים (פנאומותורקס, היפוולמיה)<br>
+          • גיל הריון + משקל (גיל החיות — נייר #27)<br>
+          • דיון עם המשפחה (כשאפשר)<br>
+          • התייעצות עם מנהל מחלקת ילודים
+        </div>
+      </div>
+    </details>
+
+    <!-- ═══ Decision Tree visual ═══ -->
+    <div class="rec-box" style="margin-top:14px">
+      <div class="rec-head">
+        <span>אלגוריתם NRP — סיכום ויזואלי</span>
+        <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">לעיון מהיר</span>
+      </div>
+      <div class="rec-body">
+        <div style="font-size:12.5px;line-height:1.8">
+          <div style="background:var(--primary-bg);padding:10px;border-radius:8px;margin-bottom:6px">
+            <b style="color:var(--primary)">לידה →</b> שאלות מקדימות · יציב? → Skin-to-skin · לא יציב? → Warmer
+          </div>
+          <div style="text-align:center;color:var(--text3);font-size:18px">⬇</div>
+          <div style="background:var(--amber-bg);padding:10px;border-radius:8px;margin-bottom:6px">
+            <b style="color:var(--amber-text)">30 שניות:</b> חימום · מנח · סקשן (אם צריך) · יבוש · גירוי → הערכה
+          </div>
+          <div style="text-align:center;color:var(--text3);font-size:18px">⬇</div>
+          <div style="background:var(--red-bg);padding:10px;border-radius:8px;margin-bottom:6px">
+            <b style="color:var(--red-text)">אם אפניאה / HR <100:</b> PPV 40-60/min, חמצן לפי SpO2 → הערכה תוך 15 שניות → אם לא משתפר: MR. SOPA + אינטובציה
+          </div>
+          <div style="text-align:center;color:var(--text3);font-size:18px">⬇</div>
+          <div style="background:var(--red-bg);padding:10px;border-radius:8px;margin-bottom:6px">
+            <b style="color:var(--red-text)">אם HR <60 אחרי 30 שניות PPV:</b> CC 3:1, 120/min + 100% O2 + EKG
+          </div>
+          <div style="text-align:center;color:var(--text3);font-size:18px">⬇</div>
+          <div style="background:var(--purple);color:#fff;padding:10px;border-radius:8px;margin-bottom:6px">
+            <b>אם HR <60 אחרי 60 שניות CC + PPV:</b> UVC + אדרנלין 0.02 mg/kg IV (חזרה כל 3-5 דק)
+          </div>
+          <div style="text-align:center;color:var(--text3);font-size:18px">⬇</div>
+          <div style="background:var(--green-bg);padding:10px;border-radius:8px">
+            <b style="color:var(--green-text)">החזרה לרוח חיים → NICU + מעקב + שקול hypothermia אם HIE</b>
+          </div>
+        </div>
+        <div class="rec-src">NRP 8th Ed. (2021) · AAP/AHA · ILCOR 2020</div>
+      </div>
+    </div>
+
+    <!-- Result display -->
+    <div id="nrp-res" style="margin-top:14px"></div>
+  </div>
+
   <!-- ===== DKA Emergency Protocol ===== -->
   <div id="dka" class="panel">
     <details class="ref-wrap">
@@ -3302,7 +3644,7 @@
       </summary>
       <div class="ref">
         <b>JAMA 2024:</b> Selective postpartum VTE prophylaxis protocol — הפחית שימוש LMWH מ-16% ל-8%, הפחית המטומות פצע ב-62% (aOR 0.38), <b>ללא עלייה ב-VTE</b> (aOR 0.40)<br>
-        <b>נייר עמדה ישראלי #24 (2024):</b> קרישיות בהריון<br>
+        <b>נייר עמדה ישראלי #24 (פברואר 2023):</b> קרישיות בהריון<br>
         <b>ACCP Antithrombotic Therapy (Bates et al.):</b> Chest 2018 — מסגרת גורמי סיכון מז'וריים/מינוריים<br>
         <b>ACOG PB 196 (2018, מאומץ 2023):</b> Thromboembolism in Pregnancy<br>
         <b>RCOG Green-top 37a (2015):</b> תוספות מינוריות לפרוטוקול JAMA — גיל אמהי ≥35, פריות ≥3, דליות ורידיות (כל אחד = 1 נקודה במערכת הניקוד של RCOG)<br>
@@ -3694,7 +4036,7 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="ref">
-        <b>נייר עמדה ישראלי #12 (2024):</b> PPH — דימום לאחר לידה — האיגוד הישראלי למיילדות<br>
+        <b>נייר עמדה ישראלי #12 (אפריל 2025):</b> PPH — דימום לאחר לידה — האיגוד הישראלי למיילדות<br>
         <b>ACOG Practice Bulletin 183 (2017, מאומץ 2023):</b> Postpartum Hemorrhage<br>
         <b>FIGO 2022:</b> Postpartum Hemorrhage Initiative · <b>RCOG Green-top Guideline 52</b><br>
         <b>WOMAN Trial (Shakur 2017, Lancet):</b> TXA 1g תוך 3 שעות — הפחתת תמותה מ-PPH ב-31% (Bleeding-related)<br>
@@ -4255,7 +4597,7 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="ref">
-        <b>נייר עמדה ישראלי #18 (2024):</b> יתר לחץ דם ורעלת בהיריון — האיגוד הישראלי למיילדות וגינקולוגיה<br>
+        <b>נייר עמדה ישראלי #18 (מהדורת 2025):</b> יתר לחץ דם ורעלת בהיריון — האיגוד הישראלי למיילדות וגינקולוגיה<br>
         <b>ACOG Practice Bulletin 222 (2020):</b> Gestational Hypertension and Preeclampsia<br>
         <b>CHAP Trial 2022 (NEJM):</b> Active treatment of chronic HTN in pregnancy — יעד &lt;140/90<br>
         <b>MAGPIE Trial:</b> MgSO4 מפחית סיכון לאקלמספיה ב-58% ברעלת חמורה<br>
@@ -6011,7 +6353,7 @@ const ISRAELI_PAPERS = [
      '<b>VTE קודם / APS:</b> 6 שבועות',
      '<b>━━━ JAMA 2024:</b> פרוטוקול סלקטיבי (טאב VTE)'
    ]},
-  {num:'25', title:'ניהול היריון ולידה בנוכחות זיהומים מסכני אם ועובר', org:'איגוד מיילדות + AIDS + STI + זיהומיות', year:'אוגוסט 2025', tags:['HIV','HSV','עגבת','טוקסו','VZV','PrEP'], relatedTabs:['pplan'],
+  {num:'25', title:'ניהול היריון ולידה בנוכחות זיהומים מסכני אם ועובר', org:'איגוד מיילדות + AIDS + STI + זיהומיות', year:'אוגוסט 2025', tags:['HIV','HSV','עגבת','טוקסו','VZV','CMV','UTI','Listeria','PrEP'], relatedTabs:['pplan'],
    keyPoints:[
      '<b>הנייר מהווה החלפה מקיפה לנייר #25 הישן (HIV בלבד) וכולל כעת ארבע מחלות עיקריות:</b>',
      '<b>━━━━━━ HIV בהריון ━━━━━━</b>',
@@ -6057,8 +6399,71 @@ const ISRAELI_PAPERS = [
      '<b>חשיפה בהריון לא-חסינה:</b> VZIG תוך 10 ימים מחשיפה',
      '<b>הופעת אבעבועות סביב לידה (5 ימים לפני - 2 ימים אחרי):</b> סיכון לוורצלה ניאונטלי קשה → VZIG לילוד + Acyclovir',
      '<b>טיפול לאם:</b> Acyclovir 800 מ"ג ×5/יום (הריון מתקדם) או IV אם פניאומוניה',
-     '<b>━━━━━━ הערה חשובה — מה חסר מהנייר הזה ━━━━━━</b>',
-     'נייר זה <b>לא מכסה</b>: UTI (ראה נייר #47), HBV/HCV (ראה נייר #41), ליסטריה (ראה נייר #26), CMV (ראה נייר #7), GBS (ראה נייר #22)'
+     '<b>━━━━━━ 🦠 CMV (Cytomegalovirus) — סיכום והפניה ━━━━━━</b>',
+     '<b>סיבה ראשונה לחרשות מולדת לא-גנטית</b> · 0.5-1% מהילודים · ~20% מהנשים בגיל הפריון בישראל סרונגטיביות',
+     '<b>סקר רוטיני (לפי נייר #7):</b> IgG/IgM בתחילת הריון · אם שלילית — חזרה בשב׳ 11-14 ו-16-19',
+     '<b>סרוקונברסיה / IgM+ + Avidity נמוך:</b> שקול Valaciclovir 8g/יום',
+     '<b>אבחנה עוברית:</b> אמניוצנטזה PCR אחרי 21 שב׳ + 7 שב׳ מהדבקה',
+     '<b>→ ראה נייר #7 לאלגוריתם החלטות מלא</b>',
+     '<b>━━━━━━ 🦠 UTI / Pyelonephritis בהריון ━━━━━━</b>',
+     '<b>בקטריוריה אסימפטומטית (ASB):</b> 2-10% מההריונות · 20-30% מפתחות פיילונפריטיס אם לא מטופל!',
+     '<b>סקר:</b> תרבית שתן בביקור ראשון לכל הרה',
+     '<b>טיפול ASB / Cystitis:</b>',
+     '• Nitrofurantoin 100 מ"ג ×4/יום × 5-7 ימים (לא לפני לידה — אנמיה G6PD)',
+     '• Cephalexin 500 מ"ג ×4/יום × 7 ימים',
+     '• Augmentin · Fosfomycin 3g חד-פעמי',
+     '<b>אסור בהריון:</b> TMP-SMX (T1+T3), Fluoroquinolones, Tetracyclines',
+     '<b>פיילונפריטיס:</b> אשפוז + Ceftriaxone 1-2 גרם IV/יום',
+     '<b>→ ראה נייר #47 למידע מלא + סיבוכים</b>',
+     '<b>━━━━━━ 🦠 TOXO (טוקסופלסמוזיס) — סיכום מהיר ━━━━━━</b>',
+     '<b>אפידמיולוגיה:</b> 1-8 ל-1000 הריונות · העברה עוברית עולה עם GA: T1 15%, T2 30%, T3 60% (חומרה הפוכה — קל בסוף)',
+     '<b>מקור:</b> בשר נא, חתולים, ירקות לא רחוצים, חול',
+     '<b>סקר אימהי:</b> IgG/IgM בתחילת הריון (לא חובה לפי משרד הבריאות, אך מקובל)',
+     '<b>אבחנה ראשונית:</b> סרוקונברסיה IgG / IgM חיובי + אבידיטי נמוך',
+     '<b>טיפול:</b>',
+     '• <b>Spiramycin 1 גרם ×3/יום</b> — אם הדבקה אימהית בלי הוכחת זיהום עוברי (מניעת העברה)',
+     '• <b>אמניוצנטזה PCR אחרי שבוע 18 + 4-6 שבועות מההדבקה</b>',
+     '• <b>אם זיהום עוברי מאומת → Pyrimethamine + Sulfadiazine + Folinic acid</b> (מ-T2)',
+     '<b>━━━━━━ 🦠 LISTERIA — אלגוריתם החלטות מורחב ━━━━━━</b>',
+     '<b>Listeria monocytogenes</b> — באקטריה תוך-תאית · <b>סיכון בהריון ×20</b>',
+     '<b>שלבים קליניים:</b>',
+     '<b>🟢 חשיפה ללא תסמינים:</b>',
+     '• אם חשיפה לגביש/מזון בסיכון • <b>אין צורך בטיפול מונע רוטיני</b>',
+     '• הסבר על תסמינים — לחזור אם חום',
+     '<b>🟡 חום ללא ממצא מוקדי:</b>',
+     '• תרבית דם × 2 · ספירת דם · CRP · LFT',
+     '• <b>טיפול אמפירי מיידי: Ampicillin 2 גרם IV q6h</b> (גם לפני תוצאת תרבית)',
+     '• אם תרבית שלילית — להפסיק אנטיביוטיקה',
+     '• אם תרבית חיובית — להמשיך טיפול מלא (ראה למטה)',
+     '<b>🟠 חום + תסמיני שפעת / GI / אלח דם:</b>',
+     '• <b>אשפוז + תרבית דם + Ampicillin 2 גרם IV q4-6h + Gentamicin 5 מ"ג/ק"ג/יום</b>',
+     '• <b>אמניוצנטזה PCR ליסטריה</b> אם תרבית דם חיובית · בדיקת מי שפיר לסימני חורליואמניוניטיס',
+     '• מעקב CTG + US לעובר',
+     '<b>🔴 ליסטריוזיס מאומתת (תרבית חיובית):</b>',
+     '• <b>Ampicillin 2 גרם IV q4-6h × לפחות 14 ימים</b> (חורליואמניוניטיס: 21 ימים)',
+     '• <b>+ Gentamicin 5 מ"ג/ק"ג/יום</b> ב-7 ימים הראשונים (סינרגיה)',
+     '• <b>אלרגיה לפניצילין:</b> TMP-SMX 5 מ"ג/ק"ג IV q8h (אלא ב-T1)',
+     '• <b>החלטה על תזמון לידה:</b> לפי גיל הריון + מצב עוברי + תגובה לטיפול',
+     '• <b>אם NRFHR / חורליואמניוניטיס מאומת / סטטוס עוברי מחמיר:</b> לידה דחופה',
+     '<b>━━ סיבוכים עובריים אפשריים ━━</b>',
+     '<b>IUFD (~20-30%)</b> · <b>לידה מוקדמת</b> · <b>Granulomatosis infantiseptica</b> (יילוד עם מורסות מפושטות, תמותה ~50%) · <b>מנינגיטיס מאוחר</b> (שבוע-90 יום)',
+     '<b>━━ הילוד אחרי לידה ━━</b>',
+     '<b>תרבית דם + LP אם תסמיני CNS</b> · <b>Ampicillin + Gentamicin</b> ליילוד בכל ילוד עם חשד · <b>פלצנטה לתרבית</b>',
+     '<b>━━ מניעה (חינוך) ━━</b>',
+     'הימנעות ממזונות בסיכון: גבינות לא מפוסטרות (Brie, Feta, Camembert), נקניקים מעובדים, סלטי דלי, דגים מעושנים, ביצים נא, פירות וירקות לא רחוצים (במיוחד מלון!), בשר נא · בישול בשר ל-≥70°C · שטיפת ידיים אחרי טיפול במזון נא',
+     '<b>→ ראה נייר #26 (פברואר 2020) למידע מלא</b>',
+     '<b>━━━━━━ 🦠 GBS (Group B Streptococcus) — סיכום מהיר ━━━━━━</b>',
+     '<b>תרבית סקר ב-36+0–37+6 שב׳</b> (עדכון משרד הבריאות ינואר 2026)',
+     '<b>טיפול בלידה (Penicillin 5 mU IV → 2.5 mU q4h)</b> · אלרגיה: Cefazolin / Clindamycin / Vancomycin',
+     '<b>→ ראה נייר #22 (ינואר 2026) למידע מלא + טבלת מינונים</b>',
+     '<b>━━━━━━ 🦠 HBV / HCV — סיכום מהיר ━━━━━━</b>',
+     '<b>סקר HBsAg + HCV-Ab בכל הריון</b>',
+     '<b>HBV חיובי + DNA >200,000:</b> Tenofovir מ-28 שב׳ (מניעת העברה)',
+     '<b>יילוד:</b> HBIG + חיסון HBV תוך 12 שעות',
+     '<b>HCV:</b> אין טיפול בהריון. הימנע מאמניוצנטזה/FSE/מכשירני. הנקה בטוחה. → DAA לאחר לידה',
+     '<b>→ ראה נייר #41 לפרטים</b>',
+     '<b>━━━━━━ ⓘ מה כן בנייר #25 הזה ━━━━━━</b>',
+     'הנייר עצמו (אוגוסט 2025) ממקד את החלקים המפורטים ב: HIV, HSV, עגבת, טוקסו, VZV. שאר הנושאים — בניירות הנפרדים המפורטים לעיל'
    ]},
   {num:'26', title:'ליסטריה בהריון (Listeriosis)', org:'איגוד זיהומיות + AAM', year:'פברואר 2020', tags:['Listeria','Ampicillin','מזון'], relatedTabs:['pplan'],
    keyPoints:[
@@ -6943,14 +7348,29 @@ function openPaperModal(num){
   document.getElementById('paper-modal-meta-inline').textContent = `${p.year}`;
   document.getElementById('paper-modal-title').textContent = p.title;
   document.getElementById('paper-modal-meta').textContent = p.org;
+  // Smart keyPoints renderer — detect section headers and apply special styling
+  const renderKeyPoint = (k) => {
+    // Section header: starts with ━━━ or is wrapped in single <b>
+    const isSectionHeader = /━━+/.test(k) || /^<b>━+|━+<\/b>$/.test(k.trim());
+    if (isSectionHeader) {
+      const cleanText = k.replace(/━+/g, '').replace(/<\/?b>/g, '').trim();
+      return `<li style="background:linear-gradient(to left,var(--surface2),var(--primary-bg));border-right:3px solid var(--primary);margin-top:14px;margin-bottom:8px;padding:10px 14px;font-weight:700;color:var(--text);font-size:13.5px;letter-spacing:0.01em">${cleanText}</li>`;
+    }
+    // Single-line emphasis (starts with emoji marker like 🟢🟡🔴⚠️📐⚡)
+    if (/^[⚠️⚡🟢🟡🔴🟠🔵🧬📐📋🦠❤️🔬🤰💰🧭🏥]/u.test(k)) {
+      return `<li style="background:var(--surface2);padding:8px 12px;border-radius:8px;margin:6px 0;font-weight:500;line-height:1.7">${k}</li>`;
+    }
+    return `<li>${k}</li>`;
+  };
+
   document.getElementById('paper-modal-body').innerHTML = `
     <div class="paper-modal-section">
-      <h4>נקודות מפתח קליניות</h4>
-      <ul>${(p.keyPoints||[]).map(k=>`<li>${k}</li>`).join('')}</ul>
+      <h4>📋 נקודות מפתח קליניות</h4>
+      <ul>${(p.keyPoints||[]).map(renderKeyPoint).join('')}</ul>
     </div>
     <div class="paper-modal-section">
-      <h4>תגיות</h4>
-      <div style="display:flex;flex-wrap:wrap;gap:6px">${p.tags.map(t=>`<span class="paper-tag" style="font-size:11px;padding:3px 9px">${t}</span>`).join('')}</div>
+      <h4>🏷️ תגיות</h4>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">${p.tags.map(t=>`<span class="paper-tag" style="font-size:11.5px;padding:4px 11px;background:var(--surface2);color:var(--text2);border-radius:999px;font-weight:600">${t}</span>`).join('')}</div>
     </div>
     <div class="paper-modal-section">
       <button id="paper-open-pdf" type="button" onclick="openPaperPdf('${p.num}')"
@@ -10669,9 +11089,9 @@ const deliveryTimings = {
     {v:'twins_discordant',      label:'תאומים עם FGR/discordance >25%',  ga:'36+0 – 37+6', src:'SMFM'},
   ],
   other: [
-    {v:'cholestasis_mild',      label:'כולסטזיס הריוני (BA 10–39 µmol/L)', ga:'37+0', src:'נייר עמדה ישראלי #46 (2024) · SMFM 2021', note:'UDCA 10-15 mg/kg/יום · מעקב BA + LFT שבועי'},
-    {v:'cholestasis_mod',       label:'כולסטזיס בינוני (BA 40–99)',       ga:'36+0 – 37+0', src:'נייר עמדה ישראלי #46 (2024)', note:'UDCA 15 mg/kg/יום · מעקב צמוד · להימנע מהריון מעבר 37w'},
-    {v:'cholestasis_severe',    label:'כולסטזיס חמור (BA ≥100)',          ga:'34+0 – 36+0', src:'נייר עמדה ישראלי #46 (2024)', note:'סיכון מוגבר ל-IUFD — לידה מוקדמת. סטרואידים לפני 34+0'},
+    {v:'cholestasis_mild',      label:'כולסטזיס הריוני (BA 10–39 µmol/L)', ga:'37+0', src:'נייר עמדה ישראלי #46 (פברואר 2023) · SMFM 2021', note:'UDCA 10-15 mg/kg/יום · מעקב BA + LFT שבועי'},
+    {v:'cholestasis_mod',       label:'כולסטזיס בינוני (BA 40–99)',       ga:'36+0 – 37+0', src:'נייר עמדה ישראלי #46 (פברואר 2023)', note:'UDCA 15 mg/kg/יום · מעקב צמוד · להימנע מהריון מעבר 37w'},
+    {v:'cholestasis_severe',    label:'כולסטזיס חמור (BA ≥100)',          ga:'34+0 – 36+0', src:'נייר עמדה ישראלי #46 (פברואר 2023)', note:'סיכון מוגבר ל-IUFD — לידה מוקדמת. סטרואידים לפני 34+0'},
     {v:'sle_stable',            label:'לופוס יציב, ללא נוגדנים פעילים',   ga:'39+0 – 40+0', src:'ACOG'},
     {v:'sle_active',            label:'לופוס פעיל / נפרופתיה',            ga:'36+0 – 38+6', src:'ACOG'},
     {v:'aps',                   label:'תסמונת אנטיפוספוליפיד (APS)',     ga:'36+0 – 38+6', src:'ACOG 2018 (PB 132)'},
@@ -11368,6 +11788,77 @@ function updateSdProgress(){
       el.addEventListener('change', updateSdProgress);
     });
     updateSdProgress();
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+
+// ─── NRP — Neonatal Resuscitation Program (AAP/AHA 8th ed., 2021) ───
+const NRP_SECTIONS = {
+  prep:    ['nrp_prep_3q','nrp_prep_warmer','nrp_prep_equip','nrp_prep_team','nrp_prep_briefing'],
+  initial: ['nrp_cord','nrp_warm','nrp_position','nrp_suction','nrp_dry','nrp_assess_30s','nrp_apgar'],
+  ppv:     ['nrp_ppv_start','nrp_ppv_o2','nrp_ppv_pressure','nrp_ppv_check','nrp_ppv_mrsopa','nrp_ppv_intubate'],
+  cc:      ['nrp_cc_intubate','nrp_cc_ratio','nrp_cc_technique','nrp_cc_reassess','nrp_cc_ekg'],
+  meds:    ['nrp_med_uvc','nrp_med_epi','nrp_med_volume','nrp_med_glucose'],
+  post:    ['nrp_post_transfer','nrp_post_hie','nrp_post_glucose','nrp_post_temp','nrp_post_doc']
+};
+
+function updateNrpProgress(){
+  const $ = id => document.getElementById(id);
+  const chk = id => $(id)?.checked || false;
+  let totalChecked = 0, totalAll = 0;
+  for(const [section, ids] of Object.entries(NRP_SECTIONS)){
+    const c = ids.filter(chk).length;
+    totalChecked += c;
+    totalAll += ids.length;
+    const cntEl = document.getElementById(`nrp-count-${section}`);
+    if(cntEl) cntEl.textContent = c > 0 ? `${c}/${ids.length}` : `${ids.length}`;
+  }
+  const main = document.getElementById('nrp-step-count');
+  if(main) main.textContent = `${totalChecked} / ${totalAll} בוצעו`;
+
+  // Progress bars: 2 segments — initial assessment vs advanced resuscitation
+  const initialIds = [...NRP_SECTIONS.prep, ...NRP_SECTIONS.initial];
+  const advancedIds = [...NRP_SECTIONS.ppv, ...NRP_SECTIONS.cc, ...NRP_SECTIONS.meds, ...NRP_SECTIONS.post];
+  const iChk = initialIds.filter(chk).length;
+  const aChk = advancedIds.filter(chk).length;
+  const bars = document.querySelectorAll('#nrp-progress > div');
+  if(bars[0]) bars[0].classList.toggle('done', iChk === initialIds.length);
+  if(bars[1]) bars[1].classList.toggle('done', aChk === advancedIds.length);
+
+  // Render running summary
+  const resEl = document.getElementById('nrp-res');
+  if(resEl){
+    const completedSteps = [];
+    for(const ids of Object.values(NRP_SECTIONS)){
+      ids.forEach(id => { if(chk(id)){
+        const lab = document.querySelector(`input#${id}`)?.closest('label')?.querySelector('span')?.textContent || id;
+        completedSteps.push(lab.replace(/<[^>]*>/g, '').trim().slice(0, 120));
+      }});
+    }
+    if(completedSteps.length === 0){
+      resEl.innerHTML = '';
+    } else {
+      resEl.innerHTML = `<div class="rec-box">
+        <div class="rec-head">
+          <span>סיכום פעולות שבוצעו בהחייאה</span>
+          <span class="rec-tag" style="background:var(--green-bg);color:var(--green-text)">${completedSteps.length} פריטים</span>
+        </div>
+        <div class="rec-body">
+          <ol class="rec-list">${completedSteps.map(s=>`<li>${s}</li>`).join('')}</ol>
+          <div class="rec-src">תיעוד מלא לרשומה: זמני התחלת כל שלב, צוות נוכח, Apgar 1/5/10, גזי חבל</div>
+        </div>
+      </div>`;
+    }
+  }
+}
+
+(function bindNrpProgress(){
+  const init = () => {
+    document.querySelectorAll('#nrp input[type=checkbox]').forEach(el => {
+      el.addEventListener('change', updateNrpProgress);
+    });
+    updateNrpProgress();
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
