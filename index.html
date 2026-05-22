@@ -1297,6 +1297,86 @@
     display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap;
   }
   .pp-cta-row .btn-primary { flex: 1; min-width: 200px; }
+
+  /* ── VTE selective protocol — bordered container with header band ──── */
+  .vte-container {
+    background: var(--surface); border: 2px solid var(--primary);
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 1px 3px rgba(15,23,42,0.04); margin-top: 8px;
+  }
+  .vte-header-band {
+    background: rgba(45,127,234,0.06);
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(45,127,234,0.15);
+  }
+  .vte-header-band .vte-h-title {
+    font-size: 15px; font-weight: 600; color: var(--text);
+  }
+  .vte-header-band .vte-h-sub {
+    font-size: 12px; color: var(--text2); margin-top: 3px; line-height: 1.5;
+  }
+  .vte-body { padding: 14px 16px; }
+  .vte-cta-btn {
+    width: 100%; background: var(--primary); color: #fff; border: none;
+    border-radius: 12px; padding: 14px 18px;
+    font-size: 14.5px; font-weight: 600; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: inherit; transition: background .15s, transform .1s;
+  }
+  .vte-cta-btn:hover { background: var(--primary-hover); }
+  .vte-cta-btn:active { transform: scale(.985); }
+  .vte-cta-btn svg { width: 16px; height: 16px; }
+
+  /* Result card — amber for moderate, red for high, green for low */
+  .vte-result-card {
+    margin-top: 14px; border-radius: 12px;
+    padding: 14px 16px; border: 1px solid; border-right-width: 4px;
+  }
+  .vte-result-card.amber {
+    background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.25);
+    border-right-color: var(--amber);
+  }
+  .vte-result-card.red {
+    background: rgba(225,29,72,0.08); border-color: rgba(225,29,72,0.25);
+    border-right-color: var(--red);
+  }
+  .vte-result-card.green {
+    background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.25);
+    border-right-color: var(--green);
+  }
+  .vte-result-row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; margin-bottom: 12px;
+  }
+  .vte-result-label { font-size: 11px; font-weight: 500; margin-bottom: 2px; }
+  .vte-result-card.amber .vte-result-label,
+  .vte-result-card.amber .vte-result-big,
+  .vte-result-card.amber .vte-result-small { color: var(--amber-text); }
+  .vte-result-card.red .vte-result-label,
+  .vte-result-card.red .vte-result-big,
+  .vte-result-card.red .vte-result-small { color: var(--red-text); }
+  .vte-result-card.green .vte-result-label,
+  .vte-result-card.green .vte-result-big,
+  .vte-result-card.green .vte-result-small { color: var(--green-text); }
+  .vte-result-big { font-size: 22px; font-weight: 700; }
+  .vte-result-small { font-size: 14px; font-weight: 600; }
+  .vte-trigger-box {
+    background: rgba(255,255,255,0.6); border-radius: 8px;
+    padding: 10px 12px; font-size: 12px; color: var(--text); line-height: 1.6;
+  }
+  @media (prefers-color-scheme: dark) {
+    .vte-trigger-box { background: rgba(255,255,255,0.04); }
+  }
+  .vte-trigger-box ul { margin: 4px 0 0; padding-right: 16px; }
+
+  /* LTR utility block for dose adjustments (no bullet, English numbers) */
+  .dose-ltr-block {
+    margin-top: 10px; padding: 9px 12px;
+    background: var(--surface2); border-radius: 8px;
+    direction: ltr; text-align: left;
+    font-size: 11.5px; line-height: 1.6; color: var(--text2);
+  }
+  .dose-ltr-block b { color: var(--text); }
 </style>
 </head>
 <body>
@@ -2879,20 +2959,18 @@
         <b>נייר עמדה ישראלי #24 (2024):</b> קרישיות בהריון<br>
         <b>ACCP Antithrombotic Therapy (Bates et al.):</b> Chest 2018 — מסגרת גורמי סיכון מז'וריים/מינוריים<br>
         <b>ACOG PB 196 (2018, מאומץ 2023):</b> Thromboembolism in Pregnancy<br>
-        <b>RCOG Green-top 37a (2015):</b> דליות ורידיות כגורם סיכון מינורי<br>
+        <b>RCOG Green-top 37a (2015):</b> תוספות מינוריות לפרוטוקול JAMA — גיל אמהי ≥35, פריות ≥3, דליות ורידיות (כל אחד = 1 נקודה במערכת הניקוד של RCOG)<br>
         <b>סיכון VTE בהריון:</b> פי 4–5 מאוכלוסייה כללית · 65% מהאירועים — פוסט-פרטום · LMWH בטוח, לא חוצה שלייה, תואם הנקה<br>
         <b>שיקול עקרוני:</b> פרוטוקול סלקטיבי — צמצום שימוש ב-LMWH לקבוצות בסיכון אמיתי, הפחתת סיבוכי דימום ללא עלייה ב-VTE
       </div>
     </details>
 
-    <div class="pplan-header">
-      <div class="pplan-step-count" id="vte-step-count">קבוצת סיכון: לא נקבעה</div>
-      <div class="pplan-title">פרוטוקול סלקטיבי VTE פוסט-פרטום</div>
-      <div class="pplan-sub">מבוסס JAMA 2024 · סמני גורמי סיכון; הקבוצה (גבוה / בינוני / נמוך) מחושבת אוטומטית.</div>
-      <div class="pplan-progress" id="vte-progress">
-        <div></div><div></div><div></div>
+    <div class="vte-container">
+      <div class="vte-header-band">
+        <div class="vte-h-title">פרוטוקול סלקטיבי VTE פוסט-פרטום</div>
+        <div class="vte-h-sub">מבוסס JAMA 2024 · נייר עמדה ישראלי #24 · סמני גורמי סיכון ולחץ "חשב"</div>
       </div>
-    </div>
+      <div class="vte-body">
 
     <!-- ============ Section 1: High-risk indicators ============ -->
     <details class="pp-section" open>
@@ -2961,7 +3039,7 @@
           <div class="pp-sec-title">גורמי סיכון מינוריים — שני גורמים מספיקים לסיכון בינוני המצריך טיפול</div>
           <div class="pp-sec-sub">סיכון בינוני → LMWH למשך 7–10 ימים · או גורם מינורי 1 + ניתוח קיסרי דחוף בלידה</div>
         </div>
-        <span class="pp-sec-count" id="vte-count-minor">8</span>
+        <span class="pp-sec-count" id="vte-count-minor">10</span>
         <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="pp-sec-body">
@@ -2973,6 +3051,8 @@
           <label class="pp-check"><input type="checkbox" id="vte_n_iugr" onchange="calcVte()"> <span>עיכוב גדילה תוך-רחמי (ללא פרה-אקלמפסיה)</span></label>
           <label class="pp-check"><input type="checkbox" id="vte_n_pe_no_iugr" onchange="calcVte()"> <span>פרה-אקלמפסיה (ללא עיכוב גדילה)</span></label>
           <label class="pp-check"><input type="checkbox" id="vte_n_pcs_def" onchange="calcVte()"> <span>מחסור בחלבון C או S</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_n_age35" onchange="calcVte()"> <span><b>גיל אמהי ≥35</b> (RCOG 37a · 1 נקודה במערכת הניקוד)</span></label>
+          <label class="pp-check"><input type="checkbox" id="vte_n_parity3" onchange="calcVte()"> <span><b>פריות גבוהה (Parity ≥3)</b> (RCOG 37a · 1 נקודה)</span></label>
           <label class="pp-check"><input type="checkbox" id="vte_n_varicose" onchange="calcVte()"> <span>דליות ורידים משמעותיות (RCOG · לפי שיקול קליני)</span></label>
         </div>
         <div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-top:12px;font-size:11.5px">
@@ -3006,10 +3086,13 @@
       </div>
     </details>
 
-    <div class="pp-cta-row">
-      <button class="btn btn-primary" onclick="calcVte()">חשב קבוצת סיכון והמלצה</button>
-    </div>
+    <button class="vte-cta-btn" onclick="calcVte(true)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l3 3 7-7"/></svg>
+      חשב קבוצת סיכון והמלצה
+    </button>
     <div id="vte-res"></div>
+      </div>
+    </div>
   </div>
 
   <!-- ===== Pregnancy Plan / Personalized Test Timing ===== -->
@@ -4712,7 +4795,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.21';
+const APP_VERSION = '3.23';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -9167,9 +9250,23 @@ function updateBreechProgress(){
 // ─── VTE POSTPARTUM PROPHYLAXIS (Selective protocol — JAMA 2024) ───────
 const VTE_HIGH_IDS  = ['vte_h_prior_vte','vte_h_lmwh_pregnancy','vte_h_high_thrombo','vte_h_low_thrombo_fam','vte_h_aps'];
 const VTE_MAJOR_IDS = ['vte_m_immobility','vte_m_pph_surgery','vte_m_pe_iugr','vte_m_transfusion','vte_m_infection','vte_m_active_sle','vte_m_heart','vte_m_sickle','vte_m_bmi40','vte_m_cancer','vte_m_chf','vte_m_nephrotic','vte_m_t1dm_neph','vte_m_ibd'];
-const VTE_MINOR_IDS = ['vte_n_bmi3039','vte_n_multifetal','vte_n_pph_no_surgery','vte_n_smoking','vte_n_iugr','vte_n_pe_no_iugr','vte_n_pcs_def','vte_n_varicose'];
+const VTE_MINOR_IDS = ['vte_n_bmi3039','vte_n_multifetal','vte_n_pph_no_surgery','vte_n_smoking','vte_n_iugr','vte_n_pe_no_iugr','vte_n_pcs_def','vte_n_age35','vte_n_parity3','vte_n_varicose'];
 
-function calcVte(){
+// Live counter updates — runs on every checkbox change (no result render)
+function updateVteCounters(){
+  const $ = id => document.getElementById(id);
+  const chk = id => $(id)?.checked || false;
+  const highChecked  = VTE_HIGH_IDS.filter(chk);
+  const majorChecked = VTE_MAJOR_IDS.filter(chk);
+  const minorChecked = VTE_MINOR_IDS.filter(chk);
+  const setCount = (id, n, total) => { const e = $(id); if (e) e.textContent = n > 0 ? `${n}/${total}` : `${total}`; };
+  setCount('vte-count-high',  highChecked.length,  VTE_HIGH_IDS.length);
+  setCount('vte-count-major', majorChecked.length, VTE_MAJOR_IDS.length);
+  setCount('vte-count-minor', minorChecked.length, VTE_MINOR_IDS.length);
+}
+
+// Full calculation — runs on every checkbox change (dynamic) and on button click
+function calcVte(scrollToResult){
   const el = document.getElementById('vte-res');
   if(!el) return;
   const $ = id => document.getElementById(id);
@@ -9181,22 +9278,18 @@ function calcVte(){
   const emergencyCS  = chk('vte_emergency_cs');
   const acuteVte     = chk('vte_acute_in_pregnancy');
 
-  // Update section badges
-  const setCount = (id, n, total) => { const e = $(id); if (e) e.textContent = n > 0 ? `${n}/${total}` : `${total}`; };
-  setCount('vte-count-high',  highChecked.length,  VTE_HIGH_IDS.length);
-  setCount('vte-count-major', majorChecked.length, VTE_MAJOR_IDS.length);
-  setCount('vte-count-minor', minorChecked.length, VTE_MINOR_IDS.length);
+  updateVteCounters();
 
   // Determine risk category per JAMA 2024
-  let category, durationLabel, color, badgeText;
+  let category, durationLabel, badgeText, cardClass, durBadge;
   if (acuteVte) {
     category = 'therapeutic';
     durationLabel = 'אנטיקואגולציה טיפולית למשך 6+ שבועות (מינימום 3 חודשים סה"כ)';
-    color = 'var(--red)'; badgeText = 'VTE חריף';
+    badgeText = 'VTE חריף'; cardClass = 'red'; durBadge = '≥6 שבועות טיפולי';
   } else if (highChecked.length > 0) {
     category = 'high';
     durationLabel = 'LMWH למשך 6 שבועות פוסט-פרטום';
-    color = 'var(--red)'; badgeText = 'סיכון גבוה';
+    badgeText = 'סיכון גבוה'; cardClass = 'red'; durBadge = '6 שבועות';
   } else if (
     majorChecked.length >= 1 ||
     minorChecked.length >= 2 ||
@@ -9204,56 +9297,47 @@ function calcVte(){
   ) {
     category = 'moderate';
     durationLabel = 'LMWH למשך 7–10 ימים פוסט-פרטום';
-    color = 'var(--amber)'; badgeText = 'סיכון בינוני';
+    badgeText = 'סיכון בינוני'; cardClass = 'amber'; durBadge = '7–10 ימים';
   } else {
     category = 'low';
-    durationLabel = 'אין טיפול תרופתי · ניוד מוקדם, הידרציה, מכשירי לחץ פנאומטיים בניתוח';
-    color = 'var(--green)'; badgeText = 'סיכון נמוך';
+    durationLabel = 'אין טיפול תרופתי';
+    badgeText = 'סיכון נמוך'; cardClass = 'green'; durBadge = 'ללא טיפול';
   }
-
-  // Progress bar (3 segments — low/moderate/high)
-  const bars = document.querySelectorAll('#vte-progress > div');
-  if (bars.length === 3) {
-    const idx = category === 'high' || category === 'therapeutic' ? 2 : category === 'moderate' ? 1 : 0;
-    bars.forEach((b, i) => b.classList.toggle('done', i <= idx));
-  }
-  const stepCount = $('vte-step-count');
-  if (stepCount) stepCount.textContent = `קבוצת סיכון: ${badgeText}`;
 
   // Build summary of what triggered the category
   const triggers = [];
-  if (acuteVte) triggers.push('<li class="crit"><b>VTE חריף בהריון</b> בטיפול אנטיקואגולנטי</li>');
-  if (highChecked.length > 0) triggers.push(`<li class="crit"><b>${highChecked.length} גורמי סיכון גבוה</b> מסומנים</li>`);
+  if (acuteVte) triggers.push('<b>VTE חריף בהריון</b> בטיפול אנטיקואגולנטי');
+  if (highChecked.length > 0) triggers.push(`<b>${highChecked.length} גורמי סיכון גבוה</b> מסומנים — מספיק גורם אחד`);
   if (category === 'moderate') {
-    if (majorChecked.length >= 1) triggers.push(`<li class="warn"><b>${majorChecked.length} גורמי סיכון מז'וריים</b> מסומנים (אחד מספיק לסיכון בינוני)</li>`);
-    else if (minorChecked.length >= 2) triggers.push(`<li class="warn"><b>${minorChecked.length} גורמי סיכון מינוריים</b> מסומנים (שניים מספיקים לסיכון בינוני)</li>`);
-    else if (minorChecked.length >= 1 && emergencyCS) triggers.push(`<li class="warn">גורם מינורי <b>+</b> ניתוח קיסרי דחוף</li>`);
-    // Cumulative warning when several major factors are checked together
+    if (majorChecked.length >= 1) triggers.push(`<b>${majorChecked.length} גורמי סיכון מז'וריים</b> מסומנים (גורם אחד מספיק לסיכון בינוני)`);
+    else if (minorChecked.length >= 2) triggers.push(`<b>${minorChecked.length} גורמי סיכון מינוריים</b> מסומנים (שניים מספיקים לסיכון בינוני)`);
+    else if (minorChecked.length >= 1 && emergencyCS) triggers.push(`גורם סיכון מינורי <b>+</b> ניתוח קיסרי דחוף`);
     if (majorChecked.length >= 3) {
-      triggers.push(`<li class="crit"><b>≥3 גורמים מז'וריים</b> — JAMA 2024 מגדיר עדיין סיכון בינוני (פרוטוקול בינארי). אך נייר עמדה ישראלי #24 ו-RCOG Green-top 37a עושים שימוש בניקוד מצטבר — שקול הרחבת משך ל-6 שבועות / התייעצות המטולוגית לפי שיקול קליני.</li>`);
+      triggers.push(`<b>≥3 גורמים מז'וריים</b> — JAMA 2024 מגדיר עדיין סיכון בינוני. אך נייר עמדה ישראלי #24 ו-RCOG 37a עושים שימוש בניקוד מצטבר — שקול הרחבת משך ל-6 שבועות / התייעצות המטולוגית.`);
     } else if (majorChecked.length === 2) {
-      triggers.push(`<li class="warn">≥2 גורמים מז'וריים — שקול שיקול קליני מצטבר (RCOG 37a). הפרוטוקול הסלקטיבי (JAMA 2024) מגדיר 7–10 ימים, אך התייעצות סבירה במקרים גבוליים.</li>`);
+      triggers.push(`≥2 גורמים מז'וריים — שקול שיקול קליני מצטבר (RCOG 37a). הפרוטוקול הסלקטיבי (JAMA 2024) מגדיר 7–10 ימים, אך התייעצות סבירה במקרים גבוליים.`);
     }
   }
   if (category === 'low' && minorChecked.length === 1 && !emergencyCS) {
-    triggers.push('<li>גורם סיכון מינורי בודד ללא ניתוח קיסרי דחוף → אינו מצדיק טיפול</li>');
+    triggers.push('גורם סיכון מינורי בודד ללא ניתוח קיסרי דחוף → אינו מצדיק טיפול');
   }
-  if (triggers.length === 0) triggers.push('<li>אין גורמי סיכון מסומנים</li>');
+  if (triggers.length === 0) triggers.push('אין גורמי סיכון מסומנים');
 
-  // Result
-  let html = `<div class="result">
-    <div class="result-label">קבוצת סיכון VTE — JAMA 2024</div>
-    <div class="big" style="color:${color};font-size:34px">${badgeText}</div>
-    <div class="zscore" style="margin-top:8px">${durationLabel}</div>
-  </div>`;
-
-  html += `<div class="rec-box">
-    <div class="rec-head">
-      <span>גורמים שקבעו את הקבוצה</span>
-      <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">${category === 'high' ? 'גבוה' : category === 'moderate' ? 'בינוני' : category === 'therapeutic' ? 'טיפולי' : 'נמוך'}</span>
+  // Main result card (amber/red/green)
+  let html = `<div class="vte-result-card ${cardClass}">
+    <div class="vte-result-row">
+      <div>
+        <div class="vte-result-label">קבוצת סיכון נוכחית</div>
+        <div class="vte-result-big">${badgeText}</div>
+      </div>
+      <div style="text-align:left">
+        <div class="vte-result-label">המלצה</div>
+        <div class="vte-result-small">${durationLabel}</div>
+      </div>
     </div>
-    <div class="rec-body">
-      <ul class="rec-list">${triggers.join('')}</ul>
+    <div class="vte-trigger-box">
+      <b>מה הפעיל את ההמלצה:</b>
+      <ul>${triggers.map(t => `<li>${t}</li>`).join('')}</ul>
     </div>
   </div>`;
 
@@ -9261,25 +9345,22 @@ function calcVte(){
   if (category !== 'low') {
     const doseLabel = category === 'therapeutic'
       ? 'מינון טיפולי לפי משקל — ראה ייעוץ המטולוגיה'
-      : 'Enoxaparin 40 mg SC × פעם ביום (או Dalteparin 5000 IU SC × פעם ביום)';
-    html += `<div class="rec-box">
+      : 'Enoxaparin 40 mg SC פעם ביום (או Dalteparin 5000 IU SC פעם ביום)';
+    html += `<div class="rec-box" style="margin-top:10px">
       <div class="rec-head">
         <span>מינון, התחלה ומשך טיפול</span>
-        <span class="rec-tag rec-tag-${category==='high'||category==='therapeutic'?'bad':'warn'}">${category === 'high' ? '6 שבועות' : category === 'therapeutic' ? '≥6 שבועות טיפולי' : '7–10 ימים'}</span>
+        <span class="rec-tag rec-tag-${category==='high'||category==='therapeutic'?'bad':'warn'}">${durBadge}</span>
       </div>
       <div class="rec-body">
         <div class="rec-section">
           <div class="rec-section-title">מינון</div>
           <ul class="rec-list">
             <li><b>${doseLabel}</b></li>
-            ${category !== 'therapeutic' ? `
-            <li>התאמות למשקל קיצוני:
-              &lt;50 ק"ג → 20mg ·
-              91-130 ק"ג → 60mg ·
-              131-170 ק"ג → 80mg ·
-              &gt;170 ק"ג → 0.6 mg/kg
-            </li>` : ''}
           </ul>
+          ${category !== 'therapeutic' ? `
+          <div class="dose-ltr-block">
+            <b>Weight adjustments:</b> &lt;50 kg → 20 mg · 91–130 kg → 60 mg · 131–170 kg → 80 mg · &gt;170 kg → 0.6 mg/kg
+          </div>` : ''}
         </div>
         <div class="rec-section">
           <div class="rec-section-title">זמני התחלה</div>
@@ -9300,7 +9381,7 @@ function calcVte(){
   }
 
   // General considerations
-  html += `<div class="rec-box">
+  html += `<div class="rec-box" style="margin-top:10px">
     <div class="rec-head">
       <span>שיקולים והנחיות כלליות</span>
       <span class="rec-tag" style="background:var(--surface2);color:var(--text2)">בכל מקרה</span>
@@ -9317,10 +9398,12 @@ function calcVte(){
   </div>`;
 
   html += `<div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-top:14px">
-    <b>הערת מקור:</b> פרוטוקול זה מבוסס JAMA 2024 — גישה סלקטיבית שהפחיתה שימוש LMWH מ-16% ל-8%, הפחיתה המטומות פצע ב-62% (aOR 0.38), <b>ללא עלייה ב-VTE</b> (aOR 0.40). דליות ורידיות כגורם מינורי הוא תוספת לפי RCOG (לא בפרוטוקול JAMA המקורי).
+    <b>הערת מקור:</b> פרוטוקול זה מבוסס JAMA 2024 — גישה סלקטיבית שהפחיתה שימוש LMWH מ-16% ל-8%, הפחיתה המטומות פצע ב-62% (aOR 0.38), <b>ללא עלייה ב-VTE</b> (aOR 0.40). גיל אמהי ≥35, פריות ≥3 ודליות ורידים — תוספות מינוריות לפי RCOG Green-top 37a (לא בפרוטוקול JAMA המקורי, אך מוכרים כגורמי סיכון לגיטימיים).
   </div>`;
 
   el.innerHTML = html;
+  // Smooth scroll to result only when explicitly requested (button click)
+  if (scrollToResult) setTimeout(() => el.scrollIntoView({block:'nearest', behavior:'smooth'}), 50);
 }
 
 (function bindVteAuto(){
