@@ -4795,7 +4795,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.23';
+const APP_VERSION = '3.24';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -5126,8 +5126,8 @@ const ISRAELI_PAPERS = [
    keyPoints:['בישופ <6 → הבשלת צוואר עם PGE2 או בלון','בישופ ≥6 → אוקסיטוצין IV','Misoprostol 25-50µg PV כל 4-6 שעות','Cervical Ripening Balloon (Foley/Cook) — בטוח גם ב-TOLAC','אוקסיטוצין: התחלה 1-2 mU/min, עליה כל 30 דק','קסליפ קליני (אוקסיטוצין + צירים פעילים) — מעקב CTG רציף']},
   {num:'12', title:'PPH — דימום לאחר לידה', org:'איגוד מיילדות', year:'2024', tags:['PPH','דימום','אטוניה','קרע'], relatedTabs:['pph'],
    keyPoints:['הגדרה: ≥1000ml בכל סוג לידה או עם תסמיני שוק','4 T\'s: Tone (70%), Trauma (20%), Tissue (10%), Thrombin (1%)','TXA 1g IV מיידי (WOMAN trial)','אוקסיטוצין 40U בליטר NS · מטרגין 0.2mg IM · המבייט 250µg IM','בלון באקרי 250-500ml · אם נכשל → MTP','MTP יחס 1:1:1 (RBC:FFP:Plt) · יעד פיברינוגן ≥2 g/L']},
-  {num:'13', title:'PPROM — פקיעת קרומים מוקדמת לפני המועד', org:'איגוד מיילדות', year:'2024', tags:['PPROM','צלסטון','Latency'], relatedTabs:['ptb'],
-   keyPoints:['אבחון: גיש אגן + Nitrazine + AmniSure','אנטיביוטיקה: Ampicillin + Azithromycin × 7 ימים','סטרואידים אם 24-34 שבועות','MgSO4 לנוירופרוטקציה אם <32 שבועות','לידה: 34+0 (אלא אם זיהום, NRFHR, היפרדות)','חקיקת כורליו: NICHD criteria']},
+  {num:'13', title:'PPROM — פקיעת קרומים מוקדמת לפני המועד', org:'איגוד מיילדות', year:'2023', tags:['PPROM','צלסטון','Latency'], relatedTabs:['ptb'],
+   keyPoints:['אבחון: בדיקה במשטח סטרילי + Nitrazine/AmniSure (PAMG-1)','אנטיביוטיקה: Ampicillin + Azithromycin × 7 ימים (Erythromycin אלטרנטיבה)','סטרואידים 24+0–33+6 (Betamethasone ×2); סטרואידי-הצלה ב-34+0–36+6 ניתנים לשקול אם לא ניתן קורס קודם','MgSO4 לנוירופרוטקציה אם <32+0 שבועות','<b>לידה:</b> 34+0–36+6 — שתי הגישות סבירות (לידה מתוכננת או צפייה עם מעקב); <b>מ-37+0 — לידה מומלצת</b>','זיהום, NRFHR, היפרדות, דמם — לידה מיידית בכל גיל הריון','חקיקת כורליו: NICHD criteria (חום אימהי + טכיקרדיה/רגישות רחמית/הפרשה מוגלתית/WBC)']},
   {num:'14', title:'לידה מוקדמת (PTB)', org:'איגוד מיילדות', year:'2024', tags:['PTL','פרוגסטרון','צלסטון','מגנזיום'], relatedTabs:['ptb','ptcomp'],
    keyPoints:['CL <25mm באישה אסימפטומטית → פרוגסטרון 200mg PV','CL <25mm + לידה מוקדמת קודמת → שקול cerclage','טוקוליזה: Nifedipine קו ראשון (Atosiban אלטרנטיבה)','סטרואידים 24-34+6 שבועות (Betamethasone 12mg ×2)','MgSO4 לנוירופרוטקציה <32 שבועות','אנטיביוטיקה ל-GBS פרופילקטית']},
   {num:'15', title:'הגישה לדימומים בהיריון בגיל החיות', org:'איגוד מיילדות', year:'2024', tags:['דימום','גבול חיות','שליה'], relatedTabs:['delivery'],
@@ -8628,7 +8628,7 @@ const deliveryTimings = {
     {v:'aps',                   label:'תסמונת אנטיפוספוליפיד (APS)',     ga:'36+0 – 38+6', src:'ACOG 2018 (PB 132)'},
     {v:'prior_stillbirth',      label:'לידת מת בהריון קודם',             ga:'39+0 – 40+0', src:'ACOG'},
     {v:'oligohydramnios',       label:'מיעוט מי שפיר מבודד (DVP <2)',    ga:'36+0 – 37+6', src:'ACOG'},
-    {v:'pprom',                 label:'PPROM ללא זיהום',                  ga:'34+0',         src:'ACOG 2020 (PB 217)'},
+    {v:'pprom',                 label:'PPROM ללא זיהום',                  ga:'34+0 – 37+0', src:'נייר עמדה ישראלי #13 (2023) · ACOG PB 217 (2020) · SMFM Consult #58', note:'<b>בין 34+0 ל-36+6:</b> שתי הגישות סבירות — לידה מתוכננת או ניהול צפייני עם מעקב צמוד (CTG יומי, ספירת לבן, חום, סימני זיהום), בהחלטה משותפת עם המטופלת. ניהול צפייני מקטין RDS וטיפול ב-NICU אך מעלה כורליואמניוניטיס. <b>מ-37+0 — לידה מומלצת.</b> זיהום, היפרדות, NRFHR או דמם — לידה מיידית בכל גיל הריון. שקול סטרואידי-הצלה (Rescue) 34+0–36+6 אם לא קיבלה קורס קודם.'},
     {v:'macrosomia',            label:'מקרוזומיה (EFW ≥ 4500 גר\')',     ga:'39+0',         src:'ACOG/SMFM #52 (2020)', note:'יש לדון בקיסרי אלקטיבי כאשר EFW ≥ 5000 (לא סוכרתית) או ≥ 4500 (סוכרתית)'},
   ],
 };
@@ -8664,9 +8664,11 @@ function selectDelCategory(cat){
   document.getElementById('del-cat-title').textContent = `מצבים — ${delCategoryMeta[cat].name}`;
   let html = '';
   for(const c of deliveryTimings[cat]){
-    // GA color
+    // GA color — ranges that extend to 37+ are late-preterm shared-decision (warn)
     let cls = 'ok';
-    if(c.ga.includes('34') || c.ga.includes('32') || c.ga.includes('30') || c.ga.includes('26') || c.ga.includes('מיידי')) cls = 'bad';
+    const isLatePretermRange = /[–-]\s*3[7-9]/.test(c.ga); // e.g. "34+0 – 37+0", "36+0 – 38+6"
+    if(isLatePretermRange) cls = 'warn';
+    else if(c.ga.includes('34') || c.ga.includes('32') || c.ga.includes('30') || c.ga.includes('26') || c.ga.includes('מיידי')) cls = 'bad';
     else if(c.ga.includes('36') || c.ga.includes('37')) cls = 'warn';
     const bgMap = {ok:'var(--green-bg)', warn:'var(--amber-bg)', bad:'var(--red-bg)'};
     const colorMap = {ok:'var(--green-text)', warn:'var(--amber-text)', bad:'var(--red-text)'};
@@ -8698,9 +8700,12 @@ function calcDelivery(){
   const cond = deliveryTimings[cat].find(c=>c.v===v);
   if(!cond){ el.innerHTML=''; return; }
 
-  // Color code by timing
+  // Color code by timing — ranges that extend to 37+ are late-preterm shared-decision (warn)
   let timingClass = 'ok';
-  if(cond.ga.includes('34') || cond.ga.includes('32') || cond.ga.includes('30') || cond.ga.includes('26') || cond.ga.includes('מיידי')){
+  const isLatePretermRange = /[–-]\s*3[7-9]/.test(cond.ga);
+  if(isLatePretermRange){
+    timingClass = 'warn';
+  } else if(cond.ga.includes('34') || cond.ga.includes('32') || cond.ga.includes('30') || cond.ga.includes('26') || cond.ga.includes('מיידי')){
     timingClass = 'bad';
   } else if(cond.ga.includes('36') || cond.ga.includes('37')){
     timingClass = 'warn';
