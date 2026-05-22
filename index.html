@@ -5141,7 +5141,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.28';
+const APP_VERSION = '3.29';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -6879,26 +6879,61 @@ const ISRAELI_PAPERS = [
 ];
 
 // Render papers grid
+// ─── Smart Categorization of Israeli Position Papers ────────────────────
+// Maps each paper number to a clinical category for filtering
+const PAPER_CATEGORIES = {
+  delivery:    ['1','2','3','4','5','9','11','14','20','34','45','48','52'],
+  maternal:    ['16','17','18','19','24','36','43','46','49','50'],
+  us_genetic:  ['8','10','30','31','32','33','37','38','51','53','58'],
+  infection:   ['7','22','25','26','35','41','47'],
+  followup:    ['6','21','28','29'],
+  complications:['12','13','15','23','27','39','40','42']
+};
+
+const CATEGORY_META = {
+  all:           {label:'הכל', icon:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="11" y="3" width="6" height="6" rx="1"/><rect x="3" y="11" width="6" height="6" rx="1"/><rect x="11" y="11" width="6" height="6" rx="1"/></svg>', color:'var(--primary)'},
+  delivery:      {label:'לידה ויולדת', icon:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="7" r="3"/><path d="M5 17c0-3 2-5 5-5s5 2 5 5"/></svg>', color:'var(--pink)'},
+  maternal:      {label:'מחלות אם', icon:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17.5s-6-3.5-6-8.5a3.5 3.5 0 0 1 6-2.5 3.5 3.5 0 0 1 6 2.5c0 5-6 8.5-6 8.5Z"/></svg>', color:'var(--red)'},
+  us_genetic:    {label:'US וגנטיקה', icon:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6.5"/><circle cx="10" cy="10" r="2.5"/></svg>', color:'var(--purple)'},
+  infection:     {label:'זיהומיות', icon:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="3"/><path d="M10 3v2M10 15v2M3 10h2M15 10h2M5.5 5.5l1.5 1.5M13 13l1.5 1.5M14.5 5.5L13 7M7 13l-1.5 1.5"/></svg>', color:'var(--amber)'},
+  followup:      {label:'מעקב ותכנון', icon:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="13" rx="2"/><path d="M3 8h14M7 2.5v3M13 2.5v3"/><path d="M7 11.5h6M7 14h4"/></svg>', color:'var(--teal)'},
+  complications: {label:'סיבוכים וחירום', icon:'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2L2 17h16L10 2Z"/><path d="M10 8v4M10 14.5h.01"/></svg>', color:'var(--red)'}
+};
+
+function getPaperCategory(num){
+  for(const [cat, nums] of Object.entries(PAPER_CATEGORIES)){
+    if (nums.includes(String(num))) return cat;
+  }
+  return 'other';
+}
+
 function renderPapers(filter='', activeChip='all'){
   const grid = document.getElementById('papers-grid');
   const countEl = document.getElementById('papers-count');
   if(!grid) return;
   const q = filter.trim().toLowerCase();
   const filtered = ISRAELI_PAPERS.filter(p => {
-    if (activeChip !== 'all' && !p.org.includes(activeChip)) return false;
+    if (activeChip !== 'all' && getPaperCategory(p.num) !== activeChip) return false;
     if (!q) return true;
     const hay = `${p.num} ${p.title} ${p.tags.join(' ')} ${(p.keyPoints||[]).join(' ')}`.toLowerCase();
     return hay.includes(q);
   });
   countEl.textContent = `${filtered.length} מתוך ${ISRAELI_PAPERS.length} ניירות`;
-  grid.innerHTML = filtered.map(p => `
+  grid.innerHTML = filtered.map(p => {
+    const cat = getPaperCategory(p.num);
+    const meta = CATEGORY_META[cat];
+    const dotColor = meta ? meta.color : 'var(--text3)';
+    return `
     <button class="paper-card" onclick="openPaperModal('${p.num}')">
-      <div class="paper-num">נייר #${p.num} · ${p.year}</div>
+      <div class="paper-num">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${dotColor};margin-left:6px;vertical-align:middle"></span>
+        נייר #${p.num} · ${p.year}
+      </div>
       <div class="paper-title">${p.title}</div>
       <div class="paper-meta">${p.org}</div>
       <div class="paper-tags">${p.tags.slice(0,4).map(t=>`<span class="paper-tag">${t}</span>`).join('')}</div>
     </button>
-  `).join('');
+  `;}).join('');
 }
 
 function openPaperModal(num){
@@ -6953,17 +6988,34 @@ function closePaperModal(){
 
 (function initPapers(){
   const init = () => {
-    // Build org chips
+    // Build category chips with smart clinical grouping + counts
     const chipsEl = document.getElementById('papers-chips');
     if (!chipsEl) return;
-    const orgs = ['all', 'איגוד מיילדות', 'אולטרסאונד', 'זיהומיות'];
+    // Compute count per category
+    const counts = {all: ISRAELI_PAPERS.length};
+    for(const cat of Object.keys(PAPER_CATEGORIES)){
+      counts[cat] = PAPER_CATEGORIES[cat].filter(num => ISRAELI_PAPERS.find(p => p.num === num)).length;
+    }
+    const cats = ['all','delivery','maternal','us_genetic','infection','followup','complications'];
     let active = 'all';
-    chipsEl.innerHTML = orgs.map(o => `<button class="papers-chip${o===active?' active':''}" data-org="${o}">${o==='all'?'הכל':o}</button>`).join('');
+    const renderChips = () => {
+      chipsEl.innerHTML = cats.map(c => {
+        const meta = CATEGORY_META[c];
+        const count = counts[c] || 0;
+        const isActive = c === active;
+        return `<button class="papers-chip${isActive?' active':''}" data-cat="${c}" style="${isActive?`background:${meta.color};color:#fff;border-color:${meta.color}`:''};display:inline-flex;align-items:center;gap:6px">
+          <span style="display:inline-flex;width:14px;height:14px;color:${isActive?'#fff':meta.color}">${meta.icon}</span>
+          <span>${meta.label}</span>
+          <span style="background:${isActive?'rgba(255,255,255,0.25)':'var(--surface2)'};color:${isActive?'#fff':'var(--text3)'};font-size:10.5px;padding:1px 7px;border-radius:999px;font-weight:700">${count}</span>
+        </button>`;
+      }).join('');
+    };
+    renderChips();
     chipsEl.addEventListener('click', e => {
       const btn = e.target.closest('.papers-chip');
       if (!btn) return;
-      active = btn.dataset.org;
-      chipsEl.querySelectorAll('.papers-chip').forEach(b => b.classList.toggle('active', b.dataset.org === active));
+      active = btn.dataset.cat;
+      renderChips();
       renderPapers('', active);
     });
     // Esc closes modal
