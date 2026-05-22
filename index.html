@@ -1895,8 +1895,15 @@
       </div>
     </div>
 
-    <div class="sec">בחר מערכת</div>
-    <div class="biom-systems" id="biom-systems-grid"></div>
+    <!-- Group 1: Anatomic systems (selection) -->
+    <div class="calc-form" data-label="בחר מערכת" style="padding-bottom:14px">
+      <div class="biom-systems" id="biom-systems-grid-main"></div>
+    </div>
+
+    <!-- Group 2: Screening, soft markers & genetics -->
+    <div class="calc-form" data-label="סקר, סמנים וגנטיקה" style="padding-bottom:14px">
+      <div class="biom-systems" id="biom-systems-grid-genetics"></div>
+    </div>
 
     <div id="biom-meas-area" style="display:none;margin-top:18px">
       <div class="sec" id="biom-system-title">מדידות</div>
@@ -5483,7 +5490,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '3.29';
+const APP_VERSION = '4.1';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -10173,51 +10180,61 @@ const biomMeasurements = {
 // Biometry systems grouping with SVG icons and per-system color
 const biomSystems = {
   cns: {
+    group: 'main',
     name: 'מערכת עצבים', color: 'var(--purple)',
     icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4c-2 0-3.5 1.5-3.5 3.5 0 1.2.6 2 1 2.4-.4.4-1 1.3-1 2.6 0 2 1.5 3.5 3.5 3.5.5 0 1-.1 1.5-.3.5.2 1 .3 1.5.3 2 0 3.5-1.5 3.5-3.5 0-1.3-.6-2.2-1-2.6.4-.4 1-1.2 1-2.4C13.5 5.5 12 4 10 4c-.7 0-1.2.3-1.5.6-.3-.3-.8-.6-1.5-.6Z"/><path d="M10 5v11"/></svg>',
     items: ['tcd','cm','lv','cc','nf']
   },
   face: {
+    group: 'main',
     name: 'פנים ועיניים', color: 'var(--pink)',
     icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><circle cx="7.5" cy="9" r="1.2"/><circle cx="12.5" cy="9" r="1.2"/><path d="M7.5 13.5c1 1 4 1 5 0"/></svg>',
     items: ['iod','ood','eye']
   },
   cardio: {
+    group: 'main',
     name: 'לב וכלי דם', color: 'var(--red)',
     icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17.5s-6-3.5-6-8.5a3.5 3.5 0 0 1 6-2.5 3.5 3.5 0 0 1 6 2.5c0 5-6 8.5-6 8.5Z"/></svg>',
     items: ['ctr','ao','pa','da','ivc','mv','tv','lvw']
   },
   gi: {
+    group: 'main',
     name: 'מערכת עיכול', color: 'var(--amber)',
     icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3c0 1-1 2-2 2H4c-1 0-2 1-2 2v3c0 3 2 6 5 6 1.5 0 3-.5 4-2 1 1.5 2.5 2 4 2 3 0 5-3 5-6V9c0-1-1-2-2-2h-2c-1 0-2-1-2-2V2"/></svg>',
     items: ['stom','liver','gb','spleen']
   },
   endo: {
+    group: 'main',
     name: 'אנדוקרינית', color: 'var(--teal)',
     icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4c-2 1-3 3-3 5s1 4 3 5l3-2 3 2c2-1 3-3 3-5s-1-4-3-5l-3 2-3-2Z"/></svg>',
     items: ['thy']
   },
   gu: {
+    group: 'main',
     name: 'מין ומערכת השתן', color: 'var(--indigo)',
     icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4c-2 0-3 2-3 4 0 4 7 8 7 8s7-4 7-8c0-2-1-4-3-4-2 0-3 1-4 3-1-2-2-3-4-3Z" stroke-opacity="0"/><ellipse cx="10" cy="11" rx="5" ry="4"/><path d="M5 11V8c0-1.5 1-3 2.5-3M15 11V8c0-1.5-1-3-2.5-3"/></svg>',
     items: ['kid','pelvis','bladd','pen']
   },
   bones: {
+    group: 'main',
     name: 'עצמות ארוכות', color: 'var(--primary)',
     icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16c-1.5-.5-1.5-2.5 0-3 .5-1.5 2.5-1.5 3 0l6-6c-1.5-.5-1.5-2.5 0-3s2.5 1.5 3 0c1.5.5 1.5 2.5 0 3 .5 1.5-1.5 2.5-3 3l-6 6c1.5.5 1.5 2.5 0 3s-2.5-1.5-3 0Z"/></svg>',
     items: ['hl','tib','rad','uln','foot']
   },
   dsrisk_t1: {
+    group: 'genetics',
     name: 'סקר DS T1', color: 'var(--green)',
     icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="4"/><path d="M5 17c0-3 2-5 5-5s5 2 5 5"/><circle cx="8" cy="7.5" r=".7" fill="currentColor"/><circle cx="12" cy="7.5" r=".7" fill="currentColor"/></svg>',
     items: [], external: 'dsrisk', subtitle: 'NT + βhCG + PAPP-A · FMF'
   },
   soft_markers: {
+    group: 'genetics',
     name: 'סמנים רכים ווריאנטים', color: 'var(--amber)',
     icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7.5"/><path d="M10 6v4l2.5 2.5"/><circle cx="10" cy="10" r="1" fill="currentColor"/></svg>',
     items: [], customHandler: 'showSoftMarkersInfo', subtitle: 'נייר #30 + חוזר 13/2014 — LR לכל ממצא'
   },
   exome: {
+    group: 'genetics',
     name: 'אינדיקציות לאקסום', color: 'var(--primary)',
     icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12v12H4z"/><path d="M4 8h12M4 12h12M8 4v12M12 4v12"/></svg>',
     items: [], customHandler: 'showExomeInfo', subtitle: 'פיילוט WES + Klalit 2026'
@@ -10534,21 +10551,30 @@ function showExomeInfo(){
 }
 
 (function renderBiomSystems(){
-  const grid = document.getElementById('biom-systems-grid');
-  if(!grid) return;
-  let html = '';
-  for(const [sysId, sys] of Object.entries(biomSystems)){
+  const mainGrid = document.getElementById('biom-systems-grid-main');
+  const geneticsGrid = document.getElementById('biom-systems-grid-genetics');
+  if(!mainGrid && !geneticsGrid) return;
+
+  const buildCard = (sysId, sys) => {
     const subtitle = sys.subtitle || `${sys.items.length} מדידות`;
-    const extraStyle = sys.external ? ' style="grid-column:1/-1;border:1px dashed var(--border2)"' : '';
-    html += `<button class="biom-sys-card" type="button" data-sys="${sysId}" onclick="selectBiomSystem('${sysId}')"${extraStyle}>
+    return `<button class="biom-sys-card" type="button" data-sys="${sysId}" onclick="selectBiomSystem('${sysId}')">
       <span class="biom-sys-icon" style="background:${sys.color}">${sys.icon}</span>
       <span class="biom-sys-body">
         <div class="biom-sys-name">${sys.name}${sys.external?' →':''}</div>
         <div class="biom-sys-count">${subtitle}</div>
       </span>
     </button>`;
+  };
+
+  let mainHtml = '', geneticsHtml = '';
+  for(const [sysId, sys] of Object.entries(biomSystems)){
+    const group = sys.group || 'main';
+    const card = buildCard(sysId, sys);
+    if(group === 'genetics') geneticsHtml += card;
+    else mainHtml += card;
   }
-  grid.innerHTML = html;
+  if(mainGrid) mainGrid.innerHTML = mainHtml;
+  if(geneticsGrid) geneticsGrid.innerHTML = geneticsHtml;
 })();
 
 function selectBiomSystem(sysId){
