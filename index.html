@@ -1939,7 +1939,7 @@
       <!-- Fetus A column (also used as the single-fetus column when efwPlurality='single') -->
       <div class="fetus-col" id="e-fetus-a" style="padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
         <div class="fetus-col-header" id="e-fetus-a-header" style="display:none;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;font-weight:700;color:var(--text);padding-bottom:8px;margin-bottom:8px;border-bottom:2px solid #E24B4A">
-          <span>עובר A</span>
+          <span>עובר <bdi>A</bdi></span>
           <div class="seg fetus-sex-inline" id="e-sex-inline-a" style="font-size:11px">
             <button data-v="U" class="active" onclick="setSex(this)">לא ידוע</button>
             <button data-v="M" onclick="setSex(this)">זכר</button>
@@ -2001,7 +2001,7 @@
       <!-- Fetus B column (twin mode only) -->
       <div class="fetus-col" id="e-fetus-b" style="display:none;padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
         <div class="fetus-col-header" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;font-weight:700;color:var(--text);padding-bottom:8px;margin-bottom:8px;border-bottom:2px solid #0EA5E9">
-          <span>עובר B</span>
+          <span>עובר <bdi>B</bdi></span>
           <div class="seg fetus-sex-inline" id="e-sex-inline-b" style="font-size:11px">
             <button data-v="U" class="active" onclick="setSexB(this)">לא ידוע</button>
             <button data-v="M" onclick="setSexB(this)">זכר</button>
@@ -2047,7 +2047,7 @@
         </div>
 
         <div class="row" id="e-sex-row-b" style="display:none">
-          <label>מין עובר B</label>
+          <label>מין עובר <bdi>B</bdi></label>
           <div class="seg" id="e-sex-b">
             <button data-v="U" class="active" onclick="setSexB(this)">לא ידוע</button>
             <button data-v="M" onclick="setSexB(this)">זכר</button>
@@ -6877,7 +6877,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.20';
+const APP_VERSION = '4.21';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -10301,17 +10301,17 @@ function calcEFW(){
     const labB = pctB<3?'SGA קשה (<3)':pctB<10?'SGA (<10)':pctB>97?'LGA קיצוני (>97)':pctB>90?'LGA (>90)':'AGA – תקין';
     const labA = pct<3?'SGA קשה (<3)':pct<10?'SGA (<10)':pct>97?'LGA קיצוני (>97)':pct>90?'LGA (>90)':'AGA – תקין';
     html += `<div class="result">
-      <div class="result-label">${gaStr(w,d)} שבועות · ${sourceLabel}<br><span style="font-size:11px;color:var(--text3)">${ga.source}</span></div>
+      <div class="result-label">${gaStr(w,d)} שבועות · ${sourceLabel}</div>
       <div class="detail-grid two" style="margin-top:10px">
         <div class="sub-result" style="background:rgba(226,75,74,0.06);border-color:rgba(226,75,74,0.30)">
-          <div class="sub-title" style="color:#E24B4A">עובר A <span style="font-weight:500;font-size:11px;color:var(--text3)">· ${efw.toLocaleString()} גר'</span></div>
+          <div class="sub-title" style="color:#E24B4A">עובר <bdi>A</bdi> · ${efw.toLocaleString()} גר'</div>
           <div class="big" style="margin-top:4px">${ps}<span style="font-size:14px;font-weight:400;color:var(--text2)"> אחוזון</span></div>
           <div class="zscore">Z = ${z.toFixed(2)}</div>
           ${bar(parseFloat(ps)||0,c)}
           ${badge(c,labA)}
         </div>
         <div class="sub-result" style="background:rgba(14,165,233,0.06);border-color:rgba(14,165,233,0.30)">
-          <div class="sub-title" style="color:#0EA5E9">עובר B <span style="font-weight:500;font-size:11px;color:var(--text3)">· ${efwB.toLocaleString()} גר'</span></div>
+          <div class="sub-title" style="color:#0EA5E9">עובר <bdi>B</bdi> · ${efwB.toLocaleString()} גר'</div>
           <div class="big" style="margin-top:4px">${psBmain.ps}<span style="font-size:14px;font-weight:400;color:var(--text2)"> אחוזון</span></div>
           <div class="zscore">Z = ${psBmain.z.toFixed(2)}</div>
           ${bar(parseFloat(psBmain.ps)||0,cB)}
@@ -10367,7 +10367,7 @@ function calcEFW(){
       ps:psI, z:zI
     });
 
-    const aTitle = hasTwinPair ? 'השוואת אחוזונים — עובר A' : 'השוואת אחוזונים בין עקומות';
+    const aTitle = hasTwinPair ? 'השוואת אחוזונים — עובר <bdi>A</bdi>' : 'השוואת אחוזונים בין עקומות';
     html += `<div class="chart-card" style="margin-top:14px">
       <div class="chart-head">
         <div class="chart-title">${aTitle}</div>
@@ -10393,7 +10393,7 @@ function calcEFW(){
       });
       html += `<div class="chart-card" style="margin-top:10px">
         <div class="chart-head">
-          <div class="chart-title">השוואת אחוזונים — עובר B</div>
+          <div class="chart-title">השוואת אחוזונים — עובר <bdi>B</bdi></div>
           <span style="font-size:11px;color:var(--text3)">${rowsB.length} עקומות · ${efwB.toLocaleString()} גר'</span>
         </div>
         <div style="padding:4px 6px">${rowsB.map(curveRow).join('')}</div>
@@ -10476,14 +10476,14 @@ function calcEFW(){
       <div class="result-label" style="color:${discColor};font-weight:600">השוואת תאומים · ${gaStr(w,d)} שבועות · עקומה: ${sourceLabel}</div>
       <div class="detail-grid two" style="margin-top:10px">
         <div class="sub-result" style="background:rgba(226,75,74,0.06);border-color:rgba(226,75,74,0.30)">
-          <div class="sub-title" style="color:#E24B4A">עובר A <span style="font-weight:500;font-size:11px;color:var(--text3)">· ${sexLabel}</span></div>
+          <div class="sub-title" style="color:#E24B4A">עובר <bdi>A</bdi> · ${sexLabel}</div>
           <div class="med">${efw.toLocaleString()}<span style="font-size:13px;font-weight:400;color:var(--text2)"> גר'</span></div>
-          <div style="font-size:12px;color:var(--text2);margin-top:4px"><b style="color:${aSevColor};font-size:14px">${primary.ps}</b> אחוזון · Z=${primary.z.toFixed(2)}</div>
+          <div style="font-size:13px;font-weight:600;color:${aSevColor};margin-top:4px"><span style="font-size:15px;font-weight:700">${primary.ps}</span> אחוזון · Z=${primary.z.toFixed(2)}</div>
         </div>
         <div class="sub-result" style="background:rgba(14,165,233,0.06);border-color:rgba(14,165,233,0.30)">
-          <div class="sub-title" style="color:#0EA5E9">עובר B <span style="font-weight:500;font-size:11px;color:var(--text3)">· ${sexLabelB}</span></div>
+          <div class="sub-title" style="color:#0EA5E9">עובר <bdi>B</bdi> · ${sexLabelB}</div>
           <div class="med">${efwB.toLocaleString()}<span style="font-size:13px;font-weight:400;color:var(--text2)"> גר'</span></div>
-          <div style="font-size:12px;color:var(--text2);margin-top:4px"><b style="color:${bSevColor};font-size:14px">${psB.ps}</b> אחוזון · Z=${psB.z.toFixed(2)}</div>
+          <div style="font-size:13px;font-weight:600;color:${bSevColor};margin-top:4px"><span style="font-size:15px;font-weight:700">${psB.ps}</span> אחוזון · Z=${psB.z.toFixed(2)}</div>
         </div>
       </div>
       <div style="margin-top:14px;padding:12px;border-radius:10px;background:${discBg};border:1px solid ${discColor}">
@@ -10523,7 +10523,7 @@ function calcEFW(){
   } else if(efwPlurality==='twin'){
     // Twin selected but B not provided
     html += `<div class="note" style="border-right-color:var(--blue)">
-      <b>תאומים:</b> הזן גם את הנתונים של עובר B (משקל ישיר או ביומטריה) כדי לקבל חישוב דיסקורדנסי והמלצות.
+      <b>תאומים:</b> הזן גם את הנתונים של עובר <bdi>B</bdi> (משקל ישיר או ביומטריה) כדי לקבל חישוב דיסקורדנסי והמלצות.
     </div>`;
   }
 
@@ -10599,9 +10599,9 @@ function calcEFW(){
   if(useDollberg) legend += legendItem('#7E57C2',`Dollberg 2005 (${sexLabel}${hasTwinPair ? ' / '+sexLabelB : ''} · ${plurLabel})`);
   if(useIsmfm) legend += legendItem('#D97706','ISMFM Twin (Harefuah 2026)');
   if(hasTwinPair){
-    legend += legendDot('#E24B4A',`עובר A: ${efw.toLocaleString()} גר' · ${primary.ps} אחוזון`);
+    legend += legendDot('#E24B4A',`עובר <bdi>A</bdi>: ${efw.toLocaleString()} גר' · ${primary.ps} אחוזון`);
     const psB = allB[primaryCurve] || allB.hadlock;
-    legend += legendDot('#0EA5E9',`עובר B: ${efwB.toLocaleString()} גר' · ${psB.ps} אחוזון`);
+    legend += legendDot('#0EA5E9',`עובר <bdi>B</bdi>: ${efwB.toLocaleString()} גר' · ${psB.ps} אחוזון`);
   } else {
     legend += legendDot('#E24B4A',`EFW נמדד: ${efw.toLocaleString()} גר'`);
   }
