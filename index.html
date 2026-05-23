@@ -58,7 +58,7 @@
     --grad-end: #8B5CF6;
   }
   @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
       --bg: #0A0F1E;
       --surface: #131A2C;
       --surface2: #1A2235;
@@ -101,6 +101,52 @@
       --grad-end: #A78BFA;
     }
   }
+  /* Manual theme override — forces dark regardless of system preference */
+  :root[data-theme="dark"] {
+    --bg: #0A0F1E;
+    --surface: #131A2C;
+    --surface2: #1A2235;
+    --surface-elev: #161E33;
+    --border: rgba(148,163,184,0.10);
+    --border2: rgba(148,163,184,0.16);
+    --ring: rgba(96,165,250,0.32);
+    --text: #F1F5F9;
+    --text2: #CBD5E1;
+    --text3: #94A3B8;
+    --primary: #60A5FA;
+    --primary-hover: #93BBFD;
+    --primary-bg: rgba(96,165,250,0.16);
+    --teal: #2DD4BF;
+    --teal-bg: rgba(45,212,191,0.14);
+    --blue: #60A5FA;
+    --blue-bg: rgba(96,165,250,0.16);
+    --green: #34D399;
+    --green-bg: rgba(52,211,153,0.16);
+    --green-text: #6EE7B7;
+    --amber: #FBBF24;
+    --amber-bg: rgba(251,191,36,0.16);
+    --amber-text: #FCD34D;
+    --red: #FB7185;
+    --red-bg: rgba(251,113,133,0.16);
+    --red-text: #FDA4AF;
+    --purple: #A78BFA;
+    --pink: #F472B6;
+    --indigo: #818CF8;
+    --sh-sm: 0 1px 2px rgba(0,0,0,0.4);
+    --sh-md: 0 6px 18px rgba(0,0,0,0.4), 0 1px 3px rgba(0,0,0,0.30);
+    --sh-lg: 0 18px 44px rgba(0,0,0,0.50), 0 6px 14px rgba(0,0,0,0.30);
+    --sh-primary: 0 4px 18px rgba(96,165,250,0.35), 0 1px 3px rgba(96,165,250,0.28);
+    --chart-grid: rgba(255,255,255,0.07);
+    --chart-axis: rgba(255,255,255,0.35);
+    --chart-band: rgba(96,165,250,0.16);
+    --chart-band2: rgba(167,139,250,0.16);
+    --grad-start: #60A5FA;
+    --grad-mid: #2DD4BF;
+    --grad-end: #A78BFA;
+  }
+  :root { color-scheme: light dark; }
+  :root[data-theme="dark"] { color-scheme: dark; }
+  :root[data-theme="light"] { color-scheme: light; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { -webkit-text-size-adjust: 100%; }
   body {
@@ -119,16 +165,49 @@
     font-feature-settings: "cv11","ss01","ss03";
   }
   @media (prefers-color-scheme: dark) {
-    body { background:
+    :root:not([data-theme="light"]) body { background:
       radial-gradient(900px 500px at 100% -10%, rgba(96,165,250,0.12), transparent 60%),
       radial-gradient(800px 460px at -10% 10%, rgba(45,212,191,0.08), transparent 55%),
       radial-gradient(700px 400px at 50% 110%, rgba(167,139,250,0.08), transparent 60%),
       var(--bg); }
   }
+  :root[data-theme="dark"] body { background:
+    radial-gradient(900px 500px at 100% -10%, rgba(96,165,250,0.12), transparent 60%),
+    radial-gradient(800px 460px at -10% 10%, rgba(45,212,191,0.08), transparent 55%),
+    radial-gradient(700px 400px at 50% 110%, rgba(167,139,250,0.08), transparent 60%),
+    var(--bg); }
   .app { max-width: 720px; margin: 0 auto; padding: 28px 18px 56px; }
 
   /* ── Header ────────────────────────────────────────────────────────── */
-  .app-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 22px; }
+  .app-header { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+  /* Theme toggle button — sits at visual top-left (margin-inline-start auto in RTL) */
+  .theme-toggle {
+    margin-inline-start: auto;
+    flex: 0 0 auto;
+    width: 38px; height: 38px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; cursor: pointer;
+    display: grid; place-items: center; color: var(--text2);
+    transition: all .18s ease; box-shadow: var(--sh-sm);
+    font-family: inherit; position: relative; overflow: hidden;
+  }
+  .theme-toggle:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-1px); box-shadow: var(--sh-md); }
+  .theme-toggle:active { transform: translateY(0); }
+  .theme-toggle svg { width: 18px; height: 18px; transition: transform .25s ease, opacity .25s ease; }
+  /* Sun icon shows in dark mode (so user can click to go light); moon shows in light mode */
+  .theme-icon-sun, .theme-icon-moon {
+    grid-row: 1; grid-column: 1; position: absolute;
+  }
+  .theme-icon-sun { opacity: 0; transform: rotate(-90deg) scale(0.6); }
+  .theme-icon-moon { opacity: 1; transform: rotate(0) scale(1); }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .theme-icon-sun { opacity: 1; transform: rotate(0) scale(1); }
+    :root:not([data-theme="light"]) .theme-icon-moon { opacity: 0; transform: rotate(90deg) scale(0.6); }
+  }
+  :root[data-theme="dark"] .theme-icon-sun { opacity: 1; transform: rotate(0) scale(1); }
+  :root[data-theme="dark"] .theme-icon-moon { opacity: 0; transform: rotate(90deg) scale(0.6); }
+  :root[data-theme="light"] .theme-icon-sun { opacity: 0; transform: rotate(-90deg) scale(0.6); }
+  :root[data-theme="light"] .theme-icon-moon { opacity: 1; transform: rotate(0) scale(1); }
   .app-mark {
     flex: 0 0 auto; width: 46px; height: 46px; border-radius: 13px;
     background: linear-gradient(135deg, var(--grad-start) 0%, var(--grad-mid) 55%, var(--grad-end) 100%);
@@ -356,8 +435,9 @@
   details.ref-wrap summary::-webkit-details-marker { display: none; }
   details.ref-wrap summary:hover { background: rgba(0,0,0,0.025); }
   @media (prefers-color-scheme: dark) {
-    details.ref-wrap summary:hover { background: rgba(255,255,255,0.03); }
+    :root:not([data-theme="light"]) details.ref-wrap summary:hover { background: rgba(255,255,255,0.03); }
   }
+  :root[data-theme="dark"] details.ref-wrap summary:hover { background: rgba(255,255,255,0.03); }
   details.ref-wrap summary .ref-ico {
     width: 16px; height: 16px; flex: 0 0 auto; color: var(--text3);
   }
@@ -506,8 +586,9 @@
   }
   .seg button:hover:not(.active) { color: var(--text); background: rgba(0,0,0,0.03); }
   @media (prefers-color-scheme: dark) {
-    .seg button:hover:not(.active) { background: rgba(255,255,255,0.04); }
+    :root:not([data-theme="light"]) .seg button:hover:not(.active) { background: rgba(255,255,255,0.04); }
   }
+  :root[data-theme="dark"] .seg button:hover:not(.active) { background: rgba(255,255,255,0.04); }
 
   /* ── Result block (the hero of the screen) ───────────────────────── */
   .result {
@@ -876,6 +957,24 @@
   }
   .pp-check, .pp-check > * { min-width: 0; }
   .pp-check { word-break: break-word; overflow-wrap: anywhere; line-height: 1.4; }
+  /* DS calculator — bypass + soft marker checkboxes (v4.5) */
+  .ds-bypass-check, .ds-soft-check {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 11px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); cursor: pointer;
+    transition: all .15s;
+    line-height: 1.45; min-width: 0;
+  }
+  .ds-bypass-check input, .ds-soft-check input {
+    width: 17px; height: 17px; accent-color: var(--primary);
+    cursor: pointer; flex: 0 0 auto;
+  }
+  .ds-bypass-check:hover { border-color: var(--red); background: var(--red-bg); }
+  .ds-bypass-check:has(input:checked) { border-color: var(--red); background: var(--red-bg); color: var(--red-text); }
+  .ds-soft-check:hover { border-color: var(--amber); background: var(--amber-bg); }
+  .ds-soft-check:has(input:checked) { border-color: var(--amber); background: var(--amber-bg); color: var(--amber-text); }
+  .ds-soft-check span i { font-style: italic; font-weight: 600; font-size: 11.5px; margin-right: 4px; }
 
   /* ── Action toolbar (print, copy) ───────────────────────────────── */
   .pp-toolbar {
@@ -1474,8 +1573,9 @@
     padding: 10px 12px; font-size: 12px; color: var(--text); line-height: 1.6;
   }
   @media (prefers-color-scheme: dark) {
-    .vte-trigger-box { background: rgba(255,255,255,0.04); }
+    :root:not([data-theme="light"]) .vte-trigger-box { background: rgba(255,255,255,0.04); }
   }
+  :root[data-theme="dark"] .vte-trigger-box { background: rgba(255,255,255,0.04); }
   .vte-trigger-box ul { margin: 4px 0 0; padding-right: 16px; }
 
   /* LTR utility block for dose adjustments (no bullet, English numbers) */
@@ -1497,6 +1597,14 @@
     <div>
       <div class="app-title">מחשבון מיילדות</div>
     </div>
+    <button class="theme-toggle" id="theme-toggle-btn" type="button" onclick="toggleTheme()" aria-label="החלף בין מצב כהה לבהיר">
+      <svg class="theme-icon-sun" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="10" cy="10" r="3.5"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.5 4.5l1.4 1.4M14.1 14.1l1.4 1.4M15.5 4.5l-1.4 1.4M5.9 14.1l-1.4 1.4"/>
+      </svg>
+      <svg class="theme-icon-moon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M16 12a6 6 0 0 1-8-8 7 7 0 1 0 8 8Z"/>
+      </svg>
+    </button>
   </div>
 
   <div class="search-row">
@@ -1516,8 +1624,8 @@
 
   <div class="tab-groups">
     <div class="tab-group biometry">
-      <div class="tab-group-title">ביומטריה ודופלר</div>
-      <nav class="tabs" role="tablist" aria-label="ביומטריה ודופלר">
+      <div class="tab-group-title">ביומטריה, דופלר ואבחון פרהנטלי</div>
+      <nav class="tabs" role="tablist" aria-label="ביומטריה, דופלר ואבחון פרהנטלי">
         <button class="tab active" onclick="showTab('preg',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="14" height="13" rx="2"/><path d="M3 8.5h14M7 2.5v3M13 2.5v3"/></svg>
           <span>גיל הריון</span>
@@ -1545,6 +1653,10 @@
         <button class="tab" onclick="showTab('biom',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="6" r="2.5"/><path d="M10 8.5v3M7 11h6M6 17l2-5M14 17l-2-5"/></svg>
           <span>ביומטריה</span>
+        </button>
+        <button class="tab" onclick="showTab('biomgen',this)" role="tab">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v12M13 4v12M4 6c3 1 6 1 9 0M4 10c3 1 6 1 9 0M4 14c3 1 6 1 9 0"/></svg>
+          <span>סמנים וגנטיקה</span>
         </button>
         <button class="tab hidden-tab" onclick="showTab('dsrisk',this)" role="tab" id="tab-dsrisk">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="4"/><path d="M5 17c0-3 2-5 5-5s5 2 5 5"/><circle cx="8" cy="7.5" r=".7" fill="currentColor"/><circle cx="12" cy="7.5" r=".7" fill="currentColor"/></svg>
@@ -1961,14 +2073,9 @@
       </div>
     </details>
 
-    <!-- Group 1: Anatomic systems (selection) -->
+    <!-- Anatomic systems (selection) -->
     <div class="calc-form" data-label="בחר מערכת" style="padding-bottom:14px">
       <div class="biom-systems" id="biom-systems-grid-main"></div>
-    </div>
-
-    <!-- Group 2: Screening, soft markers & genetics -->
-    <div class="calc-form" data-label="סקר, סמנים וגנטיקה" style="padding-bottom:14px">
-      <div class="biom-systems" id="biom-systems-grid-genetics"></div>
     </div>
 
     <div id="biom-meas-area" style="display:none;margin-top:18px">
@@ -2004,6 +2111,32 @@
 
     <input type="hidden" id="biom-meas">
     <div id="biom-res"></div>
+  </div>
+
+  <!-- ===== Screening, Soft Markers & Genetics (סמנים וגנטיקה) ===== -->
+  <div id="biomgen" class="panel">
+    <details class="ref-wrap">
+      <summary>
+        <svg class="ref-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5h7l3 3v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1Z"/><path d="M10 2.5v3h3"/><path d="M5 9h6M5 11.5h4"/></svg>
+        <span>מקורות וקריטריונים</span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="ref">
+        <b>סקר DS T1 (NT + βhCG + PAPP-A):</b> Nicolaides FMF · Snijders et al. Lancet 1998<br>
+        <b>סמנים רכים ווריאנטים:</b> נייר עמדה ישראלי #30 (ינואר 2026) + חוזר 13/2014 · איגוד גנטיקה + מיילדות + אולטרסאונד<br>
+        <b>אקסום (Trio WES):</b> פיילוט משרד הבריאות 12/2024 (תוקף 1.1.2025) · כללית מושלם 2/2026<br>
+        <b>הערה:</b> סקירת מערכות מבנית (אנטומיה) נמצאת בטאב "ביומטריה" — כאן: סקרי גנטיקה, סמנים רכים והרחבות אקסום
+      </div>
+    </details>
+
+    <div class="calc-form" data-label="בחר נושא" style="padding-bottom:14px">
+      <div class="biom-systems" id="biomgen-systems-grid"></div>
+    </div>
+
+    <div id="biomgen-meas-area" style="display:none;margin-top:18px">
+      <div class="sec" id="biomgen-system-title">מידע</div>
+      <div class="biom-meas-list" id="biomgen-meas-list"></div>
+    </div>
   </div>
 
   <!-- ===== UA + UtA + CPR (FGR Doppler suite) ===== -->
@@ -2806,10 +2939,10 @@
 
   <!-- ===== Down Syndrome Risk Assessment (FMF First-Trimester Combined Test) ===== -->
   <div id="dsrisk" class="panel">
-    <button type="button" onclick="(function(){var b=document.querySelector(&quot;.tab[onclick*=\&quot;showTab('biom'\&quot;]&quot;);if(b)showTab('biom',b);})()"
+    <button type="button" onclick="(function(){var b=document.querySelector(&quot;.tab[onclick*=\&quot;showTab('biomgen'\&quot;]&quot;);if(b)showTab('biomgen',b);})()"
       style="display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:999px;color:var(--text2);font-size:12px;font-family:inherit;cursor:pointer">
       <svg viewBox="0 0 14 14" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3l-4 4 4 4"/></svg>
-      חזרה לביומטריה
+      חזרה לסמנים וגנטיקה
     </button>
 
     <details class="ref-wrap">
@@ -2830,59 +2963,191 @@
       </div>
     </details>
 
+    <!-- ═══ BYPASS INDICATIONS — go directly to genetic counseling + amnio ═══ -->
+    <div class="rec-box" style="border:1.5px solid var(--red);background:var(--red-bg);margin-bottom:14px">
+      <div class="rec-head" style="background:var(--red);color:#fff;padding:10px 14px;margin:-1px -1px 0 -1px;border-top-right-radius:var(--radius-lg);border-top-left-radius:var(--radius-lg);font-weight:700">
+        ⚠️ אינדיקציות העוקפות חישוב — ייעוץ גנטי + דיקור ישיר
+      </div>
+      <div class="rec-body" style="padding:12px 14px">
+        <div style="font-size:11.5px;color:var(--text2);margin-bottom:10px">סמן כל מה שרלוונטי. אם מסומן ולו אחד — הסיכון אינו רלוונטי לחישוב, ההמלצה היא ייעוץ גנטי + שקול דיקור</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;font-size:12.5px">
+          <label class="ds-bypass-check"><input type="checkbox" data-ds-bypass="nt3" onchange="updateDsBypass()"> <span><b>NT ≥ 3 מ"מ</b></span></label>
+          <label class="ds-bypass-check"><input type="checkbox" data-ds-bypass="anomaly" onchange="updateDsBypass()"> <span><b>מום מבני בסקירה</b></span></label>
+          <label class="ds-bypass-check"><input type="checkbox" data-ds-bypass="prev_chrom" onchange="updateDsBypass()"> <span><b>הריון קודם / ילד עם הפרעה כרומוזומלית</b></span></label>
+          <label class="ds-bypass-check"><input type="checkbox" data-ds-bypass="translocation" onchange="updateDsBypass()"> <span><b>הורה נשא טרנסלוקציה (13/21)</b></span></label>
+          <label class="ds-bypass-check"><input type="checkbox" data-ds-bypass="multi_soft" onchange="updateDsBypass()"> <span><b>≥2 סמנים רכים</b></span></label>
+          <label class="ds-bypass-check"><input type="checkbox" data-ds-bypass="nf_pathologic" onchange="updateDsBypass()"> <span><b>NF פתולוגי (≥5/6 מ"מ)</b></span></label>
+          <label class="ds-bypass-check"><input type="checkbox" data-ds-bypass="nipt_pos" onchange="updateDsBypass()"> <span><b>NIPT חיובי / לא מסקני</b></span></label>
+          <label class="ds-bypass-check"><input type="checkbox" data-ds-bypass="genetic_disease" onchange="updateDsBypass()"> <span><b>מחלה גנטית ידועה במשפחה</b></span></label>
+        </div>
+        <div id="ds-bypass-alert" style="display:none;margin-top:12px;padding:11px 13px;background:var(--red);color:#fff;border-radius:8px;font-weight:600;font-size:13px">
+          <span>📋 קיימת אינדיקציה לדיקור ישיר — לא נדרש חישוב סיכון</span>
+          <div style="font-weight:400;font-size:12px;margin-top:6px;opacity:0.95">הפניה לייעוץ גנטי · מימון בסל הבריאות · CMA/אקסום לפי הקליניקה</div>
+        </div>
+      </div>
+    </div>
+
     <div class="sec">סיכון בסיסי</div>
     <div class="row">
-      <label>גיל אם (שנים)</label>
+      <label>גיל אם בתחילת ההריון (שנים)</label>
       <input type="number" id="ds-age" min="13" max="55" step="1" placeholder="שנים" onchange="calcDsRisk()">
     </div>
-    <div class="row">
-      <label>גיל הריון (CRL/שבועות)</label>
-      <input type="number" id="ds-crl" min="45" max="84" step="0.1" placeholder="CRL במ״מ" onchange="calcDsRisk()">
-      <span class="unit">מ"מ (45–84)</span>
+    <div id="ds-age32-note" style="display:none;padding:10px 13px;background:var(--green-bg);border-right:3px solid var(--green);border-radius:8px;font-size:12.5px;color:var(--green-text);margin-bottom:14px;line-height:1.55">
+      <b>💰 גיל ≥32 — מימון בסל הבריאות:</b> הריון שהחל בגיל 32 ומעלה זכאי למימון בדיקת מי שפיר ב-CMA דרך סל הבריאות, ללא תלות בתוצאת הסקר.
     </div>
 
-    <div class="sec">סמנים סונוגרפיים (TVUS/TAUS ב-11+0 עד 13+6)</div>
-    <div class="row">
-      <label>שקיפות עורפית (NT)</label>
-      <input type="number" id="ds-nt" min="0.5" max="10" step="0.1" placeholder="מ״מ" onchange="calcDsRisk()">
-      <span class="unit">מ"מ</span>
-    </div>
-    <div class="row">
-      <label>עצם אף (Nasal Bone)</label>
-      <div class="seg" id="ds-nb">
-        <button data-v="present" class="active" onclick="setDsSeg(this,'nb')">קיימת</button>
-        <button data-v="hypoplastic" onclick="setDsSeg(this,'nb')">היפופלסטית</button>
-        <button data-v="absent" onclick="setDsSeg(this,'nb')">נעדרת</button>
-        <button data-v="unknown" onclick="setDsSeg(this,'nb')">לא נמדדה</button>
-      </div>
-    </div>
-    <div class="row">
-      <label>Ductus Venosus a-wave</label>
-      <div class="seg" id="ds-dv">
-        <button data-v="positive" class="active" onclick="setDsSeg(this,'dv')">חיובי (תקין)</button>
-        <button data-v="reversed" onclick="setDsSeg(this,'dv')">נעדר/הפיך</button>
-        <button data-v="unknown" onclick="setDsSeg(this,'dv')">לא נבדק</button>
-      </div>
-    </div>
-    <div class="row">
-      <label>Tricuspid Regurgitation (TR)</label>
-      <div class="seg" id="ds-tr">
-        <button data-v="absent" class="active" onclick="setDsSeg(this,'tr')">נעדרת</button>
-        <button data-v="present" onclick="setDsSeg(this,'tr')">קיימת</button>
-        <button data-v="unknown" onclick="setDsSeg(this,'tr')">לא נבדק</button>
+    <div class="sec">בחר מקור נתונים לחישוב</div>
+    <div class="row" style="margin-bottom:0">
+      <div class="seg" id="ds-mode" style="flex-wrap:wrap;gap:4px">
+        <button data-v="t1full" class="active" onclick="setDsMode(this)">T1 מפורט</button>
+        <button data-v="t1res" onclick="setDsMode(this)">T1 — תוצאה</button>
+        <button data-v="t2full" onclick="setDsMode(this)">T2 מפורט (Quad)</button>
+        <button data-v="t2res" onclick="setDsMode(this)">T2 — תוצאה</button>
+        <button data-v="integrated" onclick="setDsMode(this)">משולב T1+T2</button>
       </div>
     </div>
 
-    <div class="sec">סמנים ביוכימיים (אופציונלי — MoM)</div>
-    <div class="row">
-      <label>PAPP-A</label>
-      <input type="number" id="ds-papp" min="0.01" max="10" step="0.01" placeholder="MoM" onchange="calcDsRisk()">
-      <span class="unit">MoM</span>
+    <!-- ═══ MODE T1 FULL — current detailed sonographic + biochem ═══ -->
+    <div class="ds-mode-block" data-ds-mode="t1full">
+      <div class="row">
+        <label>גיל הריון (CRL)</label>
+        <input type="number" id="ds-crl" min="45" max="84" step="0.1" placeholder="CRL במ״מ" onchange="calcDsRisk()">
+        <span class="unit">מ"מ (45–84)</span>
+      </div>
+      <div class="sec" style="margin-top:14px">סמנים סונוגרפיים (11+0 עד 13+6)</div>
+      <div class="row">
+        <label>שקיפות עורפית (NT)</label>
+        <input type="number" id="ds-nt" min="0.5" max="10" step="0.1" placeholder="מ״מ" onchange="calcDsRisk()">
+        <span class="unit">מ"מ</span>
+      </div>
+      <div class="row">
+        <label>עצם אף</label>
+        <div class="seg" id="ds-nb">
+          <button data-v="present" class="active" onclick="setDsSeg(this,'nb')">קיימת</button>
+          <button data-v="hypoplastic" onclick="setDsSeg(this,'nb')">היפופלסטית</button>
+          <button data-v="absent" onclick="setDsSeg(this,'nb')">נעדרת</button>
+          <button data-v="unknown" onclick="setDsSeg(this,'nb')">לא נמדדה</button>
+        </div>
+      </div>
+      <div class="row">
+        <label>Ductus Venosus a-wave</label>
+        <div class="seg" id="ds-dv">
+          <button data-v="positive" class="active" onclick="setDsSeg(this,'dv')">חיובי (תקין)</button>
+          <button data-v="reversed" onclick="setDsSeg(this,'dv')">נעדר/הפיך</button>
+          <button data-v="unknown" onclick="setDsSeg(this,'dv')">לא נבדק</button>
+        </div>
+      </div>
+      <div class="row">
+        <label>Tricuspid Regurgitation</label>
+        <div class="seg" id="ds-tr">
+          <button data-v="absent" class="active" onclick="setDsSeg(this,'tr')">נעדרת</button>
+          <button data-v="present" onclick="setDsSeg(this,'tr')">קיימת</button>
+          <button data-v="unknown" onclick="setDsSeg(this,'tr')">לא נבדק</button>
+        </div>
+      </div>
+      <div class="sec" style="margin-top:14px">סמנים ביוכימיים (MoM, אופציונלי)</div>
+      <div class="row">
+        <label>PAPP-A</label>
+        <input type="number" id="ds-papp" min="0.01" max="10" step="0.01" placeholder="MoM" onchange="calcDsRisk()">
+        <span class="unit">MoM</span>
+      </div>
+      <div class="row">
+        <label>free βhCG</label>
+        <input type="number" id="ds-bhcg" min="0.01" max="10" step="0.01" placeholder="MoM" onchange="calcDsRisk()">
+        <span class="unit">MoM</span>
+      </div>
     </div>
-    <div class="row">
-      <label>free βhCG</label>
-      <input type="number" id="ds-bhcg" min="0.01" max="10" step="0.01" placeholder="MoM" onchange="calcDsRisk()">
-      <span class="unit">MoM</span>
+
+    <!-- ═══ MODE T1 RESULT — just enter the combined T1 result ═══ -->
+    <div class="ds-mode-block" data-ds-mode="t1res" style="display:none">
+      <div class="row">
+        <label>תוצאת סקר T1 משולב (1 ב-X)</label>
+        <input type="number" id="ds-t1res" min="2" max="100000" step="1" placeholder="לדוגמה: 500" onchange="calcDsRisk()">
+        <span class="unit">1:X</span>
+      </div>
+      <div style="font-size:11.5px;color:var(--text3);padding:0 4px;line-height:1.55">
+        הזן את המכנה (X) — הסיכון לדאון לפי הסקר. למשל: דווח כ-"1 ל-500" → הזן 500. הסיכון כבר כולל את גיל האם.
+      </div>
+    </div>
+
+    <!-- ═══ MODE T2 FULL — Quad screen ═══ -->
+    <div class="ds-mode-block" data-ds-mode="t2full" style="display:none">
+      <div class="row">
+        <label>גיל הריון</label>
+        <div class="ga-row">
+          <select id="ds-t2-w" onchange="calcDsRisk()">
+            <option value="">שבועות</option>
+            <script>for(let i=15;i<=22;i++)document.write(`<option value="${i}">${i}</option>`)</script>
+          </select>
+          <span class="unit">+</span>
+          <select id="ds-t2-d" style="width:80px" onchange="calcDsRisk()">
+            <option value="0">0 ימים</option><option value="1">1 יום</option><option value="2">2 ימים</option>
+            <option value="3">3 ימים</option><option value="4">4 ימים</option><option value="5">5 ימים</option><option value="6">6 ימים</option>
+          </select>
+        </div>
+      </div>
+      <div class="sec" style="margin-top:14px">סמני Quad screen (MoM)</div>
+      <div class="row">
+        <label>AFP</label>
+        <input type="number" id="ds-afp" min="0.01" max="10" step="0.01" placeholder="MoM" onchange="calcDsRisk()">
+        <span class="unit">MoM</span>
+      </div>
+      <div class="row">
+        <label>hCG total</label>
+        <input type="number" id="ds-hcgt" min="0.01" max="10" step="0.01" placeholder="MoM" onchange="calcDsRisk()">
+        <span class="unit">MoM</span>
+      </div>
+      <div class="row">
+        <label>uE3 (estriol)</label>
+        <input type="number" id="ds-ue3" min="0.01" max="10" step="0.01" placeholder="MoM" onchange="calcDsRisk()">
+        <span class="unit">MoM</span>
+      </div>
+      <div class="row">
+        <label>Inhibin A</label>
+        <input type="number" id="ds-inha" min="0.01" max="10" step="0.01" placeholder="MoM" onchange="calcDsRisk()">
+        <span class="unit">MoM</span>
+      </div>
+    </div>
+
+    <!-- ═══ MODE T2 RESULT — just enter the quad result ═══ -->
+    <div class="ds-mode-block" data-ds-mode="t2res" style="display:none">
+      <div class="row">
+        <label>תוצאת סקר T2 (Quad — 1 ב-X)</label>
+        <input type="number" id="ds-t2res" min="2" max="100000" step="1" placeholder="לדוגמה: 800" onchange="calcDsRisk()">
+        <span class="unit">1:X</span>
+      </div>
+      <div style="font-size:11.5px;color:var(--text3);padding:0 4px;line-height:1.55">
+        הזן את המכנה כפי שדווח. הסיכון כבר כולל את גיל האם.
+      </div>
+    </div>
+
+    <!-- ═══ MODE INTEGRATED — T1 + T2 combined ═══ -->
+    <div class="ds-mode-block" data-ds-mode="integrated" style="display:none">
+      <div class="row">
+        <label>תוצאת סקר T1 (1 ב-X)</label>
+        <input type="number" id="ds-int-t1" min="2" max="100000" step="1" placeholder="500" onchange="calcDsRisk()">
+        <span class="unit">1:X</span>
+      </div>
+      <div class="row">
+        <label>תוצאת סקר T2 / Quad (1 ב-X)</label>
+        <input type="number" id="ds-int-t2" min="2" max="100000" step="1" placeholder="800" onchange="calcDsRisk()">
+        <span class="unit">1:X</span>
+      </div>
+      <div style="font-size:11.5px;color:var(--text3);padding:0 4px;line-height:1.55">
+        חישוב משולב מבוטל את הכפילות בגיל האם — מספק סיכון אינטגרטיבי משוקלל.
+      </div>
+    </div>
+
+    <!-- ═══ SOFT MARKERS — applied on top of any mode (paper #30 LR) ═══ -->
+    <div class="sec" style="margin-top:18px">סמנים רכים (סקירת מערכות) — מוסיף LR ע"פ נייר #30</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;margin-bottom:14px;font-size:12.5px">
+      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="nf" data-lr="17" onchange="calcDsRisk()"> <span><b>NF פתולוגי</b> (≥5 מ"מ T1 / ≥6 מ"מ T2) <i style="color:var(--red-text)">LR 17</i></span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="hb" data-lr="6" onchange="calcDsRisk()"> <span><b>מעי היפראקוגני</b> <i style="color:var(--amber-text)">LR 6</i></span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="sf" data-lr="2" onchange="calcDsRisk()"> <span><b>קיצור פמור</b> <i style="color:var(--amber-text)">LR 2</i></span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="eif" data-lr="1.5" onchange="calcDsRisk()"> <span><b>EIF</b> (שמאל בלבד) <i style="color:var(--amber-text)">LR 1.5</i></span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="cpc" data-lr="1" onchange="calcDsRisk()"> <span><b>Choroid Plexus Cyst</b> <i style="color:var(--green-text)">LR 1.0</i></span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="pyel" data-lr="1" onchange="calcDsRisk()"> <span><b>הרחבת אגן כליה</b> <i style="color:var(--green-text)">LR 1.0</i></span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="sua" data-lr="1" onchange="calcDsRisk()"> <span><b>SUA</b> (עורק טבורי בודד) <i style="color:var(--green-text)">LR 1.0</i></span></label>
     </div>
 
     <button class="btn btn-primary" onclick="calcDsRisk()">חשב סיכון</button>
@@ -5889,7 +6154,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.4';
+const APP_VERSION = '4.5';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -8088,6 +8353,29 @@ function totalDaysToGA(td){
   return {w: Math.floor(td/7), d: td%7, ga: td/7, totalDays: td};
 }
 function todayDate(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
+
+// ─── Theme toggle (light/dark) — persisted in localStorage ────────────────
+// First time: respects system preference. After user toggles, override is sticky.
+(function initTheme(){
+  try {
+    const stored = localStorage.getItem('calc-theme');
+    if (stored === 'dark' || stored === 'light') {
+      document.documentElement.setAttribute('data-theme', stored);
+    }
+  } catch(e){}
+})();
+function toggleTheme(){
+  const root = document.documentElement;
+  const current = root.getAttribute('data-theme');
+  // Resolve current effective theme
+  let effective = current;
+  if (!effective) {
+    effective = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  const next = effective === 'dark' ? 'light' : 'dark';
+  root.setAttribute('data-theme', next);
+  try { localStorage.setItem('calc-theme', next); } catch(e){}
+}
 
 function showTab(id,el){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
@@ -10692,6 +10980,18 @@ const biomSystems = {
     icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12v12H4z"/><path d="M4 8h12M4 12h12M8 4v12M12 4v12"/></svg>',
     items: [], customHandler: 'showExomeInfo', subtitle: 'פיילוט WES + Klalit 2026'
   },
+  echo_indications: {
+    group: 'genetics',
+    name: 'אינדיקציות לאקו לב עוברי', color: 'var(--red)',
+    icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17.5s-6-3.5-6-8.5a3.5 3.5 0 0 1 6-2.5 3.5 3.5 0 0 1 6 2.5c0 5-6 8.5-6 8.5Z"/><path d="M7 9.5l1.5 1.5L10 9l1.5 2 1.5-2.5"/></svg>',
+    items: [], customHandler: 'showEchoIndicationsInfo', subtitle: 'נייר #32 (מרץ 2025) — מתי להפנות'
+  },
+  nipt: {
+    group: 'genetics',
+    name: 'NIPT — דנ"א חופשי בדם האם', color: 'var(--teal)',
+    icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4c2 2 2 6 0 8s-2 0 0 0M14 4c-2 2-2 6 0 8s2 0 0 0M10 4v12"/><circle cx="6" cy="14" r="1.2" fill="currentColor"/><circle cx="14" cy="14" r="1.2" fill="currentColor"/></svg>',
+    items: [], customHandler: 'showNiptInfo', subtitle: 'נייר #51 (אוגוסט 2023) — סקר ראשוני'
+  },
 };
 
 // ─── Neurosonography Info Accordion (Israeli #53 מרץ 2026) ──
@@ -10770,13 +11070,14 @@ function renderNeurosonoAccordion(){
 
 // ─── Soft Markers Info Panel (Israeli #30 ינואר 2026 + MoH 13/2014) ──
 function showSoftMarkersInfo(){
-  const list = document.getElementById('biom-meas-list');
-  document.getElementById('biom-system-title').textContent = 'סמנים רכים, ווריאנטים של הנורמה ומומים אנטומיים';
-  document.getElementById('biom-meas-area').style.display = '';
-  document.getElementById('biom-input-area').style.display = 'none';
+  const t = getBiomTargets();
+  const list = document.getElementById(t.list);
+  document.getElementById(t.title).textContent = 'סמנים רכים, ווריאנטים של הנורמה ומומים אנטומיים';
+  document.getElementById(t.area).style.display = '';
+  if (t.inputArea) document.getElementById(t.inputArea).style.display = 'none';
 
   const html = `
-    <div style="background:var(--surface);border-radius:12px;padding:14px;font-size:13px;line-height:1.6">
+    <div style="grid-column:1/-1;background:var(--surface);border-radius:12px;padding:14px;font-size:13px;line-height:1.6">
       <!-- Header -->
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
         <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary);font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700">נייר עמדה #30 — ינואר 2026</span>
@@ -10973,19 +11274,21 @@ function showSoftMarkersInfo(){
   `;
 
   list.innerHTML = html;
-  document.getElementById('biom-res').innerHTML = '';
-  document.getElementById('biom-meas-area').scrollIntoView({block:'nearest', behavior:'smooth'});
+  const resEl = document.getElementById('biom-res');
+  if (resEl) resEl.innerHTML = '';
+  document.getElementById(t.area).scrollIntoView({block:'nearest', behavior:'smooth'});
 }
 
 // ─── Exome Indications Panel (Pilot WES 12/2024 + Klalit Moshlam 2/2026) ──
 function showExomeInfo(){
-  const list = document.getElementById('biom-meas-list');
-  document.getElementById('biom-system-title').textContent = 'אינדיקציות לאקסום בהריון (WES)';
-  document.getElementById('biom-meas-area').style.display = '';
-  document.getElementById('biom-input-area').style.display = 'none';
+  const t = getBiomTargets();
+  const list = document.getElementById(t.list);
+  document.getElementById(t.title).textContent = 'אינדיקציות לאקסום בהריון (WES)';
+  document.getElementById(t.area).style.display = '';
+  if (t.inputArea) document.getElementById(t.inputArea).style.display = 'none';
 
   const html = `
-    <div style="background:var(--surface);border-radius:12px;padding:14px;font-size:13px;line-height:1.6">
+    <div style="grid-column:1/-1;background:var(--surface);border-radius:12px;padding:14px;font-size:13px;line-height:1.6">
       <!-- Header -->
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
         <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary);font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700">פיילוט משרד הבריאות 12/2024</span>
@@ -11095,13 +11398,231 @@ function showExomeInfo(){
   `;
 
   list.innerHTML = html;
-  document.getElementById('biom-res').innerHTML = '';
-  document.getElementById('biom-meas-area').scrollIntoView({block:'nearest', behavior:'smooth'});
+  const resEl2 = document.getElementById('biom-res');
+  if (resEl2) resEl2.innerHTML = '';
+  document.getElementById(t.area).scrollIntoView({block:'nearest', behavior:'smooth'});
+}
+
+// ─── Fetal Echocardiography Indications (Israeli #32, מרץ 2025) ──
+function showEchoIndicationsInfo(){
+  const t = getBiomTargets();
+  const list = document.getElementById(t.list);
+  document.getElementById(t.title).textContent = 'אינדיקציות להפניה לאקו לב עוברי';
+  document.getElementById(t.area).style.display = '';
+  if (t.inputArea) document.getElementById(t.inputArea).style.display = 'none';
+
+  const html = `
+    <div style="grid-column:1/-1;background:var(--surface);border-radius:12px;padding:14px;font-size:13px;line-height:1.6">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+        <span class="rec-tag" style="background:var(--red-bg);color:var(--red-text);font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700">נייר עמדה #32 — מרץ 2025</span>
+        <span class="rec-tag" style="background:var(--surface2);color:var(--text2);font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700">איגוד קרדיולוגיית ילדים + AAM</span>
+      </div>
+
+      <div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-bottom:14px">
+        <div style="font-weight:700;color:var(--primary);margin-bottom:6px;font-size:14px">⚡ נתוני יסוד</div>
+        <div style="font-size:12.5px;color:var(--text2)">
+          <b>שכיחות CHD:</b> ~8 ל-1,000 לידות חי · כמחצית דורשים התערבות בחודשי החיים הראשונים<br>
+          <b>מועד מומלץ:</b> שבועות <b>19–23</b> · מקרים נבחרים — אקו מוקדם 14–16 במרכזים מומחים<br>
+          <b>מבצעים:</b> מומחה בקרדיולוגיית ילדים או מומחה במיילדות עם הרשאה לסקירת מערכות
+        </div>
+      </div>
+
+      <details open style="margin-bottom:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:11px 14px;font-weight:700;color:var(--text);font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:linear-gradient(to left,var(--surface2),var(--amber-bg))">
+          <span><span style="background:var(--amber);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;margin-left:8px">חלק 1</span>אינדיקציות אימהיות / משפחתיות</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:12px 14px;font-size:12.5px;line-height:1.7">
+          <ol style="margin:0;padding-right:20px">
+            <li><b>מום לב מולד בקרוב מדרגה ראשונה</b> (כולל ילד קודם של אחד מבני הזוג)</li>
+            <li>מום לב מולד בקרבה רחוקה — בהמלצת ייעוץ גנטי</li>
+            <li>הורה עם תסמונת/מחלה הקשורה למומי לב מולדים</li>
+            <li><b>סוכרת טרום-הריונית (PGDM)</b> — לא GDM בלבד</li>
+            <li>זיהומים אימהיים הגורמים למומי לב עובריים (CMV, רובאלה, פרבו וכו')</li>
+            <li><b>חשיפה לתרופות טרטוגניות</b> (לפי רשימת ויצמן) · NSAIDs במינון גבוה ב-T3 (סגירת DA)</li>
+            <li><b>נוגדנים אוטואימוניים:</b> Anti-Ro (SSA), Anti-La (SSB)</li>
+            <li>על סמך המלצת ייעוץ גנטי</li>
+            <li><b>FGR חמור (&lt;אחוזון 3)</b> ללא התוויה ליילוד</li>
+          </ol>
+        </div>
+      </details>
+
+      <details open style="margin-bottom:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:11px 14px;font-weight:700;color:var(--text);font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:linear-gradient(to left,var(--surface2),var(--red-bg))">
+          <span><span style="background:var(--red);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;margin-left:8px">חלק 2</span>אינדיקציות עובריות</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:12px 14px;font-size:12.5px;line-height:1.7">
+          <ol style="margin:0;padding-right:20px">
+            <li><b>הדמיית לב לא מספקת</b> בסקירת מערכות</li>
+            <li><b>חשד למום לב</b>, ציר/מנח לא תקין, הגדלת לב, אסימטריית חדרים, הפרעת תפקוד</li>
+            <li><b>הפרעת קצב לב עוברית</b></li>
+            <li>מום מבני לא-לבבי באסוציאציה (CDH, situs anomalies וכו')</li>
+            <li><b>וריאנטים באסוציאציה ל-CHD:</b> Right aortic arch · ARSA · absent IVC · PLSVC</li>
+            <li>אחרי ייעוץ גנטי / חשד להפרעה כרומוזומלית / תסמונת</li>
+            <li><b>תפליט פריקרדיאלי</b> (מעבר לפיזיולוגי), פליאורלי, <b>הידרופס</b></li>
+            <li>ריבוי מי שפיר בינוני ומעלה (DVP גבוה / AFI גבוה)</li>
+            <li><b>הריון רב-עוברי מונוכוריאלי</b></li>
+            <li>סיכון לאי-ספיקת לב עוברית: גידול עשיר באספקת דם · היעדר DV / דלפים פורטו-סיסטמיים / PRUV / Vein of Galen aneurysm · Acardiac twin</li>
+            <li><b>ממצאי סקר ראשון:</b> NT &gt; 3 מ"מ · עורק טבורי בודד (SUA)</li>
+          </ol>
+        </div>
+      </details>
+
+      <details style="margin-bottom:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:11px 14px;font-weight:700;color:var(--text);font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:var(--surface2)">
+          <span><span style="background:var(--text3);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;margin-left:8px">מגבלות</span>מה לא ניתן לשלול באקו עוברי</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:12px 14px;font-size:12.5px;line-height:1.7;color:var(--text2)">
+          <ul style="margin:0;padding-right:20px">
+            <li><b>אי-אפשר לשלול:</b> PDA, secundum ASD, sinus venosus ASD, <b>קוארקטציה</b> (דיוק רק ~50% במומי קשת)</li>
+            <li>קשה להדגים: partial APVR, AP window, VSD קטן-בינוני</li>
+            <li>קשה בשל גודל/מנח: coronary anomalies, aortic arch, bicuspid AV</li>
+            <li><b>פגיעות מסתמיות</b> שמתבטאות רק במחצית שנייה של ההריון — לא יראו באקו רגיל</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="note" style="border-right-color:var(--red);background:var(--red-bg);margin-bottom:0;margin-top:10px;font-size:12.5px">
+        <b style="color:var(--red-text)">CHD חמור →</b> ייעוץ קרדיולוג ילדים · תכנון לידה במרכז שלישוני (NICU + פדיאטריק קרדיו)
+      </div>
+
+      <div style="margin-top:12px;padding-top:10px;border-top:1px dashed var(--border)">
+        <button onclick="openPaperModal('32')" style="background:var(--primary);color:#fff;border:none;padding:9px 14px;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h8M7 3l4 4-4 4"/></svg>
+          לפתיחת נייר עמדה #32 (מלא)
+        </button>
+      </div>
+    </div>
+  `;
+
+  list.innerHTML = html;
+  const resEl3 = document.getElementById('biom-res');
+  if (resEl3) resEl3.innerHTML = '';
+  document.getElementById(t.area).scrollIntoView({block:'nearest', behavior:'smooth'});
+}
+
+// ─── NIPT / NIPS Info Panel (Israeli #51, אוגוסט 2023) ──
+function showNiptInfo(){
+  const t = getBiomTargets();
+  const list = document.getElementById(t.list);
+  document.getElementById(t.title).textContent = 'NIPT — דנ"א עוברי חופשי בדם האם';
+  document.getElementById(t.area).style.display = '';
+  if (t.inputArea) document.getElementById(t.inputArea).style.display = 'none';
+
+  const html = `
+    <div style="grid-column:1/-1;background:var(--surface);border-radius:12px;padding:14px;font-size:13px;line-height:1.6">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+        <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary);font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700">נייר עמדה #51 — אוגוסט 2023</span>
+        <span class="rec-tag" style="background:var(--green-bg);color:var(--green-text);font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700">שינוי גישה — סקר ראשוני</span>
+      </div>
+
+      <div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-bottom:14px">
+        <div style="font-weight:700;color:var(--primary);margin-bottom:6px;font-size:14px">⚡ עיקרון מרכזי</div>
+        <div style="font-size:12.5px;color:var(--text2)">
+          <b>האיגוד ממליץ NIPS כבדיקת סקר ראשונית</b> במקום הסקר המשולב הביוכימי (T1+T2) — <b>לכל הנשים</b>, ללא תלות בגיל או סיכון<br>
+          <b>בסיס הבדיקה:</b> cfDNA — מקטעי DNA קצרים בדם האם · ~10% (2-20%) ממקור שלייתי · בעובר עם טריזומיה היחס בין הכרומוזומים משתנה
+        </div>
+      </div>
+
+      <details open style="margin-bottom:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:11px 14px;font-weight:700;color:var(--text);font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:linear-gradient(to left,var(--surface2),var(--green-bg))">
+          <span>📊 ביצועים סטטיסטיים</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:12px;font-size:12.5px">
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px">
+            <div style="background:var(--green-bg);padding:8px 10px;border-radius:6px"><b>רגישות T21:</b> &gt;98%</div>
+            <div style="background:var(--green-bg);padding:8px 10px;border-radius:6px"><b>רגישות T18:</b> 94–98%</div>
+            <div style="background:var(--green-bg);padding:8px 10px;border-radius:6px"><b>רגישות T13:</b> &gt;99%</div>
+            <div style="background:var(--green-bg);padding:8px 10px;border-radius:6px"><b>סגוליות:</b> &gt;99.9% · FPR &lt;0.1%</div>
+          </div>
+          <div style="margin-top:10px;padding:8px 10px;background:var(--amber-bg);border-radius:6px">
+            <b>PPV:</b> סקר משולב — 3–4% בלבד · <b>NIPS — 85–90%</b> (פי 20)
+          </div>
+        </div>
+      </details>
+
+      <details open style="margin-bottom:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:11px 14px;font-weight:700;color:var(--text);font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:linear-gradient(to left,var(--surface2),var(--primary-bg))">
+          <span>📅 מתי לבצע + למי</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:12px;font-size:12.5px;line-height:1.7">
+          <ul style="margin:0;padding-right:20px">
+            <li><b>החל משבוע 9–10</b> להריון</li>
+            <li><b>הריון יחיד או תאומים</b> — ביצועים זהים לטריזומיות שכיחות</li>
+            <li><b>שלישיות+</b> — מידע מועט, לא מומלץ</li>
+            <li><b>דילול עוברים / Vanishing twin / Missed abortion של אחד</b> — לא מומלץ (סיכון FP)</li>
+          </ul>
+          <div style="margin-top:8px;padding:8px 10px;background:var(--primary-bg);border-radius:6px;color:var(--primary)">
+            <b>אינדיקציות מועדפות (גם בלי אינדיקציה — לכל הנשים):</b>
+            <ul style="margin:6px 0 0;padding-right:18px;color:var(--text2)">
+              <li><b>גיל אמהי 33+</b></li>
+              <li>סמנים רכים מחשידים להפרעה כרומוזומלית הנבדקת ב-NIPS</li>
+              <li>עבר אישי/משפחתי של הפרעה כרומוזומלית</li>
+              <li>סקר T1/T2 חיובי</li>
+              <li>אחד מההורים — נשא טרנסלוקציה רוברטסונית הכוללת כרומוזומים 13/21</li>
+            </ul>
+          </div>
+        </div>
+      </details>
+
+      <details style="margin-bottom:10px;border:1.5px solid var(--red);border-radius:10px;background:var(--red-bg);overflow:hidden">
+        <summary style="cursor:pointer;padding:11px 14px;font-weight:700;color:var(--red-text);font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none">
+          <span>⛔ מתי <u>אסור</u> להסתפק ב-NIPS</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:12px;font-size:12.5px;line-height:1.7;background:var(--surface)">
+          <ul style="margin:0;padding-right:20px">
+            <li class="crit"><b>NT ≥ 3 מ"מ</b> → ייעוץ גנטי + שקול דיקור (לא NIPS לבד)</li>
+            <li class="crit"><b>זוהו מומים בעובר</b> → ייעוץ גנטי + CMA בדיקור (לא NIPS לבד)</li>
+            <li class="crit">יש התוויה לבדיקה אבחנתית מסיבות אחרות (הסתמנות מבנית, עבר משפחתי וכו')</li>
+            <li><b>פאנלים מורחבים (CNVs, RATs):</b> האיגוד אינו ממליץ כעת — PPV נמוך לתסמונות חסר נדירות · לזיהוי CNVs הבדיקה היא CMA בדיקור, לא NIPS</li>
+          </ul>
+        </div>
+      </details>
+
+      <details style="margin-bottom:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:11px 14px;font-weight:700;color:var(--text);font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:var(--surface2)">
+          <span>🎯 אחרי תוצאה</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:12px;font-size:12.5px;line-height:1.7">
+          <div style="display:grid;grid-template-columns:1fr;gap:8px">
+            <div style="background:var(--green-bg);padding:8px 10px;border-radius:6px"><b>תוצאה תקינה</b> בנשים בסיכון → מבטלת את סיכון הסקר הביוכימי לטריזומיות השכיחות. אין צורך בסקר ביוכימי נוסף</div>
+            <div style="background:var(--amber-bg);padding:8px 10px;border-radius:6px"><b>תוצאה חריגה</b> → ייעוץ גנטי + <b>אימות בבדיקה אבחנתית</b> (CVS/אמניוצנטזה) · <b>אסור פעולה בלתי הפיכה על סמך NIPS בלבד</b></div>
+            <div style="background:var(--red-bg);padding:8px 10px;border-radius:6px"><b>2+ הפרעות כרומוזומליות בבדיקה</b> → חשד לממאירות אצל האם · התייחסות פרטנית</div>
+            <div style="background:var(--surface2);padding:8px 10px;border-radius:6px"><b>No call / No result</b> → ייעוץ גנטי (סיכון מוגבר להפרעות במצב זה)</div>
+          </div>
+        </div>
+      </details>
+
+      <div class="note" style="border-right-color:var(--amber);background:var(--amber-bg);margin-bottom:0;margin-top:10px;font-size:12.5px">
+        <b style="color:var(--amber-text)">💰 מימון:</b> <b>NIPS אינו בסל הבריאות</b> — תשלום פרטי או ביטוח משלים (~₪1,500–3,000)
+        <br><b>חשוב:</b> סקירה אנטומית עדיין נדרשת — NIPS לא מזהה מומים מבניים
+      </div>
+
+      <div style="margin-top:12px;padding-top:10px;border-top:1px dashed var(--border)">
+        <button onclick="openPaperModal('51')" style="background:var(--primary);color:#fff;border:none;padding:9px 14px;border-radius:8px;font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:6px">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h8M7 3l4 4-4 4"/></svg>
+          לפתיחת נייר עמדה #51 (מלא)
+        </button>
+      </div>
+    </div>
+  `;
+
+  list.innerHTML = html;
+  const resEl4 = document.getElementById('biom-res');
+  if (resEl4) resEl4.innerHTML = '';
+  document.getElementById(t.area).scrollIntoView({block:'nearest', behavior:'smooth'});
 }
 
 (function renderBiomSystems(){
   const mainGrid = document.getElementById('biom-systems-grid-main');
-  const geneticsGrid = document.getElementById('biom-systems-grid-genetics');
+  const geneticsGrid = document.getElementById('biomgen-systems-grid')
+    || document.getElementById('biom-systems-grid-genetics');
   if(!mainGrid && !geneticsGrid) return;
 
   const buildCard = (sysId, sys) => {
@@ -11126,6 +11647,26 @@ function showExomeInfo(){
   if(geneticsGrid) geneticsGrid.innerHTML = geneticsHtml;
 })();
 
+// Returns DOM IDs for the meas area in whichever panel (biom vs biomgen) is currently active.
+// Falls back to biom IDs.
+function getBiomTargets(){
+  const genPanel = document.getElementById('biomgen');
+  if (genPanel && genPanel.classList.contains('active')) {
+    return {
+      list: 'biomgen-meas-list',
+      area: 'biomgen-meas-area',
+      title: 'biomgen-system-title',
+      inputArea: null, // genetics tab doesn't show measurement inputs
+    };
+  }
+  return {
+    list: 'biom-meas-list',
+    area: 'biom-meas-area',
+    title: 'biom-system-title',
+    inputArea: 'biom-input-area',
+  };
+}
+
 function selectBiomSystem(sysId){
   const sys = biomSystems[sysId];
   // External target: navigate to a different panel rather than render measurements inline.
@@ -11145,8 +11686,9 @@ function selectBiomSystem(sysId){
   document.querySelectorAll('.biom-sys-card').forEach(c => {
     c.classList.toggle('active', c.dataset.sys === sysId);
   });
-  const list = document.getElementById('biom-meas-list');
-  document.getElementById('biom-system-title').textContent = `מדידות — ${sys.name}`;
+  const t = getBiomTargets();
+  const list = document.getElementById(t.list);
+  document.getElementById(t.title).textContent = `מדידות — ${sys.name}`;
   let html = '';
   // CNS-specific: prepend neurosonography position paper accordion (#53) — spans full row
   if (sysId === 'cns') {
@@ -11161,10 +11703,11 @@ function selectBiomSystem(sysId){
     </button>`;
   }
   list.innerHTML = html;
-  document.getElementById('biom-meas-area').style.display = '';
-  document.getElementById('biom-input-area').style.display = 'none';
-  document.getElementById('biom-res').innerHTML = '';
-  document.getElementById('biom-meas-area').scrollIntoView({block:'nearest', behavior:'smooth'});
+  document.getElementById(t.area).style.display = '';
+  if (t.inputArea) document.getElementById(t.inputArea).style.display = 'none';
+  const resEl = document.getElementById('biom-res');
+  if (resEl) resEl.innerHTML = '';
+  document.getElementById(t.area).scrollIntoView({block:'nearest', behavior:'smooth'});
 }
 
 function selectBiomMeas(k){
@@ -12104,10 +12647,24 @@ function peeBand(range, label, cls, active){
 // ─── DOWN SYNDROME RISK (FMF First-Trimester Combined Test) ──────────
 // Based on Nicolaides 2011 + FMF Online Calculator approach.
 // All LRs from FMF database (approximations — use FMF software for clinical decisions).
-const dsState = { nb:'present', dv:'positive', tr:'absent' };
+const dsState = { nb:'present', dv:'positive', tr:'absent', mode:'t1full' };
+const DS_CUTOFF = 380; // Israeli paper #30 / חוזר 13/2014 — 1:380 high-risk cutoff
 function setDsSeg(btn, key){
   btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active'); dsState[key]=btn.dataset.v;
+  if(document.getElementById('ds-res').innerHTML) calcDsRisk();
+}
+function setDsMode(btn){
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active'); dsState.mode = btn.dataset.v;
+  document.querySelectorAll('.ds-mode-block').forEach(blk => {
+    blk.style.display = (blk.dataset.dsMode === dsState.mode) ? '' : 'none';
+  });
+  document.getElementById('ds-res').innerHTML = '';
+}
+function updateDsBypass(){
+  const checked = document.querySelectorAll('[data-ds-bypass]:checked').length;
+  document.getElementById('ds-bypass-alert').style.display = checked > 0 ? '' : 'none';
   if(document.getElementById('ds-res').innerHTML) calcDsRisk();
 }
 // Background age risk for T21 at term (Snijders 1999)
@@ -12143,100 +12700,244 @@ function ntLR(nt, crl){
   if(delta < 3.0) return 84;
   return 268;
 }
+// ─── T2 Quad screen LRs (approximations from FMF data) ───
+function quadLR(marker, mom){
+  if(isNaN(mom) || mom<=0) return 1;
+  switch(marker){
+    case 'afp': // low AFP → DS risk
+      if(mom < 0.5) return 3;
+      if(mom < 0.75) return 1.7;
+      if(mom > 1.5) return 0.6;
+      return 1;
+    case 'hcgt': // high hCG → DS risk
+      if(mom > 2.5) return 3;
+      if(mom > 2.0) return 2;
+      if(mom > 1.5) return 1.5;
+      if(mom < 0.5) return 0.5;
+      return 1;
+    case 'ue3': // low uE3 → DS risk
+      if(mom < 0.5) return 3;
+      if(mom < 0.75) return 1.7;
+      if(mom > 1.5) return 0.7;
+      return 1;
+    case 'inha': // high inhibin A → DS risk
+      if(mom > 2.0) return 2;
+      if(mom > 1.5) return 1.4;
+      if(mom < 0.7) return 0.7;
+      return 1;
+  }
+  return 1;
+}
+
 function calcDsRisk(){
   const el = document.getElementById('ds-res');
   const age = parseFloat(document.getElementById('ds-age').value);
-  const crl = parseFloat(document.getElementById('ds-crl').value);
   if(isNaN(age) || age<13 || age>55){
     el.innerHTML='<div class="note" style="border-right-color:var(--red);background:var(--red-bg);color:var(--red-text)">הזן גיל אם תקין</div>'; return;
   }
-  if(isNaN(crl) || crl<45 || crl>84){
-    el.innerHTML='<div class="note" style="border-right-color:var(--red);background:var(--red-bg);color:var(--red-text)">הזן CRL בטווח 45–84 מ"מ (11+0 עד 13+6)</div>'; return;
+
+  // Age 32+ funded amnio note
+  const age32Note = document.getElementById('ds-age32-note');
+  if (age32Note) age32Note.style.display = (age >= 32) ? '' : 'none';
+
+  // Check bypass indications
+  const bypassChecked = Array.from(document.querySelectorAll('[data-ds-bypass]:checked'));
+  if(bypassChecked.length > 0){
+    const labels = bypassChecked.map(cb => cb.parentElement.querySelector('span').textContent.trim());
+    el.innerHTML = `
+      <div class="rec-box" style="border:1.5px solid var(--red);background:var(--red-bg);margin-top:14px">
+        <div class="rec-head" style="background:var(--red);color:#fff"><span>⚠️ אינדיקציה לייעוץ גנטי + דיקור — חישוב סיכון אינו רלוונטי</span></div>
+        <div class="rec-body">
+          <div style="font-size:12.5px;color:var(--text);margin-bottom:10px"><b>אינדיקציות שסומנו:</b></div>
+          <ul class="rec-list" style="margin-bottom:10px">${labels.map(l => `<li><b>${l}</b></li>`).join('')}</ul>
+          <div class="rec-section">
+            <div class="rec-section-title">המלצה</div>
+            <ul class="rec-list">
+              <li><b>ייעוץ גנטי</b> — הפניה דחופה</li>
+              <li><b>CVS (10–13w) או אמניוצנטזה (≥16w)</b> + <b>CMA</b> · במידה ויוחלט על דיקור — <b>מימון בסל הבריאות</b></li>
+              <li>שקול אקסום (WES) לפי הקלינית — נייר עמדה אקסום בסל מ-1/2025</li>
+              <li><b>NIPT לא מספיק כאן</b> — מקרים אלה דורשים אבחנה מוחלטת</li>
+            </ul>
+            <div class="rec-src">נייר עמדה ישראלי #30 · #51 · חוזר משרד הבריאות 13/2014</div>
+          </div>
+        </div>
+      </div>`;
+    return;
   }
-  // Background risk: 1/X
+
+  // Base age risk (denominator at term)
   const baseDenom = ageRiskT21(age);
   let lrCombined = 1;
+  let adjDenom = null; // if mode provides direct result, use it
   const breakdown = [];
   breakdown.push({label:`סיכון בסיסי (גיל ${age})`, value:'1 ב-' + baseDenom, lr:1, base:true});
 
-  // NT
-  const nt = parseFloat(document.getElementById('ds-nt').value);
-  if(!isNaN(nt) && nt>0){
-    const lr = ntLR(nt, crl);
-    lrCombined *= lr;
-    const med = ntMedian(crl);
-    breakdown.push({label:'שקיפות עורפית (NT)', value:`${nt.toFixed(1)} מ"מ (חציון ~${med.toFixed(1)})`, lr});
+  const mode = dsState.mode;
+
+  if(mode === 't1full'){
+    const crl = parseFloat(document.getElementById('ds-crl').value);
+    if(isNaN(crl) || crl<45 || crl>84){
+      el.innerHTML='<div class="note" style="border-right-color:var(--red);background:var(--red-bg);color:var(--red-text)">הזן CRL בטווח 45–84 מ"מ (11+0 עד 13+6)</div>'; return;
+    }
+    const nt = parseFloat(document.getElementById('ds-nt').value);
+    if(!isNaN(nt) && nt>0){
+      const lr = ntLR(nt, crl);
+      lrCombined *= lr;
+      const med = ntMedian(crl);
+      breakdown.push({label:'שקיפות עורפית (NT)', value:`${nt.toFixed(1)} מ"מ (חציון ~${med.toFixed(1)})`, lr});
+    }
+    const nbLRs = {present:0.4, hypoplastic:6, absent:23, unknown:1};
+    if(dsState.nb !== 'unknown'){
+      lrCombined *= nbLRs[dsState.nb];
+      const lbl = {present:'קיימת', hypoplastic:'היפופלסטית', absent:'נעדרת'}[dsState.nb];
+      breakdown.push({label:'עצם אף', value:lbl, lr:nbLRs[dsState.nb]});
+    }
+    const dvLRs = {positive:0.6, reversed:6.6, unknown:1};
+    if(dsState.dv !== 'unknown'){
+      lrCombined *= dvLRs[dsState.dv];
+      breakdown.push({label:'Ductus Venosus a-wave', value:{positive:'חיובי', reversed:'נעדר/הפיך'}[dsState.dv], lr:dvLRs[dsState.dv]});
+    }
+    const trLRs = {absent:0.6, present:24, unknown:1};
+    if(dsState.tr !== 'unknown'){
+      lrCombined *= trLRs[dsState.tr];
+      breakdown.push({label:'Tricuspid Regurgitation', value:{absent:'נעדרת', present:'קיימת'}[dsState.tr], lr:trLRs[dsState.tr]});
+    }
+    const papp = parseFloat(document.getElementById('ds-papp').value);
+    if(!isNaN(papp) && papp>0){
+      let lr = 1;
+      if(papp < 0.3) lr = 6;
+      else if(papp < 0.5) lr = 3;
+      else if(papp < 0.8) lr = 1.5;
+      else if(papp > 1.5) lr = 0.6;
+      lrCombined *= lr;
+      breakdown.push({label:'PAPP-A', value:papp.toFixed(2)+' MoM', lr});
+    }
+    const bhcg = parseFloat(document.getElementById('ds-bhcg').value);
+    if(!isNaN(bhcg) && bhcg>0){
+      let lr = 1;
+      if(bhcg > 3) lr = 6;
+      else if(bhcg > 2) lr = 3;
+      else if(bhcg > 1.5) lr = 1.5;
+      else if(bhcg < 0.5) lr = 0.6;
+      lrCombined *= lr;
+      breakdown.push({label:'free βhCG', value:bhcg.toFixed(2)+' MoM', lr});
+    }
+    adjDenom = Math.round(baseDenom / lrCombined);
   }
-  // Nasal Bone
-  const nbLRs = {present:0.4, hypoplastic:6, absent:23, unknown:1};
-  if(dsState.nb !== 'unknown'){
-    lrCombined *= nbLRs[dsState.nb];
-    const lbl = {present:'קיימת', hypoplastic:'היפופלסטית', absent:'נעדרת'}[dsState.nb];
-    breakdown.push({label:'עצם אף', value:lbl, lr:nbLRs[dsState.nb]});
+  else if(mode === 't1res'){
+    const t1res = parseFloat(document.getElementById('ds-t1res').value);
+    if(isNaN(t1res) || t1res<2){
+      el.innerHTML='<div class="note" style="border-right-color:var(--red);background:var(--red-bg);color:var(--red-text)">הזן את תוצאת סקר T1 (מכנה — לדוגמה 500)</div>'; return;
+    }
+    adjDenom = Math.round(t1res);
+    lrCombined = baseDenom / adjDenom;
+    breakdown.push({label:'תוצאת סקר T1 משולב', value:'1 ב-'+adjDenom, lr:lrCombined});
   }
-  // DV
-  const dvLRs = {positive:0.6, reversed:6.6, unknown:1};
-  if(dsState.dv !== 'unknown'){
-    lrCombined *= dvLRs[dsState.dv];
-    const lbl = {positive:'חיובי', reversed:'נעדר/הפיך'}[dsState.dv];
-    breakdown.push({label:'Ductus Venosus a-wave', value:lbl, lr:dvLRs[dsState.dv]});
+  else if(mode === 't2full'){
+    const w = parseInt(document.getElementById('ds-t2-w').value);
+    if(isNaN(w) || w<15 || w>22){
+      el.innerHTML='<div class="note" style="border-right-color:var(--red);background:var(--red-bg);color:var(--red-text)">בחר גיל הריון (15–22w)</div>'; return;
+    }
+    const afp = parseFloat(document.getElementById('ds-afp').value);
+    const hcgt = parseFloat(document.getElementById('ds-hcgt').value);
+    const ue3 = parseFloat(document.getElementById('ds-ue3').value);
+    const inha = parseFloat(document.getElementById('ds-inha').value);
+    if(isNaN(afp) && isNaN(hcgt) && isNaN(ue3) && isNaN(inha)){
+      el.innerHTML='<div class="note" style="border-right-color:var(--red);background:var(--red-bg);color:var(--red-text)">הזן לפחות סמן ביוכימי אחד</div>'; return;
+    }
+    if(!isNaN(afp)){ const lr=quadLR('afp',afp); lrCombined*=lr; breakdown.push({label:'AFP',value:afp.toFixed(2)+' MoM',lr}); }
+    if(!isNaN(hcgt)){ const lr=quadLR('hcgt',hcgt); lrCombined*=lr; breakdown.push({label:'hCG total',value:hcgt.toFixed(2)+' MoM',lr}); }
+    if(!isNaN(ue3)){ const lr=quadLR('ue3',ue3); lrCombined*=lr; breakdown.push({label:'uE3',value:ue3.toFixed(2)+' MoM',lr}); }
+    if(!isNaN(inha)){ const lr=quadLR('inha',inha); lrCombined*=lr; breakdown.push({label:'Inhibin A',value:inha.toFixed(2)+' MoM',lr}); }
+    adjDenom = Math.round(baseDenom / lrCombined);
   }
-  // TR
-  const trLRs = {absent:0.6, present:24, unknown:1};
-  if(dsState.tr !== 'unknown'){
-    lrCombined *= trLRs[dsState.tr];
-    const lbl = {absent:'נעדרת', present:'קיימת'}[dsState.tr];
-    breakdown.push({label:'Tricuspid Regurgitation', value:lbl, lr:trLRs[dsState.tr]});
+  else if(mode === 't2res'){
+    const t2res = parseFloat(document.getElementById('ds-t2res').value);
+    if(isNaN(t2res) || t2res<2){
+      el.innerHTML='<div class="note" style="border-right-color:var(--red);background:var(--red-bg);color:var(--red-text)">הזן את תוצאת סקר T2 (מכנה)</div>'; return;
+    }
+    adjDenom = Math.round(t2res);
+    lrCombined = baseDenom / adjDenom;
+    breakdown.push({label:'תוצאת סקר T2 / Quad', value:'1 ב-'+adjDenom, lr:lrCombined});
   }
-  // Biochemistry
-  const papp = parseFloat(document.getElementById('ds-papp').value);
-  const bhcg = parseFloat(document.getElementById('ds-bhcg').value);
-  // Approximation: low PAPP-A → higher risk, high free βhCG → higher risk
-  if(!isNaN(papp) && papp>0){
-    let lr = 1;
-    if(papp < 0.3) lr = 6;
-    else if(papp < 0.5) lr = 3;
-    else if(papp < 0.8) lr = 1.5;
-    else if(papp > 1.5) lr = 0.6;
-    else lr = 1;
-    lrCombined *= lr;
-    breakdown.push({label:'PAPP-A', value:papp.toFixed(2)+' MoM', lr});
-  }
-  if(!isNaN(bhcg) && bhcg>0){
-    let lr = 1;
-    if(bhcg > 3) lr = 6;
-    else if(bhcg > 2) lr = 3;
-    else if(bhcg > 1.5) lr = 1.5;
-    else if(bhcg < 0.5) lr = 0.6;
-    else lr = 1;
-    lrCombined *= lr;
-    breakdown.push({label:'free βhCG', value:bhcg.toFixed(2)+' MoM', lr});
+  else if(mode === 'integrated'){
+    const t1 = parseFloat(document.getElementById('ds-int-t1').value);
+    const t2 = parseFloat(document.getElementById('ds-int-t2').value);
+    if(isNaN(t1) || isNaN(t2) || t1<2 || t2<2){
+      el.innerHTML='<div class="note" style="border-right-color:var(--red);background:var(--red-bg);color:var(--red-text)">הזן את שתי התוצאות (T1 ו-T2)</div>'; return;
+    }
+    // Convert each to LR vs age baseline, multiply (assume independence — paper #16 integrated approach)
+    const lrT1 = baseDenom / t1;
+    const lrT2 = baseDenom / t2;
+    const combinedLR = lrT1 * lrT2;
+    lrCombined = combinedLR;
+    adjDenom = Math.round(baseDenom / combinedLR);
+    breakdown.push({label:'תוצאת סקר T1', value:'1 ב-'+Math.round(t1), lr:lrT1});
+    breakdown.push({label:'תוצאת סקר T2 / Quad', value:'1 ב-'+Math.round(t2), lr:lrT2});
   }
 
-  const adjDenom = Math.round(baseDenom / lrCombined);
-  // Risk classification
+  // ─── Apply soft markers (LR multipliers from paper #30) ───
+  const softChecked = Array.from(document.querySelectorAll('[data-ds-soft]:checked'));
+  let softLR = 1;
+  for(const cb of softChecked){
+    const lr = parseFloat(cb.dataset.lr) || 1;
+    softLR *= lr;
+    const lbl = cb.parentElement.querySelector('span').firstElementChild?.textContent || cb.dataset.dsSoft;
+    breakdown.push({label:'סמן רך — '+lbl, value:`LR=${lr}`, lr, soft:true});
+  }
+  if(softLR !== 1){
+    lrCombined *= softLR;
+    adjDenom = Math.round(baseDenom / lrCombined);
+  }
+
+  // Hard floor / ceiling
+  if(adjDenom < 2) adjDenom = 2;
+  if(adjDenom > 100000) adjDenom = 100000;
+
+  // ─── Classification vs 1:380 cutoff ───
+  // High: ≤1:380 (denominator ≤ 380) — counseling + amnio funded
+  // Borderline: 1:381–1:1000 — consider NIPT
+  // Low: >1:1000
   let cls, label;
-  if(adjDenom <= 100){ cls='bad'; label='סיכון גבוה (≥ 1:100)'; }
-  else if(adjDenom <= 250){ cls='warn'; label='סיכון בינוני (1:101–1:250)'; }
-  else if(adjDenom <= 1000){ cls='warn'; label='סיכון גבולי (1:251–1:1000)'; }
-  else { cls='ok'; label='סיכון נמוך (> 1:1000)'; }
+  if(adjDenom <= 100){ cls='bad'; label='סיכון גבוה מאוד (≥ 1:100)'; }
+  else if(adjDenom <= DS_CUTOFF){ cls='bad'; label=`גבוה — מעבר לסף 1:${DS_CUTOFF}`; }
+  else if(adjDenom <= 1000){ cls='warn'; label=`גבולי (1:${DS_CUTOFF+1}–1:1000)`; }
+  else { cls='ok'; label='נמוך (> 1:1000)'; }
   const colorMap={ok:'var(--green)',warn:'var(--amber)',bad:'var(--red)'};
 
-  let html = `<div class="result">
-    <div class="result-label">סיכון מותאם — טריזומיה 21</div>
-    <div class="big" style="color:${colorMap[cls]}">1 ב-${adjDenom}</div>
-    <div class="zscore">גיל ${age} · בסיס 1 ב-${baseDenom} · LR משולב ×${lrCombined.toFixed(1)}</div>
-    ${badge(cls, label)}
-    ${cls==='bad' ? '<div class="note" style="border-right-color:var(--red);background:var(--red-bg);margin-top:10px"><b>המלצה:</b> בדיקה אבחנתית (CVS/אמניוצנטזה) או NIPT. ייעוץ גנטי.</div>' : ''}
-    ${cls==='warn' ? '<div class="note" style="border-right-color:var(--amber);background:var(--amber-bg);margin-top:10px"><b>המלצה:</b> NIPT מומלץ. ייעוץ גנטי לדיון.</div>' : ''}
-  </div>`;
+  const modeLabels = {
+    t1full: 'סקר T1 מפורט',
+    t1res: 'סקר T1 — תוצאה',
+    t2full: 'סקר T2 / Quad מפורט',
+    t2res: 'סקר T2 — תוצאה',
+    integrated: 'משולב T1+T2',
+  };
 
-  // Breakdown
+  let html = `<div class="result">
+    <div class="result-label">סיכון מותאם — טריזומיה 21 · ${modeLabels[mode]}</div>
+    <div class="big" style="color:${colorMap[cls]}">1 ב-${adjDenom}</div>
+    <div class="zscore">גיל ${age} · בסיס 1 ב-${baseDenom} · LR משולב ×${lrCombined.toFixed(2)}${softLR!==1?' (כולל סמנים רכים ×'+softLR.toFixed(2)+')':''}</div>
+    ${badge(cls, label)}`;
+
+  // 1:380 cutoff explainer
+  const cutoffComparison = adjDenom <= DS_CUTOFF
+    ? `<div class="note" style="border-right-color:var(--red);background:var(--red-bg);margin-top:10px;font-size:12.5px"><b>📍 חציית סף 1:${DS_CUTOFF}</b> (חוזר 13/2014 + נייר #30) — אינדיקציה לייעוץ גנטי + שקול דיקור אבחנתי. <b>מימון בסל הבריאות.</b></div>`
+    : `<div class="note" style="border-right-color:var(--green);background:var(--green-bg);margin-top:10px;font-size:12.5px"><b>🟢 מתחת לסף 1:${DS_CUTOFF}</b> — לא נדרשת התוויה גנטית מהחישוב. NIPT אפשרי לפי בקשת המטופלת (לא בסל).</div>`;
+  html += cutoffComparison;
+
+  // Age 32+ funded amnio note (in result too)
+  if(age >= 32){
+    html += `<div class="note" style="border-right-color:var(--green);background:var(--green-bg);margin-top:8px;font-size:12.5px"><b>💰 גיל ≥32:</b> מימון אמניוצנטזה בסל הבריאות זמין ללא תלות בתוצאה (CMA כלול).</div>`;
+  }
+
+  html += `</div>`;
+
+  // Breakdown card
   html += `<div class="chart-card">
     <div class="chart-head"><div class="chart-title">פירוק הסמנים</div></div>`;
   for(const b of breakdown){
     const lrColor = b.base ? 'var(--text)' : b.lr > 1 ? 'var(--red)' : 'var(--green)';
-    html += `<div style="display:flex;align-items:center;gap:14px;padding:10px 4px;border-bottom:1px solid var(--border)">
+    html += `<div style="display:flex;align-items:center;gap:14px;padding:10px 4px;border-bottom:1px solid var(--border)${b.soft?';background:var(--amber-bg)':''}">
       <div style="flex:1;min-width:0">
         <div style="font-size:13px;font-weight:600;color:var(--text)">${b.label}</div>
         <div style="font-size:11.5px;color:var(--text3);margin-top:2px">${b.value}</div>
@@ -12248,16 +12949,28 @@ function calcDsRisk(){
   }
   html += '</div>';
 
+  // Recommendation card
   html += `<div class="rec-box">
-    <div class="rec-head"><span>אפשרויות אבחון</span><span class="rec-tag rec-tag-${cls}">${label}</span></div>
+    <div class="rec-head"><span>המלצות והמשך</span><span class="rec-tag rec-tag-${cls}">${label}</span></div>
     <div class="rec-body">
-      <ul class="rec-list">
-        <li><b>NIPT:</b> רגישות 99% לטריזומיה 21 · אינו אבחנתי</li>
-        <li><b>CVS (10-13w):</b> אבחנתי · ~1% הפלה</li>
-        <li><b>מי שפיר (≥16w):</b> אבחנתי · ~0.3% הפלה</li>
-        <li><b>סקירת מערכות 19-23w:</b> "סמני T2" — אם NT היה חשוד, מעקב באקו לב + סקירה מורחבת</li>
+      <ul class="rec-list">`;
+  if(adjDenom <= DS_CUTOFF){
+    html += `
+        <li class="crit"><b>ייעוץ גנטי</b> — הפניה</li>
+        <li><b>אבחנתי — CVS (10–13w) או אמניוצנטזה (≥16w) + CMA</b> · <b>מימון בסל</b></li>
+        <li><b>NIPT</b> — אפשרי כסקר משני אם המטופלת מסרבת לדיקור · רגישות T21 >98%</li>`;
+  } else {
+    html += `
+        <li><b>אין אינדיקציה לדיקור אבחנתי</b> מהחישוב</li>
+        <li><b>NIPT</b> — אפשרי לפי בקשת המטופלת (פרטי, לא בסל) · נייר #51 ממליץ כסקר ראשוני מוצדק לכולן</li>
+        <li><b>סקירת מערכות 19–23w</b> — בכל הריון, ללא תלות בתוצאה</li>`;
+  }
+  if(age >= 32){
+    html += `<li class="crit"><b>גיל ≥32:</b> זכאות לדיקור אבחנתי + CMA בסל ללא תלות בתוצאה</li>`;
+  }
+  html += `
       </ul>
-      <div class="rec-src">Nicolaides KH AJOG 2011 · Cicero Lancet 2001 · Maiz UOG 2009 · Faiola UOG 2005</div>
+      <div class="rec-src">נייר עמדה #30 (ינואר 2026) · נייר עמדה #51 (אוגוסט 2023) · חוזר משרד הבריאות 13/2014 · FMF Combined Test</div>
     </div>
   </div>`;
 
