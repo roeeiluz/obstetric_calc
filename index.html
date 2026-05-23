@@ -4759,7 +4759,8 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="ref">
-        <b>משרד הבריאות, האיגוד הישראלי למיילדות וגינקולוגיה:</b> מעקב הריון תקין — תוכנית בדיקות מומלצת<br>
+        <b>נייר עמדה ישראלי #6 (דצמבר 2024):</b> מעקב הריון בסיכון נמוך — האיגוד הישראלי למיילדות (החברה לרפואת האם והעובר)<br>
+        <b>נייר עמדה ישראלי #8 (ינואר 2026, מהדורה 4):</b> הנחיות לביצוע אולטרה-סאונד בהיריון — איגוד אולטרסאונד + AAM — <b>4 סקרי US מומלצים:</b> T1 (6-12) · NT (11-13+6) · סקירה מאוחרת (20-24) · גדילה T3 (29-34)<br>
         <b>סל בריאות 2023:</b> סקר משולב T1, סקר ביוכימי T2, סקירה מאוחרת · <b>NIPT — אינו בסל הבריאות</b>, אופציה פרטית / ביטוח משלים<br>
         <b>ACOG Practice Bulletins:</b> 226 (אבחון כרומוזומלי) · 222 (יל"ד) · 190 (GDM) · 200 (חיסונים) · 234 (תאומים)<br>
         <b>הערה:</b> ההמלצות מותאמות אישית על בסיס מצבי רקע. בדיקות פרטיות מסומנות בנפרד.
@@ -6774,7 +6775,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.13';
+const APP_VERSION = '4.14';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -14389,7 +14390,7 @@ function getPpRiskItems(state){
 
   // Age ≥35
   if(state.age >= 35){
-    items.push({fromW:10, toW:13, label:'NIPT — אופציה פרטית מומלצת', cat:'optional', priority:'high',
+    items.push({fromW:10, toW:13, label:'NIPT — אופציה פרטית מומלצת', cat:'optional', groups:['genetics'], priority:'high',
       tests:'גילוי טריזומיות 21/18/13 ברגישות 99% · במקום או בנוסף לסקר משולב · אינו בסל הבריאות, תשלום פרטי / ביטוח משלים',
       reason:'גיל אמהי מתקדם'});
     items.push({fromW:21, toW:24, label:'אקו לב עוברי', cat:'us', priority:'medium',
@@ -14420,7 +14421,7 @@ function getPpRiskItems(state){
     items.push({fromW:11, toW:13, label:'סקירת מקום שליה — שליית פתח / אקרטה', cat:'us', priority:'high',
       tests:'הערכת מיקום שליה ביחס לצלקת — חשד לאקרטה',
       reason:'קיסרי קודם'});
-    items.push({fromW:18, toW:22, label:'סקירה מאוחרת — דגש על שליה', cat:'us', priority:'high',
+    items.push({fromW:20, toW:24, label:'סקירה מאוחרת — דגש על שליה', cat:'us', priority:'high',
       tests:'הערכה מורחבת לאקרטה / פרקרטה / אינקרטה',
       reason:'קיסרי קודם'});
     items.push({fromW:28, toW:32, label:'דיון על מסלול לידה (TOLAC vs CS)', cat:'visit', priority:'high',
@@ -14649,13 +14650,13 @@ function getPpRiskItems(state){
     items.push({fromW:12, toW:16, label:'<b>ASA 100-150 מ"ג/יום</b>', cat:'lab', priority:'high',
       tests:'מניעת רעלת — סיכון משמעותי בגיל 45+ (גורם סיכון מוסכם בנייר #18 ו-USPSTF)',
       reason:'גיל 45+'});
-    items.push({fromW:10, toW:13, label:'<b>NIPT מומלץ בעדיפות גבוהה</b>', cat:'optional', priority:'high',
+    items.push({fromW:10, toW:13, label:'<b>NIPT מומלץ בעדיפות גבוהה</b>', cat:'optional', groups:['genetics'], priority:'high',
       tests:'סיכון לטריזומיה 21 בגיל 45: 1:25 (לעומת 1:1300 בגיל 25). NIPT — רגישות >98%. ראה נייר #51',
       reason:'גיל 45+'});
-    items.push({fromW:11, toW:14, label:'דיון על דיקור אבחנתי (CVS) מוקדם', cat:'optional', priority:'medium',
+    items.push({fromW:11, toW:14, label:'דיון על דיקור אבחנתי (CVS) מוקדם', cat:'optional', groups:['genetics'], priority:'medium',
       tests:'גיל 45+ מהווה אינדיקציה לדיקור גם בלי סקר חיובי — לדון ביתרונות (אבחנה ודאית) מול סיכון (~1% הפלה)',
       reason:'גיל 45+'});
-    items.push({fromW:18, toW:22, label:'<b>סקירה מאוחרת + Doppler UtA</b>', cat:'us', priority:'high',
+    items.push({fromW:20, toW:24, label:'<b>סקירה מאוחרת + Doppler UtA</b>', cat:'us', priority:'high',
       tests:'הערכת סיכון רעלת ע"י Doppler עורקים רחמיים (UtA-PI)',
       reason:'גיל 45+'});
     items.push({fromW:21, toW:24, label:'אקו לב עוברי', cat:'us', priority:'high',
@@ -14673,7 +14674,7 @@ function getPpRiskItems(state){
 
   // Recurrent miscarriage
   if(state.r_recurrent_misc){
-    items.push({fromW:6, toW:8, label:'בירור הפלות חוזרות', cat:'lab', priority:'high',
+    items.push({fromW:6, toW:8, label:'בירור הפלות חוזרות', cat:'lab', groups:['lab','genetics'], priority:'high',
       tests:'APL · קריוטיפ זוגי · TSH · פרולקטין · אנטומיה רחמית',
       reason:'הפלות חוזרות'});
   }
@@ -14711,20 +14712,26 @@ const ppStandardSchedule = [
   {fromW:16, toW:19, label:'CMV — סקר 3 (לסרונגטיביות)', cat:'lab',
    tests:'<b>חזרת IgG ו-IgM</b> ביחד עם הסקר הביוכימי השני. רק לנשים שנשארו סרונגטיביות בסקר 2. <b>אין לבדוק אחרי שבוע 20</b> — תחלואה עוברית מהדבקה מאוחרת זניחה',
    src:'נייר עמדה ישראלי #7 (CMV — 2025), שלב 3 באלגוריתם'},
-  {fromW:10, toW:13, label:'שקיפות עורפית (NT) + סקר משולב', cat:'us',
-   tests:'NT + PAPP-A + free βhCG · חישוב סיכון לטריזומיות · אישור גיל הריון'},
-  {fromW:10, toW:22, label:'NIPT (אופציה פרטית)', cat:'optional',
+  {fromW:6, toW:12, label:'US שליש ראשון — חיוניות + תיארוך', cat:'us', groups:['us'],
+   tests:'<b>חיוניות · מספר עוברים · כוריוניות (בתאומים) · CRL לתיארוך · אנטומיה בסיסית.</b> תיקון EDD לפי CRL מותר עד 13+6',
+   src:'נייר עמדה ישראלי #8 (US בהריון — מהדורה 4, ינואר 2026) · בדיקה 1 מתוך 4'},
+  {fromW:11, toW:13, label:'סקירת NT + סקר משולב', cat:'us', groups:['us','genetics'],
+   tests:'<b>CRL 45-84 מ"מ</b> · NT + PAPP-A + free βhCG · עצם אף · DV · חישוב סיכון לטריזומיות 21/18/13',
+   src:'נייר עמדה ישראלי #8 (US בהריון — מהדורה 4, ינואר 2026) · בדיקה 2 מתוך 4'},
+  {fromW:10, toW:22, label:'NIPT (אופציה פרטית)', cat:'optional', groups:['genetics'],
    tests:'DNA חופשי · טריזומיות 21/18/13 · רגישות 99% · <b>אינו בסל הבריאות</b> — תשלום פרטי או ביטוח משלים'},
-  {fromW:14, toW:17, label:'סקר ביוכימי שני (טריפל/קוואד)', cat:'lab',
+  {fromW:14, toW:17, label:'סקר ביוכימי שני (טריפל/קוואד)', cat:'lab', groups:['lab','genetics'],
    tests:'αFP, βhCG, uE3 (+ inhibin A בקוואד) · טריזומיה 21 ופגמי נורית עצבית'},
-  {fromW:14, toW:17, label:'סקירה מוקדמת (פרטי)', cat:'optional',
-   tests:'אנטומיה מוקדמת · לב · גפיים · בטן · מוח'},
-  {fromW:10, toW:13, label:'סיסי שליה (CVS — אם מתאים)', cat:'optional',
-   tests:'אבחנה בטרימסטר ראשון — אם סקר חיובי'},
-  {fromW:16, toW:22, label:'מי שפיר (אם מתאים)', cat:'optional',
+  {fromW:14, toW:17, label:'סקירה מוקדמת (פרטי — אינה תחליף לסקירה המאוחרת)', cat:'optional', groups:['us'],
+   tests:'אנטומיה מוקדמת · לב עוברי · גפיים · בטן · מוח · <b>אופציונלי בלבד</b> — אינה מחליפה את סקירת המערכות המאוחרת',
+   src:'נייר עמדה ישראלי #8 (US בהריון — מהדורה 4, ינואר 2026) · בדיקה אופציונלית'},
+  {fromW:10, toW:13, label:'סיסי שליה (CVS — אם מתאים)', cat:'optional', groups:['genetics'],
+   tests:'אבחנה בטרימסטר ראשון — אם סקר חיובי / סיכון גבוה'},
+  {fromW:16, toW:22, label:'מי שפיר (אם מתאים)', cat:'optional', groups:['genetics'],
    tests:'אבחנה — שקול אם סקר חיובי / גיל מתקדם / ממצאים סונוגרפיים'},
-  {fromW:19, toW:23, label:'סקירה מאוחרת (סקירת מערכות)', cat:'us',
-   tests:'אנטומיה מקיפה · ביומטריה · שליה · מי שפיר · UtA-PI'},
+  {fromW:20, toW:24, label:'סקירת מערכות מאוחרת', cat:'us', groups:['us'],
+   tests:'<b>אנטומיה מקיפה · ביומטריה · שליה · מי שפיר · UtA-PI</b> (לסיכון רעלת)',
+   src:'נייר עמדה ישראלי #8 (US בהריון — מהדורה 4, ינואר 2026) · בדיקה 3 מתוך 4'},
   {fromW:24, toW:28, label:'GCT 50g (סקר GDM)', cat:'lab',
    tests:'בדיקת העמסה 50 גרם · GTT 100g אם חיובי',
    src:'נייר עמדה ישראלי #16 (GDM)'},
@@ -14743,8 +14750,9 @@ const ppStandardSchedule = [
   {fromW:28, toW:34, label:'סקר אנמיה (T3)', cat:'lab',
    tests:'Hb · פריטין · MCV · אם Hb<11 (T3) → ברזל פומי 60mg יסודי × 1-2/יום · אם Hb<9 או פומי לא נסבל → ברזל IV',
    src:'נייר עמדה ישראלי #49 (אנמיה בהריון)'},
-  {fromW:30, toW:32, label:'סקירת גדילה / סקירה שלישית', cat:'us',
-   tests:'EFW אחוזון · שליה · מי שפיר · ביומטריה · מנח'},
+  {fromW:29, toW:34, label:'הערכת גדילה T3 (סקירה שלישית)', cat:'us', groups:['us'],
+   tests:'<b>EFW + אחוזון · מצב שליה · כמות מי שפיר · ביומטריה · מנח עוברי</b>',
+   src:'נייר עמדה ישראלי #8 (US בהריון — מהדורה 4, ינואר 2026) · בדיקה 4 מתוך 4'},
   {fromW:35, toW:37, label:'GBS', cat:'lab',
    tests:'תרבית רקטו-וגינלית · פניצילין IV בלידה אם חיובי (5 mU bolus, 2.5 mU/4h) · אלרגיה: Cefazolin / Clindamycin',
    src:'נייר עמדה ישראלי #22 (GBS)'},
@@ -14901,10 +14909,23 @@ function calcPp(){
   const catColors = {visit:'var(--primary)', lab:'var(--teal)', us:'var(--purple)', optional:'var(--text3)'};
   const catLabels = {visit:'ביקור', lab:'מעבדה', us:'אולטרסאונד', optional:'אופציונלי'};
 
+  // Helper: each item has a `groups` array (e.g. ['us'], ['lab','genetics']).
+  // Fallback to its `cat` when groups isn't defined.
+  const itemGroups = (it) => {
+    if(Array.isArray(it.groups) && it.groups.length) return it.groups;
+    if(it.cat === 'us') return ['us'];
+    if(it.cat === 'lab') return ['lab'];
+    return [];
+  };
+
   // Counts for filter
   const riskCount = allItems.filter(i=>i.source==='risk').length;
   const standardCount = allItems.filter(i=>i.source==='standard').length;
-  const currentFilter = window._ppFilter || 'all'; // 'all' | 'risk' | 'current'
+  const usCount = allItems.filter(i=>itemGroups(i).includes('us')).length;
+  const labCount = allItems.filter(i=>itemGroups(i).includes('lab')).length;
+  const genCount = allItems.filter(i=>itemGroups(i).includes('genetics')).length;
+  const currentFilter = window._ppFilter || 'all'; // 'all' | 'risk' | 'standard' | 'current'
+  const currentCat    = window._ppCatFilter || 'allcat'; // 'allcat' | 'us' | 'lab' | 'genetics'
 
   html += `<div class="chart-card">
     <div class="chart-head">
@@ -14914,8 +14935,8 @@ function calcPp(){
       </div>
     </div>
 
-    <!-- Filter toolbar -->
-    <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 4px;border-bottom:1px solid var(--border);margin-bottom:8px">
+    <!-- Filter toolbar — row 1: source -->
+    <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 4px 8px 4px;border-bottom:1px solid var(--border);margin-bottom:0">
       <button onclick="setPpFilter('all')" type="button" style="font-size:12px;padding:7px 13px;border-radius:999px;border:1px solid var(--border);background:${currentFilter==='all'?'var(--primary)':'var(--surface2)'};color:${currentFilter==='all'?'#fff':'var(--text2)'};font-weight:${currentFilter==='all'?'700':'500'};cursor:pointer">
         כל ההמלצות (${allItems.length})
       </button>
@@ -14934,15 +14955,38 @@ function calcPp(){
           הורד טבלה (Excel/CSV)
         </button>
       </div>
+    </div>
+
+    <!-- Filter toolbar — row 2: category -->
+    <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:8px 4px 10px 4px;border-bottom:1px solid var(--border);margin-bottom:8px">
+      <span style="font-size:11.5px;font-weight:600;color:var(--text3);margin-left:4px">סוג בדיקה:</span>
+      <button onclick="setPpCatFilter('allcat')" type="button" style="font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--border);background:${currentCat==='allcat'?'var(--text)':'var(--surface2)'};color:${currentCat==='allcat'?'var(--bg)':'var(--text2)'};font-weight:${currentCat==='allcat'?'700':'500'};cursor:pointer">
+        הכל
+      </button>
+      <button onclick="setPpCatFilter('us')" type="button" style="font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--purple);background:${currentCat==='us'?'var(--purple)':'var(--surface2)'};color:${currentCat==='us'?'#fff':'var(--purple)'};font-weight:${currentCat==='us'?'700':'600'};cursor:pointer" ${usCount===0?'disabled':''}>
+        אולטרסאונד (${usCount})
+      </button>
+      <button onclick="setPpCatFilter('lab')" type="button" style="font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--teal);background:${currentCat==='lab'?'var(--teal)':'var(--surface2)'};color:${currentCat==='lab'?'#fff':'var(--teal)'};font-weight:${currentCat==='lab'?'700':'600'};cursor:pointer" ${labCount===0?'disabled':''}>
+        מעבדה (${labCount})
+      </button>
+      <button onclick="setPpCatFilter('genetics')" type="button" style="font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--amber);background:${currentCat==='genetics'?'var(--amber)':'var(--surface2)'};color:${currentCat==='genetics'?'#fff':'var(--amber-text)'};font-weight:${currentCat==='genetics'?'700':'600'};cursor:pointer" ${genCount===0?'disabled':''}>
+        גנטיקה — NIPT / מי שפיר / סיסים (${genCount})
+      </button>
     </div>`;
 
-  // Apply filter
+  // Apply filter — source AND category must both pass
   const filteredItems = allItems.filter(item => {
-    if(currentFilter === 'risk') return item.source === 'risk';
-    if(currentFilter === 'standard') return item.source === 'standard';
-    if(currentFilter === 'current'){
-      const isPastItem = currentGaDays > item.toW*7+6;
-      return !isPastItem; // current or future only
+    // Source filter (row 1)
+    let passSrc = true;
+    if(currentFilter === 'risk') passSrc = item.source === 'risk';
+    else if(currentFilter === 'standard') passSrc = item.source === 'standard';
+    else if(currentFilter === 'current'){
+      passSrc = currentGaDays <= item.toW*7+6;
+    }
+    if(!passSrc) return false;
+    // Category filter (row 2)
+    if(currentCat !== 'allcat'){
+      if(!itemGroups(item).includes(currentCat)) return false;
     }
     return true;
   });
@@ -15046,6 +15090,14 @@ function setPpFilter(mode){
   window._ppFilter = mode;
   calcPp();
   // Scroll the results section back into view smoothly
+  const el = document.getElementById('pp-res');
+  if(el) el.scrollIntoView({block:'start', behavior:'smooth'});
+}
+
+// ── Pregnancy plan category filter (US / lab / genetics) ──
+function setPpCatFilter(mode){
+  window._ppCatFilter = mode;
+  calcPp();
   const el = document.getElementById('pp-res');
   if(el) el.scrollIntoView({block:'start', behavior:'smooth'});
 }
