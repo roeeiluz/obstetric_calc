@@ -1732,6 +1732,10 @@
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="6" r="2.5"/><path d="M5 18c1-3 3-5 5-5s4 2 5 5"/><path d="M3 11l3 1M17 11l-3 1"/></svg>
           <span>פרע כתפיים</span>
         </button>
+        <button class="tab" onclick="showTab('iptus',this)" role="tab">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a7 7 0 1 1 14 0v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3Z"/><path d="M6.5 11l1.5-2 1.5 3 1.5-2 1.5 2"/></svg>
+          <span>US בלידה</span>
+        </button>
         <button class="tab" onclick="showTab('nrp',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="6" r="3"/><path d="M5 18c1-3 3-5 5-5s4 2 5 5"/><path d="M10 9v3M8 12h4"/></svg>
           <span>NRP החייאת ילוד</span>
@@ -2938,12 +2942,7 @@
   </div>
 
   <!-- ===== Down Syndrome Risk Assessment (FMF First-Trimester Combined Test) ===== -->
-  <div id="dsrisk" class="dsrisk-inline-area" style="display:none">
-    <button type="button" onclick="hideDsRiskInline()"
-      style="display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;padding:7px 14px;background:var(--primary-bg);border:1px solid var(--primary);border-radius:999px;color:var(--primary);font-size:12.5px;font-weight:600;font-family:inherit;cursor:pointer">
-      <svg viewBox="0 0 14 14" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3l-4 4 4 4"/></svg>
-      חזרה לסמנים וגנטיקה
-    </button>
+  <div id="dsrisk" class="dsrisk-inline-area" style="display:none;margin-top:14px">
 
     <details class="ref-wrap">
       <summary>
@@ -3152,6 +3151,598 @@
 
     <button class="btn btn-primary" onclick="calcDsRisk()">חשב סיכון</button>
     <div id="ds-res"></div>
+  </div>
+
+  <!-- ===== Intrapartum Ultrasound (US בלידה) — ISUOG 2018 Practice Guideline ===== -->
+  <div id="iptus" class="panel">
+    <details class="ref-wrap">
+      <summary>
+        <svg class="ref-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5h7l3 3v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1Z"/><path d="M10 2.5v3h3"/><path d="M5 9h6M5 11.5h4"/></svg>
+        <span>מקורות וקריטריונים</span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="ref">
+        <b>ISUOG Practice Guidelines (Ghi T, Eggebø T et al. UOG 2018;52:128–139):</b> Intrapartum ultrasound — סטנדרטים מקצועיים<br>
+        <b>AOP (Angle of Progression):</b> Barbera AF, Pilu G et al. AJOG 2009;200:313 — היחס המבוסס לחיזוי לידה נרתיקית<br>
+        <b>HPD (Head-Perineum Distance):</b> Eggebø TM et al. UOG 2008;32:199 — מדידה אובייקטיבית של תחנת הראש<br>
+        <b>Head direction / MLA / HSD:</b> Tutschek B et al. UOG 2013;41:425<br>
+        <b>תפקיד US תוך-לידתי:</b> אבחנת מנח (OA/OP/OT) — דיוק >90% (לעומת ~70% של בדיקה ידנית) · חיזוי הצלחת מכשירני · החלטה בין מכשירני לקיסרי · ניטור התקדמות שלב שני
+      </div>
+    </details>
+
+    <div class="info-frame" style="margin-top:8px">
+      <div class="sec" style="margin-top:0">לחץ על קלף לפרטים</div>
+      <div class="pph-cards" id="iptus-cards-nav">
+        <button class="pph-card active" data-pph="aop" onclick="showPphSection('aop', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16l8-10M4 16l12 0"/><path d="M8 16a4 4 0 0 0 0-3"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">AOP — זווית התקדמות</div><div class="pph-card-sub">סגיטלי · ≥120° חיובי · ≥150° מיידי</div></div>
+        </button>
+        <button class="pph-card" data-pph="hpd" onclick="showPphSection('hpd', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="7" r="4"/><path d="M3 17h14M10 11v6"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">HPD — מרחק ראש-פרינאום</div><div class="pph-card-sub">טרנסוורסי · &lt;40 mm חיובי</div></div>
+        </button>
+        <button class="pph-card" data-pph="position" onclick="showPphSection('position', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="6"/><circle cx="8" cy="9" r="1" fill="currentColor"/><circle cx="12" cy="9" r="1" fill="currentColor"/><path d="M10 4v12"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">אבחנת מנח</div><div class="pph-card-sub">OP / OT / אסינקליטיזם</div></div>
+        </button>
+        <button class="pph-card" data-pph="indications" onclick="showPphSection('indications', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3h7l3 3v11H5z"/><path d="M12 3v3h3M7 9h6M7 12h6M7 15h4"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">אינדיקציות לביצוע</div><div class="pph-card-sub">מתי להפעיל US בלידה</div></div>
+        </button>
+        <button class="pph-card" data-pph="extra" onclick="showPphSection('extra', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h12M4 10h12M4 14h8"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">מדדים נוספים</div><div class="pph-card-sub">MLA · HSD · Head direction</div></div>
+        </button>
+        <button class="pph-card" data-pph="vacuum" onclick="showPphSection('vacuum', this)">
+          <div class="pph-card-ico"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h10v6a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V7Z"/><path d="M8 7V4M12 7V4"/><path d="M3 5h14"/></svg></div>
+          <div class="pph-card-text"><div class="pph-card-title">🧪 סיכוי הצלחת ואקום</div><div class="pph-card-sub">AOP + HPD + מנח + לידנות · ניסיוני</div></div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Section: AOP -->
+    <div class="pph-detail-area" data-pph-sec="aop">
+      <div class="sec" style="margin-top:0">AOP — Angle of Progression (זווית התקדמות)</div>
+
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>הגדרה ושיטת מדידה</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">ISUOG 2018</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">מה זה</div>
+            <ul class="rec-list">
+              <li><b>הזווית בין הציר הארוך של ה-symphysis pubis</b> לבין קו מהשפה התחתונה של ה-symphysis המשיק לקצה הראש העוברי</li>
+              <li>סמן <b>אובייקטיבי וכמותי</b> לחיזוי לידה נרתיקית; משחזר תחנת ראש טוב יותר מבדיקה ידנית</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">איך מודדים</div>
+            <ul class="rec-list">
+              <li><b>מתמר 3.5–5 MHz, קונבקס</b> · בכיסוי סטרילי (Probe cover)</li>
+              <li><b>מנח טרנספרינאלי בחתך סגיטלי</b> — בין השפתיים הגדולות, בקו אמצע מאוד</li>
+              <li>זיהוי: <b>symphysis pubis</b> (אקוגני, באמצע התמונה) → <b>קצה הראש העוברי</b> נראה לאחור</li>
+              <li>הצב קו לאורך ה-symphysis · הצב קו שני מהשפה התחתונה של ה-symphysis באופן המשיק לקו הראש העוברי · המדידה היא <b>הזווית ביניהם</b></li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">הנחת המתמר — טרנספרינאלי סגיטלי</div>
+            <img src="assets/iptus/tpu-sagittal.png" alt="Transperineal sagittal probe placement — anatomic diagram and US image" style="max-width:100%;height:auto;display:block;margin:6px auto;border-radius:6px">
+            <div style="font-size:11px;color:var(--text3);margin-top:4px;text-align:center">משמאל: הנחת המתמר על הפרינאום בקו אמצע · במרכז: אנטומיה (symphysis, ראש העובר) · מימין: תמונת US עם הסימון</div>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">דוגמה ויזואלית — תמונת US עם סימון AoP</div>
+            <img src="assets/iptus/aop-measurement.png" alt="AOP measurement on intrapartum US — symphysis pubis, AoP angle, fetal head" style="max-width:100%;height:auto;display:block;margin:6px auto;border-radius:6px">
+            <div style="font-size:11px;color:var(--text3);margin-top:4px;text-align:center">symphysis pubis בקו עליון, AoP מסומן, קצה הראש העוברי בקו תחתון</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px;border-right:3px solid var(--primary)">
+        <div class="rec-head"><span>ספי החלטה</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">Barbera 2009 · Kalache 2009</span></div>
+        <div class="rec-body">
+          <div class="ref-table-wrap">
+            <table class="ref-table" aria-label="AOP thresholds">
+              <thead>
+                <tr><th>AOP</th><th>תחנה (Station)</th><th>פירוש קליני</th><th>פעולה</th></tr>
+              </thead>
+              <tbody>
+                <tr style="background:var(--green-bg)">
+                  <td><b>≥ 150°</b></td>
+                  <td>+3 ומטה</td>
+                  <td>לידה נרתיקית <b>מיידית/קרובה</b> (תוך דקות–שעה)</td>
+                  <td>שלב שני אקטיבי — לעודד יציאה</td>
+                </tr>
+                <tr>
+                  <td><b>140°–149°</b></td>
+                  <td>+2 עד +2.5</td>
+                  <td>חיזוי טוב מאוד ללידה נרתיקית</td>
+                  <td>המשך מעקב</td>
+                </tr>
+                <tr>
+                  <td><b>120°–139°</b></td>
+                  <td>+1 עד +1.5</td>
+                  <td>חיזוי טוב ללידה ספונטנית</td>
+                  <td>המשך מעקב / שיקול ואקום אם תנאים</td>
+                </tr>
+                <tr style="background:var(--amber-bg)">
+                  <td><b>116°</b></td>
+                  <td>0 (Ischial spines)</td>
+                  <td>תחנה אפס — נקודת ייחוס</td>
+                  <td>שיקול דעת לפי קלינית</td>
+                </tr>
+                <tr style="background:var(--amber-bg)">
+                  <td><b>95°–115°</b></td>
+                  <td>−2 עד −0.5</td>
+                  <td>אזור ביניים — ראש לא תחת אפס</td>
+                  <td>מעקב התקדמות · ואקום לרוב לא מומלץ</td>
+                </tr>
+                <tr style="background:var(--red-bg)">
+                  <td><b>&lt; 95°</b></td>
+                  <td>−2.5 ומעלה</td>
+                  <td>בשלב שני — <b>חיזוי כישלון לידה נרתיקית</b></td>
+                  <td>שקול קיסרי / אין מקום למכשירני</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="font-size:11px;color:var(--text3);margin-top:8px;line-height:1.55;padding:0 2px">
+            <b>נוסחה (Tutschek B et al. UOG 2013):</b> Station (cm) = AOP° × 0.0937 − 10.911
+          </div>
+          <details style="margin-top:10px;border:1px solid var(--border);border-radius:8px;overflow:hidden">
+            <summary style="cursor:pointer;padding:9px 12px;background:var(--surface2);font-size:12px;font-weight:600;color:var(--text2);list-style:none">📊 טבלת המרה מלאה (Tutschek) — הצג תמונה רשמית</summary>
+            <img src="assets/iptus/aop-station-table.png" alt="AOP to head station conversion table (Tutschek)" style="max-width:100%;height:auto;display:block;padding:10px;background:#fff">
+          </details>
+          <div class="rec-section" style="margin-top:14px">
+            <div class="rec-section-title">שימוש לפני מכשירני</div>
+            <ul class="rec-list">
+              <li><b>AOP ≥ 120° + ראש OA</b> → סיכוי גבוה להצלחת ואקום ספונטנית</li>
+              <li><b>AOP ≥ 140°</b> → סיכוי הצלחה &gt;90% למכשירני</li>
+              <li><b>AOP &lt; 110° + OP</b> → סיכון לכישלון מכשירני, שקול CS</li>
+            </ul>
+            <div class="rec-src">Kalache KD et al. UOG 2009 · Barbera AF et al. AJOG 2009 · Bultez T et al. UOG 2016</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Section: HPD -->
+    <div class="pph-detail-area" data-pph-sec="hpd" style="display:none">
+      <div class="sec" style="margin-top:0">HPD — Head-Perineum Distance (מרחק ראש-פרינאום)</div>
+
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>הגדרה ושיטת מדידה</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">Eggebø 2008</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">מה זה</div>
+            <ul class="rec-list">
+              <li><b>המרחק הקצר ביותר מהפרינאום (פני העור) לקצה החיצוני של עצם הגולגולת העוברית</b></li>
+              <li>מתאם הפוך לתחנה — ככל ש-HPD קטן יותר, כך הראש נמוך יותר</li>
+              <li>פחות תלוי בקליטת US (לא דורש הדמיה של symphysis) — שימושי בנשים עם BMI גבוה</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">איך מודדים</div>
+            <ul class="rec-list">
+              <li><b>מתמר 3.5–5 MHz, קונבקס</b> · בכיסוי סטרילי</li>
+              <li><b>מנח טרנספרינאלי בחתך טרנסוורסי</b> (90° לציר הסגיטלי של ה-AOP) — בין השפתיים הגדולות</li>
+              <li>זיהוי: <b>קצה גולגולת עוברית</b> (קו לבן אקוגני קמור) מעל הפרינאום</li>
+              <li>הצב סמני מדידה: מ-<b>גבול העור-פרינאום</b> עד <b>הקצה הקרוב ביותר של עצם הגולגולת</b></li>
+              <li>הימנע ללחוץ את המתמר חזק על הפרינאום (יוצר הטיה כלפי מטה)</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">דוגמה ויזואלית — הנחת מתמר ומדידה</div>
+            <img src="assets/iptus/hpd-measurement.png" alt="HPD measurement — probe placement, perineal anatomy, US image with HPD line" style="max-width:100%;height:auto;display:block;margin:6px auto;border-radius:6px">
+            <div style="font-size:11px;color:var(--text3);margin-top:4px;text-align:center">משמאל: הנחת המתמר על הפורשט · במרכז: אנטומיה · מימין: תמונת US עם קו HPD ועם זיהוי skull contour, molding, ו-midline</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px;border-right:3px solid var(--primary)">
+        <div class="rec-head"><span>ספי החלטה</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">Eggebø 2008/2014</span></div>
+        <div class="rec-body">
+          <div class="ref-table-wrap">
+            <table class="ref-table" aria-label="HPD thresholds">
+              <thead>
+                <tr><th>HPD</th><th>פירוש</th><th>פעולה</th></tr>
+              </thead>
+              <tbody>
+                <tr style="background:var(--green-bg)">
+                  <td><b>≤ 35 mm</b></td>
+                  <td>ראש נמוך מאוד — לידה נרתיקית בדקות עד שעה</td>
+                  <td>שלב שני אקטיבי</td>
+                </tr>
+                <tr>
+                  <td><b>36–40 mm</b></td>
+                  <td>חיזוי טוב ללידה נרתיקית · תחנה ~ +1 עד +2</td>
+                  <td>המשך מעקב</td>
+                </tr>
+                <tr style="background:var(--amber-bg)">
+                  <td><b>41–50 mm</b></td>
+                  <td>תחנה גבוהה יחסית · הסתברות נמוכה ללידה נרתיקית בשעה הקרובה</td>
+                  <td>שיקול דעת + מעקב התקדמות</td>
+                </tr>
+                <tr style="background:var(--red-bg)">
+                  <td><b>&gt; 50 mm</b></td>
+                  <td>ראש גבוה — חיזוי לכישלון מכשירני / שלב שני ממושך</td>
+                  <td>שקול קיסרי במקום מכשירני</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="rec-section" style="margin-top:14px">
+            <div class="rec-section-title">השוואה ל-AOP</div>
+            <ul class="rec-list">
+              <li><b>AOP ≥ 120°</b> ≈ <b>HPD ≤ 40 mm</b> ≈ תחנה +1</li>
+              <li><b>AOP ≥ 150°</b> ≈ <b>HPD ≤ 25 mm</b> ≈ תחנה +3 — לידה צפויה תוך דקות</li>
+              <li><b>HPD &gt; 50 mm</b> ≈ <b>AOP &lt; 100°</b> — ראש גבוה, כשל מכשירני סביר</li>
+            </ul>
+            <div class="rec-src">Eggebø TM et al. UOG 2008 · Eggebø TM AJOG 2014</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Section: Position diagnosis (OA / OP / OT / asynclitism) -->
+    <div class="pph-detail-area" data-pph-sec="position" style="display:none">
+      <div class="sec" style="margin-top:0">אבחנת מנח — OA / OP / OT / אסינקליטיזם</div>
+
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>גישה מערכתית — שלוש אבחנות במקביל</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">ISUOG 2018</span></div>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>1. מיקום עמוד שדרה (גב)</b> — מבדיקה בטנית · המנח של ה-occiput הפוך לזה של ה-spine</li>
+            <li><b>2. מיקום ארובות העיניים</b> — מבדיקה סופרא-פובית · מאשר את אבחנת המנח</li>
+            <li><b>3. אקסטנציה צווארית / סנטר עוברי</b> — סימן עקיף ל-OP (סנטר רחוק מהחזה)</li>
+            <li>דיוק &gt;90% לעומת ~70% בלבד בבדיקה ידנית — שיפור משמעותי, במיוחד ב-BMI גבוה ו-caput</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Step 1: spine / back location -->
+      <div class="rec-box" style="margin-top:14px">
+        <div class="rec-head"><span>שלב 1: זיהוי עמוד השדרה (גב)</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">סקירה בטנית</span></div>
+        <div class="rec-body">
+          <img src="assets/iptus/isuog-spine-abdominal.png" alt="Abdominal scan showing fetal spine for position assessment" style="max-width:100%;height:auto;display:block;margin:6px auto 10px;border-radius:6px">
+          <ul class="rec-list">
+            <li>מתחילים בבדיקה בטנית — מעקב אחר עמוד השדרה מהגב התחתון לכיוון הראש</li>
+            <li><b>גב לפנים (חלק קדמי של בטן האם):</b> פוזיציית OA (occipito-anterior) — האוקסיפוט בכיוון ה-symphysis</li>
+            <li><b>גב לאחור (לכיוון העמוד שדרה האימהי):</b> פוזיציית OP (occipito-posterior) — האוקסיפוט בכיוון ה-sacrum</li>
+            <li><b>גב מימין/משמאל:</b> פוזיציית OT (occipito-transverse) — האוקסיפוט בכיוון לטרלי</li>
+            <li><b>חשוב:</b> עמ"ש העובר נראה כקו אקוגני רציף עם הזיזים האחוריים (vertebral processes) — מבדיל מצלעות</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Step 2: orbits / suprapubic axial -->
+      <div class="rec-box" style="margin-top:14px">
+        <div class="rec-head"><span>שלב 2: זיהוי ארובות העיניים — חתך אקסיאלי סופרא-פובי</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">אישור</span></div>
+        <div class="rec-body">
+          <img src="assets/iptus/isuog-suprapubic-axial.png" alt="Suprapubic axial scan showing fetal orbits — aids OA/OP/OT diagnosis" style="max-width:100%;height:auto;display:block;margin:6px auto 10px;border-radius:6px">
+          <ul class="rec-list">
+            <li>הצב את המתמר מעל ה-symphysis pubis, חתך אקסיאלי, סלייד למטה לראות ראש העובר</li>
+            <li><b>OA (occipito-anterior):</b> רואים את <b>cerebellum, falx, midline thalami</b> — העיניים <b>אינן נראות</b> (פונות אחורנית)</li>
+            <li><b>OP (occipito-posterior):</b> <b>שתי ארובות עיניים נראות בקדמת הראש</b> · ה-occipital bone לאחור (אקוסטית "צל" אקוסטי)</li>
+            <li><b>OT (occipito-transverse):</b> רואים <b>עין אחת בלבד</b> בצד הראש, ו-cerebellum בקצה השני</li>
+            <li><b>טיפ:</b> זיהוי המוחון בקלות = מקצרים אבחנה ל-OA; זיהוי שתי עיניים = OP חשוד</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Step 3: chin-chest angle (CCA) — deflexion -->
+      <div class="rec-box" style="margin-top:14px;border-right:3px solid var(--amber)">
+        <div class="rec-head"><span>שלב 3: זווית סנטר-חזה (CCA) — אקסטנציה צווארית</span><span class="rec-tag" style="background:var(--amber-bg);color:var(--amber)">Pasquo 2019</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">הגדרת המדידה — Chin-Chest Angle (CCA)</div>
+            <ul class="rec-list">
+              <li><b>בחתך סגיטלי טרנס-בטני</b> של פני העובר וגוף עליון</li>
+              <li>קו 1: דרך ציר ה-<b>סטרנום</b> (longest axis of sternum)</li>
+              <li>קו 2: דרך העור מעל ה-<b>סנטר/מנדיבולה</b></li>
+              <li><b>הזווית ביניהם = CCA</b> · קטן יותר = פלקציה טובה (תקין) · גדול יותר = deflexion</li>
+            </ul>
+          </div>
+
+          <!-- SVG diagram comparing flexed vs deflexed -->
+          <div style="background:var(--surface2);border-radius:10px;padding:14px;margin-top:10px">
+            <svg viewBox="0 0 540 280" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;display:block;margin:0 auto">
+              <!-- LEFT: Flexed (normal) -->
+              <g transform="translate(0,0)">
+                <text x="135" y="22" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#047857">פלקציה תקינה</text>
+                <text x="135" y="38" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#374151">CCA &lt; 33° · OA / לידה נרתיקית</text>
+
+                <!-- skull/head -->
+                <ellipse cx="155" cy="100" rx="50" ry="42" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5"/>
+                <text x="120" y="80" font-family="sans-serif" font-size="10" fill="#92400E">Occiput</text>
+                <!-- face/chin profile -->
+                <path d="M155 85 Q180 100 178 120 Q175 135 165 142" fill="none" stroke="#D97706" stroke-width="2"/>
+                <!-- chin point -->
+                <circle cx="165" cy="142" r="3" fill="#1F2937"/>
+                <text x="172" y="148" font-family="sans-serif" font-size="10" fill="#1F2937">סנטר</text>
+                <!-- chest/sternum -->
+                <rect x="135" y="175" width="40" height="78" fill="#FCD34D" stroke="#D97706" stroke-width="1.5" rx="6"/>
+                <text x="125" y="220" font-family="sans-serif" font-size="10" fill="#92400E">חזה</text>
+                <!-- sternum axis line (vertical) -->
+                <line x1="155" y1="175" x2="155" y2="253" stroke="#2D7FEA" stroke-width="2" stroke-dasharray="4 3"/>
+                <!-- mandible line (closer to vertical = small angle) -->
+                <line x1="165" y1="142" x2="155" y2="175" stroke="#E11D48" stroke-width="2" stroke-dasharray="4 3"/>
+                <!-- angle arc -->
+                <path d="M155 175 A15 15 0 0 0 162 165" fill="none" stroke="#10B981" stroke-width="2"/>
+                <text x="173" y="172" font-family="sans-serif" font-size="13" fill="#047857" font-weight="700">~20°</text>
+              </g>
+
+              <!-- divider -->
+              <line x1="270" y1="50" x2="270" y2="270" stroke="var(--border)" stroke-width="1" stroke-dasharray="3 3"/>
+
+              <!-- RIGHT: Deflexed (OP) -->
+              <g transform="translate(280,0)">
+                <text x="125" y="22" text-anchor="middle" font-family="sans-serif" font-size="13" font-weight="700" fill="#9F1239">Deflexion / אקסטנציה</text>
+                <text x="125" y="38" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#374151">CCA &gt; 33° · OP · סיכון לכישלון</text>
+
+                <!-- skull/head — tilted back -->
+                <ellipse cx="145" cy="90" rx="50" ry="42" fill="#FEF3C7" stroke="#D97706" stroke-width="1.5" transform="rotate(-15 145 90)"/>
+                <text x="105" y="70" font-family="sans-serif" font-size="10" fill="#92400E">Occiput</text>
+                <!-- face/chin profile, lifted up & away -->
+                <path d="M180 75 Q210 70 220 85 Q224 100 215 115" fill="none" stroke="#D97706" stroke-width="2"/>
+                <!-- chin point -->
+                <circle cx="215" cy="115" r="3" fill="#1F2937"/>
+                <text x="222" y="120" font-family="sans-serif" font-size="10" fill="#1F2937">סנטר</text>
+                <!-- chest -->
+                <rect x="130" y="175" width="40" height="78" fill="#FCD34D" stroke="#D97706" stroke-width="1.5" rx="6"/>
+                <text x="180" y="220" font-family="sans-serif" font-size="10" fill="#92400E">חזה</text>
+                <!-- sternum axis line (vertical) -->
+                <line x1="150" y1="175" x2="150" y2="253" stroke="#2D7FEA" stroke-width="2" stroke-dasharray="4 3"/>
+                <!-- mandible line (large angle - to chin which is lifted away) -->
+                <line x1="215" y1="115" x2="150" y2="175" stroke="#E11D48" stroke-width="2" stroke-dasharray="4 3"/>
+                <!-- angle arc - wider -->
+                <path d="M150 175 A28 28 0 0 0 178 161" fill="none" stroke="#E11D48" stroke-width="2"/>
+                <text x="178" y="155" font-family="sans-serif" font-size="13" fill="#9F1239" font-weight="700">~60°</text>
+              </g>
+
+              <!-- Legend -->
+              <g transform="translate(20,265)">
+                <line x1="0" y1="0" x2="22" y2="0" stroke="#2D7FEA" stroke-width="2" stroke-dasharray="4 3"/>
+                <text x="28" y="4" font-family="sans-serif" font-size="10" fill="#1F2937">ציר סטרנום</text>
+                <line x1="110" y1="0" x2="132" y2="0" stroke="#E11D48" stroke-width="2" stroke-dasharray="4 3"/>
+                <text x="138" y="4" font-family="sans-serif" font-size="10" fill="#1F2937">ציר מנדיבולה (סנטר)</text>
+              </g>
+            </svg>
+            <div style="font-size:11px;color:var(--text3);margin-top:8px;line-height:1.55;text-align:center">
+              תרשים סכמטי על-בסיס Pasquo M et al. UOG 2019 · המדידה בחתך סגיטלי טרנס-בטני של פני העובר וגוף עליון
+            </div>
+          </div>
+
+          <div class="rec-section" style="margin-top:14px">
+            <div class="rec-section-title">ספי החלטה (Pasquo 2019)</div>
+            <ul class="rec-list">
+              <li><b>CCA &lt; 33°</b> — פלקציה טובה · קוטר Suboccipito-bregmatic (9.5 ס"מ) · חיזוי טוב ללידה נרתיקית</li>
+              <li class="crit"><b>CCA ≥ 33°</b> — Deflexion · קוטר Occipito-frontal (~11.5 ס"מ) · סיכון מוגבר משמעותית לקיסרי בשל dystocia</li>
+              <li><b>תוצאות מחקר Pasquo:</b> קבוצת לידה נרתיקית — CCA ממוצע 27° ± 33; קבוצת קיסרי — 56° ± 28</li>
+              <li><b>סיבות לאקסטנציה:</b> OP מתמשך · brow / face presentation (קיצונית) · macrosomia · CPD</li>
+              <li><b>השלכה קלינית:</b> Deflexed head + OP = סיכון משמעותי להתארכות שלב שני, מכשירני, וקיסרי בגין dystocia</li>
+            </ul>
+            <div class="rec-src">Pasquo M et al. UOG 2019 · Ghi T et al. AJOG 2021 — protracted labor multicenter · Bellussi F et al. AJOG MFM 2020</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Asynclitism -->
+      <div class="rec-box" style="margin-top:14px">
+        <div class="rec-head"><span>אסינקליטיזם (Asynclitism)</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">סיבוב לטרלי</span></div>
+        <div class="rec-body">
+          <img src="assets/iptus/isuog-asynclitism.png" alt="ISUOG: asynclitism — lateral tilt of fetal head, sagittal suture not in pelvis midline" style="max-width:100%;height:auto;display:block;margin:6px auto 10px;border-radius:6px">
+          <ul class="rec-list">
+            <li><b>הגדרה:</b> ה-sagittal suture של הראש העוברי <b>אינה בקו האמצע של האגן</b> — הראש מוטה לטרלית</li>
+            <li><b>אנטריור:</b> Sagittal suture קרובה ל-sacrum · האוזן הקדמית-עליונה מוצגת — נפוץ יותר</li>
+            <li><b>פוסטריור:</b> Sagittal suture קרובה ל-symphysis · האוזן האחורית מוצגת — פחות שכיח</li>
+            <li><b>אבחנה ב-US:</b> בחתך סופרא-פובי אקסיאלי — ה-falx cerebri אינה בקו האמצע של האגן; קצה אחד של הראש קרוב ל-symphysis יותר מהשני</li>
+            <li><b>קלינית:</b> מעלה סיכון לעיכוב התקדמות, OP מתמשך, ולידה מכשירנית. דורש לפעמים תיקון ידני / סיבוב</li>
+          </ul>
+          <div class="rec-src">ISUOG Practice Guidelines — Intrapartum ultrasound (UOG 2018;52:128–139)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: Indications (own tab) -->
+    <div class="pph-detail-area" data-pph-sec="indications" style="display:none">
+      <div class="sec" style="margin-top:0">אינדיקציות לביצוע US תוך-לידתי</div>
+
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>אינדיקציות עיקריות</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">ISUOG 2018 · נוהל ישראלי 2023</span></div>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li class="crit"><b>שלב שני ממושך / חוסר התקדמות</b> — להעריך תחנה ומנח באובייקטיביות לפני החלטות</li>
+            <li class="crit"><b>לפני לידה מכשירנית (ואקום / forceps)</b> — אישור מנח + תחנה + חיזוי הצלחה (נייר עמדה ספציפי: <a href="javascript:showPphSection('vacuum', document.querySelector('[data-pph=&quot;vacuum&quot;]'))" style="color:var(--primary);text-decoration:underline">ראה מחשבון ואקום</a>)</li>
+            <li><b>חשד למנח חריג</b> (OP / OT / asynclitism) — לפני החלטה על תנוחה או סיוע</li>
+            <li><b>אחרי כישלון מכשירני</b> — להעריך אם להמשיך או לעבור לקיסרי דחוף</li>
+            <li><b>שלב ראשון ממושך</b> — להעריך תחנה ולאתר מנח בעייתי</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px">
+        <div class="rec-head"><span>מצבים שמומלץ להיעזר ב-US</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">תומך החלטה</span></div>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>וגיניזמוס או קושי בביצוע בדיקה נרתיקית</b> — להעריך פתיחה ומנח ללא מגע</li>
+            <li><b>חוסר ודאות בבדיקה ידנית</b> — BMI גבוה, ראש לא ברור, caput משמעותי</li>
+            <li><b>שונות בין בודקים</b> — שתי דעות שונות על גובה הראש / המנח</li>
+            <li><b>חשד למלפרזנטציה</b> — הערכת פוזיציה, פרזנטציה, ומידת פלקציה (attitude)</li>
+            <li><b>ביופידבק ליולדת</b> — אפשר להראות לה את הראש בזמן לחיצות (משפר מוטיבציה ויעילות לחיצות)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px;border-right:3px solid var(--amber)">
+        <div class="rec-head"><span>גבולות והערות חשובות</span><span class="rec-tag" style="background:var(--amber-bg);color:var(--amber)">מגבלות</span></div>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>US לא מחליף בדיקה ידנית</b> — ההחלטה על אופן הלידה ועצירת לידה תיעשה קלינית, וה-US הוא כלי תומך</li>
+            <li><b>נדרשת מיומנות</b> — דיוק תלוי בניסיון הסונוגרפיסט; מומלצת הכשרה ייעודית</li>
+            <li><b>זמן הביצוע</b> — אסור לעכב התערבות חירומית בשביל לבצע US (NRFHR, prolapse וכו')</li>
+            <li><b>גישה סטרילית</b> — מתמר טרנספרינאלי דורש כיסוי סטרילי</li>
+          </ul>
+          <div class="rec-src">ISUOG Practice Guidelines — Intrapartum ultrasound (UOG 2018) · נוהל משרד הבריאות ינואר 2023 · NICE 2014 · ACOG CO 766</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: Other parameters -->
+    <div class="pph-detail-area" data-pph-sec="extra" style="display:none">
+      <div class="sec" style="margin-top:0">מדדים נוספים</div>
+
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>MLA — Midline Angle</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">סיבוב</span></div>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>הזווית בין קו האמצע של הראש העוברי (falx/CSP)</b> לבין קו האמצע של האגן האימהי</li>
+            <li>נמדד בחתך טרנספרינאלי טרנסוורסי (כמו HPD)</li>
+            <li><b>MLA &lt; 45°</b> — מנח OA או קרוב, סיכוי גבוה ללידה נרתיקית</li>
+            <li><b>MLA ≥ 45°</b> — סיבוב חלקי / OT, שקול שהות נוספת או סיוע מכשירני</li>
+          </ul>
+          <div class="rec-section" style="margin-top:10px">
+            <div class="rec-section-title">תמונה ויזואלית — מבט אקסיאלי על ראש העובר באגן</div>
+            <img src="assets/iptus/isuog-axial-head-pelvis.png" alt="ISUOG: axial view of fetal head in pelvis showing midline alignment" style="max-width:100%;height:auto;display:block;margin:6px auto;border-radius:6px">
+            <div style="font-size:11px;color:var(--text3);margin-top:4px;text-align:center">למעלה: הנחת מתמר וחתך · למטה: אגן עם הראש בפנים + המקבילה ב-US. הנקודה הצהובה מסמנת את ציר האמצע של הראש ביחס לאגן.</div>
+          </div>
+          <div class="rec-src" style="margin-top:10px">Ghi T et al. UOG 2009</div>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px">
+        <div class="rec-head"><span>HSD — Head-Symphysis Distance</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">תחנה</span></div>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>המרחק מהקצה התחתון של ה-symphysis בניצב לקצה הראש העוברי</b></li>
+            <li>חתך סגיטלי טרנספרינאלי (כמו AOP)</li>
+            <li><b>HSD &lt; 24 mm</b> — תחנה +1 או נמוכה יותר, לידה צפויה</li>
+            <li>אלטרנטיבה מעולה ל-AOP כאשר symphysis קשה להדמיה</li>
+          </ul>
+          <div class="rec-src">Youssef A et al. UOG 2013</div>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px">
+        <div class="rec-head"><span>Head Direction</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">כיוון</span></div>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li>זווית בין הציר הארוך של הראש העוברי לבין הציר ההורי-זונטלי (perpendicular to symphysis axis)</li>
+            <li><b>Head-up:</b> ראש פונה מעלה — תחנה גבוהה</li>
+            <li><b>Horizontal:</b> תחנה ביניים</li>
+            <li><b>Head-down:</b> ראש פונה מטה — תחנה נמוכה, לידה נרתיקית קרובה</li>
+          </ul>
+          <div class="rec-section" style="margin-top:10px">
+            <div class="rec-section-title">תמונה ויזואלית — Head direction</div>
+            <img src="assets/iptus/isuog-head-direction.png" alt="ISUOG: head direction shown by anatomic diagram and ultrasound image" style="max-width:100%;height:auto;display:block;margin:6px auto;border-radius:6px">
+            <div style="font-size:11px;color:var(--text3);margin-top:4px;text-align:center">חץ ירוק מצביע על כיוון התקדמות הראש — בתרשים האנטומי ובתמונת ה-US המקבילה</div>
+          </div>
+          <div class="rec-src" style="margin-top:10px">Henrich W et al. UOG 2006</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Section: Vacuum Success Calculator — EXPERIMENTAL -->
+    <div class="pph-detail-area" data-pph-sec="vacuum" style="display:none">
+      <div class="sec" style="margin-top:0">סיכוי הצלחת ואקום — מחשבון ניסיוני</div>
+
+      <div class="note" style="border-right-color:var(--amber);background:var(--amber-bg);margin-bottom:14px;font-size:12.5px">
+        <b style="color:var(--amber-text)">⚠️ ניסיוני — תומך החלטה בלבד</b><br>
+        אין כיום מחשבון יחיד מאומת ומקובל לחיזוי הצלחת ואקום. המודל מסנתז משקלים מתוך מספר מחקרים מובילים (Bultez 2016, Kasbaoui 2017, Cuerva 2014, Sainz 2019, ISUOG 2018). <b>אינו תחליף לשיקול דעת קליני</b> ולתנאי הסף ההכרחיים לוואקום (פתיחה מלאה, ידיעת מנח ותחנה, מבכר מנוסה, הסכמה מדעת, מערכת מוכנה לקיסרי במידת הצורך).
+      </div>
+
+      <div class="rec-box" style="margin-top:0">
+        <div class="rec-head"><span>קלט — נתוני US וקלינית</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">שבעה פרמטרים</span></div>
+        <div class="rec-body">
+          <div style="font-size:11.5px;color:var(--text3);background:var(--surface2);padding:8px 11px;border-radius:6px;margin-bottom:10px">
+            <b>סדר השדות:</b> מ-US (AOP חובה · HPD · קאפוט) → קליני (פוזיציה · תחנה ידנית · לידנות · EFW).
+          </div>
+          <div class="row">
+            <label>AOP (זווית התקדמות)</label>
+            <input type="number" id="vac-aop" min="60" max="220" step="1" placeholder="80–200" onkeydown="if(event.key==='Enter')calcVacuum()">
+            <span class="unit">°</span>
+          </div>
+          <div class="row">
+            <label>HPD (מרחק ראש-פרינאום)</label>
+            <input type="number" id="vac-hpd" min="10" max="100" step="1" placeholder="20–80 (אופציונלי)" onkeydown="if(event.key==='Enter')calcVacuum()">
+            <span class="unit">מ"מ</span>
+          </div>
+          <div class="row">
+            <label>קאפוט (Caput succedaneum)</label>
+            <input type="number" id="vac-caput" min="0" max="60" step="1" placeholder="0–40 (אופציונלי)" onkeydown="if(event.key==='Enter')calcVacuum()">
+            <span class="unit">מ"מ</span>
+          </div>
+          <div class="row">
+            <label>מנח הראש (פוזיציה)</label>
+            <div class="seg" id="vac-pos">
+              <button data-v="oa" class="active" onclick="setVacSeg(this,'pos')">OA</button>
+              <button data-v="ot" onclick="setVacSeg(this,'pos')">OT</button>
+              <button data-v="op" onclick="setVacSeg(this,'pos')">OP</button>
+            </div>
+          </div>
+          <div class="row">
+            <label>תחנה ידנית (בדיקה נרתיקית)</label>
+            <div class="seg" id="vac-station" style="flex-wrap:wrap">
+              <button data-v="high" onclick="setVacSeg(this,'station')">≤ 0</button>
+              <button data-v="plus1" onclick="setVacSeg(this,'station')">+1</button>
+              <button data-v="plus2" class="active" onclick="setVacSeg(this,'station')">+2</button>
+              <button data-v="plus3" onclick="setVacSeg(this,'station')">+3 / crowning</button>
+            </div>
+          </div>
+          <div class="row">
+            <label>לידנות</label>
+            <div class="seg" id="vac-parity">
+              <button data-v="primip" class="active" onclick="setVacSeg(this,'parity')">מבכירה</button>
+              <button data-v="multip" onclick="setVacSeg(this,'parity')">לידה קודמת</button>
+            </div>
+          </div>
+          <div class="row">
+            <label>EFW (משקל משוער)</label>
+            <input type="number" id="vac-efw" min="1500" max="6000" step="50" placeholder="גרם (אופציונלי)" onkeydown="if(event.key==='Enter')calcVacuum()">
+            <span class="unit">גרם</span>
+          </div>
+          <button class="btn btn-primary" onclick="calcVacuum()">חשב סיכוי</button>
+          <div id="vac-res" style="margin-top:14px"></div>
+        </div>
+      </div>
+
+      <div class="rec-box" style="margin-top:14px">
+        <div class="rec-head"><span>על המודל</span><span class="rec-tag" style="background:var(--surface2);color:var(--text2)">שיטה</span></div>
+        <div class="rec-body">
+          <div class="rec-section">
+            <div class="rec-section-title">משקלים</div>
+            <ul class="rec-list">
+              <li><b>AOP — עוגן ראשי</b> · &lt;95°: ~15% · 95–119°: ~30–60% · 120–139°: ~70–78% · 140–149°: ~85% · ≥150°: ~90–95%</li>
+              <li><b>HPD — מעדן</b> · ≤35 מ"מ: +5 · 36–40: +2 · 41–50: −8 · &gt;50: −20</li>
+              <li><b>קאפוט (Caput)</b> · &lt;10 מ"מ: 0 · 10–19: −2 · 20–29: −5 · ≥30: −10 · (קאפוט גדול = מסכה חזות אמיתית של תחנה ב-US)</li>
+              <li><b>פוזיציה</b> · OA: +5 · OT: −5 · OP: −15</li>
+              <li><b>תחנה ידנית</b> · +3/crowning: +10 · +2: +5 · +1: 0 · ≤0: −10</li>
+              <li><b>לידנות</b> · לידה קודמת: +5 · מבכירה: 0</li>
+              <li><b>EFW</b> · ≥4000g: −10 · 3500–4000g: −3 · &lt;3500g: 0</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">פירוש (4 רמות)</div>
+            <ul class="rec-list">
+              <li><b>≥80%</b> — סיכוי גבוה. ניתן להתקדם עם ואקום.</li>
+              <li><b>60–79%</b> — סיכוי בינוני. זהירות, מערכת קיסרי מוכנה, הגבל ניסיונות.</li>
+              <li><b>40–59%</b> — גבולי. שקול קיסרי כחלופה.</li>
+              <li><b>&lt;40%</b> — סיכוי נמוך. מומלץ קיסרי על פני ואקום.</li>
+            </ul>
+          </div>
+          <div class="rec-section">
+            <div class="rec-section-title">למה גם תחנה ידנית?</div>
+            <ul class="rec-list">
+              <li>ה-AOP נותן תחנה אובייקטיבית, אך בנוכחות <b>caput משמעותי</b> או <b>molding</b> — תחנת ה-US יכולה להציג את הראש נמוך יותר ממנו בפועל</li>
+              <li>הוספת בדיקה ידנית מקבלת את ההערכה הכפולה שמומלצת ב-ISUOG 2018: US ≠ תחליף, אלא תוספת.</li>
+              <li>תחנה ידנית ≤ 0 = ראש לא engaged → ואקום אסור (תוסיף ענישה כבדה במודל).</li>
+            </ul>
+          </div>
+          <div class="rec-src">Bultez T et al. UOG 2016 · Kasbaoui S et al. AJOG 2017 · Cuerva MJ et al. UOG 2014 · Sainz JA et al. J Matern Fetal Neonatal Med 2019 · ISUOG 2018 · ACOG PB 219 (Operative vaginal birth)</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- ===== Shoulder Dystocia (פרע כתפיים) — Emergency Checklist (Israeli #52, יוני 2025) ===== -->
@@ -6154,7 +6745,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.6';
+const APP_VERSION = '4.9';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -11432,35 +12023,24 @@ function showExomeInfo(){
     place();
   }
 })();
+// Show DS calc inline — same UX as other genetics cards (cards stay visible above)
 function showDsRiskInline(){
   document.querySelectorAll('.biom-sys-card').forEach(c => {
     c.classList.toggle('active', c.dataset.sys === 'dsrisk_t1');
   });
-  // Hide the genetics cards grid + ref-wrap + meas area; show the calc
-  const gen = document.getElementById('biomgen');
-  if (!gen) return;
-  // Hide everything in biomgen except #dsrisk
-  Array.from(gen.children).forEach(ch => {
-    if (ch.id === 'dsrisk') return;
-    ch.dataset._prevDisplay = ch.style.display || '';
-    ch.style.display = 'none';
-  });
+  // Hide meas-area (it would render other cards' content); show #dsrisk below cards
+  const measArea = document.getElementById('biomgen-meas-area');
+  if (measArea) measArea.style.display = 'none';
   const ds = document.getElementById('dsrisk');
   if (ds) {
     ds.style.display = '';
-    ds.scrollIntoView({block:'start', behavior:'smooth'});
+    ds.scrollIntoView({block:'nearest', behavior:'smooth'});
   }
 }
+// Helper called by every other genetics card handler to clear DS visibility
 function hideDsRiskInline(){
-  const gen = document.getElementById('biomgen');
-  if (!gen) return;
-  Array.from(gen.children).forEach(ch => {
-    if (ch.id === 'dsrisk') { ch.style.display = 'none'; return; }
-    ch.style.display = ch.dataset._prevDisplay || '';
-    delete ch.dataset._prevDisplay;
-  });
-  document.querySelectorAll('.biom-sys-card').forEach(c => c.classList.remove('active'));
-  gen.scrollIntoView({block:'start', behavior:'smooth'});
+  const ds = document.getElementById('dsrisk');
+  if (ds) ds.style.display = 'none';
 }
 
 // ─── Genetic Counseling Indications — comprehensive summary ─────────
@@ -11484,7 +12064,7 @@ function showGeneticCounselInfo(){
       <div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-bottom:14px">
         <div style="font-weight:700;color:var(--primary);margin-bottom:6px;font-size:14px">⚡ עיקרון מנחה</div>
         <div style="font-size:12.5px;color:var(--text2)">
-          <b>סף החלטה כללי: 1:380</b> · בגיל 35 הסיכון הבסיסי שווה ל-1:380 וסיכון היסטורי של אובדן עוברי בדיקור הוא 1:200 — מכאן הגיון הסף.<br>
+          <b>סף החלטה כללי: 1:380</b> · בגיל 35 הסיכון הבסיסי שווה ל-1:380 וסיכון היסטורי של אובדן עוברי בדיקור הוא 1:200 — מכאן הגיון הסף. <i style="color:var(--text3)">(הסיכון העדכני לאובדן הריון בדיקור היום הוא 1:700–1:1000, נמוך בהרבה מההיסטורי)</i><br>
           <b>סקר משולב/אינטגרטיבי נדיר היום</b> — נייר #51 ממליץ על NIPS כסקר ראשוני לכל הנשים. אך הספים שלהלן בתוקף כאשר נעשה סקר ביוכימי או כשנמצא ממצא סקר אחר.
         </div>
       </div>
@@ -11927,6 +12507,11 @@ function selectBiomSystem(sysId){
     const tabBtn = document.querySelector(`.tab[onclick*="showTab('${sys.external}'"]`);
     if (tabBtn) showTab(sys.external, tabBtn);
     return;
+  }
+  // Clicking any card other than DS Risk should hide the inline DS calc.
+  if (sysId !== 'dsrisk_t1') {
+    const ds = document.getElementById('dsrisk');
+    if (ds) ds.style.display = 'none';
   }
   // Custom handler: invoke a specific function instead of rendering measurements
   if (sys && sys.customHandler && typeof window[sys.customHandler] === 'function') {
@@ -13227,6 +13812,127 @@ function calcDsRisk(){
     </div>
   </div>`;
 
+  el.innerHTML = html;
+}
+
+// ─── INTRAPARTUM US — Vacuum Success Calculator ──────────────────────
+// Tutschek formula: Station (cm) = AOP × 0.0937 − 10.911 (used by vacuum calc)
+function aopToStation(aop){
+  return aop * 0.0937 - 10.911;
+}
+
+// ─── Vacuum Success Calculator (EXPERIMENTAL) ──────────────────────────
+const vacState = { pos: 'oa', parity: 'primip', station: 'plus2' };
+function setVacSeg(btn, key){
+  btn.parentElement.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); vacState[key] = btn.dataset.v;
+  if (document.getElementById('vac-res').innerHTML) calcVacuum();
+}
+function calcVacuum(){
+  const el = document.getElementById('vac-res');
+  const aop = parseFloat(document.getElementById('vac-aop').value);
+  const hpd = parseFloat(document.getElementById('vac-hpd').value);
+  const caput = parseFloat(document.getElementById('vac-caput').value);
+  const efw = parseFloat(document.getElementById('vac-efw').value);
+  if (isNaN(aop) || aop < 60 || aop > 220) {
+    el.innerHTML = '<div class="note" style="border-right-color:var(--red);background:var(--red-bg);color:var(--red-text)">חובה להזין AOP (60–220°) — הסמן הראשי במודל</div>';
+    return;
+  }
+  // Baseline from AOP
+  let base;
+  if (aop >= 160) base = 95;
+  else if (aop >= 150) base = 90;
+  else if (aop >= 140) base = 85;
+  else if (aop >= 130) base = 78;
+  else if (aop >= 120) base = 70;
+  else if (aop >= 110) base = 60;
+  else if (aop >= 100) base = 45;
+  else if (aop >= 95) base = 30;
+  else base = 15;
+  // HPD modifier
+  let hpdMod = 0, hpdNote = 'לא הוזן';
+  if (!isNaN(hpd) && hpd >= 10 && hpd <= 100) {
+    if (hpd <= 35) { hpdMod = +5; hpdNote = `${hpd} mm → +5`; }
+    else if (hpd <= 40) { hpdMod = +2; hpdNote = `${hpd} mm → +2`; }
+    else if (hpd <= 50) { hpdMod = -8; hpdNote = `${hpd} mm → −8`; }
+    else { hpdMod = -20; hpdNote = `${hpd} mm → −20`; }
+  }
+  // Caput modifier
+  let caputMod = 0, caputNote = 'לא הוזן';
+  if (!isNaN(caput) && caput >= 0 && caput <= 60) {
+    if (caput >= 30) { caputMod = -10; caputNote = `${caput} mm → −10 (חמור)`; }
+    else if (caput >= 20) { caputMod = -5; caputNote = `${caput} mm → −5 (בינוני)`; }
+    else if (caput >= 10) { caputMod = -2; caputNote = `${caput} mm → −2 (קל)`; }
+    else { caputNote = `${caput} mm → 0`; }
+  }
+  // Position
+  const posMap = { oa: {mod:+5, lbl:'OA'}, ot: {mod:-5, lbl:'OT'}, op: {mod:-15, lbl:'OP'} };
+  const posMod = posMap[vacState.pos].mod;
+  // Manual clinical station
+  const stationMap = {
+    high:  {mod:-10, lbl:'≤ 0 (high)'},
+    plus1: {mod:0,   lbl:'+1'},
+    plus2: {mod:+5,  lbl:'+2'},
+    plus3: {mod:+10, lbl:'+3 / crowning'},
+  };
+  const stMod = stationMap[vacState.station].mod;
+  const stLbl = stationMap[vacState.station].lbl;
+  // Parity
+  const parMod = vacState.parity === 'multip' ? 5 : 0;
+  // EFW
+  let efwMod = 0, efwNote = 'לא הוזן';
+  if (!isNaN(efw) && efw > 1500 && efw < 6000) {
+    if (efw >= 4000) { efwMod = -10; efwNote = `${efw} g → −10`; }
+    else if (efw >= 3500) { efwMod = -3; efwNote = `${efw} g → −3`; }
+    else { efwNote = `${efw} g → 0`; }
+  }
+  let total = base + hpdMod + caputMod + posMod + stMod + parMod + efwMod;
+  total = Math.max(5, Math.min(99, total));
+  // Risk band
+  let cls, label, advice;
+  // Special warning: station ≤ 0 is a contraindication regardless of score
+  const stationHigh = vacState.station === 'high';
+  if (stationHigh) {
+    cls = 'bad'; label = 'תחנה ידנית ≤ 0 — אסור ואקום';
+    advice = '⛔ <b>הראש לא engaged.</b> ואקום אסור — קיסרי. ההצגה למטה היא לעיון בלבד.';
+  } else if (total >= 80) {
+    cls = 'ok'; label = 'סיכוי גבוה';
+    advice = 'ניתן להתקדם עם ואקום בביטחון יחסי. וודא: פתיחה מלאה · מנח ברור · כוחות סדירים · הסכמה מדעת.';
+  } else if (total >= 60) {
+    cls = 'warn'; label = 'סיכוי בינוני';
+    advice = 'התקדם בזהירות. הכן מערכת לקיסרי במידת הצורך. הגבל ל-3 משיכות / 3 פליטות / 15–20 דק׳.';
+  } else if (total >= 40) {
+    cls = 'warn'; label = 'סיכוי גבולי';
+    advice = '⚠️ שקול קיסרי כחלופה. אם בוחר ואקום — וודא תנאים מלאים והצוות מוכן להמרה מהירה.';
+  } else {
+    cls = 'bad'; label = 'סיכוי נמוך';
+    advice = '⛔ מומלץ קיסרי על פני ואקום. סיכון מוגבר לכישלון, פגיעה אימהית/עוברית.';
+  }
+  const colorMap = {ok:'var(--green)', warn:'var(--amber)', bad:'var(--red)'};
+  const station = aopToStation(aop);
+  let html = `<div class="result">
+    <div class="result-label">סיכוי הצלחת ואקום · מודל ניסיוני</div>
+    <div class="big" style="color:${colorMap[cls]}">${total}%</div>
+    <div class="zscore">AOP ${aop}° (תחנת US ${station >= 0 ? '+' : ''}${station.toFixed(1)} ס"מ) · תחנה ידנית ${stLbl} · ${posMap[vacState.pos].lbl} · ${vacState.parity === 'multip' ? 'לידה קודמת' : 'מבכירה'}</div>
+    ${badge(cls, label)}
+    <div class="note" style="border-right-color:${colorMap[cls]};background:var(--surface2);margin-top:10px;font-size:12.5px"><b>המלצה:</b> ${advice}</div>
+  </div>`;
+  // Breakdown card
+  const fmtMod = (m) => `${m > 0 ? '+' : ''}${m}`;
+  const colorFor = (m) => m > 0 ? 'var(--green-text)' : m < 0 ? 'var(--red-text)' : 'var(--text2)';
+  html += `<div class="chart-card" style="margin-top:14px">
+    <div class="chart-head"><div class="chart-title">פירוק החישוב</div></div>
+    <div style="font-size:13px;padding:6px 4px">
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span>בסיס AOP (${aop}°)</span><span style="font-weight:700">${base}%</span></div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span>HPD</span><span style="font-weight:700;color:${colorFor(hpdMod)}">${fmtMod(hpdMod)} <span style="color:var(--text3);font-weight:400;font-size:11.5px">(${hpdNote})</span></span></div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span>קאפוט</span><span style="font-weight:700;color:${colorFor(caputMod)}">${fmtMod(caputMod)} <span style="color:var(--text3);font-weight:400;font-size:11.5px">(${caputNote})</span></span></div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span>פוזיציה ${posMap[vacState.pos].lbl}</span><span style="font-weight:700;color:${colorFor(posMod)}">${fmtMod(posMod)}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span>תחנה ידנית ${stLbl}</span><span style="font-weight:700;color:${colorFor(stMod)}">${fmtMod(stMod)}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span>${vacState.parity === 'multip' ? 'לידה קודמת' : 'מבכירה'}</span><span style="font-weight:700;color:${colorFor(parMod)}">${fmtMod(parMod)}</span></div>
+      <div style="display:flex;justify-content:space-between;padding:8px 0"><span>EFW</span><span style="font-weight:700;color:${colorFor(efwMod)}">${fmtMod(efwMod)} <span style="color:var(--text3);font-weight:400;font-size:11.5px">(${efwNote})</span></span></div>
+      <div style="display:flex;justify-content:space-between;padding:10px 0 4px;border-top:2px solid var(--border);font-weight:700"><span>סה"כ</span><span style="color:${colorMap[cls]}">${total}%</span></div>
+    </div>
+  </div>`;
   el.innerHTML = html;
 }
 
