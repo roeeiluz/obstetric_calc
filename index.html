@@ -6877,7 +6877,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.19';
+const APP_VERSION = '4.20';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -10293,12 +10293,39 @@ function calcEFW(){
     html += `</div>`;
   }
 
-  html += `<div class="result">
-    <div class="result-label">EFW ${efw.toLocaleString()} גר' · ${gaStr(w,d)} שבועות · ${sourceLabel}<br><span style="font-size:11px;color:var(--text3)">${ga.source}</span></div>
-    <div class="big">${ps}<span> אחוזון</span></div>
-    <div class="zscore">Z = ${z.toFixed(2)}</div>
-    ${bar(parseFloat(ps)||0,c)}
-    ${badge(c,lab)}`;
+  if(hasTwinPair){
+    // Twin mode — two side-by-side percentile blocks (A red, B blue)
+    const psBmain = allB[primaryCurve] || allB.hadlock;
+    const pctB = psBmain.pct;
+    const cB = cls(pctB);
+    const labB = pctB<3?'SGA קשה (<3)':pctB<10?'SGA (<10)':pctB>97?'LGA קיצוני (>97)':pctB>90?'LGA (>90)':'AGA – תקין';
+    const labA = pct<3?'SGA קשה (<3)':pct<10?'SGA (<10)':pct>97?'LGA קיצוני (>97)':pct>90?'LGA (>90)':'AGA – תקין';
+    html += `<div class="result">
+      <div class="result-label">${gaStr(w,d)} שבועות · ${sourceLabel}<br><span style="font-size:11px;color:var(--text3)">${ga.source}</span></div>
+      <div class="detail-grid two" style="margin-top:10px">
+        <div class="sub-result" style="background:rgba(226,75,74,0.06);border-color:rgba(226,75,74,0.30)">
+          <div class="sub-title" style="color:#E24B4A">עובר A <span style="font-weight:500;font-size:11px;color:var(--text3)">· ${efw.toLocaleString()} גר'</span></div>
+          <div class="big" style="margin-top:4px">${ps}<span style="font-size:14px;font-weight:400;color:var(--text2)"> אחוזון</span></div>
+          <div class="zscore">Z = ${z.toFixed(2)}</div>
+          ${bar(parseFloat(ps)||0,c)}
+          ${badge(c,labA)}
+        </div>
+        <div class="sub-result" style="background:rgba(14,165,233,0.06);border-color:rgba(14,165,233,0.30)">
+          <div class="sub-title" style="color:#0EA5E9">עובר B <span style="font-weight:500;font-size:11px;color:var(--text3)">· ${efwB.toLocaleString()} גר'</span></div>
+          <div class="big" style="margin-top:4px">${psBmain.ps}<span style="font-size:14px;font-weight:400;color:var(--text2)"> אחוזון</span></div>
+          <div class="zscore">Z = ${psBmain.z.toFixed(2)}</div>
+          ${bar(parseFloat(psBmain.ps)||0,cB)}
+          ${badge(cB,labB)}
+        </div>
+      </div>`;
+  } else {
+    html += `<div class="result">
+      <div class="result-label">EFW ${efw.toLocaleString()} גר' · ${gaStr(w,d)} שבועות · ${sourceLabel}<br><span style="font-size:11px;color:var(--text3)">${ga.source}</span></div>
+      <div class="big">${ps}<span> אחוזון</span></div>
+      <div class="zscore">Z = ${z.toFixed(2)}</div>
+      ${bar(parseFloat(ps)||0,c)}
+      ${badge(c,lab)}`;
+  }
 
   // ── Comparison block (when 2+ curves selected) ──
   if(isCompareView){
@@ -10435,18 +10462,28 @@ function calcEFW(){
     const discText  = disc < 15 ? 'תקין (<15%)' : disc < 20 ? 'בגבול הנורמה (15-20%)' : disc < 25 ? 'דיסקורדנסי מתון (20-25%)' : 'דיסקורדנסי משמעותי (>25%)';
     const discBadge = disc < 15 ? 'var(--green-text)' : disc < 20 ? 'var(--blue)' : disc < 25 ? 'var(--amber-text)' : 'var(--red-text)';
 
+    // Severity color for percentile numbers (matches the curve-row legend in the comparison view)
+    const severityColor = (psStr) => {
+      const v = parseFloat(psStr);
+      if(psStr === '<1' || v < 3 || psStr === '>99' || v > 97) return 'var(--red)';
+      if(v < 10 || v > 90) return 'var(--amber-text)';
+      return 'var(--green-text)';
+    };
+    const aSevColor = severityColor(primary.ps);
+    const bSevColor = severityColor(psB.ps);
+
     html += `<div class="result" style="background:var(--surface);border-color:${discColor}">
       <div class="result-label" style="color:${discColor};font-weight:600">השוואת תאומים · ${gaStr(w,d)} שבועות · עקומה: ${sourceLabel}</div>
       <div class="detail-grid two" style="margin-top:10px">
-        <div class="sub-result" style="background:${discBg};border-color:${discColor}">
-          <div class="sub-title">עובר A <span style="font-weight:500;font-size:11px;color:var(--text3)">· ${sexLabel}</span></div>
+        <div class="sub-result" style="background:rgba(226,75,74,0.06);border-color:rgba(226,75,74,0.30)">
+          <div class="sub-title" style="color:#E24B4A">עובר A <span style="font-weight:500;font-size:11px;color:var(--text3)">· ${sexLabel}</span></div>
           <div class="med">${efw.toLocaleString()}<span style="font-size:13px;font-weight:400;color:var(--text2)"> גר'</span></div>
-          <div style="font-size:12px;color:var(--text2);margin-top:4px"><b>${primary.ps}</b> אחוזון · Z=${primary.z.toFixed(2)}</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px"><b style="color:${aSevColor};font-size:14px">${primary.ps}</b> אחוזון · Z=${primary.z.toFixed(2)}</div>
         </div>
-        <div class="sub-result" style="background:${discBg};border-color:${discColor}">
-          <div class="sub-title">עובר B <span style="font-weight:500;font-size:11px;color:var(--text3)">· ${sexLabelB}</span></div>
+        <div class="sub-result" style="background:rgba(14,165,233,0.06);border-color:rgba(14,165,233,0.30)">
+          <div class="sub-title" style="color:#0EA5E9">עובר B <span style="font-weight:500;font-size:11px;color:var(--text3)">· ${sexLabelB}</span></div>
           <div class="med">${efwB.toLocaleString()}<span style="font-size:13px;font-weight:400;color:var(--text2)"> גר'</span></div>
-          <div style="font-size:12px;color:var(--text2);margin-top:4px"><b>${psB.ps}</b> אחוזון · Z=${psB.z.toFixed(2)}</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px"><b style="color:${bSevColor};font-size:14px">${psB.ps}</b> אחוזון · Z=${psB.z.toFixed(2)}</div>
         </div>
       </div>
       <div style="margin-top:14px;padding:12px;border-radius:10px;background:${discBg};border:1px solid ${discColor}">
