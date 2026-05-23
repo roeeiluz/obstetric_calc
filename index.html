@@ -1637,6 +1637,10 @@
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h10l1.5 9a1.5 1.5 0 0 1-1.5 1.7H5a1.5 1.5 0 0 1-1.5-1.7L5 7Z"/><path d="M8 7V5a2 2 0 0 1 4 0v2"/><path d="M7.5 11.5h5"/></svg>
           <span>EFW</span>
         </button>
+        <button class="tab" onclick="showTab('ua',this)" role="tab">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 11h3l2-5 3 8 2-4 2 2h4"/></svg>
+          <span>FGR</span>
+        </button>
         <button class="tab" onclick="showTab('hc',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="10" rx="7" ry="6"/><path d="M3 10h14M10 4v12" stroke-dasharray="1.5 2"/></svg>
           <span>HC</span>
@@ -1644,10 +1648,6 @@
         <button class="tab" onclick="showTab('fl',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16c-1.5-.5-1.5-2.5 0-3 .5-1.5 2.5-1.5 3 0l6-6c-1.5-.5-1.5-2.5 0-3s2.5 1.5 3 0c1.5.5 1.5 2.5 0 3 .5 1.5-1.5 2.5-3 3l-6 6c1.5.5 1.5 2.5 0 3s-2.5-1.5-3 0Z"/></svg>
           <span>FL</span>
-        </button>
-        <button class="tab" onclick="showTab('ua',this)" role="tab">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 11h3l2-5 3 8 2-4 2 2h4"/></svg>
-          <span>FGR</span>
         </button>
         <button class="tab" onclick="showTab('mca',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3.5c-2.5 0-4 2-4 4 0 1.2.5 2 1 2.5-.6.7-1 1.5-1 2.5 0 2.5 2.5 4 4.5 4 .5 0 1-.1 1.5-.3.5.2 1 .3 1.5.3 2 0 4.5-1.5 4.5-4 0-1-.4-1.8-1-2.5.5-.5 1-1.3 1-2.5 0-2-1.5-4-4-4-1 0-1.5.4-2 .8-.5-.4-1-.8-2-.8Z"/><path d="M10 4.3v12"/></svg>
@@ -1938,7 +1938,14 @@
 
       <!-- Fetus A column (also used as the single-fetus column when efwPlurality='single') -->
       <div class="fetus-col" id="e-fetus-a" style="padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
-        <div class="fetus-col-header" id="e-fetus-a-header" style="display:none;font-size:13px;font-weight:700;color:var(--text);padding-bottom:6px;margin-bottom:6px;border-bottom:2px solid var(--red)">עובר א'</div>
+        <div class="fetus-col-header" id="e-fetus-a-header" style="display:none;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;font-weight:700;color:var(--text);padding-bottom:8px;margin-bottom:8px;border-bottom:2px solid #E24B4A">
+          <span>עובר A</span>
+          <div class="seg fetus-sex-inline" id="e-sex-inline-a" style="font-size:11px">
+            <button data-v="U" class="active" onclick="setSex(this)">לא ידוע</button>
+            <button data-v="M" onclick="setSex(this)">זכר</button>
+            <button data-v="F" onclick="setSex(this)">נקבה</button>
+          </div>
+        </div>
 
         <div class="row">
           <label>שיטת קלט</label>
@@ -1981,8 +1988,8 @@
           </div>
         </div>
 
-        <div class="row">
-          <label><span id="e-sex-label-single">מין העובר</span><span id="e-sex-label-twin" style="display:none">מין עובר א'</span></label>
+        <div class="row" id="e-sex-row-a">
+          <label>מין העובר</label>
           <div class="seg" id="e-sex">
             <button data-v="U" class="active" onclick="setSex(this)">לא ידוע</button>
             <button data-v="M" onclick="setSex(this)">זכר</button>
@@ -1993,7 +2000,14 @@
 
       <!-- Fetus B column (twin mode only) -->
       <div class="fetus-col" id="e-fetus-b" style="display:none;padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
-        <div class="fetus-col-header" style="font-size:13px;font-weight:700;color:var(--text);padding-bottom:6px;margin-bottom:6px;border-bottom:2px solid #0EA5E9">עובר ב'</div>
+        <div class="fetus-col-header" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;font-weight:700;color:var(--text);padding-bottom:8px;margin-bottom:8px;border-bottom:2px solid #0EA5E9">
+          <span>עובר B</span>
+          <div class="seg fetus-sex-inline" id="e-sex-inline-b" style="font-size:11px">
+            <button data-v="U" class="active" onclick="setSexB(this)">לא ידוע</button>
+            <button data-v="M" onclick="setSexB(this)">זכר</button>
+            <button data-v="F" onclick="setSexB(this)">נקבה</button>
+          </div>
+        </div>
 
         <div class="row">
           <label>שיטת קלט</label>
@@ -2032,8 +2046,8 @@
             <span class="unit">מ״מ</span></div>
         </div>
 
-        <div class="row">
-          <label>מין עובר ב'</label>
+        <div class="row" id="e-sex-row-b" style="display:none">
+          <label>מין עובר B</label>
           <div class="seg" id="e-sex-b">
             <button data-v="U" class="active" onclick="setSexB(this)">לא ידוע</button>
             <button data-v="M" onclick="setSexB(this)">זכר</button>
@@ -6863,7 +6877,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.17';
+const APP_VERSION = '4.18';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -9404,16 +9418,24 @@ function styleCurveChip(key, on, color){
   }
 }
 
+// Sync sex state across multiple selectors (standalone row + inline header)
+function _syncSexButtons(containerIds, value){
+  for(const id of containerIds){
+    const el = document.getElementById(id);
+    if(!el) continue;
+    el.querySelectorAll('button').forEach(b => {
+      b.classList.toggle('active', b.dataset.v === value);
+    });
+  }
+}
 function setSex(btn){
-  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  efwSex=btn.dataset.v;
+  efwSex = btn.dataset.v;
+  _syncSexButtons(['e-sex', 'e-sex-inline-a'], efwSex);
   if(document.getElementById('efw-res').innerHTML) calcEFW();
 }
 function setSexB(btn){
-  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  efwSexB=btn.dataset.v;
+  efwSexB = btn.dataset.v;
+  _syncSexButtons(['e-sex-b', 'e-sex-inline-b'], efwSexB);
   if(document.getElementById('efw-res').innerHTML) calcEFW();
 }
 function setCurve(btn){
@@ -9429,16 +9451,22 @@ function setPlurality(btn){
   const isTwin = efwPlurality==='twin';
   // Toggle 2-column twin layout
   const grid = document.getElementById('e-fetus-grid');
+  const fetusA = document.getElementById('e-fetus-a');
   const fetusB = document.getElementById('e-fetus-b');
   const fetusAHeader = document.getElementById('e-fetus-a-header');
   if(grid) grid.style.gridTemplateColumns = isTwin ? 'repeat(2, 1fr)' : '1fr';
   if(fetusB) fetusB.style.display = isTwin ? '' : 'none';
-  if(fetusAHeader) fetusAHeader.style.display = isTwin ? '' : 'none';
-  // Toggle sex labels (single → "מין העובר" / twin → "מין עובר א'")
-  const sexLabS = document.getElementById('e-sex-label-single');
-  const sexLabT = document.getElementById('e-sex-label-twin');
-  if(sexLabS) sexLabS.style.display = isTwin ? 'none' : '';
-  if(sexLabT) sexLabT.style.display = isTwin ? '' : 'none';
+  if(fetusAHeader) fetusAHeader.style.display = isTwin ? 'flex' : 'none';
+  // Subtle tinted background for each fetus column (matches header underline color)
+  if(fetusA) fetusA.style.background = isTwin ? 'rgba(226, 75, 74, 0.06)' : 'var(--surface)';  // red tint for A
+  if(fetusA) fetusA.style.borderColor = isTwin ? 'rgba(226, 75, 74, 0.30)' : 'var(--border)';
+  if(fetusB) fetusB.style.background = 'rgba(14, 165, 233, 0.06)';                              // blue tint for B
+  if(fetusB) fetusB.style.borderColor = 'rgba(14, 165, 233, 0.30)';
+  // Hide standalone sex rows in twin mode (inline header sex replaces them)
+  const sexRowA = document.getElementById('e-sex-row-a');
+  const sexRowB = document.getElementById('e-sex-row-b');
+  if(sexRowA) sexRowA.style.display = isTwin ? 'none' : '';
+  if(sexRowB) sexRowB.style.display = 'none'; // always hidden — header inline handles it in twin
   // Reveal ISMFM Twin curve chip only in twin mode
   const ismChip = document.getElementById('e-curve-chip-ismfm');
   if(ismChip){
@@ -10315,7 +10343,7 @@ function calcEFW(){
     html += `<div class="chart-card" style="margin-top:14px">
       <div class="chart-head">
         <div class="chart-title">השוואת אחוזונים בין עקומות</div>
-        <span style="font-size:11px;color:var(--text3)">${rows.length} עקומות · ${hasTwinPair ? 'עובר א'+"'" : 'EFW '+efw.toLocaleString()+' גר'+"'"}</span>
+        <span style="font-size:11px;color:var(--text3)">${rows.length} עקומות · ${hasTwinPair ? 'עובר A' : 'EFW '+efw.toLocaleString()+' גר'+"'"}</span>
       </div>
       <div style="padding:4px 6px">${rows.map(curveRow).join('')}</div>
     </div>`;
@@ -10337,7 +10365,7 @@ function calcEFW(){
       });
       html += `<div class="chart-card" style="margin-top:10px">
         <div class="chart-head">
-          <div class="chart-title">השוואת אחוזונים — עובר ב'</div>
+          <div class="chart-title">השוואת אחוזונים — עובר B</div>
           <span style="font-size:11px;color:var(--text3)">${rowsB.length} עקומות · ${efwB.toLocaleString()} גר'</span>
         </div>
         <div style="padding:4px 6px">${rowsB.map(curveRow).join('')}</div>
@@ -10410,12 +10438,12 @@ function calcEFW(){
       <div class="result-label" style="color:${discColor};font-weight:600">השוואת תאומים · ${gaStr(w,d)} שבועות · עקומה: ${sourceLabel}</div>
       <div class="detail-grid two" style="margin-top:10px">
         <div class="sub-result" style="background:${discBg};border-color:${discColor}">
-          <div class="sub-title">עובר א' <span style="font-weight:500;font-size:11px;color:var(--text3)">· ${sexLabel}</span></div>
+          <div class="sub-title">עובר A <span style="font-weight:500;font-size:11px;color:var(--text3)">· ${sexLabel}</span></div>
           <div class="med">${efw.toLocaleString()}<span style="font-size:13px;font-weight:400;color:var(--text2)"> גר'</span></div>
           <div style="font-size:12px;color:var(--text2);margin-top:4px"><b>${primary.ps}</b> אחוזון · Z=${primary.z.toFixed(2)}</div>
         </div>
         <div class="sub-result" style="background:${discBg};border-color:${discColor}">
-          <div class="sub-title">עובר ב' <span style="font-weight:500;font-size:11px;color:var(--text3)">· ${sexLabelB}</span></div>
+          <div class="sub-title">עובר B <span style="font-weight:500;font-size:11px;color:var(--text3)">· ${sexLabelB}</span></div>
           <div class="med">${efwB.toLocaleString()}<span style="font-size:13px;font-weight:400;color:var(--text2)"> גר'</span></div>
           <div style="font-size:12px;color:var(--text2);margin-top:4px"><b>${psB.ps}</b> אחוזון · Z=${psB.z.toFixed(2)}</div>
         </div>
@@ -10457,7 +10485,7 @@ function calcEFW(){
   } else if(efwPlurality==='twin'){
     // Twin selected but B not provided
     html += `<div class="note" style="border-right-color:var(--blue)">
-      <b>תאומים:</b> הזן גם את הנתונים של עובר ב' (משקל ישיר או ביומטריה) כדי לקבל חישוב דיסקורדנסי והמלצות.
+      <b>תאומים:</b> הזן גם את הנתונים של עובר B (משקל ישיר או ביומטריה) כדי לקבל חישוב דיסקורדנסי והמלצות.
     </div>`;
   }
 
@@ -10512,7 +10540,7 @@ function calcEFW(){
 
   // Twin chart: A as the main point + B as extra
   const extraPoints = hasTwinPair
-    ? [{x:gaFloat, y:efwB, color:'#0EA5E9', label:"ב'"}]
+    ? [{x:gaFloat, y:efwB, color:'#0EA5E9', label:'B'}]
     : null;
   const mainPointLabel = hasTwinPair ? "א'" : null;
 
@@ -10533,9 +10561,9 @@ function calcEFW(){
   if(useDollberg) legend += legendItem('#7E57C2',`Dollberg 2005 (${sexLabel}${hasTwinPair ? ' / '+sexLabelB : ''} · ${plurLabel})`);
   if(useIsmfm) legend += legendItem('#D97706','ISMFM Twin (Harefuah 2026)');
   if(hasTwinPair){
-    legend += legendDot('#E24B4A',`עובר א': ${efw.toLocaleString()} גר' · ${primary.ps} אחוזון`);
+    legend += legendDot('#E24B4A',`עובר A: ${efw.toLocaleString()} גר' · ${primary.ps} אחוזון`);
     const psB = allB[primaryCurve] || allB.hadlock;
-    legend += legendDot('#0EA5E9',`עובר ב': ${efwB.toLocaleString()} גר' · ${psB.ps} אחוזון`);
+    legend += legendDot('#0EA5E9',`עובר B: ${efwB.toLocaleString()} גר' · ${psB.ps} אחוזון`);
   } else {
     legend += legendDot('#E24B4A',`EFW נמדד: ${efw.toLocaleString()} גר'`);
   }
