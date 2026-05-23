@@ -6877,7 +6877,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.18';
+const APP_VERSION = '4.19';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -10340,10 +10340,11 @@ function calcEFW(){
       ps:psI, z:zI
     });
 
+    const aTitle = hasTwinPair ? 'השוואת אחוזונים — עובר A' : 'השוואת אחוזונים בין עקומות';
     html += `<div class="chart-card" style="margin-top:14px">
       <div class="chart-head">
-        <div class="chart-title">השוואת אחוזונים בין עקומות</div>
-        <span style="font-size:11px;color:var(--text3)">${rows.length} עקומות · ${hasTwinPair ? 'עובר A' : 'EFW '+efw.toLocaleString()+' גר'+"'"}</span>
+        <div class="chart-title">${aTitle}</div>
+        <span style="font-size:11px;color:var(--text3)">${rows.length} עקומות · ${efw.toLocaleString()} גר'</span>
       </div>
       <div style="padding:4px 6px">${rows.map(curveRow).join('')}</div>
     </div>`;
