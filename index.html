@@ -2938,10 +2938,10 @@
   </div>
 
   <!-- ===== Down Syndrome Risk Assessment (FMF First-Trimester Combined Test) ===== -->
-  <div id="dsrisk" class="panel">
-    <button type="button" onclick="(function(){var b=document.querySelector(&quot;.tab[onclick*=\&quot;showTab('biomgen'\&quot;]&quot;);if(b)showTab('biomgen',b);})()"
-      style="display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:999px;color:var(--text2);font-size:12px;font-family:inherit;cursor:pointer">
-      <svg viewBox="0 0 14 14" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3l-4 4 4 4"/></svg>
+  <div id="dsrisk" class="dsrisk-inline-area" style="display:none">
+    <button type="button" onclick="hideDsRiskInline()"
+      style="display:inline-flex;align-items:center;gap:6px;margin-bottom:12px;padding:7px 14px;background:var(--primary-bg);border:1px solid var(--primary);border-radius:999px;color:var(--primary);font-size:12.5px;font-weight:600;font-family:inherit;cursor:pointer">
+      <svg viewBox="0 0 14 14" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3l-4 4 4 4"/></svg>
       חזרה לסמנים וגנטיקה
     </button>
 
@@ -6154,7 +6154,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.5';
+const APP_VERSION = '4.6';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -8079,6 +8079,13 @@ function openPaperModal(num){
 
 function jumpFromPaper(tid){
   closePaperModal();
+  // Special case: dsrisk is now inline inside biomgen — route accordingly
+  if (tid === 'dsrisk') {
+    const genBtn = document.querySelector(`.tab[onclick*="showTab('biomgen'"]`);
+    if (genBtn) showTab('biomgen', genBtn);
+    setTimeout(() => { if (typeof showDsRiskInline === 'function') showDsRiskInline(); }, 80);
+    return;
+  }
   const btn = document.querySelector(`.tab[onclick*="showTab('${tid}'"]`);
   if (btn) showTab(tid, btn);
 }
@@ -10964,9 +10971,9 @@ const biomSystems = {
   },
   dsrisk_t1: {
     group: 'genetics',
-    name: 'סקר DS T1', color: 'var(--green)',
+    name: 'סקר ביוכימי וסמנים רכים', color: 'var(--green)',
     icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="4"/><path d="M5 17c0-3 2-5 5-5s5 2 5 5"/><circle cx="8" cy="7.5" r=".7" fill="currentColor"/><circle cx="12" cy="7.5" r=".7" fill="currentColor"/></svg>',
-    items: [], external: 'dsrisk', subtitle: 'NT + βhCG + PAPP-A · FMF'
+    items: [], customHandler: 'showDsRiskInline', subtitle: 'T1 / T2 / Quad / משולב + LR סמנים רכים'
   },
   soft_markers: {
     group: 'genetics',
@@ -10979,6 +10986,12 @@ const biomSystems = {
     name: 'אינדיקציות לאקסום', color: 'var(--primary)',
     icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12v12H4z"/><path d="M4 8h12M4 12h12M8 4v12M12 4v12"/></svg>',
     items: [], customHandler: 'showExomeInfo', subtitle: 'פיילוט WES + Klalit 2026'
+  },
+  genetic_counsel: {
+    group: 'genetics',
+    name: 'אינדיקציות לייעוץ גנטי', color: 'var(--purple)',
+    icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l4-4 3 3 4-4 3 3"/><circle cx="13" cy="6" r="2.5"/><path d="M11 6h-2M15 6h2"/></svg>',
+    items: [], customHandler: 'showGeneticCounselInfo', subtitle: 'סיכום ספים — חוזר 13/2014 + 7/2019 + נייר #30'
   },
   echo_indications: {
     group: 'genetics',
@@ -11400,6 +11413,246 @@ function showExomeInfo(){
   list.innerHTML = html;
   const resEl2 = document.getElementById('biom-res');
   if (resEl2) resEl2.innerHTML = '';
+  document.getElementById(t.area).scrollIntoView({block:'nearest', behavior:'smooth'});
+}
+
+// ─── DS Risk Calculator — inline display inside biomgen panel ───────
+// On first load, move the #dsrisk element to be a child of #biomgen so
+// clicking the card shows the calc INLINE without leaving the genetics tab.
+(function initDsRiskInline(){
+  const place = () => {
+    const ds = document.getElementById('dsrisk');
+    const gen = document.getElementById('biomgen');
+    if (!ds || !gen) return;
+    if (ds.parentElement !== gen) gen.appendChild(ds);
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', place);
+  } else {
+    place();
+  }
+})();
+function showDsRiskInline(){
+  document.querySelectorAll('.biom-sys-card').forEach(c => {
+    c.classList.toggle('active', c.dataset.sys === 'dsrisk_t1');
+  });
+  // Hide the genetics cards grid + ref-wrap + meas area; show the calc
+  const gen = document.getElementById('biomgen');
+  if (!gen) return;
+  // Hide everything in biomgen except #dsrisk
+  Array.from(gen.children).forEach(ch => {
+    if (ch.id === 'dsrisk') return;
+    ch.dataset._prevDisplay = ch.style.display || '';
+    ch.style.display = 'none';
+  });
+  const ds = document.getElementById('dsrisk');
+  if (ds) {
+    ds.style.display = '';
+    ds.scrollIntoView({block:'start', behavior:'smooth'});
+  }
+}
+function hideDsRiskInline(){
+  const gen = document.getElementById('biomgen');
+  if (!gen) return;
+  Array.from(gen.children).forEach(ch => {
+    if (ch.id === 'dsrisk') { ch.style.display = 'none'; return; }
+    ch.style.display = ch.dataset._prevDisplay || '';
+    delete ch.dataset._prevDisplay;
+  });
+  document.querySelectorAll('.biom-sys-card').forEach(c => c.classList.remove('active'));
+  gen.scrollIntoView({block:'start', behavior:'smooth'});
+}
+
+// ─── Genetic Counseling Indications — comprehensive summary ─────────
+// Sources: MoH circulars 13/2014 + 7/2019 · נייר #30 (Jan 2026) · #51 (Aug 2023)
+function showGeneticCounselInfo(){
+  const t = getBiomTargets();
+  const list = document.getElementById(t.list);
+  document.getElementById(t.title).textContent = 'אינדיקציות לייעוץ גנטי — סיכום מלא';
+  document.getElementById(t.area).style.display = '';
+  if (t.inputArea) document.getElementById(t.inputArea).style.display = 'none';
+
+  const html = `
+    <div style="grid-column:1/-1;background:var(--surface);border-radius:12px;padding:14px;font-size:13px;line-height:1.6">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+        <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary);font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700">חוזר 13/2014</span>
+        <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary);font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700">חוזר 7/2019</span>
+        <span class="rec-tag" style="background:var(--green-bg);color:var(--green-text);font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700">נייר #30 (ינואר 2026)</span>
+        <span class="rec-tag" style="background:var(--teal-bg);color:var(--teal);font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700">נייר #51 (NIPT)</span>
+      </div>
+
+      <div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-bottom:14px">
+        <div style="font-weight:700;color:var(--primary);margin-bottom:6px;font-size:14px">⚡ עיקרון מנחה</div>
+        <div style="font-size:12.5px;color:var(--text2)">
+          <b>סף החלטה כללי: 1:380</b> · בגיל 35 הסיכון הבסיסי שווה ל-1:380 וסיכון היסטורי של אובדן עוברי בדיקור הוא 1:200 — מכאן הגיון הסף.<br>
+          <b>סקר משולב/אינטגרטיבי נדיר היום</b> — נייר #51 ממליץ על NIPS כסקר ראשוני לכל הנשים. אך הספים שלהלן בתוקף כאשר נעשה סקר ביוכימי או כשנמצא ממצא סקר אחר.
+        </div>
+      </div>
+
+      <!-- Section 1: Hard bypass — no calc -->
+      <details open style="margin-bottom:10px;border:1.5px solid var(--red);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:11px 14px;font-weight:700;color:var(--red-text);font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:var(--red-bg)">
+          <span><span style="background:var(--red);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;margin-left:8px">1</span>אינדיקציות עוקפות — לייעוץ + דיקור ישיר (מימון בסל)</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:12px 14px;font-size:12.5px;line-height:1.7">
+          <ul style="margin:0;padding-right:20px">
+            <li class="crit"><b>NT ≥ 3.0 מ"מ</b> — תמיד, ללא תלות בחישוב משולב</li>
+            <li class="crit"><b>מום מבני בעובר</b> בסקירה מוקדמת או מאוחרת</li>
+            <li class="crit"><b>הריון/ילד קודם עם הפרעה כרומוזומלית</b></li>
+            <li class="crit"><b>הורה נשא טרנסלוקציה רוברטסונית</b> (במיוחד 13/21)</li>
+            <li class="crit"><b>מחלה גנטית ידועה במשפחה</b> · קרבת דם · נשאות משותפת</li>
+            <li class="crit"><b>תוצאת NIPS חיובית או לא-מסקנית (No Call)</b> — אימות בדיקור</li>
+            <li class="crit"><b>≥ 2 סמנים רכים</b> (גם אם LR=1 לכל אחד)</li>
+            <li class="crit"><b>סמן רך בודד עם LR גבוה</b>: NF פתולוגי (LR 17) · מעי היפראקוגני (LR 6)</li>
+            <li class="crit"><b>EIF בחדר ימני / מרובה / דו-צדדי</b> — ייעוץ ללא תלות ב-LR</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Section 2: T1 combined stepwise -->
+      <details style="margin-bottom:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:11px 14px;font-weight:700;color:var(--text);font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:linear-gradient(to left,var(--surface2),var(--primary-bg))">
+          <span><span style="background:var(--primary);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;margin-left:8px">2</span>סקר משולב T1 — סטפווייז (Stepwise / Contingent)</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:12px 14px;font-size:12.5px;line-height:1.7">
+          <table style="width:100%;border-collapse:collapse;font-size:12.5px">
+            <thead style="background:var(--surface2)"><tr><th style="padding:7px 9px;text-align:right;border-bottom:1px solid var(--border)">תוצאה משולבת T1</th><th style="padding:7px 9px;text-align:right;border-bottom:1px solid var(--border)">המלצה</th></tr></thead>
+            <tbody>
+              <tr><td style="padding:7px 9px;border-bottom:1px solid var(--border);background:var(--red-bg)"><b>≥ 1:200</b></td><td style="padding:7px 9px;border-bottom:1px solid var(--border)"><b>ייעוץ גנטי + דיקור אבחנתי</b> (מימון בסל)</td></tr>
+              <tr><td style="padding:7px 9px;border-bottom:1px solid var(--border);background:var(--amber-bg)"><b>1:200 – 1:380</b></td><td style="padding:7px 9px;border-bottom:1px solid var(--border)">"אזור אפור" — לפי הנחיית משרד הבריאות יש להשלים סקר T2; קופות מאפשרות פולשני בפועל</td></tr>
+              <tr><td style="padding:7px 9px;border-bottom:1px solid var(--border)"><b>1:381 – 1:3000</b></td><td style="padding:7px 9px;border-bottom:1px solid var(--border)"><b>השלם סקר T2 / Quad</b> (משולב Integrated/Sequential) — חישוב סופי קובע</td></tr>
+              <tr><td style="padding:7px 9px;background:var(--green-bg)"><b>≥ 1:3001</b></td><td style="padding:7px 9px">סיכון נמוך — מספיק <b>AFP בלבד</b> ב-T2 (לאיתור NTD ומומי דופן בטן)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <!-- Section 3: T1 individual markers -->
+      <details style="margin-bottom:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:11px 14px;font-weight:700;color:var(--text);font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:linear-gradient(to left,var(--surface2),var(--primary-bg))">
+          <span><span style="background:var(--primary);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;margin-left:8px">3</span>סמנים בודדים T1 (סקר 11–13+6 שב')</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:12px 14px;font-size:12.5px;line-height:1.7">
+          <ul style="margin:0;padding-right:20px">
+            <li><b>NT ≥ 3 מ"מ</b> → ייעוץ גנטי + דיקור (מימון בסל) · <b>NT &lt; 3 מ"מ עם LR &gt; 1:380</b> → ייעוץ</li>
+            <li><b>PAPP-A ≤ 0.15 MoM</b> → ייעוץ גנטי (גם בסקר תקין — קשור גם ל-FGR, רעלת, IUFD)</li>
+            <li><b>free βhCG ≤ 0.15 MoM</b> → ייעוץ גנטי</li>
+            <li><b>βhCG ≥ 3 MoM</b> בפני עצמו — אין הוריה לייעוץ; <b>סקירה מכוונת + מעקב HRP</b></li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Section 4: T2 biochem -->
+      <details style="margin-bottom:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:11px 14px;font-weight:700;color:var(--text);font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:linear-gradient(to left,var(--surface2),var(--amber-bg))">
+          <span><span style="background:var(--amber);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;margin-left:8px">4</span>סמני T2 (Triple / Quad — 16–19 שב')</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:12px 14px;font-size:12.5px;line-height:1.7">
+          <table style="width:100%;border-collapse:collapse;font-size:12.5px">
+            <thead style="background:var(--surface2)"><tr><th style="padding:7px 9px;text-align:right;border-bottom:1px solid var(--border)">סמן</th><th style="padding:7px 9px;text-align:right;border-bottom:1px solid var(--border)">ערך</th><th style="padding:7px 9px;text-align:right;border-bottom:1px solid var(--border)">פעולה</th></tr></thead>
+            <tbody>
+              <tr><td rowspan="2" style="padding:7px 9px;border-bottom:1px solid var(--border)" valign="top"><b>AFP</b></td><td style="padding:7px 9px;border-bottom:1px solid var(--border)">≥ 2.0 MoM</td><td style="padding:7px 9px;border-bottom:1px solid var(--border)">סקירה מכוונת (NTD, דופן בטן, GU) — אם ממצא → ייעוץ</td></tr>
+              <tr><td style="padding:7px 9px;border-bottom:1px solid var(--border);background:var(--red-bg)"><b>≥ 2.5 MoM</b></td><td style="padding:7px 9px;border-bottom:1px solid var(--border)"><b>ייעוץ גנטי — ללא תלות בממצאי הסקירה</b></td></tr>
+              <tr><td rowspan="2" style="padding:7px 9px;border-bottom:1px solid var(--border)" valign="top"><b>hCG (T2)</b></td><td style="padding:7px 9px;border-bottom:1px solid var(--border)">≥ 3.0 MoM</td><td style="padding:7px 9px;border-bottom:1px solid var(--border)">סקירה מכוונת + מעקב HRP — אין הוריה ישירה לייעוץ</td></tr>
+              <tr><td style="padding:7px 9px;border-bottom:1px solid var(--border);background:var(--red-bg)"><b>≤ 0.15 MoM</b></td><td style="padding:7px 9px;border-bottom:1px solid var(--border)"><b>ייעוץ גנטי</b></td></tr>
+              <tr><td style="padding:7px 9px;border-bottom:1px solid var(--border)"><b>uE3</b></td><td style="padding:7px 9px;border-bottom:1px solid var(--border);background:var(--red-bg)"><b>≤ 0.15 MoM</b></td><td style="padding:7px 9px;border-bottom:1px solid var(--border)"><b>ייעוץ גנטי</b> (ערכים &gt;1.0 חסרי משמעות קלינית)</td></tr>
+              <tr><td style="padding:7px 9px;border-bottom:1px solid var(--border)"><b>uE3 + hCG</b></td><td style="padding:7px 9px;border-bottom:1px solid var(--border);background:var(--red-bg)">שניהם <b>&lt; 0.7 MoM</b></td><td style="padding:7px 9px;border-bottom:1px solid var(--border)"><b>ייעוץ גנטי</b></td></tr>
+              <tr><td style="padding:7px 9px"><b>סיכון T18</b></td><td style="padding:7px 9px;background:var(--red-bg)"><b>≥ 1:300</b></td><td style="padding:7px 9px"><b>ייעוץ גנטי</b> (סף עצמאי)</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:10px;padding:9px 11px;background:var(--surface2);border-radius:6px;font-size:11.5px;line-height:1.55">
+            <b>גורמים שמעלים AFP (לא בהכרח כרומוזומלי):</b> NTD פתוח · מומי דופן בטן (gastroschisis/omphalocele) · מומי כליות/שתן · הריון רב-עוברי · עישון · השמנה · אנמיה עוברית · IUFD · שליה נעוצה · גיל הריון שגוי
+          </div>
+        </div>
+      </details>
+
+      <!-- Section 5: Soft markers -->
+      <details style="margin-bottom:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:11px 14px;font-weight:700;color:var(--text);font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:linear-gradient(to left,var(--surface2),var(--green-bg))">
+          <span><span style="background:var(--green);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;margin-left:8px">5</span>סמנים רכים (US) — סיכום LR מנייר #30</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:12px 14px;font-size:12.5px;line-height:1.6">
+          <table style="width:100%;border-collapse:collapse;font-size:12.5px;table-layout:fixed">
+            <thead style="background:var(--surface2)"><tr><th style="padding:7px 9px;text-align:right;border-bottom:1px solid var(--border)">סמן</th><th style="padding:7px 9px;text-align:right;border-bottom:1px solid var(--border);width:60px">LR</th><th style="padding:7px 9px;text-align:right;border-bottom:1px solid var(--border)">פעולה (כממצא בודד)</th></tr></thead>
+            <tbody>
+              <tr><td style="padding:7px 9px;border-bottom:1px solid var(--border)"><b>NF</b> (≥5 ב-14–18+6w / ≥6 ב-19–24w)</td><td style="padding:7px 9px;border-bottom:1px solid var(--border);text-align:center;background:var(--red-bg);font-weight:700">17</td><td style="padding:7px 9px;border-bottom:1px solid var(--border)"><b>תמיד ייעוץ + TORCH/Parvo + אקו לב</b></td></tr>
+              <tr><td style="padding:7px 9px;border-bottom:1px solid var(--border)"><b>מעי היפראקוגני</b> (≥ עצם איליאק, 18–24w)</td><td style="padding:7px 9px;border-bottom:1px solid var(--border);text-align:center;background:var(--amber-bg);font-weight:700">6</td><td style="padding:7px 9px;border-bottom:1px solid var(--border)">ייעוץ + סקר CF + TORCH + אקו לב + מעקב גדילה</td></tr>
+              <tr><td style="padding:7px 9px;border-bottom:1px solid var(--border)"><b>קיצור פמור</b> (אחוזון ≤2.5 Hadlock, &gt;20w)</td><td style="padding:7px 9px;border-bottom:1px solid var(--border);text-align:center;background:var(--amber-bg);font-weight:700">2</td><td style="padding:7px 9px;border-bottom:1px solid var(--border)">ייעוץ + מעקב גדילה 2–3 שב' (חשד dysplasia)</td></tr>
+              <tr><td style="padding:7px 9px;border-bottom:1px solid var(--border)"><b>EIF</b> (שמאלי בלבד)</td><td style="padding:7px 9px;border-bottom:1px solid var(--border);text-align:center;background:var(--amber-bg);font-weight:700">1.5</td><td style="padding:7px 9px;border-bottom:1px solid var(--border)">חישוב משוקלל · ימני / מרובה → ייעוץ ללא תלות ב-LR · <b>אין צורך באקו לב</b></td></tr>
+              <tr><td style="padding:7px 9px;border-bottom:1px solid var(--border)"><b>CPC</b> (Choroid Plexus Cyst)</td><td style="padding:7px 9px;border-bottom:1px solid var(--border);text-align:center;background:var(--green-bg);font-weight:700">1.0</td><td style="padding:7px 9px;border-bottom:1px solid var(--border)">תיעוד, ללא ייעוץ. (50% מ-T18 — נדיר כממצא יחיד)</td></tr>
+              <tr><td style="padding:7px 9px;border-bottom:1px solid var(--border)"><b>Pyelectasis</b> (≥4 / ≥6 / ≥7 מ"מ לפי GA)</td><td style="padding:7px 9px;border-bottom:1px solid var(--border);text-align:center;background:var(--green-bg);font-weight:700">1.0</td><td style="padding:7px 9px;border-bottom:1px solid var(--border)">מעקב כליות עד 32w · <b>≥10 מ"מ → ייעוץ + נפרולוג/אורולוג ילדים</b></td></tr>
+              <tr><td style="padding:7px 9px"><b>SUA</b> (עורק טבורי בודד)</td><td style="padding:7px 9px;text-align:center;background:var(--green-bg);font-weight:700">1.0</td><td style="padding:7px 9px">סקירה + אקו לב + מעקב גדילה · אם ממצא נוסף → ייעוץ</td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:10px;padding:9px 11px;background:var(--amber-bg);border-radius:6px;font-size:11.5px;line-height:1.55;color:var(--amber-text)">
+            <b>חוק ה-≥2 סמנים:</b> גם כשכל סמן בנפרד LR=1 — שני סמנים יחד = ייעוץ + שיקול דיקור.
+          </div>
+        </div>
+      </details>
+
+      <!-- Section 6: Age & Funding -->
+      <details style="margin-bottom:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:11px 14px;font-weight:700;color:var(--text);font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:linear-gradient(to left,var(--surface2),var(--green-bg))">
+          <span><span style="background:var(--green);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;margin-left:8px">6</span>גיל אם ומימון בסל</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:12px 14px;font-size:12.5px;line-height:1.7">
+          <ul style="margin:0;padding-right:20px">
+            <li><b>בגיל 35 הסיכון הבסיסי = 1:380</b> · הסיכון ההיסטורי לאובדן עוברי בדיקור היה 1:200 → מנקודה זו הדיקור מועדף סטטיסטית.</li>
+            <li class="crit"><b>הריון שהחל בגיל ≥32:</b> מימון אמניוצנטזה + CMA <b>בסל הבריאות</b>, ללא תלות בתוצאת סקר. שיקול דעת המטופלת.</li>
+            <li><b>סיכון משוקלל מעל 1:380:</b> ייעוץ + מימון לדיקור.</li>
+            <li>סיכון T18 ≥ 1:300 — סף עצמאי לייעוץ.</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Section 7: NIPT positioning -->
+      <details style="margin-bottom:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:11px 14px;font-weight:700;color:var(--text);font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:linear-gradient(to left,var(--surface2),var(--teal-bg))">
+          <span><span style="background:var(--teal);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;margin-left:8px">7</span>מיקום NIPS (נייר #51, 8/2023)</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:12px 14px;font-size:12.5px;line-height:1.7">
+          <ul style="margin:0;padding-right:20px">
+            <li><b>NIPS כסקר ראשוני</b> מומלץ לכל הנשים (פרטי, ~₪1,500–3,000)</li>
+            <li>רגישות T21 &gt;98% · FPR &lt;0.1% · PPV ~85–90%</li>
+            <li class="crit"><b>NIPS לא מספיק כאשר:</b> NT≥3 · מום מבני · הוריה אחרת לפולשני — בכל המקרים האלה: ייעוץ + CMA בדיקור</li>
+            <li><b>NIPS חיובי:</b> אימות בדיקור (CVS/אמניוצנטזה) — לעולם לא להחליט הפסקה על סמך NIPS לבד</li>
+            <li><b>No call / 2+ הפרעות בבדיקה:</b> סיכון מוגבר · ייעוץ דחוף</li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- Section 8: Special situations -->
+      <details style="margin-bottom:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:11px 14px;font-weight:700;color:var(--text);font-size:13.5px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:var(--surface2)">
+          <span><span style="background:var(--text3);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;margin-left:8px">8</span>מצבים מיוחדים</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:12px 14px;font-size:12.5px;line-height:1.7">
+          <ul style="margin:0;padding-right:20px">
+            <li><b>הריון רב-עוברי:</b> בדיקת הבחירה — NT בשליש ראשון לכל עובר · שליש שני — AFP או סקירה מכוונת למומים פתוחים (חלבון רב-עוברי לא יודע למי לייחס חריגה)</li>
+            <li><b>Vanishing twin / IVF / שליה נעוצה / IUFD של אחד:</b> NIPS לא מומלץ — מקור DNA לא ברור</li>
+            <li><b>DZ vs MZ:</b> סיכון DS בתאומי DZ — מוגבר; ב-MZ — ירידה של 1/3 לעומת סינגלטון</li>
+            <li><b>גיל אב מתקדם:</b> ה-MoH לא מתייחס גם אם 60–70</li>
+          </ul>
+        </div>
+      </details>
+
+      <div class="note" style="border-right-color:var(--amber);background:var(--amber-bg);margin-bottom:0;margin-top:10px;font-size:12.5px">
+        <b>חשוב:</b> הספים מבוססים על חוזרי משרד הבריאות 13/2014 ו-7/2019. נייר עמדה #51 (אוגוסט 2023) מהפך את הגישה ל-NIPS-first — אך הספים הביוכימיים נשארים תקפים כאשר מתבצע סקר ביוכימי או כאשר תוצאות חורגות.
+      </div>
+    </div>
+  `;
+
+  list.innerHTML = html;
+  const resEl5 = document.getElementById('biom-res');
+  if (resEl5) resEl5.innerHTML = '';
   document.getElementById(t.area).scrollIntoView({block:'nearest', behavior:'smooth'});
 }
 
