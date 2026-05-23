@@ -2220,12 +2220,14 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
     <div class="ref">
-      <b>נייר עמדה ישראלי #10 (2025):</b> ניהול הריון עם עובר החשוד ב-IUGR — AAM + חברת אולטרסאונד<br>
-      <b>UA PI ו-S/D:</b> Arduini D, Rizzo G. <i>J Perinat Med</i> 1990;18:165–172 (1556 עוברים)<br>
-      &nbsp;&nbsp;<b>נכלל בחישוב:</b> Doppler מעורק טבורי ב-free loop — PSV (S), EDV (D), TAMax · PI=(S–D)/TAMax · S/D=S/D<br>
-      <b>UtA-PI:</b> Gómez O et al. <i>UOG</i> 2008;32:128–132 (מאומץ ISUOG)<br>
-      &nbsp;&nbsp;<b>נכלל בחישוב:</b> Doppler משני העורקים הרחמיים → ממוצע PI דו-צדדי<br>
-      אינטרפולציה לינארית בין שבועות לפי ימים
+      <b>נייר עמדה ישראלי #10 (ינואר 2025, מהדורה 5):</b> ניהול הריון עם עובר החשוד ב-IUGR/FGR — איגוד מיילדות + AAM + אולטרסאונד · מגדיר סף קליני "UA-PI > אחוזון 95 לפי GA" ללא חיוב טבלת ייחוס יחידה<br>
+      <b>ISUOG Practice Guidelines (Bhide, Acharya et al.):</b> <i>UOG</i> 2021;58:331–339 — <b>ממליצה PI על פני S/D / RI</b> (PI בעל מתאם לינארי עם תנגודת; S/D פרבולי ולא מוגדר ב-AEDV/REDV). מאמצת את Acharya 2005 כעקומת ייחוס מומלצת.<br>
+      <b>UA-PI · עקומה ראשית (default):</b> Acharya G, Wilsgaard T, Berntsen GKR, Maltau JM, Kiserud T. <i>Am J Obstet Gynecol</i> 2005;192:937–944 — free-loop UA, 130 נשים בהריון יחיד בסיכון נמוך, 19–41 שב׳ · Table II<br>
+      <b>UA-PI · עקומה חלופית:</b> Drukker L, Staines-Urias E, Villar J, et al. INTERGROWTH-21st — <i>Am J Obstet Gynecol</i> 2020;222(6):602.e1–15 — מודל BCCG בינלאומי, מכוסה 24–40 שב׳, ניתן לבחירה בצ'יפ שמעל הקלט<br>
+      <b>UA S/D:</b> Arduini D, Rizzo G. <i>J Perinat Med</i> 1990;18:165–172 (n=1,556) — שמור לתאימות אחורנית; <b>אינו מומלץ ע"י ISUOG 2021</b>, עדיף לדווח PI<br>
+      <b>UtA-PI:</b> Gómez O et al. <i>UOG</i> 2008;32:128–132 (מאומץ ISUOG) · ממוצע דו-צדדי<br>
+      <b>CPR:</b> Baschat AA. <i>UOG</i> 2003;21:124–127 (סף &lt;1.08) · Khalil A. <i>UOG</i> 2017 (סקירה)<br>
+      <b>חישוב:</b> אינטרפולציה לינארית בין שבועות לפי ימים. INTERGROWTH מחושב מהמשוואה הפובלית לכל GA רציף.
     </div>
     </details>
     <div class="row">
@@ -2246,12 +2248,29 @@
     </div>
     <div class="divider"></div>
     <div class="sec">עורק טבורי (Umbilical Artery)</div>
+
+    <!-- UA-PI curve selector -->
+    <div class="row" style="align-items:flex-start">
+      <label>עקומת ייחוס ל-PI<br><span style="font-size:10.5px;font-weight:500;color:var(--text3)">ISUOG 2021 ממליצה Acharya</span></label>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button type="button" data-v="acharya" class="active" onclick="setUaPICurve(this)" style="font-size:11.5px;padding:6px 11px;border-radius:999px;border:1.5px solid var(--primary);background:var(--primary);color:#fff;font-weight:700;cursor:pointer">Acharya 2005</button>
+        <button type="button" data-v="intergrowth" onclick="setUaPICurve(this)" style="font-size:11.5px;padding:6px 11px;border-radius:999px;border:1.5px solid var(--border);background:var(--surface2);color:var(--text2);font-weight:600;cursor:pointer">INTERGROWTH-21st (Drukker 2020)</button>
+      </div>
+    </div>
+
     <div class="row"><label>UA PI</label>
       <input type="number" id="ua-pi" placeholder="PI" min="0" max="5" step="0.01">
       <span class="unit">PI</span></div>
+    <div class="note" style="margin:-4px 0 8px 0;padding:6px 10px;font-size:11px;background:transparent;border:0;color:var(--text3)">
+      <b>מקור פעיל:</b> <span id="ua-pi-src">Acharya G et al. AJOG 2005 — free-loop, 19–41w</span>
+    </div>
+
     <div class="row"><label>UA S/D ratio</label>
       <input type="number" id="ua-sd" placeholder="S/D" min="0" max="15" step="0.01">
       <span class="unit">S/D</span></div>
+    <div class="note" style="margin:-4px 0 8px 0;padding:6px 10px;font-size:11px;background:transparent;border:0;color:var(--text3)">
+      <b>מקור:</b> Acharya G et al. AJOG 2005 — Table IV, free-loop, 19–41w · <b>הערה:</b> <span style="color:var(--amber-text)">ISUOG 2021 ממליצה PI על S/D</span> (PI לינארי עם תנגודת; S/D עם CV הגבוה ביותר 13% ולא מוגדר ב-AEDV/REDV)
+    </div>
     <div class="row">
       <label>End-Diastolic Flow</label>
       <div class="seg" id="ua-edv">
@@ -6844,7 +6863,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.16';
+const APP_VERSION = '4.17';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -10731,19 +10750,119 @@ function calcPTB(){
 }
 
 // ─── UA ───────────────────────────────────────────────────────────────────
-const uaPIref = {
-  20:{m:1.27,p95:1.62},21:{m:1.22,p95:1.55},22:{m:1.17,p95:1.50},23:{m:1.12,p95:1.43},
-  24:{m:1.08,p95:1.38},25:{m:1.04,p95:1.33},26:{m:1.00,p95:1.28},27:{m:0.97,p95:1.24},
-  28:{m:0.94,p95:1.20},29:{m:0.91,p95:1.17},30:{m:0.89,p95:1.14},31:{m:0.86,p95:1.10},
-  32:{m:0.84,p95:1.08},33:{m:0.82,p95:1.05},34:{m:0.80,p95:1.02},35:{m:0.78,p95:1.00},
-  36:{m:0.77,p95:0.98},37:{m:0.75,p95:0.96},38:{m:0.73,p95:0.94},39:{m:0.72,p95:0.93},40:{m:0.70,p95:0.91}
+// Active UA-PI reference selector — 'acharya' is default (ISUOG 2021 endorsed)
+let uaPICurve = 'acharya';
+
+// Acharya G, Wilsgaard T, Berntsen GKR, Maltau JM, Kiserud T.
+// Am J Obstet Gynecol 2005;192:937-944, Table II — free-loop UA, 130 low-risk singletons, 19-41w.
+// ISUOG Practice Guidelines (Bhide A, Acharya G, et al. UOG 2021;58:331-339) endorses Acharya as the
+// recommended UA-PI reference. Values stored as {m: 50th percentile, p95}.
+const uaPI_Acharya = {
+  19:{m:1.30,p95:1.66},20:{m:1.27,p95:1.62},21:{m:1.22,p95:1.58},22:{m:1.19,p95:1.54},
+  23:{m:1.15,p95:1.50},24:{m:1.12,p95:1.47},25:{m:1.09,p95:1.44},26:{m:1.06,p95:1.41},
+  27:{m:1.03,p95:1.38},28:{m:1.00,p95:1.35},29:{m:0.98,p95:1.32},30:{m:0.95,p95:1.29},
+  31:{m:0.93,p95:1.27},32:{m:0.90,p95:1.25},33:{m:0.88,p95:1.22},34:{m:0.86,p95:1.20},
+  35:{m:0.84,p95:1.18},36:{m:0.82,p95:1.16},37:{m:0.80,p95:1.14},38:{m:0.78,p95:1.12},
+  39:{m:0.76,p95:1.10},40:{m:0.75,p95:1.09},41:{m:0.73,p95:1.07}
 };
+
+// INTERGROWTH-21st (Drukker L et al. AJOG 2020;222(6):602.e1-15, Table 6) — Box-Cox Cole-Green
+// (BCCG/LMS) model. International multicenter prospective cohort. GA range 24+0 to 40+0 weeks.
+// Values are computed per-call from published equations (not stored as a lookup table).
+const uaPI_Intergrowth_lambda = -0.0768617;
+function uaPI_Intergrowth_mu(ga){
+  return 1.02944 + 77.7456 / (ga*ga) - 0.000004455 * Math.pow(ga, 3);
+}
+function uaPI_Intergrowth_sigma(ga){
+  return -0.00645693 + 254.885 * Math.log(ga) / (ga*ga) - 715.949 / (ga*ga);
+}
+// Inverse of Box-Cox: returns the value at z standard deviations from the median
+function uaPI_Intergrowth_centile(ga, z){
+  const lambda = uaPI_Intergrowth_lambda;
+  const mu = uaPI_Intergrowth_mu(ga);
+  const sigma = uaPI_Intergrowth_sigma(ga);
+  // y = mu + (sigma/lambda) * ln(1 + lambda*z)
+  return mu + (sigma / lambda) * Math.log(1 + lambda * z);
+}
+// Build a {m, p95} object for a given GA in weeks (integer or fractional)
+function uaPI_Intergrowth_at(ga){
+  if(ga < 24 || ga > 40) return null;
+  return {
+    m: uaPI_Intergrowth_centile(ga, 0),
+    p95: uaPI_Intergrowth_centile(ga, 1.64485)
+  };
+}
+// z-score for an observed PI under the INTERGROWTH model
+function uaPI_Intergrowth_z(pi, ga){
+  const lambda = uaPI_Intergrowth_lambda;
+  const mu = uaPI_Intergrowth_mu(ga);
+  const sigma = uaPI_Intergrowth_sigma(ga);
+  // z = (1/lambda) * { exp[(pi - mu)*lambda/sigma] - 1 }
+  return (1 / lambda) * (Math.exp((pi - mu) * lambda / sigma) - 1);
+}
+
+// Build a virtual INTERGROWTH lookup table for chart rendering
+function uaPI_Intergrowth_table(){
+  const t = {};
+  for(let w = 24; w <= 40; w++){
+    t[w] = uaPI_Intergrowth_at(w);
+  }
+  return t;
+}
+const uaPI_Intergrowth_cache = uaPI_Intergrowth_table();
+
+// Backwards-compat alias that always points to the active curve
+const uaPIref_byCurve = () => uaPICurve === 'intergrowth' ? uaPI_Intergrowth_cache : uaPI_Acharya;
+// Some legacy callers reference `uaPIref` as a constant — keep as a Proxy that delegates
+const uaPIref = new Proxy({}, {
+  get(_, key){ return uaPIref_byCurve()[key]; },
+  has(_, key){ return key in uaPIref_byCurve(); },
+  ownKeys(){ return Object.keys(uaPIref_byCurve()); },
+  getOwnPropertyDescriptor(_, key){
+    const v = uaPIref_byCurve()[key];
+    return v === undefined ? undefined : {value:v, enumerable:true, configurable:true};
+  }
+});
+
+// Curve chip toggle (single-select for UA-PI)
+function setUaPICurve(btn){
+  const buttons = btn.parentElement.querySelectorAll('button');
+  buttons.forEach(b => {
+    b.classList.remove('active');
+    // Restore unselected style
+    b.style.background = 'var(--surface2)';
+    b.style.color = 'var(--text2)';
+    b.style.borderColor = 'var(--border)';
+    b.style.fontWeight = '600';
+  });
+  btn.classList.add('active');
+  btn.style.background = 'var(--primary)';
+  btn.style.color = '#fff';
+  btn.style.borderColor = 'var(--primary)';
+  btn.style.fontWeight = '700';
+  uaPICurve = btn.dataset.v;
+  // Update inline source caption
+  const srcEl = document.getElementById('ua-pi-src');
+  if(srcEl){
+    srcEl.textContent = uaPICurve === 'intergrowth'
+      ? 'Drukker L et al. INTERGROWTH-21st, AJOG 2020 — 24–40w, מודל BCCG'
+      : 'Acharya G et al. AJOG 2005 — free-loop, 19–41w';
+  }
+  if(document.getElementById('ua-res').innerHTML) calcUA();
+}
+// UA-S/D — Acharya G, Wilsgaard T, Berntsen GKR, Maltau JM, Kiserud T.
+// Am J Obstet Gynecol 2005;192:937-944, Table IV. Free-loop UA, same cohort as the PI table
+// above (130 low-risk singletons, 19-41w). Adopted as default to keep all three UA indices
+// from a single consistent longitudinal cohort. Values stored as {m: 50th, p95: 95th}.
+// Note: ISUOG 2021 still prefers PI over S/D for clinical use — S/D's CV is the highest (13.0%
+// in the paper) and S/D is undefined in AEDV/REDV.
 const uaSDref = {
-  20:{m:3.44,p95:4.40},21:{m:3.28,p95:4.18},22:{m:3.12,p95:3.98},23:{m:2.98,p95:3.80},
-  24:{m:2.85,p95:3.63},25:{m:2.73,p95:3.48},26:{m:2.61,p95:3.33},27:{m:2.51,p95:3.20},
-  28:{m:2.41,p95:3.07},29:{m:2.32,p95:2.96},30:{m:2.23,p95:2.85},31:{m:2.15,p95:2.74},
-  32:{m:2.07,p95:2.64},33:{m:2.00,p95:2.55},34:{m:1.93,p95:2.46},35:{m:1.87,p95:2.38},
-  36:{m:1.81,p95:2.31},37:{m:1.75,p95:2.23},38:{m:1.70,p95:2.17},39:{m:1.65,p95:2.11},40:{m:1.60,p95:2.04}
+  19:{m:4.28,p95:6.26},20:{m:4.11,p95:5.99},21:{m:3.91,p95:5.67},22:{m:3.77,p95:5.45},
+  23:{m:3.62,p95:5.22},24:{m:3.48,p95:5.02},25:{m:3.35,p95:4.83},26:{m:3.23,p95:4.66},
+  27:{m:3.12,p95:4.50},28:{m:3.02,p95:4.36},29:{m:2.92,p95:4.22},30:{m:2.83,p95:4.10},
+  31:{m:2.75,p95:3.98},32:{m:2.67,p95:3.87},33:{m:2.60,p95:3.77},34:{m:2.53,p95:3.68},
+  35:{m:2.46,p95:3.59},36:{m:2.40,p95:3.51},37:{m:2.34,p95:3.43},38:{m:2.28,p95:3.36},
+  39:{m:2.23,p95:3.29},40:{m:2.18,p95:3.22},41:{m:2.13,p95:3.16}
 };
 function uaInterp(table,w,d){
   const r0=table[w], r1=table[w+1]||r0, f=d/7;
@@ -10751,19 +10870,29 @@ function uaInterp(table,w,d){
 }
 function utaMed(ga){ return 0.9465+46.891/ga-345.52/(ga*ga); }
 function uaChart(table, value, w, d, valLabel, yMax){
+  // Adaptive week range — read whatever the active table covers
+  const weeks = Object.keys(table).map(Number).filter(n => !isNaN(n)).sort((a,b)=>a-b);
+  const xMin = weeks[0] || 20;
+  const xMax = weeks[weeks.length-1] || 40;
   const med=[], p95=[];
-  for(let ww=20; ww<=40; ww++){
-    med.push([ww, table[ww].m]); p95.push([ww, table[ww].p95]);
+  for(const ww of weeks){
+    const r = table[ww];
+    if(!r) continue;
+    med.push([ww, r.m]); p95.push([ww, r.p95]);
   }
-  const ga=w+d/7;
+  const ga = w + d/7;
+  // For the dot color: lookup the closest week we have data for
+  const closestW = Math.max(xMin, Math.min(xMax, Math.round(ga)));
+  const refRow = table[closestW];
+  const overP95 = refRow ? value > refRow.p95 : false;
   return makeChart({
-    xMin:20, xMax:40, yMin:0, yMax,
+    xMin, xMax, yMin:0, yMax,
     xLabel:'גיל הריון (שבועות)', yLabel:valLabel,
     series:[
       {label:'חציון', color:'#185FA5', points:med, width:1.6},
       {label:'95th', color:'#EF9F27', points:p95, width:1.2, dash:'4 3'}
     ],
-    point:{x:ga, y:value, color: value>table[Math.round(ga)].p95?'#E24B4A':'#1D9E75'},
+    point:{x:ga, y:value, color: overP95 ? '#E24B4A' : '#1D9E75'},
     yFormat:v=>v.toFixed(1)
   });
 }
@@ -10786,8 +10915,9 @@ function calcUA(){
     const r=uaInterp(uaPIref,w,d);
     const high=pi>r.p95;
     if(high && worst==='normal') worst='pi95';
+    const uaPISrcLabel = uaPICurve === 'intergrowth' ? 'INTERGROWTH-21st 2020' : 'Acharya 2005 (ISUOG)';
     html+=`<div class="sub-result">
-      <div class="sub-title">UA PI · Arduini &amp; Rizzo 1990</div>
+      <div class="sub-title">UA PI · ${uaPISrcLabel}</div>
       <div class="med">${pi.toFixed(2)}</div>
       <div class="detail-grid two" style="margin-top:8px">
         <div class="di"><div class="dl">חציון</div><div class="dv">${r.m.toFixed(2)}</div></div>
@@ -10828,7 +10958,7 @@ function calcUA(){
             ${legendDot(high?'#E24B4A':'#1D9E75', `S/D נמדד: ${sd.toFixed(2)}`)}
           </div>
         </div>
-        ${uaChart(uaSDref, sd, w, d, 'S/D', 5.5)}
+        ${uaChart(uaSDref, sd, w, d, 'S/D', 7.0)}
       </div>
     </div>`;
   }
