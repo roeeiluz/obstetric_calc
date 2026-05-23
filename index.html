@@ -985,7 +985,10 @@
   .pp-seg button:first-child { border-inline-start: 0; }
   .pp-seg button:hover { background: var(--surface2); }
   .pp-seg button.active {
-    background: var(--text); color: var(--bg); font-weight: 600;
+    background: var(--primary-bg);
+    color: var(--primary);
+    font-weight: 700;
+    box-shadow: inset 0 -2px 0 var(--primary);
   }
   .pp-cat-chips {
     display: flex; gap: 5px; flex-wrap: wrap; align-items: center;
@@ -997,16 +1000,22 @@
     display: inline-flex; align-items: center; gap: 6px;
     transition: all .15s;
   }
-  .pp-cat-chip:hover { border-color: var(--text3); background: var(--surface2); }
+  .pp-cat-chip:hover {
+    /* Light tint of the chip's own text color (currentColor) — works for every category */
+    background: color-mix(in oklab, currentColor 6%, transparent);
+    border-color: color-mix(in oklab, currentColor 25%, transparent);
+  }
   .pp-cat-chip .dot {
     width: 8px; height: 8px; border-radius: 50%;
     background: currentColor; opacity: .85; flex: 0 0 8px;
   }
+  /* Active state: stronger tint of the chip's own color (no harsh black) */
   .pp-cat-chip.active {
-    background: var(--text); color: var(--bg); border-color: var(--text);
-    font-weight: 600;
+    background: color-mix(in oklab, currentColor 12%, transparent);
+    border-color: color-mix(in oklab, currentColor 50%, transparent);
+    font-weight: 700;
   }
-  .pp-cat-chip.active .dot { background: var(--bg); opacity: 1; }
+  .pp-cat-chip.active .dot { opacity: 1; }
   .pp-check {
     display: flex; align-items: center; gap: 10px;
     padding: 10px 12px; border: 1px solid var(--border2);
@@ -1098,7 +1107,7 @@
     .result { padding: 18px; }
     .seg { width: 100%; }
     .seg button { flex: 1; }
-    .pp-grid { grid-template-columns: 1fr; }
+    /* pp-grid stays 2 columns on mobile too (user request) — checkbox text wraps inside cells */
   }
 
   /* ── Israeli Position Papers ──────────────────────────────────────── */
@@ -5075,10 +5084,6 @@
 
     <div class="pp-cta-row">
       <button class="btn btn-primary" onclick="calcPp()">בנה תוכנית מותאמת</button>
-      <button type="button" onclick="resetPp()" style="font-size:13px;padding:9px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;font-family:inherit">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:4px"><path d="M2 7a5 5 0 0 1 9-3M11 2v3h-3M12 7a5 5 0 0 1-9 3M3 12V9h3"/></svg>
-        אפס
-      </button>
     </div>
     <div id="pp-res"></div>
   </div>
@@ -6952,7 +6957,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.22';
+const APP_VERSION = '4.24';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -15739,15 +15744,23 @@ function calcPp(){
     <div class="no-print pp-filter-card">
       <div class="pp-filter-head">
         <span>סינון</span>
-        <button onclick="exportPpCsv()" type="button" class="pp-filter-icon-btn" aria-label="הורד טבלה Excel/CSV" title="הורד טבלה (Excel/CSV)">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M7 1.5v8M4 7l3 3 3-3M2 12h10"/></svg>
-        </button>
+        <div style="display:flex;gap:6px">
+          <button onclick="downloadPpHtml()" type="button" class="pp-filter-icon-btn" aria-label="הורד תוכנית" title="הורד תוכנית ידידותית (HTML)">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M7 1.5v8M4 7l3 3 3-3M2 12h10"/></svg>
+          </button>
+          <button onclick="sendPpEmail()" type="button" class="pp-filter-icon-btn" aria-label="שלח במייל" title="שלח תוכנית במייל">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><rect x="1.5" y="3" width="11" height="8" rx="1"/><path d="M1.5 4l5.5 4 5.5-4"/></svg>
+          </button>
+          <button onclick="resetPp()" type="button" class="pp-filter-icon-btn" aria-label="אפס" title="אפס את כל הנתונים">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M2 7a5 5 0 0 1 9-3M11 2v3h-3M12 7a5 5 0 0 1-9 3M3 12V9h3"/></svg>
+          </button>
+        </div>
       </div>
-      <!-- Source filter — segmented control -->
-      <div class="pp-seg">
-        <button type="button" class="${currentFilter==='all'?'active':''}" onclick="setPpFilter('all')">כל ההמלצות · ${allItems.length}</button>
-        <button type="button" class="${currentFilter==='risk'?'active':''}" onclick="setPpFilter('risk')" ${riskCount===0?'disabled style="opacity:.45;cursor:not-allowed"':''}>מותאמות אישית · ${riskCount}</button>
-        <button type="button" class="${currentFilter==='standard'?'active':''}" onclick="setPpFilter('standard')">שגרתיות · ${standardCount}</button>
+      <!-- Source filter — segmented control (full width) -->
+      <div class="pp-seg" style="display:flex;width:100%">
+        <button type="button" style="flex:1" class="${currentFilter==='all'?'active':''}" onclick="setPpFilter('all')">כל ההמלצות · ${allItems.length}</button>
+        <button type="button" style="flex:1" class="${currentFilter==='risk'?'active':''}" onclick="setPpFilter('risk')" ${riskCount===0?'disabled style="flex:1;opacity:.45;cursor:not-allowed"':''}>מותאמות אישית · ${riskCount}</button>
+        <button type="button" style="flex:1" class="${currentFilter==='standard'?'active':''}" onclick="setPpFilter('standard')">שגרתיות · ${standardCount}</button>
       </div>
       <!-- Category filter — chips with colored dots -->
       <div class="pp-cat-chips">
@@ -16202,11 +16215,59 @@ function openPpPatientView(){
   </footer></body></html>`;
 
   const fullHtml = head + bodyHtml + foot;
+  // Stash for downstream consumers (download, email) so they don't rebuild
+  window._lastPpPatientHtml = fullHtml;
   const win = window.open('', '_blank');
   if(!win){ alert('חסום פופ-אפ. אנא אפשר חלונות קופצים לאתר זה.'); return; }
   win.document.open();
   win.document.write(fullHtml);
   win.document.close();
+}
+
+// Download the patient-friendly view as a standalone HTML file
+function downloadPpHtml(){
+  // If view was already generated, use it; otherwise build it now (silently)
+  if(!window._lastPpPatientHtml){
+    // Re-run openPpPatientView in "build-only" mode by temporarily monkey-patching window.open
+    const origOpen = window.open;
+    window.open = () => ({ document: { open: ()=>{}, write: ()=>{}, close: ()=>{} } });
+    try { openPpPatientView(); } finally { window.open = origOpen; }
+  }
+  const html = window._lastPpPatientHtml;
+  if(!html){ alert('יש לחשב תוכנית הריון תחילה'); return; }
+  const blob = new Blob(['﻿' + html], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const today = todayDate();
+  const fname = `תוכנית-מעקב-הריון-${today.toISOString().slice(0,10)}.html`;
+  a.href = url;
+  a.download = fname;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+// Open mailto with the plan text as the body, ready to send to anyone
+function sendPpEmail(){
+  const data = window._lastPpData;
+  if(!data){ alert('יש לחשב תוכנית הריון תחילה'); return; }
+  const txt = window._lastPpPlan || '';
+  if(!txt){ alert('יש לחשב תוכנית הריון תחילה'); return; }
+  const subject = `תוכנית מעקב הריון — EDD ${fmtDate(data.edd)}`;
+  const body =
+    txt +
+    '\n\n— — — — — — — — — — — — — — — — — — — —\n' +
+    'תוכנית זו נבנתה ע"י המחשבון המיילדותי.\n' +
+    'אינה תחליף להוראות הרופא/ה המטפל/ת — סטיות מהלוח אפשריות לפי שיקול קליני אישי.\n' +
+    'ניתן להוריד גם גרסת HTML מודפסת מהכפתור שליד "שלח במייל".\n';
+  const url = 'mailto:?subject=' + encodeURIComponent(subject) +
+              '&body=' + encodeURIComponent(body);
+  // Some mail clients trim long mailto URLs — warn if it's borderline
+  if(url.length > 1800){
+    if(!confirm('התוכנית ארוכה — חלק מקליינטי הדואר עלולים לחתוך את הטקסט. להמשיך?')) return;
+  }
+  window.location.href = url;
 }
 
 function _legacy_unused(){ // legacy unreachable code retained as no-op
