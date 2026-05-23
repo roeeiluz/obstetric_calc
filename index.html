@@ -940,6 +940,73 @@
     display: grid; grid-template-columns: repeat(2, 1fr);
     gap: 8px; margin-bottom: 8px;
   }
+  /* 5-option pregnancy type chips */
+  .pp-type-chip {
+    font-size: 12.5px; padding: 7px 13px; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text2); font-weight: 500; cursor: pointer;
+    transition: all .15s; font-family: inherit;
+  }
+  .pp-type-chip:hover { border-color: var(--primary); color: var(--primary); }
+  .pp-type-chip.active {
+    background: var(--primary); color: #fff;
+    border-color: var(--primary); font-weight: 700;
+  }
+  /* Option A filter — segmented source filter + category chips with colored dots */
+  .pp-filter-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .pp-filter-head {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 8px; margin-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px; font-weight: 600; color: var(--text);
+  }
+  .pp-filter-icon-btn {
+    background: transparent; border: 1px solid var(--border);
+    border-radius: 8px; padding: 6px 10px; cursor: pointer;
+    color: var(--text2); font-size: 12px; font-family: inherit;
+  }
+  .pp-filter-icon-btn:hover { border-color: var(--primary); color: var(--primary); }
+  .pp-seg {
+    display: inline-flex; border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden; margin-bottom: 10px;
+  }
+  .pp-seg button {
+    font-size: 12px; padding: 7px 14px;
+    border: 0; background: var(--surface);
+    color: var(--text2); cursor: pointer; font-family: inherit;
+    border-inline-start: 1px solid var(--border);
+  }
+  .pp-seg button:first-child { border-inline-start: 0; }
+  .pp-seg button:hover { background: var(--surface2); }
+  .pp-seg button.active {
+    background: var(--text); color: var(--bg); font-weight: 600;
+  }
+  .pp-cat-chips {
+    display: flex; gap: 5px; flex-wrap: wrap; align-items: center;
+  }
+  .pp-cat-chip {
+    font-size: 12px; padding: 5px 11px; border-radius: 999px;
+    border: 1px solid var(--border); background: var(--surface);
+    color: var(--text2); cursor: pointer; font-family: inherit;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: all .15s;
+  }
+  .pp-cat-chip:hover { border-color: var(--text3); background: var(--surface2); }
+  .pp-cat-chip .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: currentColor; opacity: .85; flex: 0 0 8px;
+  }
+  .pp-cat-chip.active {
+    background: var(--text); color: var(--bg); border-color: var(--text);
+    font-weight: 600;
+  }
+  .pp-cat-chip.active .dot { background: var(--bg); opacity: 1; }
   .pp-check {
     display: flex; align-items: center; gap: 10px;
     padding: 10px 12px; border: 1px solid var(--border2);
@@ -4905,11 +4972,14 @@
           <label>תאריך לידה משוער</label>
           <input type="date" id="pp-edd">
         </div>
-        <div class="row">
+        <div class="row" style="align-items:flex-start">
           <label>סוג ההריון</label>
-          <div class="seg" id="pp-type">
-            <button data-v="single" class="active" onclick="setPpType(this)">יחיד</button>
-            <button data-v="twin" onclick="setPpType(this)">תאומים</button>
+          <div id="pp-type" style="display:flex;flex-wrap:wrap;gap:6px">
+            <button type="button" class="pp-type-chip active" data-v="single" onclick="setPpType(this)">יחיד</button>
+            <button type="button" class="pp-type-chip" data-v="dcda" onclick="setPpType(this)">תאומים DCDA</button>
+            <button type="button" class="pp-type-chip" data-v="mcda" onclick="setPpType(this)">תאומים MCDA</button>
+            <button type="button" class="pp-type-chip" data-v="mcma" onclick="setPpType(this)">תאומים MCMA</button>
+            <button type="button" class="pp-type-chip" data-v="triplet" onclick="setPpType(this)">שלישיה</button>
           </div>
         </div>
       </div>
@@ -4981,7 +5051,7 @@
           <div class="pp-sec-title">מחלות רקע</div>
           <div class="pp-sec-sub">DM, HTN, אוטואימוני, כליה, לב...</div>
         </div>
-        <span class="pp-sec-count" id="pp-count-comorb">12</span>
+        <span class="pp-sec-count" id="pp-count-comorb">13</span>
         <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="pp-sec-body">
@@ -4998,12 +5068,17 @@
           <label class="pp-check"><input type="checkbox" id="r_epilepsy"> אפילפסיה</label>
           <label class="pp-check"><input type="checkbox" id="r_depression"> דיכאון / חרדה</label>
           <label class="pp-check"><input type="checkbox" id="r_smoking"> עישון פעיל</label>
+          <label class="pp-check"><input type="checkbox" id="r_bariatric"> ניתוח בריאטרי בעבר</label>
         </div>
       </div>
     </details>
 
     <div class="pp-cta-row">
       <button class="btn btn-primary" onclick="calcPp()">בנה תוכנית מותאמת</button>
+      <button type="button" onclick="resetPp()" style="font-size:13px;padding:9px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text2);cursor:pointer;font-family:inherit">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:4px"><path d="M2 7a5 5 0 0 1 9-3M11 2v3h-3M12 7a5 5 0 0 1-9 3M3 12V9h3"/></svg>
+        אפס
+      </button>
     </div>
     <div id="pp-res"></div>
   </div>
@@ -6877,7 +6952,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.21';
+const APP_VERSION = '4.22';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -15481,7 +15556,42 @@ function readPpState(){
     r_epilepsy: $('r_epilepsy').checked,
     r_depression: $('r_depression').checked,
     r_smoking: $('r_smoking').checked,
+    r_bariatric: $('r_bariatric').checked,
   };
+}
+
+// Reset all pregnancy plan inputs back to defaults
+function resetPp(){
+  if(!confirm('לאפס את כל הנתונים בתוכנית הריון?')) return;
+  // Dates + numbers
+  ['pp-lmp','pp-edd','pp-age','pp-h','pp-wt','pp-bmi-disp'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el && 'value' in el) el.value = '';
+  });
+  const bmiDisp = document.getElementById('pp-bmi-disp');
+  if(bmiDisp) bmiDisp.textContent = '';
+  // All risk checkboxes
+  document.querySelectorAll('#pplan input[type=checkbox]').forEach(cb => cb.checked = false);
+  // Pregnancy type → back to single
+  ppType = 'single';
+  document.querySelectorAll('#pp-type button').forEach(b => {
+    b.classList.toggle('active', b.dataset.v === 'single');
+  });
+  // Mode → back to LMP
+  ppMode = 'lmp';
+  document.querySelectorAll('#pp-mode button').forEach(b => {
+    b.classList.toggle('active', b.dataset.v === 'lmp');
+  });
+  const lmpRow = document.getElementById('pp-lmp-row'); if(lmpRow) lmpRow.style.display = '';
+  const eddRow = document.getElementById('pp-edd-row'); if(eddRow) eddRow.style.display = 'none';
+  // Clear results
+  const res = document.getElementById('pp-res'); if(res) res.innerHTML = '';
+  // Clear stashed state
+  window._lastPpPlan = null;
+  window._lastPpData = null;
+  // Reset filters
+  window._ppFilter = 'all';
+  window._ppCatFilter = 'allcat';
 }
 
 // Legacy placeholder
@@ -15553,7 +15663,8 @@ function calcPp(){
     r_hypothyroid:'תת-פעילות תריס', r_thrombophilia:'טרומבופיליה/APS',
     r_dvt:'DVT/PE היסטוריה', r_autoimmune:'מחלה אוטואימונית',
     r_asthma:'אסטמה', r_renal:'מחלת כליה', r_cardiac:'מחלת לב',
-    r_epilepsy:'אפילפסיה', r_depression:'דיכאון/חרדה', r_smoking:'עישון פעיל'
+    r_epilepsy:'אפילפסיה', r_depression:'דיכאון/חרדה', r_smoking:'עישון פעיל',
+    r_bariatric:'ניתוח בריאטרי בעבר'
   };
   for(const k in riskLabels){ if(state[k]) activeRisks.push(riskLabels[k]); }
 
@@ -15619,53 +15730,34 @@ function calcPp(){
   const currentCat    = window._ppCatFilter || 'allcat'; // 'allcat' | 'visit' | 'us' | 'lab' | 'genetics' | 'nurse'
 
   html += `<div class="chart-card">
-    <div class="chart-head">
+    <div class="chart-head" style="padding-bottom:8px">
       <div class="chart-title">לוח בדיקות מותאם</div>
-      <div class="chart-legend">
-        ${Object.keys(catLabels).map(c=>`<span class="leg-item"><span class="leg-swatch" style="background:${catColors[c]}"></span>${catLabels[c]}</span>`).join('')}
-      </div>
+      <span style="font-size:11px;color:var(--text3)">${allItems.length} פריטים</span>
     </div>
 
-    <!-- Filter toolbar — row 1: source -->
-    <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;padding:10px 4px 8px 4px;border-bottom:1px solid var(--border);margin-bottom:0">
-      <button onclick="setPpFilter('all')" type="button" style="font-size:12px;padding:7px 13px;border-radius:999px;border:1px solid var(--border);background:${currentFilter==='all'?'var(--primary)':'var(--surface2)'};color:${currentFilter==='all'?'#fff':'var(--text2)'};font-weight:${currentFilter==='all'?'700':'500'};cursor:pointer">
-        כל ההמלצות (${allItems.length})
-      </button>
-      <button onclick="setPpFilter('risk')" type="button" style="font-size:12px;padding:7px 13px;border-radius:999px;border:1px solid var(--amber);background:${currentFilter==='risk'?'var(--amber)':'var(--amber-bg)'};color:${currentFilter==='risk'?'#fff':'var(--amber-text)'};font-weight:${currentFilter==='risk'?'700':'600'};cursor:pointer" ${riskCount===0?'disabled':''}>
-        רק מותאמות אישית (${riskCount})
-      </button>
-      <button onclick="setPpFilter('standard')" type="button" style="font-size:12px;padding:7px 13px;border-radius:999px;border:1px solid var(--border);background:${currentFilter==='standard'?'var(--primary)':'var(--surface2)'};color:${currentFilter==='standard'?'#fff':'var(--text2)'};font-weight:${currentFilter==='standard'?'700':'500'};cursor:pointer">
-        רק שגרתיות (${standardCount})
-      </button>
-      <div style="margin-right:auto;display:flex;gap:8px">
-        <button onclick="exportPpCsv()" type="button" style="font-size:12px;padding:7px 13px;border-radius:8px;border:1px solid var(--green);background:var(--green-bg);color:var(--green-text);font-weight:600;cursor:pointer">
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:4px"><path d="M7 1.5v8M4 7l3 3 3-3M2 12h10"/></svg>
-          הורד טבלה (Excel/CSV)
+    <!-- Filter toolbar — Option A (clean) -->
+    <div class="no-print pp-filter-card">
+      <div class="pp-filter-head">
+        <span>סינון</span>
+        <button onclick="exportPpCsv()" type="button" class="pp-filter-icon-btn" aria-label="הורד טבלה Excel/CSV" title="הורד טבלה (Excel/CSV)">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M7 1.5v8M4 7l3 3 3-3M2 12h10"/></svg>
         </button>
       </div>
-    </div>
-
-    <!-- Filter toolbar — row 2: category -->
-    <div class="no-print" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:8px 4px 10px 4px;border-bottom:1px solid var(--border);margin-bottom:8px">
-      <span style="font-size:11.5px;font-weight:600;color:var(--text3);margin-left:4px">סוג בדיקה:</span>
-      <button onclick="setPpCatFilter('allcat')" type="button" style="font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--border);background:${currentCat==='allcat'?'var(--text)':'var(--surface2)'};color:${currentCat==='allcat'?'var(--bg)':'var(--text2)'};font-weight:${currentCat==='allcat'?'700':'500'};cursor:pointer">
-        הכל
-      </button>
-      <button onclick="setPpCatFilter('visit')" type="button" style="font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--primary);background:${currentCat==='visit'?'var(--primary)':'var(--surface2)'};color:${currentCat==='visit'?'#fff':'var(--primary)'};font-weight:${currentCat==='visit'?'700':'600'};cursor:pointer" ${visitCount===0?'disabled':''}>
-        ביקור רופא (${visitCount})
-      </button>
-      <button onclick="setPpCatFilter('us')" type="button" style="font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--purple);background:${currentCat==='us'?'var(--purple)':'var(--surface2)'};color:${currentCat==='us'?'#fff':'var(--purple)'};font-weight:${currentCat==='us'?'700':'600'};cursor:pointer" ${usCount===0?'disabled':''}>
-        אולטרסאונד (${usCount})
-      </button>
-      <button onclick="setPpCatFilter('lab')" type="button" style="font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--teal);background:${currentCat==='lab'?'var(--teal)':'var(--surface2)'};color:${currentCat==='lab'?'#fff':'var(--teal)'};font-weight:${currentCat==='lab'?'700':'600'};cursor:pointer" ${labCount===0?'disabled':''}>
-        מעבדה (${labCount})
-      </button>
-      <button onclick="setPpCatFilter('genetics')" type="button" style="font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--amber);background:${currentCat==='genetics'?'var(--amber)':'var(--surface2)'};color:${currentCat==='genetics'?'#fff':'var(--amber-text)'};font-weight:${currentCat==='genetics'?'700':'600'};cursor:pointer" ${genCount===0?'disabled':''}>
-        גנטיקה (${genCount})
-      </button>
-      <button onclick="setPpCatFilter('nurse')" type="button" style="font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--green);background:${currentCat==='nurse'?'var(--green)':'var(--surface2)'};color:${currentCat==='nurse'?'#fff':'var(--green-text)'};font-weight:${currentCat==='nurse'?'700':'600'};cursor:pointer" ${nurseCount===0?'disabled':''}>
-        ליווי אחות הריון (${nurseCount})
-      </button>
+      <!-- Source filter — segmented control -->
+      <div class="pp-seg">
+        <button type="button" class="${currentFilter==='all'?'active':''}" onclick="setPpFilter('all')">כל ההמלצות · ${allItems.length}</button>
+        <button type="button" class="${currentFilter==='risk'?'active':''}" onclick="setPpFilter('risk')" ${riskCount===0?'disabled style="opacity:.45;cursor:not-allowed"':''}>מותאמות אישית · ${riskCount}</button>
+        <button type="button" class="${currentFilter==='standard'?'active':''}" onclick="setPpFilter('standard')">שגרתיות · ${standardCount}</button>
+      </div>
+      <!-- Category filter — chips with colored dots -->
+      <div class="pp-cat-chips">
+        <button type="button" class="pp-cat-chip ${currentCat==='allcat'?'active':''}" onclick="setPpCatFilter('allcat')" style="color:#444">הכל</button>
+        <button type="button" class="pp-cat-chip ${currentCat==='visit'?'active':''}" onclick="setPpCatFilter('visit')" style="color:#185FA5" ${visitCount===0?'disabled':''}><span class="dot"></span>ביקור רופא (${visitCount})</button>
+        <button type="button" class="pp-cat-chip ${currentCat==='us'?'active':''}" onclick="setPpCatFilter('us')" style="color:#534AB7" ${usCount===0?'disabled':''}><span class="dot"></span>אולטרסאונד (${usCount})</button>
+        <button type="button" class="pp-cat-chip ${currentCat==='lab'?'active':''}" onclick="setPpCatFilter('lab')" style="color:#0F6E56" ${labCount===0?'disabled':''}><span class="dot"></span>מעבדה (${labCount})</button>
+        <button type="button" class="pp-cat-chip ${currentCat==='genetics'?'active':''}" onclick="setPpCatFilter('genetics')" style="color:#854F0B" ${genCount===0?'disabled':''}><span class="dot"></span>גנטיקה (${genCount})</button>
+        <button type="button" class="pp-cat-chip ${currentCat==='nurse'?'active':''}" onclick="setPpCatFilter('nurse')" style="color:#3B6D11" ${nurseCount===0?'disabled':''}><span class="dot"></span>אחות הריון (${nurseCount})</button>
+      </div>
     </div>`;
 
   // Apply filter — source AND category must both pass
@@ -15753,23 +15845,23 @@ function calcPp(){
     </div>`;
   }
 
-  // Action toolbar — print + copy + WhatsApp + patient-friendly
-  html += `<div class="pp-toolbar no-print">
-    <button onclick="openPpPatientView()" type="button" style="border-color:var(--primary);background:var(--primary);color:#fff">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5" r="2.2"/><path d="M3 14c0-2.8 2.3-5 5-5s5 2.2 5 5"/></svg>
-      תוכנית ליולדת — תצוגה ידידותית
+  // Action toolbar — patient view is the PRIMARY export
+  html += `<div class="pp-toolbar no-print" style="margin-top:14px">
+    <button onclick="openPpPatientView()" type="button" style="border:0;background:var(--primary);color:#fff;font-size:14px;font-weight:700;padding:12px 22px;min-width:280px;flex:1">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><circle cx="8" cy="5" r="2.2"/><path d="M3 14c0-2.8 2.3-5 5-5s5 2.2 5 5"/></svg>
+      ייצא תוכנית ליולדת
     </button>
-    <button onclick="window.print()" type="button">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="10" height="6" rx="1"/><path d="M4 6V2.5h8V6M4 10v3.5h8V10"/></svg>
-      הדפס / שמור כ-PDF
+  </div>
+  <div class="pp-toolbar no-print" style="margin-top:6px;justify-content:center;gap:4px">
+    <span style="font-size:11px;color:var(--text3);margin-inline-end:4px">פעולות נוספות:</span>
+    <button onclick="window.print()" type="button" style="font-size:12px;padding:6px 12px;background:transparent;border:1px solid var(--border);color:var(--text2)">
+      הדפס מסך
     </button>
-    <button onclick="copyPpPlan()" type="button">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4.5" y="4.5" width="8" height="9" rx="1.5"/><path d="M3 11.5v-7A1.5 1.5 0 0 1 4.5 3h7"/></svg>
+    <button onclick="copyPpPlan()" type="button" style="font-size:12px;padding:6px 12px;background:transparent;border:1px solid var(--border);color:var(--text2)">
       העתק טקסט
     </button>
-    <button onclick="shareWhatsApp()" type="button">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 13.5l1-3A6 6 0 1 1 5.5 12.5l-3 1Z"/></svg>
-      שלח בוואטסאפ
+    <button onclick="shareWhatsApp()" type="button" style="font-size:12px;padding:6px 12px;background:transparent;border:1px solid var(--border);color:var(--text2)">
+      וואטסאפ
     </button>
   </div>`;
 
@@ -15993,51 +16085,61 @@ function openPpPatientView(){
     {name:'טרימסטר שלישי (שבועות 28-42)', range:[28,42], color:'#DCFCE7', accent:'#16A34A'}
   ];
 
+  // Helper: format a week-range and date-range for an item
+  const fmtWeekRange = (it) =>
+    it.fromW === it.toW ? `${it.fromW}+0` : `${it.fromW}+0 – ${it.toW}+6`;
+  const fmtDateRange = (it) => {
+    const start = addDays(lmp, it.fromW*7);
+    const end = addDays(lmp, it.toW*7 + 6);
+    return it.fromW === it.toW ? fmtDate(start) : `${fmtDate(start)} – ${fmtDate(end)}`;
+  };
+
   let bodyHtml = '';
   for(const tri of trimesters){
+    // Items whose fromW falls in this trimester, sorted by start week
+    const triItems = allItems
+      .filter(it => it.fromW >= tri.range[0] && it.fromW <= tri.range[1])
+      .slice()
+      .sort((a, b) => a.fromW - b.fromW || a.toW - b.toW);
+    if(triItems.length === 0) continue;
+
     bodyHtml += `<section class="tri-section" style="margin-top:18px;page-break-inside:avoid">
       <h2 style="margin:0 0 8px 0;padding:8px 14px;background:${tri.color};color:${tri.accent};border-radius:8px;font-size:17px;font-weight:700">${tri.name}</h2>
       <table style="width:100%;border-collapse:collapse;font-size:13.5px;line-height:1.5">
         <thead>
           <tr style="background:#f8fafc;color:#475569;font-size:11.5px;font-weight:600">
-            <th style="padding:8px 6px;border-bottom:2px solid ${tri.accent};text-align:right;width:60px">שבוע</th>
-            <th style="padding:8px 6px;border-bottom:2px solid ${tri.accent};text-align:right;width:110px">תאריך משוער</th>
-            <th style="padding:8px 6px;border-bottom:2px solid ${tri.accent};text-align:right;width:80px">סוג</th>
+            <th style="padding:8px 6px;border-bottom:2px solid ${tri.accent};text-align:right;width:110px">שבועות</th>
+            <th style="padding:8px 6px;border-bottom:2px solid ${tri.accent};text-align:right;width:150px">תאריכים משוערים</th>
+            <th style="padding:8px 6px;border-bottom:2px solid ${tri.accent};text-align:right;width:90px">סוג</th>
             <th style="padding:8px 6px;border-bottom:2px solid ${tri.accent};text-align:right">מה צריך לעשות</th>
           </tr>
         </thead>
         <tbody>`;
-    for(let w=tri.range[0]; w<=tri.range[1]; w++){
-      const items = weekItems[w] || [];
-      if(items.length === 0) continue;
-      const weekDate = addDays(lmp, w*7);
-      const isCurrent = (currentW === w);
+
+    for(const it of triItems){
+      const groups = itemGroups(it);
+      const vis = catVisual(groups);
+      const isCurrent = (currentGaDays >= it.fromW*7 && currentGaDays <= it.toW*7 + 6);
+      const isRisk = it.source === 'risk';
       const rowBg = isCurrent ? '#FFF7ED' : 'transparent';
       const rowAccent = isCurrent ? '4px solid #F59E0B' : 'none';
-      for(let i=0; i<items.length; i++){
-        const it = items[i];
-        const groups = itemGroups(it);
-        const vis = catVisual(groups);
-        const showWeek = (i === 0);
-        const isRisk = it.source === 'risk';
-        bodyHtml += `<tr style="background:${rowBg};border-right:${rowAccent}">
-          <td style="padding:8px 6px;border-bottom:1px solid #e2e8f0;font-weight:700;color:#0f172a;font-variant-numeric:tabular-nums">
-            ${showWeek ? (isCurrent ? `<span style="color:#D97706">שבוע ${w} ★</span>` : `שבוע ${w}`) : ''}
-          </td>
-          <td style="padding:8px 6px;border-bottom:1px solid #e2e8f0;color:#475569;font-size:12.5px;font-variant-numeric:tabular-nums">
-            ${showWeek ? fmtDate(weekDate) : ''}
-          </td>
-          <td style="padding:8px 6px;border-bottom:1px solid #e2e8f0">
-            <span style="display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:${vis.color};font-weight:600">
-              <span>${vis.icon}</span>${vis.label}
-            </span>
-          </td>
-          <td style="padding:8px 6px;border-bottom:1px solid #e2e8f0">
-            <div style="font-weight:600;color:#0f172a">${friendly(it)}${isRisk ? ' <span style="font-size:10.5px;color:#D97706;font-weight:600">· מותאם אישית</span>' : ''}</div>
-            ${it.tests ? `<div style="color:#64748B;font-size:12px;margin-top:3px">${it.tests.replace(/<[^>]+>/g, '')}</div>` : ''}
-          </td>
-        </tr>`;
-      }
+      bodyHtml += `<tr style="background:${rowBg};border-right:${rowAccent}">
+        <td style="padding:8px 6px;border-bottom:1px solid #e2e8f0;font-weight:700;color:${isCurrent?'#D97706':'#0f172a'};font-variant-numeric:tabular-nums">
+          <bdi>${fmtWeekRange(it)}</bdi>${isCurrent?' ★':''}
+        </td>
+        <td style="padding:8px 6px;border-bottom:1px solid #e2e8f0;color:#475569;font-size:12.5px;font-variant-numeric:tabular-nums">
+          <bdi>${fmtDateRange(it)}</bdi>
+        </td>
+        <td style="padding:8px 6px;border-bottom:1px solid #e2e8f0">
+          <span style="display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:${vis.color};font-weight:600">
+            <span>${vis.icon}</span>${vis.label}
+          </span>
+        </td>
+        <td style="padding:8px 6px;border-bottom:1px solid #e2e8f0">
+          <div style="font-weight:600;color:#0f172a">${friendly(it)}${isRisk ? ' <span style="font-size:10.5px;color:#D97706;font-weight:600">· מותאם אישית</span>' : ''}</div>
+          ${it.tests ? `<div style="color:#64748B;font-size:12px;margin-top:3px">${it.tests.replace(/<[^>]+>/g, '')}</div>` : ''}
+        </td>
+      </tr>`;
     }
     bodyHtml += `</tbody></table></section>`;
   }
