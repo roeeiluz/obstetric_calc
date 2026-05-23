@@ -651,6 +651,7 @@
     padding-top: 16px; border-top: 1px solid var(--border);
   }
   .detail-grid.two { grid-template-columns: repeat(2,1fr); }
+  .detail-grid.three { grid-template-columns: repeat(3,1fr); }
   .detail-grid.four { grid-template-columns: repeat(4,1fr); }
   .di .dl {
     font-size: 10.5px; color: var(--text3); margin-bottom: 3px;
@@ -1025,6 +1026,8 @@
     .med { font-size: 22px; }
     .detail-grid { grid-template-columns: repeat(2,1fr); }
     .detail-grid.four { grid-template-columns: repeat(2,1fr); }
+    .detail-grid.three { grid-template-columns: repeat(1,1fr); }
+    #e-fetus-grid { grid-template-columns: 1fr !important; }
     .result { padding: 18px; }
     .seg { width: 100%; }
     .seg button { flex: 1; }
@@ -1884,7 +1887,10 @@
       &nbsp;&nbsp;<b>H3 (HC+AC+FL):</b> 1.326 − 0.00326·AC·FL + 0.0107·HC + 0.0438·AC + 0.158·FL · 1 SD ≈ 7.5%<br>
       &nbsp;&nbsp;<b>H4 (BPD+HC+AC+FL):</b> 1.3596 − 0.00386·AC·FL + 0.0064·HC + 0.00061·BPD·AC + 0.0424·AC + 0.174·FL · 1 SD ≈ 7.5%<br>
       <b>Dollberg:</b> Dollberg S et al. <i>IMAJ</i> 2005;7:311–314 — סטנדרט משקלי לידה ישראלי (לפי מין + הריון יחיד/תאומים)<br>
-      ⚠ דולברג מבוסס על משקלי לידה ולכן אחוזון 10 בפג נמוך מ-Hadlock (over-representation של IUGR בלידות פג)
+      <b>ISMFM Twin (תאומים, מבוסס US):</b> Yefet E, Daniel-Spiegel E et al. <i>הרפואה</i> 2026 ינואר;165(1):14-20 — עקומת EFW סונוגרפית ישראלית לתאומים. עוקבה ארצית של 7,060 עוברים, 18,248 מדידות, 11 מרכזים, 2010-2022. אחוזונים 1/3/5/10/25/50/75/90/95/97/99 לשבועות 14-40<br>
+      <i>(<a href="https://www.twinsakumotismfm.com/" target="_blank" rel="noopener">twinsakumotismfm.com</a> — כלי מקוון רשמי של המחברים)</i><br>
+      ⚠ דולברג מבוסס על משקלי לידה ולכן אחוזון 10 בפג נמוך מ-Hadlock (over-representation של IUGR בלידות פג).<br>
+      ⚠ Hadlock היא עקומת יחידנים — בתאומים מ-28w צפויה האטה ביחס ל-Hadlock; השווה ל-ISMFM Twin.
     </div>
     </details>
 
@@ -1893,6 +1899,14 @@
       <div class="seg" id="e-ga-mode">
         <button data-v="weeks" class="active" onclick="setEfwGaMode(this)">שבועות + ימים</button>
         <button data-v="lmp" onclick="setEfwGaMode(this)">LMP</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <label>סוג ההריון</label>
+      <div class="seg" id="e-plurality">
+        <button data-v="single" class="active" onclick="setPlurality(this)">יחיד</button>
+        <button data-v="twin" onclick="setPlurality(this)">תאומים</button>
       </div>
     </div>
 
@@ -1919,68 +1933,122 @@
       <span class="unit" id="e-ga-display"></span>
     </div>
 
-    <div class="row">
-      <label>שיטת קלט</label>
-      <div class="seg" id="e-mode">
-        <button data-v="direct" class="active" onclick="setEFWMode(this)">EFW ישיר</button>
-        <button data-v="biometry" onclick="setEFWMode(this)">חישוב לפי ביומטריה</button>
-      </div>
-    </div>
+    <!-- Fetus input area: in twin mode, becomes a 2-column grid; in single mode, single column -->
+    <div id="e-fetus-grid" style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:6px">
 
-    <div id="efw-direct-block">
-      <div class="row">
-        <label>EFW</label>
-        <input type="number" id="e-efw" placeholder="גרם" min="50" max="5500" step="1"
-          onkeydown="if(event.key==='Enter')calcEFW()">
-        <span class="unit">גרם</span>
-      </div>
-    </div>
+      <!-- Fetus A column (also used as the single-fetus column when efwPlurality='single') -->
+      <div class="fetus-col" id="e-fetus-a" style="padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+        <div class="fetus-col-header" id="e-fetus-a-header" style="display:none;font-size:13px;font-weight:700;color:var(--text);padding-bottom:6px;margin-bottom:6px;border-bottom:2px solid var(--red)">עובר א'</div>
 
-    <div id="efw-biometry-block" style="display:none">
-      <div class="sec" style="margin-top:10px">נוסחאות Hadlock 1985 — קלט במ״מ</div>
-      <div class="row"><label>BPD</label>
-        <input type="number" id="e-bpd" placeholder="מ״מ" min="20" max="120" step="0.1"
-          onkeydown="if(event.key==='Enter')calcEFW()">
-        <span class="unit">מ״מ</span></div>
-      <div class="row"><label>HC</label>
-        <input type="number" id="e-hc-bio" placeholder="מ״מ" min="80" max="400" step="0.1"
-          onkeydown="if(event.key==='Enter')calcEFW()">
-        <span class="unit">מ״מ</span></div>
-      <div class="row"><label>AC</label>
-        <input type="number" id="e-ac" placeholder="מ״מ" min="50" max="450" step="0.1"
-          onkeydown="if(event.key==='Enter')calcEFW()">
-        <span class="unit">מ״מ</span></div>
-      <div class="row"><label>FL</label>
-        <input type="number" id="e-fl-bio" placeholder="מ״מ" min="4" max="90" step="0.1"
-          onkeydown="if(event.key==='Enter')calcEFW()">
-        <span class="unit">מ״מ</span></div>
-      <div class="note" style="margin-top:4px;border-right-color:var(--blue)">
-        הנוסחה נבחרת אוטומטית: ארבעת הפרמטרים → <b>Hadlock 4</b> · HC+AC+FL → <b>Hadlock 3</b> · BPD+AC+FL → <b>Hadlock 2</b> · AC+FL → <b>Hadlock 1</b><br>
-        מינימום נדרש: AC + FL · דיוק כללי: ±15% (1 SD = 7.5%)
-      </div>
-    </div>
+        <div class="row">
+          <label>שיטת קלט</label>
+          <div class="seg" id="e-mode">
+            <button data-v="direct" class="active" onclick="setEFWMode(this)">EFW ישיר</button>
+            <button data-v="biometry" onclick="setEFWMode(this)">חישוב לפי ביומטריה</button>
+          </div>
+        </div>
 
-    <div class="row">
-      <label>מין העובר</label>
-      <div class="seg" id="e-sex">
-        <button data-v="U" class="active" onclick="setSex(this)">לא ידוע</button>
-        <button data-v="M" onclick="setSex(this)">זכר</button>
-        <button data-v="F" onclick="setSex(this)">נקבה</button>
+        <div id="efw-direct-block">
+          <div class="row">
+            <label>EFW</label>
+            <input type="number" id="e-efw" placeholder="גרם" min="50" max="5500" step="1"
+              onkeydown="if(event.key==='Enter')calcEFW()">
+            <span class="unit">גרם</span>
+          </div>
+        </div>
+
+        <div id="efw-biometry-block" style="display:none">
+          <div class="sec" style="margin-top:10px">נוסחאות Hadlock 1985 — קלט במ״מ</div>
+          <div class="row"><label>BPD</label>
+            <input type="number" id="e-bpd" placeholder="מ״מ" min="20" max="120" step="0.1"
+              onkeydown="if(event.key==='Enter')calcEFW()">
+            <span class="unit">מ״מ</span></div>
+          <div class="row"><label>HC</label>
+            <input type="number" id="e-hc-bio" placeholder="מ״מ" min="80" max="400" step="0.1"
+              onkeydown="if(event.key==='Enter')calcEFW()">
+            <span class="unit">מ״מ</span></div>
+          <div class="row"><label>AC</label>
+            <input type="number" id="e-ac" placeholder="מ״מ" min="50" max="450" step="0.1"
+              onkeydown="if(event.key==='Enter')calcEFW()">
+            <span class="unit">מ״מ</span></div>
+          <div class="row"><label>FL</label>
+            <input type="number" id="e-fl-bio" placeholder="מ״מ" min="4" max="90" step="0.1"
+              onkeydown="if(event.key==='Enter')calcEFW()">
+            <span class="unit">מ״מ</span></div>
+          <div class="note" id="e-bio-help" style="margin-top:4px;border-right-color:var(--blue)">
+            הנוסחה נבחרת אוטומטית: ארבעת הפרמטרים → <b>Hadlock 4</b> · HC+AC+FL → <b>Hadlock 3</b> · BPD+AC+FL → <b>Hadlock 2</b> · AC+FL → <b>Hadlock 1</b><br>
+            מינימום נדרש: AC + FL · דיוק כללי: ±15% (1 SD = 7.5%)
+          </div>
+        </div>
+
+        <div class="row">
+          <label><span id="e-sex-label-single">מין העובר</span><span id="e-sex-label-twin" style="display:none">מין עובר א'</span></label>
+          <div class="seg" id="e-sex">
+            <button data-v="U" class="active" onclick="setSex(this)">לא ידוע</button>
+            <button data-v="M" onclick="setSex(this)">זכר</button>
+            <button data-v="F" onclick="setSex(this)">נקבה</button>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <label>סוג ההריון</label>
-      <div class="seg" id="e-plurality">
-        <button data-v="single" class="active" onclick="setPlurality(this)">יחיד</button>
-        <button data-v="twin" onclick="setPlurality(this)">תאומים</button>
+
+      <!-- Fetus B column (twin mode only) -->
+      <div class="fetus-col" id="e-fetus-b" style="display:none;padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+        <div class="fetus-col-header" style="font-size:13px;font-weight:700;color:var(--text);padding-bottom:6px;margin-bottom:6px;border-bottom:2px solid #0EA5E9">עובר ב'</div>
+
+        <div class="row">
+          <label>שיטת קלט</label>
+          <div class="seg" id="e-mode-b">
+            <button data-v="direct" class="active" onclick="setEFWModeB(this)">EFW ישיר</button>
+            <button data-v="biometry" onclick="setEFWModeB(this)">חישוב לפי ביומטריה</button>
+          </div>
+        </div>
+
+        <div id="efw-direct-block-b">
+          <div class="row">
+            <label>EFW</label>
+            <input type="number" id="e-efw-b" placeholder="גרם" min="50" max="5500" step="1"
+              onkeydown="if(event.key==='Enter')calcEFW()">
+            <span class="unit">גרם</span>
+          </div>
+        </div>
+
+        <div id="efw-biometry-block-b" style="display:none">
+          <div class="sec" style="margin-top:10px">נוסחאות Hadlock 1985 — קלט במ״מ</div>
+          <div class="row"><label>BPD</label>
+            <input type="number" id="e-bpd-b" placeholder="מ״מ" min="20" max="120" step="0.1"
+              onkeydown="if(event.key==='Enter')calcEFW()">
+            <span class="unit">מ״מ</span></div>
+          <div class="row"><label>HC</label>
+            <input type="number" id="e-hc-bio-b" placeholder="מ״מ" min="80" max="400" step="0.1"
+              onkeydown="if(event.key==='Enter')calcEFW()">
+            <span class="unit">מ״מ</span></div>
+          <div class="row"><label>AC</label>
+            <input type="number" id="e-ac-b" placeholder="מ״מ" min="50" max="450" step="0.1"
+              onkeydown="if(event.key==='Enter')calcEFW()">
+            <span class="unit">מ״מ</span></div>
+          <div class="row"><label>FL</label>
+            <input type="number" id="e-fl-bio-b" placeholder="מ״מ" min="4" max="90" step="0.1"
+              onkeydown="if(event.key==='Enter')calcEFW()">
+            <span class="unit">מ״מ</span></div>
+        </div>
+
+        <div class="row">
+          <label>מין עובר ב'</label>
+          <div class="seg" id="e-sex-b">
+            <button data-v="U" class="active" onclick="setSexB(this)">לא ידוע</button>
+            <button data-v="M" onclick="setSexB(this)">זכר</button>
+            <button data-v="F" onclick="setSexB(this)">נקבה</button>
+          </div>
+        </div>
       </div>
+
     </div>
-    <div class="row">
-      <label>עקומה</label>
-      <div class="seg" id="e-curve">
-        <button data-v="hadlock" class="active" onclick="setCurve(this)">Hadlock</button>
-        <button data-v="dollberg" onclick="setCurve(this)">Dollberg</button>
-        <button data-v="both" onclick="setCurve(this)">השוואה</button>
+    <div class="row" style="align-items:flex-start">
+      <label>עקומה <span style="font-size:10.5px;font-weight:500;color:var(--text3);display:block">בחר אחת או יותר להשוואה</span></label>
+      <div id="e-curve-chips" style="display:flex;gap:6px;flex-wrap:wrap">
+        <button type="button" id="e-curve-chip-hadlock" class="curve-chip active" data-v="hadlock" onclick="toggleCurveChip(this)" style="font-size:12px;padding:7px 12px;border-radius:999px;border:1.5px solid var(--blue);background:var(--blue);color:#fff;font-weight:700;cursor:pointer">Hadlock</button>
+        <button type="button" id="e-curve-chip-dollberg" class="curve-chip" data-v="dollberg" onclick="toggleCurveChip(this)" style="font-size:12px;padding:7px 12px;border-radius:999px;border:1.5px solid var(--purple);background:var(--surface2);color:var(--purple);font-weight:600;cursor:pointer">Dollberg</button>
+        <button type="button" id="e-curve-chip-ismfm" class="curve-chip" data-v="ismfm" onclick="toggleCurveChip(this)" style="display:none;font-size:12px;padding:7px 12px;border-radius:999px;border:1.5px solid var(--amber);background:var(--surface2);color:var(--amber-text);font-weight:600;cursor:pointer">ISMFM Twin</button>
       </div>
     </div>
     <button class="btn btn-primary" onclick="calcEFW()">חשב אחוזון</button>
@@ -4761,6 +4829,7 @@
       <div class="ref">
         <b>נייר עמדה ישראלי #6 (דצמבר 2024):</b> מעקב הריון בסיכון נמוך — האיגוד הישראלי למיילדות (החברה לרפואת האם והעובר)<br>
         <b>נייר עמדה ישראלי #8 (ינואר 2026, מהדורה 4):</b> הנחיות לביצוע אולטרה-סאונד בהיריון — איגוד אולטרסאונד + AAM — <b>4 סקרי US מומלצים:</b> T1 (6-12) · NT (11-13+6) · סקירה מאוחרת (20-24) · גדילה T3 (29-34)<br>
+        <b>סקר גנטי אחיד (משרד הבריאות, עודכן נובמבר 2024):</b> פאנל אחיד לכלל האוכלוסייה, מחליף את הפאנלים העדתיים — מומלץ פרה-קונספציה או T1 מוקדם, לשני בני הזוג, כלול בסל הבריאות<br>
         <b>סל בריאות 2023:</b> סקר משולב T1, סקר ביוכימי T2, סקירה מאוחרת · <b>NIPT — אינו בסל הבריאות</b>, אופציה פרטית / ביטוח משלים<br>
         <b>ACOG Practice Bulletins:</b> 226 (אבחון כרומוזומלי) · 222 (יל"ד) · 190 (GDM) · 200 (חיסונים) · 234 (תאומים)<br>
         <b>הערה:</b> ההמלצות מותאמות אישית על בסיס מצבי רקע. בדיקות פרטיות מסומנות בנפרד.
@@ -6775,7 +6844,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.14';
+const APP_VERSION = '4.16';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -9280,12 +9349,52 @@ function calcPreg(){
 }
 
 // ─── EFW ──────────────────────────────────────────────────────────────────
-let efwSex='U', efwCurve='hadlock', efwMode='direct', efwGaMode='weeks', efwPlurality='single';
+let efwSex='U', efwSexB='U', efwCurve='hadlock', efwMode='direct', efwGaMode='weeks', efwPlurality='single';
+// Multi-select chip state: which curves the user wants to see
+let efwCurveSet = new Set(['hadlock']);
+
+// Toggle chip on/off, keeping at least 1 curve selected
+function toggleCurveChip(btn){
+  const v = btn.dataset.v;
+  const isOn = efwCurveSet.has(v);
+  // Prevent deselecting if it's the last one
+  if(isOn && efwCurveSet.size === 1) return;
+  if(isOn) efwCurveSet.delete(v); else efwCurveSet.add(v);
+  // Visual: active styling
+  styleCurveChip('hadlock', efwCurveSet.has('hadlock'), 'var(--blue)');
+  styleCurveChip('dollberg', efwCurveSet.has('dollberg'), 'var(--purple)');
+  styleCurveChip('ismfm', efwCurveSet.has('ismfm'), 'var(--amber)');
+  // Sync legacy efwCurve string for back-compat with rendering branches
+  if(efwCurveSet.size === 1) efwCurve = [...efwCurveSet][0];
+  else efwCurve = 'both';
+  if(document.getElementById('efw-res').innerHTML) calcEFW();
+}
+function styleCurveChip(key, on, color){
+  const el = document.getElementById('e-curve-chip-'+key);
+  if(!el) return;
+  if(on){
+    el.style.background = color;
+    el.style.color = '#fff';
+    el.style.fontWeight = '700';
+    el.classList.add('active');
+  } else {
+    el.style.background = 'var(--surface2)';
+    el.style.color = color === 'var(--amber)' ? 'var(--amber-text)' : color;
+    el.style.fontWeight = '600';
+    el.classList.remove('active');
+  }
+}
 
 function setSex(btn){
   btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   efwSex=btn.dataset.v;
+  if(document.getElementById('efw-res').innerHTML) calcEFW();
+}
+function setSexB(btn){
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  efwSexB=btn.dataset.v;
   if(document.getElementById('efw-res').innerHTML) calcEFW();
 }
 function setCurve(btn){
@@ -9298,6 +9407,37 @@ function setPlurality(btn){
   btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   efwPlurality=btn.dataset.v;
+  const isTwin = efwPlurality==='twin';
+  // Toggle 2-column twin layout
+  const grid = document.getElementById('e-fetus-grid');
+  const fetusB = document.getElementById('e-fetus-b');
+  const fetusAHeader = document.getElementById('e-fetus-a-header');
+  if(grid) grid.style.gridTemplateColumns = isTwin ? 'repeat(2, 1fr)' : '1fr';
+  if(fetusB) fetusB.style.display = isTwin ? '' : 'none';
+  if(fetusAHeader) fetusAHeader.style.display = isTwin ? '' : 'none';
+  // Toggle sex labels (single → "מין העובר" / twin → "מין עובר א'")
+  const sexLabS = document.getElementById('e-sex-label-single');
+  const sexLabT = document.getElementById('e-sex-label-twin');
+  if(sexLabS) sexLabS.style.display = isTwin ? 'none' : '';
+  if(sexLabT) sexLabT.style.display = isTwin ? '' : 'none';
+  // Reveal ISMFM Twin curve chip only in twin mode
+  const ismChip = document.getElementById('e-curve-chip-ismfm');
+  if(ismChip){
+    ismChip.style.display = isTwin ? '' : 'none';
+    if(!isTwin && efwCurveSet.has('ismfm')){
+      efwCurveSet.delete('ismfm');
+      if(efwCurveSet.size === 0) efwCurveSet.add('hadlock');
+      styleCurveChip('hadlock', efwCurveSet.has('hadlock'), 'var(--blue)');
+      styleCurveChip('dollberg', efwCurveSet.has('dollberg'), 'var(--purple)');
+      styleCurveChip('ismfm', false, 'var(--amber)');
+      efwCurve = efwCurveSet.size === 1 ? [...efwCurveSet][0] : 'both';
+    } else if(isTwin && !efwCurveSet.has('ismfm') && efwCurveSet.size === 1 && efwCurveSet.has('hadlock')){
+      // Auto-add ISMFM Twin alongside Hadlock when user picks twins (first time)
+      efwCurveSet.add('ismfm');
+      styleCurveChip('ismfm', true, 'var(--amber)');
+      efwCurve = 'both';
+    }
+  }
   if(document.getElementById('efw-res').innerHTML) calcEFW();
 }
 function setEFWMode(btn){
@@ -9306,6 +9446,16 @@ function setEFWMode(btn){
   efwMode=btn.dataset.v;
   document.getElementById('efw-direct-block').style.display = efwMode==='direct' ? '' : 'none';
   document.getElementById('efw-biometry-block').style.display = efwMode==='biometry' ? '' : 'none';
+  if(document.getElementById('efw-res').innerHTML) calcEFW();
+}
+// Independent mode for fetus B (twin mode only)
+let efwModeB = 'direct';
+function setEFWModeB(btn){
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  efwModeB=btn.dataset.v;
+  document.getElementById('efw-direct-block-b').style.display = efwModeB==='direct' ? '' : 'none';
+  document.getElementById('efw-biometry-block-b').style.display = efwModeB==='biometry' ? '' : 'none';
   if(document.getElementById('efw-res').innerHTML) calcEFW();
 }
 function setEfwGaMode(btn){
@@ -9470,6 +9620,102 @@ function dollbergZ(efw, p){
   const sd=(p.p50-p.p10)/1.2816;
   return (efw-p.p50)/sd;
 }
+
+// ── ISMFM Twin — Israeli twin EFW curve (ultrasound-based) ──
+// Source: Yefet E, Daniel-Spiegel E, et al. Harefuah 2026 Jan;165(1):14-20.
+// National multicenter cohort: 7,060 twins · 18,248 measurements · 11 Israeli centers · 2010-2022
+// Percentiles: 1/3/5/10/25/50/75/90/95/97/99 in grams, weeks 14-40 (Table 1)
+const ismfmTwin = {
+  14:{p1:72, p3:75, p5:78, p10:80, p25:83, p50:90, p75:97, p90:105, p95:109, p97:110, p99:116},
+  15:{p1:88, p3:93, p5:96, p10:100, p25:104, p50:114, p75:122, p90:131, p95:136, p97:139, p99:150},
+  16:{p1:107, p3:114, p5:118, p10:124, p25:132, p50:142, p75:152, p90:163, p95:170, p97:176, p99:191},
+  17:{p1:130, p3:140, p5:145, p10:153, p25:164, p50:177, p75:189, p90:201, p95:211, p97:220, p99:238},
+  18:{p1:157, p3:171, p5:178, p10:188, p25:203, p50:217, p75:232, p90:247, p95:258, p97:269, p99:290},
+  19:{p1:190, p3:209, p5:217, p10:230, p25:247, p50:264, p75:283, p90:301, p95:313, p97:324, p99:348},
+  20:{p1:229, p3:254, p5:264, p10:278, p25:299, p50:320, p75:342, p90:364, p95:376, p97:387, p99:413},
+  21:{p1:275, p3:307, p5:319, p10:335, p25:358, p50:384, p75:410, p90:436, p95:451, p97:462, p99:490},
+  22:{p1:327, p3:367, p5:381, p10:400, p25:426, p50:457, p75:488, p90:519, p95:537, p97:550, p99:583},
+  23:{p1:386, p3:433, p5:450, p10:472, p25:503, p50:539, p75:576, p90:612, p95:635, p97:652, p99:692},
+  24:{p1:452, p3:505, p5:524, p10:551, p25:587, p50:630, p75:675, p90:717, p95:746, p97:766, p99:816},
+  25:{p1:526, p3:583, p5:605, p10:636, p25:680, p50:729, p75:785, p90:834, p95:870, p97:894, p99:954},
+  26:{p1:608, p3:668, p5:693, p10:729, p25:783, p50:840, p75:907, p90:965, p95:1009, p97:1037, p99:1109},
+  27:{p1:696, p3:763, p5:792, p10:833, p25:897, p50:964, p75:1041, p90:1111, p95:1162, p97:1198, p99:1280},
+  28:{p1:791, p3:867, p5:902, p10:950, p25:1024, p50:1102, p75:1188, p90:1269, p95:1327, p97:1372, p99:1465},
+  29:{p1:888, p3:980, p5:1021, p10:1077, p25:1160, p50:1250, p75:1345, p90:1437, p95:1500, p97:1554, p99:1655},
+  30:{p1:985, p3:1095, p5:1144, p10:1210, p25:1302, p50:1404, p75:1510, p90:1612, p95:1678, p97:1738, p99:1846},
+  31:{p1:1084, p3:1209, p5:1265, p10:1342, p25:1447, p50:1560, p75:1681, p90:1795, p95:1866, p97:1929, p99:2044},
+  32:{p1:1186, p3:1319, p5:1384, p10:1473, p25:1595, p50:1722, p75:1858, p90:1988, p95:2068, p97:2136, p99:2262},
+  33:{p1:1296, p3:1430, p5:1501, p10:1606, p25:1748, p50:1892, p75:2042, p90:2194, p95:2287, p97:2362, p99:2503},
+  34:{p1:1418, p3:1547, p5:1625, p10:1745, p25:1908, p50:2072, p75:2236, p90:2407, p95:2514, p97:2596, p99:2753},
+  35:{p1:1553, p3:1679, p5:1761, p10:1896, p25:2076, p50:2258, p75:2436, p90:2616, p95:2733, p97:2816, p99:2984},
+  36:{p1:1700, p3:1829, p5:1914, p10:2058, p25:2249, p50:2444, p75:2638, p90:2817, p95:2937, p97:3015, p99:3188},
+  37:{p1:1859, p3:1997, p5:2083, p10:2226, p25:2426, p50:2627, p75:2836, p90:3016, p95:3136, p97:3213, p99:3395},
+  38:{p1:2028, p3:2185, p5:2265, p10:2397, p25:2608, p50:2808, p75:3026, p90:3226, p95:3353, p97:3447, p99:3654},
+  39:{p1:2208, p3:2389, p5:2459, p10:2568, p25:2798, p50:2994, p75:3210, p90:3461, p95:3608, p97:3751, p99:4009},
+  40:{p1:2401, p3:2611, p5:2665, p10:2741, p25:2998, p50:3188, p75:3392, p90:3727, p95:3908, p97:4134, p99:4472}
+};
+function ismfmTwinGet(w){
+  return ismfmTwin[w] || null;
+}
+function ismfmTwinInterp(w, d){
+  const r0 = ismfmTwinGet(w);
+  if(!r0) return null;
+  const r1 = ismfmTwinGet(w+1) || r0;
+  const f = d/7;
+  return {
+    p3:  lerp(r0.p3,  r1.p3,  f),
+    p10: lerp(r0.p10, r1.p10, f),
+    p50: lerp(r0.p50, r1.p50, f),
+    p90: lerp(r0.p90, r1.p90, f),
+    p97: lerp(r0.p97, r1.p97, f)
+  };
+}
+function ismfmTwinZ(efw, p){
+  // Estimate SD from p10-p50 distance (z@p10 = -1.2816)
+  const sd = (p.p50 - p.p10) / 1.2816;
+  return (efw - p.p50) / sd;
+}
+
+// ── Unified EFW percentile evaluator across all 3 curves ──
+// Returns {hadlock, dollberg, ismfm} — each has {z, pct, ps, r} or null
+function evalEfwAllCurves(efw, w, d, sex, plurality){
+  const out = {hadlock:null, dollberg:null, ismfm:null};
+  // Hadlock (singleton in-utero)
+  const rH = hadlockInterp(w, d);
+  if(rH){
+    const z = (efw - rH.m)/rH.sd;
+    const pct = normCDF(z)*100;
+    out.hadlock = {z, pct, ps: pct<0.5?'<1':pct>99.5?'>99':pct.toFixed(1), r: rH};
+  }
+  // Dollberg (birth-weight, sex+plurality)
+  const rD = dollbergInterp(w, d, sex, plurality);
+  if(rD){
+    const z = dollbergZ(efw, rD);
+    const pct = normCDF(z)*100;
+    out.dollberg = {z, pct, ps: pct<0.5?'<1':pct>99.5?'>99':pct.toFixed(1), r: rD};
+  }
+  // ISMFM Twin (US-based, only meaningful for twins)
+  const rI = ismfmTwinInterp(w, d);
+  if(rI && plurality==='twin'){
+    const z = ismfmTwinZ(efw, rI);
+    const pct = normCDF(z)*100;
+    out.ismfm = {z, pct, ps: pct<0.5?'<1':pct>99.5?'>99':pct.toFixed(1), r: rI};
+  }
+  return out;
+}
+
+// Pick the primary curve based on user selection + plurality
+function pickPrimaryEfwCurve(curveSel, plurality){
+  if(plurality === 'twin'){
+    // In twin mode, default away from Hadlock (singleton) toward ISMFM Twin
+    if(curveSel === 'ismfm') return 'ismfm';
+    if(curveSel === 'dollberg') return 'dollberg';
+    if(curveSel === 'hadlock') return 'hadlock';
+    return 'ismfm'; // 'both' → use ISMFM as the primary for twins
+  }
+  if(curveSel === 'dollberg') return 'dollberg';
+  return 'hadlock';
+}
 function hadlockInterp(w,d){
   const r0=hadlockRef[w], r1=hadlockRef[w+1]||r0, f=d/7;
   return {m:lerp(r0.m,r1.m,f), sd:lerp(r0.sd,r1.sd,f)};
@@ -9524,6 +9770,20 @@ function makeChart(opts){
       svg+=`<line class="crosshair" x1="${px}" y1="${MT+PH}" x2="${px}" y2="${py}" stroke="${p.color}"/>`;
       svg+=`<circle cx="${px}" cy="${py}" r="5" fill="${p.color}" stroke="var(--surface)" stroke-width="1.5"/>`;
       svg+=`<circle class="point-ring" cx="${px}" cy="${py}" r="9" stroke="${p.color}"/>`;
+      if(p.label){
+        svg+=`<text x="${px+8}" y="${py-8}" font-size="10" font-weight="700" fill="${p.color}">${p.label}</text>`;
+      }
+    }
+  }
+  if(opts.extraPoints){
+    for(const p of opts.extraPoints){
+      if(p.x>=xMin&&p.x<=xMax&&p.y>=yMin&&p.y<=yMax){
+        const px=sx(p.x), py=sy(p.y);
+        svg+=`<circle cx="${px}" cy="${py}" r="5" fill="${p.color}" stroke="var(--surface)" stroke-width="1.5"/>`;
+        if(p.label){
+          svg+=`<text x="${px+8}" y="${py-8}" font-size="10" font-weight="700" fill="${p.color}">${p.label}</text>`;
+        }
+      }
     }
   }
   svg+=`</svg>`;
@@ -9859,33 +10119,79 @@ function calcEFW(){
   if(isNaN(efw)||efw<=0){el.innerHTML='';return;}
   const gaFloat=w+d/7;
 
-  const rH=hadlockInterp(w,d);
-  const zH=(efw-rH.m)/rH.sd;
-  const pctH=normCDF(zH)*100;
-  const psH=pctH<0.5?'<1':pctH>99.5?'>99':pctH.toFixed(1);
-
-  const rD=dollbergInterp(w,d,efwSex,efwPlurality);
-  let zD=null, pctD=null, psD=null;
-  if(rD){
-    zD=dollbergZ(efw,rD);
-    pctD=normCDF(zD)*100;
-    psD=pctD<0.5?'<1':pctD>99.5?'>99':pctD.toFixed(1);
+  // In twin mode, also read fetus B — supports direct EFW OR its own biometry independently
+  let efwB = NaN, biometryInfoB = null;
+  if(efwPlurality==='twin'){
+    if(efwModeB === 'biometry'){
+      const bpdB = parseFloat(document.getElementById('e-bpd-b').value);
+      const hcB  = parseFloat(document.getElementById('e-hc-bio-b').value);
+      const acB  = parseFloat(document.getElementById('e-ac-b').value);
+      const flB  = parseFloat(document.getElementById('e-fl-bio-b').value);
+      const optsB = {
+        bpd: isNaN(bpdB)?null:bpdB/10, hc: isNaN(hcB)?null:hcB/10,
+        ac: isNaN(acB)?null:acB/10, fl: isNaN(flB)?null:flB/10
+      };
+      const resultB = hadlockEFW(optsB);
+      if(resultB){
+        efwB = Math.round(resultB.efw);
+        biometryInfoB = {efw:efwB, formula:resultB.formula, params:resultB.params, sd_pct:resultB.sd_pct, ...optsB, bpdMm:bpdB, hcMm:hcB, acMm:acB, flMm:flB};
+      }
+    } else {
+      efwB = parseFloat(document.getElementById('e-efw-b').value);
+    }
   }
+  const hasTwinPair = efwPlurality==='twin' && !isNaN(efwB) && efwB > 0;
 
-  const useHadlock = efwCurve==='hadlock' || efwCurve==='both';
-  const useDollberg = efwCurve==='dollberg' || efwCurve==='both';
-  const primaryCurve = efwCurve==='dollberg' ? 'dollberg' : 'hadlock';
-  const z = primaryCurve==='hadlock' ? zH : zD;
-  const pct = primaryCurve==='hadlock' ? pctH : pctD;
-  const ps = primaryCurve==='hadlock' ? psH : psD;
+  const allA = evalEfwAllCurves(efw, w, d, efwSex, efwPlurality);
+  const allB = hasTwinPair ? evalEfwAllCurves(efwB, w, d, efwSexB, efwPlurality) : null;
+
+  // For back-compat with the existing rendering, expose the old vars
+  const rH = allA.hadlock ? allA.hadlock.r : hadlockInterp(w,d);
+  const zH = allA.hadlock ? allA.hadlock.z : 0;
+  const pctH = allA.hadlock ? allA.hadlock.pct : 0;
+  const psH = allA.hadlock ? allA.hadlock.ps : '—';
+  const rD = allA.dollberg ? allA.dollberg.r : null;
+  const zD = allA.dollberg ? allA.dollberg.z : null;
+  const pctD = allA.dollberg ? allA.dollberg.pct : null;
+  const psD = allA.dollberg ? allA.dollberg.ps : null;
+  const rI = allA.ismfm ? allA.ismfm.r : null;
+  const zI = allA.ismfm ? allA.ismfm.z : null;
+  const pctI = allA.ismfm ? allA.ismfm.pct : null;
+  const psI = allA.ismfm ? allA.ismfm.ps : null;
+
+  // Read from the multi-select chip state
+  const useHadlock = efwCurveSet.has('hadlock');
+  const useDollberg = efwCurveSet.has('dollberg');
+  const useIsmfm = efwPlurality==='twin' && efwCurveSet.has('ismfm');
+  // Primary curve: first one selected, preferring ISMFM in twin / Hadlock otherwise
+  let primaryCurve;
+  if(efwPlurality==='twin'){
+    if(useIsmfm) primaryCurve = 'ismfm';
+    else if(useHadlock) primaryCurve = 'hadlock';
+    else if(useDollberg) primaryCurve = 'dollberg';
+    else primaryCurve = 'hadlock';
+  } else {
+    if(useHadlock) primaryCurve = 'hadlock';
+    else if(useDollberg) primaryCurve = 'dollberg';
+    else primaryCurve = 'hadlock';
+  }
+  const isCompareView = (Number(useHadlock) + Number(useDollberg) + Number(useIsmfm)) >= 2;
+  const primary = allA[primaryCurve] || allA.hadlock;
+  const z = primary.z;
+  const pct = primary.pct;
+  const ps = primary.ps;
   const c = cls(pct);
   const lab = pct<3?'SGA קשה (<3 אחוזון)':pct<10?'SGA (<10 אחוזון)':pct>97?'LGA קיצוני (>97)':pct>90?'LGA (>90 אחוזון)':'AGA – תקין';
 
-  const sexLabel = efwSex==='M'?'זכר':efwSex==='F'?'נקבה':'מין לא ידוע (ממוצע)';
+  const sexName = (s) => s==='M'?'זכר':s==='F'?'נקבה':'מין לא ידוע (ממוצע)';
+  const sexLabel = sexName(efwSex);
+  const sexLabelB = sexName(efwSexB);
   const plurLabel = efwPlurality==='twin'?'תאומים':'יחיד';
   const sourceLabel = primaryCurve==='hadlock'
     ? 'Hadlock 1991'
-    : `Dollberg 2005 · ${sexLabel} · ${plurLabel}`;
+    : primaryCurve==='ismfm'
+      ? 'ISMFM Twin · Harefuah 2026'
+      : `Dollberg 2005 · ${sexLabel} · ${plurLabel}`;
 
   let html='';
 
@@ -9947,22 +10253,95 @@ function calcEFW(){
     ${bar(parseFloat(ps)||0,c)}
     ${badge(c,lab)}`;
 
-  if(efwCurve==='both' && rD){
-    html+=`<div class="detail-grid two" style="margin-top:14px">
-      <div class="sub-result" style="background:var(--blue-bg)">
-        <div class="sub-title">Hadlock 1991</div>
-        <div class="med">${psH}<span style="font-size:13px;font-weight:400;color:var(--text2)"> אחוזון</span></div>
-        <div style="font-size:11px;color:var(--text3);margin-top:3px">Z = ${zH.toFixed(2)} · חציון ${Math.round(rH.m)} גר'</div>
+  // ── Comparison block (when 2+ curves selected) ──
+  if(isCompareView){
+    // Helper: render one curve row with number + horizontal percentile bar
+    const curveRow = (info) => {
+      const pctNum = parseFloat(info.ps);
+      const isUnder = info.ps === '<1';
+      const isOver = info.ps === '>99';
+      const barPct = isUnder ? 1 : isOver ? 99 : Math.max(1, Math.min(99, pctNum));
+      const zoneColor = pctNum<3?'var(--red)':pctNum<10?'var(--amber)':pctNum>97?'var(--red)':pctNum>90?'var(--amber)':'var(--green)';
+      return `<div style="display:grid;grid-template-columns:140px 1fr 90px;gap:10px;align-items:center;padding:10px 6px;border-bottom:1px dashed var(--border)">
+        <div>
+          <div style="font-size:12.5px;font-weight:700;color:${info.color}">${info.name}</div>
+          <div style="font-size:10.5px;color:var(--text3);margin-top:2px">${info.sub}</div>
+        </div>
+        <div style="position:relative;height:22px;border-radius:6px;background:linear-gradient(to left, var(--red-bg) 0% 3%, var(--amber-bg) 3% 10%, var(--green-bg) 10% 90%, var(--amber-bg) 90% 97%, var(--red-bg) 97% 100%);overflow:hidden;border:1px solid var(--border)">
+          <div style="position:absolute;top:0;bottom:0;right:0;width:${barPct}%;background:${info.color};opacity:.35"></div>
+          <div style="position:absolute;top:0;bottom:0;right:calc(${barPct}% - 2px);width:4px;background:${info.color};box-shadow:0 0 4px ${info.color}"></div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;padding-inline-end:8px;font-size:10px;font-weight:700;color:var(--text2)">3 · 10 · 50 · 90 · 97</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:22px;font-weight:700;color:${zoneColor};font-variant-numeric:tabular-nums">${info.ps}</div>
+          <div style="font-size:10.5px;color:var(--text3)">Z=${info.z.toFixed(2)}</div>
+        </div>
+      </div>`;
+    };
+
+    const rows = [];
+    if(useHadlock && allA.hadlock) rows.push({
+      name:'Hadlock 1991', sub:'יחיד · גלובלי', color:'#185FA5',
+      ps:psH, z:zH
+    });
+    if(useDollberg && allA.dollberg) rows.push({
+      name:'Dollberg 2005', sub:`ישראלי · ${sexLabel} · ${plurLabel}`, color:'#7E57C2',
+      ps:psD, z:zD
+    });
+    if(useIsmfm && allA.ismfm) rows.push({
+      name:'ISMFM Twin', sub:'ישראלי · תאומים · US-based', color:'#D97706',
+      ps:psI, z:zI
+    });
+
+    html += `<div class="chart-card" style="margin-top:14px">
+      <div class="chart-head">
+        <div class="chart-title">השוואת אחוזונים בין עקומות</div>
+        <span style="font-size:11px;color:var(--text3)">${rows.length} עקומות · ${hasTwinPair ? 'עובר א'+"'" : 'EFW '+efw.toLocaleString()+' גר'+"'"}</span>
       </div>
-      <div class="sub-result" style="background:var(--surface)">
-        <div class="sub-title" style="color:var(--purple)">Dollberg 2005<br>${sexLabel} · ${plurLabel}</div>
-        <div class="med">${psD}<span style="font-size:13px;font-weight:400;color:var(--text2)"> אחוזון</span></div>
-        <div style="font-size:11px;color:var(--text3);margin-top:3px">Z ≈ ${zD.toFixed(2)} · חציון ${Math.round(rD.p50)} גר'</div>
-      </div>
+      <div style="padding:4px 6px">${rows.map(curveRow).join('')}</div>
     </div>`;
-    const diff = Math.abs(parseFloat(psH)-parseFloat(psD));
-    if(diff>10){
-      html+=`<div class="note">פער בין העקומות (${diff.toFixed(0)} נק' אחוזון) — בפג צפוי שדולברג תיתן אחוזון נמוך יותר (over-representation של IUGR בלידות מוקדמות).</div>`;
+
+    // Same view for fetus B in twin mode
+    if(hasTwinPair){
+      const rowsB = [];
+      if(useHadlock && allB.hadlock) rowsB.push({
+        name:'Hadlock 1991', sub:'יחיד · גלובלי', color:'#185FA5',
+        ps:allB.hadlock.ps, z:allB.hadlock.z
+      });
+      if(useDollberg && allB.dollberg) rowsB.push({
+        name:'Dollberg 2005', sub:`ישראלי · ${sexLabelB} · ${plurLabel}`, color:'#7E57C2',
+        ps:allB.dollberg.ps, z:allB.dollberg.z
+      });
+      if(useIsmfm && allB.ismfm) rowsB.push({
+        name:'ISMFM Twin', sub:'ישראלי · תאומים · US-based', color:'#D97706',
+        ps:allB.ismfm.ps, z:allB.ismfm.z
+      });
+      html += `<div class="chart-card" style="margin-top:10px">
+        <div class="chart-head">
+          <div class="chart-title">השוואת אחוזונים — עובר ב'</div>
+          <span style="font-size:11px;color:var(--text3)">${rowsB.length} עקומות · ${efwB.toLocaleString()} גר'</span>
+        </div>
+        <div style="padding:4px 6px">${rowsB.map(curveRow).join('')}</div>
+      </div>`;
+    }
+
+    // Note about curve divergence
+    const psList = rows.map(r => parseFloat(r.ps)).filter(v => !isNaN(v));
+    if(psList.length >= 2){
+      const spread = Math.max(...psList) - Math.min(...psList);
+      if(spread > 10){
+        const notes = [];
+        if(useHadlock && useDollberg && allA.hadlock && allA.dollberg && Math.abs(parseFloat(psH)-parseFloat(psD)) > 10){
+          notes.push('• Hadlock ל-Dollberg: בפג צפוי ש-Dollberg יתן אחוזון נמוך יותר (over-representation של IUGR בלידות פג).');
+        }
+        if(useHadlock && useIsmfm && allA.hadlock && allA.ismfm && parseFloat(psI) < parseFloat(psH)){
+          notes.push('• Hadlock ל-ISMFM Twin: Hadlock היא עקומת יחידנים — בתאומים מ-28w צפויה האטה, ו-ISMFM Twin יציג אחוזון גבוה יותר.');
+        }
+        if(useDollberg && useIsmfm && allA.dollberg && allA.ismfm && Math.abs(parseFloat(psI)-parseFloat(psD)) > 10){
+          notes.push('• Dollberg ל-ISMFM Twin: Dollberg מבוסס על משקלי לידה, ISMFM הוא עקומה סונוגרפית — ההבדל גדל בפג.');
+        }
+        html+=`<div class="note">פער בין העקומות (${spread.toFixed(0)} נק' אחוזון).<br>${notes.join('<br>')}</div>`;
+      }
     }
   } else if(primaryCurve==='hadlock'){
     const p3=Math.round(rH.m-1.88*rH.sd), p10=Math.round(rH.m-1.28*rH.sd);
@@ -9984,14 +10363,84 @@ function calcEFW(){
       <div class="di"><div class="dl">97th</div><div class="dv">${Math.round(rD.p97).toLocaleString()} גר'</div></div>
       <div class="di"><div class="dl">סוג הריון</div><div class="dv">${plurLabel}</div></div>
     </div>`;
-  }
-
-  if(efwPlurality==='twin'){
-    html+=`<div class="note" style="border-right-color:var(--amber)">
-      <b>תאומים:</b> ערכי Dollberg לתאומים מבוססים על מקדם התאמה מהספרות (Glinianaia 2000, Cohen-Sacher 2006, Ananth 1998) — תאומים כמעט זהים ליחידים עד 28w ואז מתחילים להאט. לאישוש קליני בתאומים MC או בנוכחות sIUGR מומלץ להשתמש בעקומות ייעודיות לתאומים.
+  } else if(primaryCurve==='ismfm' && rI){
+    html+=`<div class="detail-grid">
+      <div class="di"><div class="dl">3rd</div><div class="dv">${Math.round(rI.p3).toLocaleString()} גר'</div></div>
+      <div class="di"><div class="dl">10th</div><div class="dv">${Math.round(rI.p10).toLocaleString()} גר'</div></div>
+      <div class="di"><div class="dl">50th</div><div class="dv">${Math.round(rI.p50).toLocaleString()} גר'</div></div>
+      <div class="di"><div class="dl">90th</div><div class="dv">${Math.round(rI.p90).toLocaleString()} גר'</div></div>
+      <div class="di"><div class="dl">97th</div><div class="dv">${Math.round(rI.p97).toLocaleString()} גר'</div></div>
+      <div class="di"><div class="dl">מקור</div><div class="dv" style="font-size:11px">Harefuah 2026<br>165(1):14-20</div></div>
     </div>`;
   }
+
   html+=`</div>`;
+
+  // ── Twin pair comparison + discordancy ──
+  if(hasTwinPair){
+    const psB = allB[primaryCurve] || allB.hadlock;
+    const efwLarge = Math.max(efw, efwB);
+    const efwSmall = Math.min(efw, efwB);
+    const disc = ((efwLarge - efwSmall) / efwLarge) * 100;
+    const discColor = disc < 15 ? 'var(--green)' : disc < 20 ? 'var(--blue)' : disc < 25 ? 'var(--amber)' : 'var(--red)';
+    const discBg    = disc < 15 ? 'var(--green-bg)' : disc < 20 ? 'var(--blue-bg)' : disc < 25 ? 'var(--amber-bg)' : 'var(--red-bg)';
+    const discText  = disc < 15 ? 'תקין (<15%)' : disc < 20 ? 'בגבול הנורמה (15-20%)' : disc < 25 ? 'דיסקורדנסי מתון (20-25%)' : 'דיסקורדנסי משמעותי (>25%)';
+    const discBadge = disc < 15 ? 'var(--green-text)' : disc < 20 ? 'var(--blue)' : disc < 25 ? 'var(--amber-text)' : 'var(--red-text)';
+
+    html += `<div class="result" style="background:var(--surface);border-color:${discColor}">
+      <div class="result-label" style="color:${discColor};font-weight:600">השוואת תאומים · ${gaStr(w,d)} שבועות · עקומה: ${sourceLabel}</div>
+      <div class="detail-grid two" style="margin-top:10px">
+        <div class="sub-result" style="background:${discBg};border-color:${discColor}">
+          <div class="sub-title">עובר א' <span style="font-weight:500;font-size:11px;color:var(--text3)">· ${sexLabel}</span></div>
+          <div class="med">${efw.toLocaleString()}<span style="font-size:13px;font-weight:400;color:var(--text2)"> גר'</span></div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px"><b>${primary.ps}</b> אחוזון · Z=${primary.z.toFixed(2)}</div>
+        </div>
+        <div class="sub-result" style="background:${discBg};border-color:${discColor}">
+          <div class="sub-title">עובר ב' <span style="font-weight:500;font-size:11px;color:var(--text3)">· ${sexLabelB}</span></div>
+          <div class="med">${efwB.toLocaleString()}<span style="font-size:13px;font-weight:400;color:var(--text2)"> גר'</span></div>
+          <div style="font-size:12px;color:var(--text2);margin-top:4px"><b>${psB.ps}</b> אחוזון · Z=${psB.z.toFixed(2)}</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;padding:12px;border-radius:10px;background:${discBg};border:1px solid ${discColor}">
+        <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+          <span style="font-size:11.5px;font-weight:700;color:${discBadge}">דיסקורדנסי</span>
+          <span style="font-size:28px;font-weight:700;color:${discColor};font-variant-numeric:tabular-nums">${disc.toFixed(1)}%</span>
+          <span style="font-size:12.5px;font-weight:600;color:${discBadge}">${discText}</span>
+        </div>
+        <div style="font-size:11.5px;color:var(--text3);margin-top:6px">
+          חישוב: (${efwLarge.toLocaleString()} − ${efwSmall.toLocaleString()}) / ${efwLarge.toLocaleString()} × 100
+        </div>
+      </div>
+    </div>`;
+
+    // Recommendations based on discordancy
+    if(disc >= 20){
+      const isSevere = disc >= 25;
+      html += `<div class="rec-box" style="border-color:${isSevere?'var(--red)':'var(--amber)'}">
+        <div class="rec-head">
+          <span>המלצות — דיסקורדנסי ${isSevere?'≥25%':'20-25%'}</span>
+          <span class="rec-tag" style="background:${isSevere?'var(--red)':'var(--amber)'};color:#fff">${isSevere?'משמעותי':'מתון'}</span>
+        </div>
+        <div class="rec-body">
+          <ul class="rec-list">
+            <li><b>וידוא מדידה:</b> חזרה על הביומטריה תוך 1-2 שבועות לפני קביעת אבחנה (שגיאת מדידה ~10%).</li>
+            <li><b>הערכת כוריוניות:</b> ב-MC — חשד גבוה ל-sFGR (selective FGR) או TTTS שיורי. ב-DC — סיבה אימהית/שלייתית.</li>
+            <li><b>דופלר:</b> UA-PI, MCA-PSV, CPR לכל עובר. ב-MC הוסף DV ו-MCA-PSV (סקר TAPS).</li>
+            <li><b>אנטומיה:</b> חזור על סקירת אנומליות לעובר הקטן (קשר ידוע ל-CHD ו-Cytogenetic).</li>
+            <li><b>תזמון מעקב:</b> ${isSevere ? 'מעקב כל 1-2 שבועות; שקול אשפוז ב-MC עם דופלר חריג' : 'מעקב כל 2 שבועות; דופלר שבועי בקבוצת סיכון'}.</li>
+            ${isSevere ? '<li><b>תזמון לידה:</b> שקול לידה מ-34+0–36+6 לפי דרגת חומרה, סוג הכוריוניות וסטטוס דופלר (ISUOG/SMFM/נייר עמדה ישראלי #33).</li>' : '<li><b>תזמון לידה:</b> ניטור גדילה צמוד; הימנע מלידה מוקדמת אם דופלר תקין וגדילה נשמרת.</li>'}
+            <li><b>סטרואידים:</b> צ׳קליסט פגות אם צפויה לידה לפני 34+0 (בהתאמה לנייר #14).</li>
+          </ul>
+          <div class="rec-src">ISUOG Twin Guidelines 2016 · ACOG PB 234 (2021) · נייר עמדה ישראלי #33 · SMFM #5 (Twin growth)</div>
+        </div>
+      </div>`;
+    }
+  } else if(efwPlurality==='twin'){
+    // Twin selected but B not provided
+    html += `<div class="note" style="border-right-color:var(--blue)">
+      <b>תאומים:</b> הזן גם את הנתונים של עובר ב' (משקל ישיר או ביומטריה) כדי לקבל חישוב דיסקורדנסי והמלצות.
+    </div>`;
+  }
 
   // chart
   const xMin=20, xMax=42;
@@ -10019,26 +10468,58 @@ function calcEFW(){
       p3.push([ww,r.p3]); p10.push([ww,r.p10]);
       p50.push([ww,r.p50]); p90.push([ww,r.p90]); p97.push([ww,r.p97]);
     }
-    if(!useHadlock) bands.push({color:'var(--chart-band2)', lower:p10, upper:p90});
+    if(!useHadlock && !useIsmfm) bands.push({color:'var(--chart-band2)', lower:p10, upper:p90});
     series.push({label:'Dollberg p50', color:'#7E57C2', points:p50, width:1.6});
     series.push({label:'Dollberg p10', color:'#7E57C2', points:p10, width:1, dash:'4 3', opacity:0.7});
     series.push({label:'Dollberg p90', color:'#7E57C2', points:p90, width:1, dash:'4 3', opacity:0.7});
     series.push({label:'Dollberg p3',  color:'#7E57C2', points:p3,  width:0.8, dash:'2 3', opacity:0.5});
     series.push({label:'Dollberg p97', color:'#7E57C2', points:p97, width:0.8, dash:'2 3', opacity:0.5});
   }
+  if(useIsmfm){
+    const p3=[], p10=[], p50=[], p90=[], p97=[];
+    for(let ww=14; ww<=40; ww++){
+      const r = ismfmTwin[ww];
+      if(!r) continue;
+      p3.push([ww,r.p3]); p10.push([ww,r.p10]);
+      p50.push([ww,r.p50]); p90.push([ww,r.p90]); p97.push([ww,r.p97]);
+    }
+    if(!useHadlock && !useDollberg) bands.push({color:'var(--chart-band)', lower:p10, upper:p90});
+    series.push({label:'ISMFM Twin p50', color:'#D97706', points:p50, width:1.8});
+    series.push({label:'ISMFM Twin p10', color:'#D97706', points:p10, width:1, dash:'4 3', opacity:0.75});
+    series.push({label:'ISMFM Twin p90', color:'#D97706', points:p90, width:1, dash:'4 3', opacity:0.75});
+    series.push({label:'ISMFM Twin p3',  color:'#D97706', points:p3,  width:0.8, dash:'2 3', opacity:0.55});
+    series.push({label:'ISMFM Twin p97', color:'#D97706', points:p97, width:0.8, dash:'2 3', opacity:0.55});
+  }
+
+  // Twin chart: A as the main point + B as extra
+  const extraPoints = hasTwinPair
+    ? [{x:gaFloat, y:efwB, color:'#0EA5E9', label:"ב'"}]
+    : null;
+  const mainPointLabel = hasTwinPair ? "א'" : null;
+
+  // Make sure both points fit within yMax
+  if(hasTwinPair && efwB > yMax * 0.95) yMax = Math.max(yMax, Math.ceil(efwB / 500) * 500 + 500);
 
   const chartSvg = makeChart({
     xMin, xMax, yMin:0, yMax,
     xLabel:'גיל הריון (שבועות)', yLabel:'EFW (גרם)',
     series, bands,
-    point:{x:gaFloat, y:efw, color:'#E24B4A'},
+    point:{x:gaFloat, y:efw, color:'#E24B4A', label: mainPointLabel},
+    extraPoints,
     yFormat:v=>v.toLocaleString()
   });
 
   let legend='';
   if(useHadlock) legend += legendItem('#185FA5','Hadlock 1991');
-  if(useDollberg) legend += legendItem('#7E57C2',`Dollberg 2005 (${sexLabel} · ${plurLabel})`);
-  legend += legendDot('#E24B4A',`EFW נמדד: ${efw.toLocaleString()} גר'`);
+  if(useDollberg) legend += legendItem('#7E57C2',`Dollberg 2005 (${sexLabel}${hasTwinPair ? ' / '+sexLabelB : ''} · ${plurLabel})`);
+  if(useIsmfm) legend += legendItem('#D97706','ISMFM Twin (Harefuah 2026)');
+  if(hasTwinPair){
+    legend += legendDot('#E24B4A',`עובר א': ${efw.toLocaleString()} גר' · ${primary.ps} אחוזון`);
+    const psB = allB[primaryCurve] || allB.hadlock;
+    legend += legendDot('#0EA5E9',`עובר ב': ${efwB.toLocaleString()} גר' · ${psB.ps} אחוזון`);
+  } else {
+    legend += legendDot('#E24B4A',`EFW נמדד: ${efw.toLocaleString()} גר'`);
+  }
 
   html += `<div class="chart-card">
     <div class="chart-head">
@@ -14694,22 +15175,25 @@ function getPpRiskItems(state){
 
 // ── Standard schedule (Israeli MOH baseline)
 const ppStandardSchedule = [
-  {fromW:5,  toW:8,  label:'ביקור ראשון', cat:'visit',
+  {fromW:5,  toW:8,  label:'ביקור ראשון אצל רופא/ה', cat:'visit', groups:['visit'],
    tests:'אנמנזה · אומדן סיכון · BMI · לחץ דם · תרבית שתן · <b>חומצה פולית 400 µg/יום</b> (5 מ"ג ביום אם BMI≥30 · סוכרת · אפילפסיה · NTD קודם)',
    src:'נייר עמדה ישראלי #6 (מעקב הריון בסיכון נמוך)'},
-  {fromW:5,  toW:12, label:'תוספים מומלצים', cat:'lab',
+  {fromW:6,  toW:12, label:'פתיחת תיק במרפאת אחות הריון', cat:'visit', groups:['nurse'],
+   tests:'הסבר תוכנית מעקב · משקל · לחץ דם · תרבית שתן · הדרכת תזונה ופעילות · ייעוץ תוספים · עיבוד אנמנזה משפחתית',
+   src:'נייר עמדה ישראלי #6 · משרד הבריאות — מעקב הריון תקין'},
+  {fromW:5,  toW:12, label:'תוספים מומלצים', cat:'lab', groups:['nurse'],
    tests:'<b>חומצה פולית 400 µg</b> (פרה-קונספציה — 12w) · <b>ויטמין D 600-1000 IU</b> · <b>אומגה 3 (DHA) 200-300 mg</b> · <b>ברזל 27 mg</b> (מ-T2) · <b>סידן 1000-1300 mg</b> · להימנע: כוהל, מינון יתר ויטמין A',
    src:'נייר עמדה ישראלי #29 (תוספי תזונה והרגלים)'},
-  {fromW:8,  toW:10, label:'מעבדה ראשונית', cat:'lab',
+  {fromW:8,  toW:10, label:'מעבדה ראשונית', cat:'lab', groups:['lab'],
    tests:'CBC · סוג דם + Rh · TSH · HIV · VDRL · HBsAg · HCV · Rubella IgG · Varicella IgG · CMV IgG/IgM · גלוקוז בצום · שתן',
    src:'נייר עמדה #6 · #7 (CMV) · #41 (HCV)'},
-  {fromW:5,  toW:10, label:'CMV — סרולוגיה ראשונית (סקר 1)', cat:'lab',
+  {fromW:5,  toW:10, label:'CMV — סרולוגיה ראשונית (סקר 1)', cat:'lab', groups:['lab'],
    tests:'IgG ו-IgM בתחילת הריון לכל אישה. <b>IgG חיובי מלפני הריון</b> → אין צורך בהמשך מעקב CMV. <b>IgG שלילי</b> → הדרכת מניעה (היגיינה, נשיקות, מוצצים) + המשך מעקב ב-CMV checkpoint 2 ו-3',
    src:'נייר עמדה ישראלי #7 (CMV — 2025)'},
-  {fromW:11, toW:14, label:'CMV — סקר 2 (לסרונגטיביות)', cat:'lab',
+  {fromW:11, toW:14, label:'CMV — סקר 2 (לסרונגטיביות)', cat:'lab', groups:['lab'],
    tests:'<b>חזרת IgG ו-IgM</b> ביחד עם הסקר הביוכימי הראשון. רק לנשים שהיו סרונגטיביות בתחילת ההריון. שינוי IgG משלילי לחיובי = סרוקונברסיה → <b>Valaciclovir 8g/יום</b> + ייעוץ MFM',
    src:'נייר עמדה ישראלי #7 (CMV — 2025), שלב 2 באלגוריתם'},
-  {fromW:16, toW:19, label:'CMV — סקר 3 (לסרונגטיביות)', cat:'lab',
+  {fromW:16, toW:19, label:'CMV — סקר 3 (לסרונגטיביות)', cat:'lab', groups:['lab'],
    tests:'<b>חזרת IgG ו-IgM</b> ביחד עם הסקר הביוכימי השני. רק לנשים שנשארו סרונגטיביות בסקר 2. <b>אין לבדוק אחרי שבוע 20</b> — תחלואה עוברית מהדבקה מאוחרת זניחה',
    src:'נייר עמדה ישראלי #7 (CMV — 2025), שלב 3 באלגוריתם'},
   {fromW:6, toW:12, label:'US שליש ראשון — חיוניות + תיארוך', cat:'us', groups:['us'],
@@ -14722,6 +15206,9 @@ const ppStandardSchedule = [
    tests:'DNA חופשי · טריזומיות 21/18/13 · רגישות 99% · <b>אינו בסל הבריאות</b> — תשלום פרטי או ביטוח משלים'},
   {fromW:14, toW:17, label:'סקר ביוכימי שני (טריפל/קוואד)', cat:'lab', groups:['lab','genetics'],
    tests:'αFP, βhCG, uE3 (+ inhibin A בקוואד) · טריזומיה 21 ופגמי נורית עצבית'},
+  {fromW:0, toW:12, label:'סקר גנטי אחיד (משרד הבריאות)', cat:'lab', groups:['lab','genetics'],
+   tests:'<b>פאנל גנטי אחיד לכלל האוכלוסייה</b> (החליף את הסקר העדתי) — בדיקת נשאות לעשרות מחלות תורשתיות. <b>מומלץ פרה-קונספציה</b> או בשליש ראשון מוקדם, לשני בני הזוג. אם נמצאו שני בני זוג נשאים לאותה מחלה → אבחון טרום השרשה / CVS / מי שפיר. כלול בסל הבריאות.',
+   src:'משרד הבריאות — סקר גנטי אחיד (עודכן נובמבר 2024) · מכלילה גם את מחלות עדות שאינן באשכנזיות/ספרדיות הקלאסיות'},
   {fromW:14, toW:17, label:'סקירה מוקדמת (פרטי — אינה תחליף לסקירה המאוחרת)', cat:'optional', groups:['us'],
    tests:'אנטומיה מוקדמת · לב עוברי · גפיים · בטן · מוח · <b>אופציונלי בלבד</b> — אינה מחליפה את סקירת המערכות המאוחרת',
    src:'נייר עמדה ישראלי #8 (US בהריון — מהדורה 4, ינואר 2026) · בדיקה אופציונלית'},
@@ -14732,33 +15219,38 @@ const ppStandardSchedule = [
   {fromW:20, toW:24, label:'סקירת מערכות מאוחרת', cat:'us', groups:['us'],
    tests:'<b>אנטומיה מקיפה · ביומטריה · שליה · מי שפיר · UtA-PI</b> (לסיכון רעלת)',
    src:'נייר עמדה ישראלי #8 (US בהריון — מהדורה 4, ינואר 2026) · בדיקה 3 מתוך 4'},
-  {fromW:24, toW:28, label:'GCT 50g (סקר GDM)', cat:'lab',
+  {fromW:24, toW:28, label:'GCT 50g (סקר GDM)', cat:'lab', groups:['lab','nurse'],
    tests:'בדיקת העמסה 50 גרם · GTT 100g אם חיובי',
    src:'נייר עמדה ישראלי #16 (GDM)'},
-  {fromW:27, toW:36, label:'חיסון Tdap', cat:'lab',
+  {fromW:24, toW:28, label:'ביקור באמצע הריון אצל רופא/ה', cat:'visit', groups:['visit'],
+   tests:'סקירת תוצאות שליש שני · BP · משקל · גובה רחם · האזנה ל-FH · דיון בתסמינים · תוצאות GCT'},
+  {fromW:27, toW:36, label:'חיסון Tdap', cat:'lab', groups:['lab','nurse'],
    tests:'<b>חיסון Tdap לכל הריון</b> ב-27-36 שבועות · מקסם נוגדנים לתינוק נגד שעלת',
    src:'נייר עמדה ישראלי #35 (חיסונים בהריון)'},
-  {fromW:0, toW:42, label:'חיסון שפעת עונתי', cat:'lab',
+  {fromW:0, toW:42, label:'חיסון שפעת עונתי', cat:'lab', groups:['lab','nurse'],
    tests:'בכל גיל הריון בעונה (אוקטובר-מרץ) · בטוח ויעיל · מומלץ אוניברסלי',
    src:'נייר עמדה ישראלי #35 (חיסונים בהריון)'},
-  {fromW:32, toW:36, label:'חיסון RSV (Abrysvo)', cat:'lab',
+  {fromW:32, toW:36, label:'חיסון RSV (Abrysvo)', cat:'lab', groups:['lab','nurse'],
    tests:'חיסון אם בעונת RSV (ספטמבר-ינואר) · 32-36w · הגנה ליילוד 6 חודשים ראשונים',
    src:'נייר עמדה ישראלי #35 (חיסונים בהריון)'},
-  {fromW:28, toW:28, label:'ספירת דם + אנטי-D', cat:'lab',
-   tests:'CBC · Coombs · Anti-D 300 µg לסוג דם Rh שלילי',
+  {fromW:28, toW:28, label:'ספירת דם + אנטי-D', cat:'lab', groups:['lab','nurse'],
+   tests:'CBC · Coombs · Anti-D 300 µg לסוג דם Rh שלילי · ניתן ע"י אחות',
    src:'נייר עמדה ישראלי #39 (אלואיזואימוניזציה)'},
-  {fromW:28, toW:34, label:'סקר אנמיה (T3)', cat:'lab',
+  {fromW:28, toW:34, label:'סקר אנמיה (T3)', cat:'lab', groups:['lab','nurse'],
    tests:'Hb · פריטין · MCV · אם Hb<11 (T3) → ברזל פומי 60mg יסודי × 1-2/יום · אם Hb<9 או פומי לא נסבל → ברזל IV',
    src:'נייר עמדה ישראלי #49 (אנמיה בהריון)'},
+  {fromW:32, toW:36, label:'ביקור T3 אצל רופא/ה', cat:'visit', groups:['visit'],
+   tests:'סקירת תוצאות T3 · הערכת מנח · גובה רחם · BP · NST לפי אינדיקציה · תכנון אופן לידה',
+   src:'נייר עמדה ישראלי #6'},
   {fromW:29, toW:34, label:'הערכת גדילה T3 (סקירה שלישית)', cat:'us', groups:['us'],
    tests:'<b>EFW + אחוזון · מצב שליה · כמות מי שפיר · ביומטריה · מנח עוברי</b>',
    src:'נייר עמדה ישראלי #8 (US בהריון — מהדורה 4, ינואר 2026) · בדיקה 4 מתוך 4'},
-  {fromW:35, toW:37, label:'GBS', cat:'lab',
-   tests:'תרבית רקטו-וגינלית · פניצילין IV בלידה אם חיובי (5 mU bolus, 2.5 mU/4h) · אלרגיה: Cefazolin / Clindamycin',
+  {fromW:35, toW:37, label:'GBS', cat:'lab', groups:['lab','nurse'],
+   tests:'תרבית רקטו-וגינלית (לרוב נלקחת ע"י אחות) · פניצילין IV בלידה אם חיובי (5 mU bolus, 2.5 mU/4h) · אלרגיה: Cefazolin / Clindamycin',
    src:'נייר עמדה ישראלי #22 (GBS)'},
-  {fromW:36, toW:40, label:'מעקב הריון מאוחר', cat:'visit',
+  {fromW:36, toW:40, label:'מעקב הריון מאוחר אצל רופא/ה', cat:'visit', groups:['visit'],
    tests:'מעקב שבועי · NST · ניטור · מנח · הערכת לידה'},
-  {fromW:41, toW:42, label:'מעקב פוסט-תרם', cat:'visit',
+  {fromW:41, toW:42, label:'מעקב פוסט-תרם', cat:'visit', groups:['visit'],
    tests:'NST · AFI · החלטה על השראת לידה (41+0)'},
 ];
 
@@ -14909,23 +15401,26 @@ function calcPp(){
   const catColors = {visit:'var(--primary)', lab:'var(--teal)', us:'var(--purple)', optional:'var(--text3)'};
   const catLabels = {visit:'ביקור', lab:'מעבדה', us:'אולטרסאונד', optional:'אופציונלי'};
 
-  // Helper: each item has a `groups` array (e.g. ['us'], ['lab','genetics']).
+  // Helper: each item has a `groups` array (e.g. ['us'], ['lab','genetics'], ['visit'], ['nurse']).
   // Fallback to its `cat` when groups isn't defined.
   const itemGroups = (it) => {
     if(Array.isArray(it.groups) && it.groups.length) return it.groups;
     if(it.cat === 'us') return ['us'];
     if(it.cat === 'lab') return ['lab'];
+    if(it.cat === 'visit') return ['visit'];
     return [];
   };
 
   // Counts for filter
   const riskCount = allItems.filter(i=>i.source==='risk').length;
   const standardCount = allItems.filter(i=>i.source==='standard').length;
+  const visitCount = allItems.filter(i=>itemGroups(i).includes('visit')).length;
   const usCount = allItems.filter(i=>itemGroups(i).includes('us')).length;
   const labCount = allItems.filter(i=>itemGroups(i).includes('lab')).length;
   const genCount = allItems.filter(i=>itemGroups(i).includes('genetics')).length;
+  const nurseCount = allItems.filter(i=>itemGroups(i).includes('nurse')).length;
   const currentFilter = window._ppFilter || 'all'; // 'all' | 'risk' | 'standard' | 'current'
-  const currentCat    = window._ppCatFilter || 'allcat'; // 'allcat' | 'us' | 'lab' | 'genetics'
+  const currentCat    = window._ppCatFilter || 'allcat'; // 'allcat' | 'visit' | 'us' | 'lab' | 'genetics' | 'nurse'
 
   html += `<div class="chart-card">
     <div class="chart-head">
@@ -14946,9 +15441,6 @@ function calcPp(){
       <button onclick="setPpFilter('standard')" type="button" style="font-size:12px;padding:7px 13px;border-radius:999px;border:1px solid var(--border);background:${currentFilter==='standard'?'var(--primary)':'var(--surface2)'};color:${currentFilter==='standard'?'#fff':'var(--text2)'};font-weight:${currentFilter==='standard'?'700':'500'};cursor:pointer">
         רק שגרתיות (${standardCount})
       </button>
-      <button onclick="setPpFilter('current')" type="button" style="font-size:12px;padding:7px 13px;border-radius:999px;border:1px solid var(--border);background:${currentFilter==='current'?'var(--primary)':'var(--surface2)'};color:${currentFilter==='current'?'#fff':'var(--text2)'};font-weight:${currentFilter==='current'?'700':'500'};cursor:pointer">
-        עכשיו ובעתיד הקרוב
-      </button>
       <div style="margin-right:auto;display:flex;gap:8px">
         <button onclick="exportPpCsv()" type="button" style="font-size:12px;padding:7px 13px;border-radius:8px;border:1px solid var(--green);background:var(--green-bg);color:var(--green-text);font-weight:600;cursor:pointer">
           <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-left:4px"><path d="M7 1.5v8M4 7l3 3 3-3M2 12h10"/></svg>
@@ -14963,6 +15455,9 @@ function calcPp(){
       <button onclick="setPpCatFilter('allcat')" type="button" style="font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--border);background:${currentCat==='allcat'?'var(--text)':'var(--surface2)'};color:${currentCat==='allcat'?'var(--bg)':'var(--text2)'};font-weight:${currentCat==='allcat'?'700':'500'};cursor:pointer">
         הכל
       </button>
+      <button onclick="setPpCatFilter('visit')" type="button" style="font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--primary);background:${currentCat==='visit'?'var(--primary)':'var(--surface2)'};color:${currentCat==='visit'?'#fff':'var(--primary)'};font-weight:${currentCat==='visit'?'700':'600'};cursor:pointer" ${visitCount===0?'disabled':''}>
+        ביקור רופא (${visitCount})
+      </button>
       <button onclick="setPpCatFilter('us')" type="button" style="font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--purple);background:${currentCat==='us'?'var(--purple)':'var(--surface2)'};color:${currentCat==='us'?'#fff':'var(--purple)'};font-weight:${currentCat==='us'?'700':'600'};cursor:pointer" ${usCount===0?'disabled':''}>
         אולטרסאונד (${usCount})
       </button>
@@ -14970,7 +15465,10 @@ function calcPp(){
         מעבדה (${labCount})
       </button>
       <button onclick="setPpCatFilter('genetics')" type="button" style="font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--amber);background:${currentCat==='genetics'?'var(--amber)':'var(--surface2)'};color:${currentCat==='genetics'?'#fff':'var(--amber-text)'};font-weight:${currentCat==='genetics'?'700':'600'};cursor:pointer" ${genCount===0?'disabled':''}>
-        גנטיקה — NIPT / מי שפיר / סיסים (${genCount})
+        גנטיקה (${genCount})
+      </button>
+      <button onclick="setPpCatFilter('nurse')" type="button" style="font-size:12px;padding:6px 12px;border-radius:999px;border:1px solid var(--green);background:${currentCat==='nurse'?'var(--green)':'var(--surface2)'};color:${currentCat==='nurse'?'#fff':'var(--green-text)'};font-weight:${currentCat==='nurse'?'700':'600'};cursor:pointer" ${nurseCount===0?'disabled':''}>
+        ליווי אחות הריון (${nurseCount})
       </button>
     </div>`;
 
@@ -14980,9 +15478,6 @@ function calcPp(){
     let passSrc = true;
     if(currentFilter === 'risk') passSrc = item.source === 'risk';
     else if(currentFilter === 'standard') passSrc = item.source === 'standard';
-    else if(currentFilter === 'current'){
-      passSrc = currentGaDays <= item.toW*7+6;
-    }
     if(!passSrc) return false;
     // Category filter (row 2)
     if(currentCat !== 'allcat'){
@@ -15062,8 +15557,12 @@ function calcPp(){
     </div>`;
   }
 
-  // Action toolbar — print + copy + WhatsApp
+  // Action toolbar — print + copy + WhatsApp + patient-friendly
   html += `<div class="pp-toolbar no-print">
+    <button onclick="openPpPatientView()" type="button" style="border-color:var(--primary);background:var(--primary);color:#fff">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5" r="2.2"/><path d="M3 14c0-2.8 2.3-5 5-5s5 2.2 5 5"/></svg>
+      תוכנית ליולדת — תצוגה ידידותית
+    </button>
     <button onclick="window.print()" type="button">
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="10" height="6" rx="1"/><path d="M4 6V2.5h8V6M4 10v3.5h8V10"/></svg>
       הדפס / שמור כ-PDF
@@ -15241,6 +15740,175 @@ function shareWhatsApp(){
   if(!txt) return;
   const url = 'https://wa.me/?text=' + encodeURIComponent(txt);
   window.open(url, '_blank');
+}
+
+// ── Patient-friendly printable view ──
+// Opens a new window with a clean, week-by-week timeline grouped by trimester.
+// Designed to be at least as clear as the simple LMP-based xlsx the user shared,
+// with friendly language, dates per week, "now" highlighted, and quick guidance per test.
+function openPpPatientView(){
+  const data = window._lastPpData;
+  if(!data){ alert('בנה תוכנית קודם.'); return; }
+  const {state, lmp, edd, allItems, activeRisks} = data;
+  const today = todayDate();
+  const currentGaDays = diffDays(today, lmp);
+  const currentW = Math.floor(currentGaDays/7);
+  const currentD = currentGaDays%7;
+
+  // Build a Map from week → list of items active that week.
+  // An item is "in this week" if its [fromW, toW] includes it.
+  const weekItems = {};
+  for(let w=0; w<=42; w++) weekItems[w] = [];
+  for(const it of allItems){
+    // Place each item at its fromW (first opportunity) to avoid spamming every week in the range
+    const ww = Math.max(0, Math.min(42, it.fromW));
+    weekItems[ww].push(it);
+  }
+
+  // Category-to-emoji+color mapping (friendly visual cues)
+  const catVisual = (groups) => {
+    if(groups.includes('us')) return {icon:'🟣', label:'אולטרסאונד', color:'#7E57C2'};
+    if(groups.includes('genetics')) return {icon:'🟡', label:'גנטיקה', color:'#D97706'};
+    if(groups.includes('visit')) return {icon:'🔵', label:'ביקור רופא', color:'#2563EB'};
+    if(groups.includes('nurse')) return {icon:'🟢', label:'אחות הריון', color:'#16A34A'};
+    if(groups.includes('lab')) return {icon:'🔷', label:'מעבדה', color:'#0EA5E9'};
+    return {icon:'⚪', label:'אחר', color:'#64748B'};
+  };
+  const itemGroups = (it) => {
+    if(Array.isArray(it.groups) && it.groups.length) return it.groups;
+    if(it.cat === 'us') return ['us'];
+    if(it.cat === 'lab') return ['lab'];
+    if(it.cat === 'visit') return ['visit'];
+    return [];
+  };
+
+  // Friendly language map for some common labels (light touch — keep medical accuracy)
+  const friendly = (it) => {
+    let label = it.label.replace(/<\/?b>/g, '');
+    // strip any HTML tags
+    label = label.replace(/<[^>]+>/g, '');
+    return label;
+  };
+
+  // Trimester groups
+  const trimesters = [
+    {name:'טרימסטר ראשון (שבועות 0-13)', range:[0,13], color:'#FCE7F3', accent:'#DB2777'},
+    {name:'טרימסטר שני (שבועות 14-27)', range:[14,27], color:'#DBEAFE', accent:'#2563EB'},
+    {name:'טרימסטר שלישי (שבועות 28-42)', range:[28,42], color:'#DCFCE7', accent:'#16A34A'}
+  ];
+
+  let bodyHtml = '';
+  for(const tri of trimesters){
+    bodyHtml += `<section class="tri-section" style="margin-top:18px;page-break-inside:avoid">
+      <h2 style="margin:0 0 8px 0;padding:8px 14px;background:${tri.color};color:${tri.accent};border-radius:8px;font-size:17px;font-weight:700">${tri.name}</h2>
+      <table style="width:100%;border-collapse:collapse;font-size:13.5px;line-height:1.5">
+        <thead>
+          <tr style="background:#f8fafc;color:#475569;font-size:11.5px;font-weight:600">
+            <th style="padding:8px 6px;border-bottom:2px solid ${tri.accent};text-align:right;width:60px">שבוע</th>
+            <th style="padding:8px 6px;border-bottom:2px solid ${tri.accent};text-align:right;width:110px">תאריך משוער</th>
+            <th style="padding:8px 6px;border-bottom:2px solid ${tri.accent};text-align:right;width:80px">סוג</th>
+            <th style="padding:8px 6px;border-bottom:2px solid ${tri.accent};text-align:right">מה צריך לעשות</th>
+          </tr>
+        </thead>
+        <tbody>`;
+    for(let w=tri.range[0]; w<=tri.range[1]; w++){
+      const items = weekItems[w] || [];
+      if(items.length === 0) continue;
+      const weekDate = addDays(lmp, w*7);
+      const isCurrent = (currentW === w);
+      const rowBg = isCurrent ? '#FFF7ED' : 'transparent';
+      const rowAccent = isCurrent ? '4px solid #F59E0B' : 'none';
+      for(let i=0; i<items.length; i++){
+        const it = items[i];
+        const groups = itemGroups(it);
+        const vis = catVisual(groups);
+        const showWeek = (i === 0);
+        const isRisk = it.source === 'risk';
+        bodyHtml += `<tr style="background:${rowBg};border-right:${rowAccent}">
+          <td style="padding:8px 6px;border-bottom:1px solid #e2e8f0;font-weight:700;color:#0f172a;font-variant-numeric:tabular-nums">
+            ${showWeek ? (isCurrent ? `<span style="color:#D97706">שבוע ${w} ★</span>` : `שבוע ${w}`) : ''}
+          </td>
+          <td style="padding:8px 6px;border-bottom:1px solid #e2e8f0;color:#475569;font-size:12.5px;font-variant-numeric:tabular-nums">
+            ${showWeek ? fmtDate(weekDate) : ''}
+          </td>
+          <td style="padding:8px 6px;border-bottom:1px solid #e2e8f0">
+            <span style="display:inline-flex;align-items:center;gap:5px;font-size:11.5px;color:${vis.color};font-weight:600">
+              <span>${vis.icon}</span>${vis.label}
+            </span>
+          </td>
+          <td style="padding:8px 6px;border-bottom:1px solid #e2e8f0">
+            <div style="font-weight:600;color:#0f172a">${friendly(it)}${isRisk ? ' <span style="font-size:10.5px;color:#D97706;font-weight:600">· מותאם אישית</span>' : ''}</div>
+            ${it.tests ? `<div style="color:#64748B;font-size:12px;margin-top:3px">${it.tests.replace(/<[^>]+>/g, '')}</div>` : ''}
+          </td>
+        </tr>`;
+      }
+    }
+    bodyHtml += `</tbody></table></section>`;
+  }
+
+  // Active risks chip row
+  const risksRow = activeRisks && activeRisks.length
+    ? `<div style="margin-top:10px;padding:10px 12px;background:#FFFBEB;border:1px solid #FCD34D;border-radius:8px">
+        <div style="font-size:12px;font-weight:700;color:#92400E;margin-bottom:6px">המעקב הוסב לפי המאפיינים שלך:</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px">
+          ${activeRisks.map(r => `<span style="font-size:11.5px;background:#FEF3C7;color:#92400E;padding:3px 9px;border-radius:999px;font-weight:600">${r}</span>`).join('')}
+        </div>
+      </div>`
+    : '';
+
+  // Legend
+  const legend = `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:14px;font-size:11.5px;color:#475569">
+    <span>🔵 ביקור רופא</span><span>🟢 אחות הריון</span><span>🟣 אולטרסאונד</span><span>🔷 מעבדה</span><span>🟡 גנטיקה</span><span style="color:#D97706">★ השבוע הנוכחי שלך</span>
+  </div>`;
+
+  const head = `<!DOCTYPE html><html dir="rtl" lang="he"><head>
+    <meta charset="UTF-8">
+    <title>תוכנית מעקב הריון אישית</title>
+    <style>
+      @page { size: A4; margin: 12mm; }
+      * { box-sizing: border-box; }
+      body { font-family: -apple-system, "Segoe UI", "Heebo", Arial, sans-serif; color: #0f172a; line-height: 1.55; margin: 0; padding: 18px; background: #fff; }
+      header { border-bottom: 3px solid #DB2777; padding-bottom: 10px; margin-bottom: 12px; }
+      header h1 { margin: 0 0 4px 0; font-size: 22px; color: #0f172a; }
+      header .sub { color: #64748B; font-size: 13px; }
+      .meta { margin-top: 10px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+      .meta .cell { background: #F8FAFC; padding: 8px 10px; border-radius: 8px; }
+      .meta .lab { font-size: 11px; color: #64748B; font-weight: 600 }
+      .meta .val { font-size: 14px; color: #0f172a; font-weight: 700; margin-top: 2px; }
+      footer { margin-top: 22px; padding-top: 12px; border-top: 1px dashed #cbd5e1; font-size: 11px; color: #64748B; }
+      .pcontrols { position: fixed; top: 8px; left: 8px; display: flex; gap: 6px; z-index: 10; }
+      .pcontrols button { background: #0f172a; color: #fff; border: 0; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+      @media print { .pcontrols { display: none; } }
+    </style>
+  </head><body>
+    <div class="pcontrols">
+      <button onclick="window.print()">🖨️ הדפס / שמור כ-PDF</button>
+      <button onclick="window.close()">סגור</button>
+    </div>
+    <header>
+      <h1>תוכנית מעקב ההריון שלך</h1>
+      <div class="sub">לוח אישי לפי וסת אחרונה — בנוי בהתאם להנחיות משרד הבריאות והאיגוד הישראלי למיילדות וגינקולוגיה</div>
+      <div class="meta">
+        <div class="cell"><div class="lab">שם</div><div class="val">_______________</div></div>
+        <div class="cell"><div class="lab">וסת אחרונה (LMP)</div><div class="val">${fmtDate(lmp)}</div></div>
+        <div class="cell"><div class="lab">תאריך לידה משוער</div><div class="val">${fmtDate(edd)}</div></div>
+        <div class="cell"><div class="lab">השבוע שלך כעת</div><div class="val">${currentW}+${currentD}</div></div>
+      </div>
+      ${risksRow}
+      ${legend}
+    </header>`;
+  const foot = `<footer>
+    <b>איך לקרוא:</b> כל שורה היא בדיקה או ביקור מומלץ. הצבע והאייקון מסמנים מי מבצע (רופא/אחות/מעבדה/אולטרסאונד/גנטיקה). השבוע הנוכחי שלך מסומן ב-★ ובכתום.<br>
+    <b>חשוב:</b> אין במסמך זה תחליף להוראות הרופא/ה המטפל/ת. סטיות מהלוח הזמנים אפשריות לפי שיקול קליני אישי.<br>
+    <span style="display:block;margin-top:6px;color:#94a3b8">נוצר ע"י המחשבון המיילדותי · v${(typeof APP_VERSION!=='undefined')?APP_VERSION:''}</span>
+  </footer></body></html>`;
+
+  const fullHtml = head + bodyHtml + foot;
+  const win = window.open('', '_blank');
+  if(!win){ alert('חסום פופ-אפ. אנא אפשר חלונות קופצים לאתר זה.'); return; }
+  win.document.open();
+  win.document.write(fullHtml);
+  win.document.close();
 }
 
 function _legacy_unused(){ // legacy unreachable code retained as no-op
