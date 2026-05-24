@@ -3318,16 +3318,36 @@
       </div>
     </div>
 
-    <!-- ═══ SOFT MARKERS — applied on top of any mode (paper #30 LR) ═══ -->
-    <div class="sec" style="margin-top:18px">סמנים רכים (סקירת מערכות) — מוסיף LR ע"פ נייר #30</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;margin-bottom:14px;font-size:12.5px">
-      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="nf" data-lr="17" onchange="calcDsRisk()"> <span><b>NF פתולוגי</b> (≥5 מ"מ T1 / ≥6 מ"מ T2) <i style="color:var(--red-text)">LR 17</i></span></label>
-      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="hb" data-lr="6" onchange="calcDsRisk()"> <span><b>מעי היפראקוגני</b> <i style="color:var(--amber-text)">LR 6</i></span></label>
-      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="sf" data-lr="2" onchange="calcDsRisk()"> <span><b>קיצור פמור</b> <i style="color:var(--amber-text)">LR 2</i></span></label>
-      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="eif" data-lr="1.5" onchange="calcDsRisk()"> <span><b>EIF</b> (שמאל בלבד) <i style="color:var(--amber-text)">LR 1.5</i></span></label>
-      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="cpc" data-lr="1" onchange="calcDsRisk()"> <span><b>Choroid Plexus Cyst</b> <i style="color:var(--green-text)">LR 1.0</i></span></label>
-      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="pyel" data-lr="1" onchange="calcDsRisk()"> <span><b>הרחבת אגן כליה</b> <i style="color:var(--green-text)">LR 1.0</i></span></label>
-      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="sua" data-lr="1" onchange="calcDsRisk()"> <span><b>SUA</b> (עורק טבורי בודד) <i style="color:var(--green-text)">LR 1.0</i></span></label>
+    <!-- ═══ SOFT MARKERS — per Israeli paper #30 (Jan 2026) ═══
+         RULE: each soft marker individually has LR=1 (no risk increase).
+         Only ≥2 soft markers together trigger indication for counseling + amnio.
+         EIF, CPC, pyelectasis, SUA are VARIANTS OF NORMAL — no clinical effect. -->
+
+    <div class="sec" style="margin-top:18px">סמנים רכים — נייר עמדה #30 (ינואר 2026)</div>
+    <div class="note" style="margin:6px 0 10px;background:var(--primary-bg);border-right-color:var(--primary);font-size:12px;color:var(--text2)">
+      <b>חישוב לפי נייר #30:</b> כל סמן רך בודד = <b>LR 1</b> (אינו משנה סיכון). <b>2+ סמנים רכים יחד = אינדיקציה לייעוץ גנטי + דיקור (בסל הבריאות).</b> סמן רך בודד + וריאנט אנטומי אחד או יותר — <b>אינו</b> מהווה אינדיקציה.
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;margin-bottom:14px;font-size:12.5px">
+      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="nf" data-lr="1" onchange="calcDsRisk()"> <span><b>NF פתולוגי</b><br><span style="font-size:11px;color:var(--text3)">14–18+6 ≥5 מ"מ · 19–24 ≥6 מ"מ (חוזר 13/2014)</span></span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="hb" data-lr="1" onchange="calcDsRisk()"> <span><b>מעי היפראקוגני</b><br><span style="font-size:11px;color:var(--text3)">18–24w · אקוגניות ≥ עצם</span></span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="sf" data-lr="1" onchange="calcDsRisk()"> <span><b>קיצור פמור</b><br><span style="font-size:11px;color:var(--text3)">13–23w · Hadlock &lt;2.5% (&gt;2 SD)</span></span></label>
+    </div>
+
+    <div class="sec" style="margin-top:14px">וריאנטים של המרונה — ללא משמעות קלינית</div>
+    <div class="note" style="margin:6px 0 10px;background:var(--green-bg);border-right-color:var(--green);font-size:12px;color:var(--text2)">
+      <b>לפי נייר #30:</b> וריאנטים של המרונה אינם מעלים סיכון לטריזומיה/הפרעה כרומוזומלית. אין חובה לאתר או לדווח. אם זוהו — ניתן לציין בחוות הדעת ש"אין משמעות קלינית, אין המלצה לייעוץ או בדיקה אבחנתית". <b>סימון כאן הוא לצורך תיעוד בלבד — אינו משפיע על החישוב.</b>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px;margin-bottom:14px;font-size:12px">
+      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="eif" onchange="calcDsRisk()"> <span>EIF (כולל ימני / מרובים)</span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="cpc" onchange="calcDsRisk()"> <span>Choroid Plexus Cyst</span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="pyel" onchange="calcDsRisk()"> <span>פיאלקטזיס קלה (מתחת לסף)</span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="sua" onchange="calcDsRisk()"> <span>SUA (עורק טבורי בודד)</span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="arsa" onchange="calcDsRisk()"> <span>ARSA</span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="pruv" onchange="calcDsRisk()"> <span>PRUV (Persistent right umbilical vein)</span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="muscvsd" onchange="calcDsRisk()"> <span>Muscular VSD</span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="lsvc" onchange="calcDsRisk()"> <span>Persistent LSVC</span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="mildtr" onchange="calcDsRisk()"> <span>אי ספיקה קלה של מסתם טריקוספידלי</span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="clinodactyly" onchange="calcDsRisk()"> <span>קלינודקטיליה / sandal gap / 11 צלעות</span></label>
     </div>
 
     <button class="btn btn-primary" onclick="calcDsRisk()">חשב סיכון</button>
@@ -6957,7 +6977,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.24';
+const APP_VERSION = '4.25';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -14501,19 +14521,23 @@ function calcDsRisk(){
     breakdown.push({label:'תוצאת סקר T2 / Quad', value:'1 ב-'+Math.round(t2), lr:lrT2});
   }
 
-  // ─── Apply soft markers (LR multipliers from paper #30) ───
+  // ─── Soft markers (Israeli paper #30, Jan 2026) ───
+  // Each soft marker individually has LR=1 (no risk increase).
+  // ≥2 soft markers together → indication for genetic counseling + amnio (handled below).
   const softChecked = Array.from(document.querySelectorAll('[data-ds-soft]:checked'));
-  let softLR = 1;
+  const softCount = softChecked.length;
   for(const cb of softChecked){
-    const lr = parseFloat(cb.dataset.lr) || 1;
-    softLR *= lr;
     const lbl = cb.parentElement.querySelector('span').firstElementChild?.textContent || cb.dataset.dsSoft;
-    breakdown.push({label:'סמן רך — '+lbl, value:`LR=${lr}`, lr, soft:true});
+    breakdown.push({label:'סמן רך — '+lbl, value:'LR 1 (יחיד) · נספר ל-≥2', lr:1, soft:true});
   }
-  if(softLR !== 1){
-    lrCombined *= softLR;
-    adjDenom = Math.round(baseDenom / lrCombined);
+  // Variants of normal — documentation only, no clinical effect (paper #30)
+  const variantsChecked = Array.from(document.querySelectorAll('[data-ds-variant]:checked'));
+  if(variantsChecked.length){
+    const names = variantsChecked.map(cb => cb.parentElement.querySelector('span').textContent.trim()).join(' · ');
+    breakdown.push({label:'וריאנטים של המרונה', value:names+' — ללא משמעות קלינית', lr:1, soft:true});
   }
+  // Soft markers don't change LR; we keep softLR=1 for display
+  let softLR = 1;
 
   // Hard floor / ceiling
   if(adjDenom < 2) adjDenom = 2;
@@ -14541,7 +14565,7 @@ function calcDsRisk(){
   let html = `<div class="result">
     <div class="result-label">סיכון מותאם — טריזומיה 21 · ${modeLabels[mode]}</div>
     <div class="big" style="color:${colorMap[cls]}">1 ב-${adjDenom}</div>
-    <div class="zscore">גיל ${age} · בסיס 1 ב-${baseDenom} · LR משולב ×${lrCombined.toFixed(2)}${softLR!==1?' (כולל סמנים רכים ×'+softLR.toFixed(2)+')':''}</div>
+    <div class="zscore">גיל ${age} · בסיס 1 ב-${baseDenom} · LR משולב ×${lrCombined.toFixed(2)}${softCount?' · '+softCount+' סמנים רכים סומנו (LR 1 לכל אחד)':''}</div>
     ${badge(cls, label)}`;
 
   // 1:380 cutoff explainer
@@ -14584,9 +14608,16 @@ function calcDsRisk(){
         <li class="crit"><b>ייעוץ גנטי</b> — הפניה</li>
         <li><b>אבחנתי — CVS (10–13w) או אמניוצנטזה (≥16w) + CMA</b> · <b>מימון בסל</b></li>
         <li><b>NIPT</b> — אפשרי כסקר משני אם המטופלת מסרבת לדיקור · רגישות T21 >98%</li>`;
+  } else if(softCount >= 2){
+    // Paper #30: ≥2 soft markers = indication regardless of risk number
+    html += `
+        <li class="crit"><b>אינדיקציה מנייר #30: ≥2 סמנים רכים</b> (${softCount} סומנו) — מהווה אינדיקציה ל<b>ייעוץ גנטי + בדיקת מי שפיר בסל הבריאות</b>, גם אם החישוב הסטטיסטי מתחת לסף 1:${DS_CUTOFF}.</li>
+        <li><b>NIPT</b> — אינו תחליף לדיקור באינדיקציה הזו (NIPT לא מאתר רוב ה-CNVs)</li>
+        <li>לתעד ייעוץ והחלטה בתיק</li>`;
   } else {
     html += `
         <li><b>אין אינדיקציה לדיקור אבחנתי</b> מהחישוב</li>
+        ${softCount === 1 ? '<li style="color:var(--text2)"><b>סמן רך בודד</b> — לפי נייר #30 אין אינדיקציה לייעוץ או דיקור (גם בנוכחות וריאנטים אנטומיים).</li>' : ''}
         <li><b>NIPT</b> — אפשרי לפי בקשת המטופלת (פרטי, לא בסל) · נייר #51 ממליץ כסקר ראשוני מוצדק לכולן</li>
         <li><b>סקירת מערכות 19–23w</b> — בכל הריון, ללא תלות בתוצאה</li>`;
   }
