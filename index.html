@@ -2231,7 +2231,7 @@
         <b>צרברום (TCD):</b> Snijders RJM, Nicolaides KH. <i>UOG</i> 1994;4:34–48<br>
         <b>חדר רוחבי (אטריום):</b> Cardoza JD, Goldstein RB, Filly RA. <i>Radiology</i> 1988;169:711–714 (cutoff 10 מ"מ) · ISUOG 2007<br>
         <b>Cisterna Magna:</b> Mahony BS et al. <i>Radiology</i> 1984;153:773–776 (תקין 3–10 מ"מ)<br>
-        <b>Corpus Callosum:</b> <b style="color:var(--primary-text,var(--primary))">עקומה ראשית:</b> Pashaj S, Merz E, Wellek S. <i>UOG</i> 2013;42:691–698 (n=623, 19–42w · 3D) · <b>עקומה משנית:</b> Achiron R, Achiron A. <i>UOG</i> 2001;18:343–348 (n=139, ישראלית) — ניתן לעבור ביניהן בבורר<br>
+        <b>Corpus Callosum:</b> <b style="color:var(--primary-text,var(--primary))">עקומה ראשית: Cignini P et al. <i>J Prenat Med</i> 2014 (n=2950, 19–37w, 2D-US) ⭐ מומלץ לפי הסקירה הסיסטמטית Corroenne et al. <i>UOG</i> 2023;62:175–184 (ציון איכות 95.7%)</b>. אלטרנטיבות בבורר: Pashaj 2013 (3D-US, 60.9%) · Achiron 2001 (ישראלית, 47.8%)<br>
         <b>Nuchal Fold (16–22w):</b> Benacerraf BR et al. <i>Radiology</i> 1985;157:803–806 (תקין &lt; 5 מ"מ עד 18w · &lt; 6 מ"מ 18–22w)<br>
         <b>Nasal Bone T1 (11–13+6):</b> Cicero S et al. <i>Lancet</i> 2001;358:1665–1667 (FMF)<br>
         <b>כליות (אורך):</b> Chitty LS, Altman DG. <i>BJOG</i> 2003;110:891<br>
@@ -2289,8 +2289,13 @@
       </div>
 
       <!-- Active source for selected measurement / curve -->
-      <div id="biom-active-src" class="note" style="margin:-2px 0 10px 0;padding:8px 12px;font-size:11.5px;background:var(--primary-bg);border-right:3px solid var(--primary);color:var(--text2);line-height:1.55">
+      <div id="biom-active-src" class="note" style="margin:-2px 0 6px 0;padding:8px 12px;font-size:11.5px;background:var(--primary-bg);border-right:3px solid var(--primary);color:var(--text2);line-height:1.55">
         <b style="color:var(--primary)">מקור הנתונים:</b> <span id="biom-active-src-text">—</span>
+      </div>
+
+      <!-- Measurement methodology note (e.g. how to measure CC) -->
+      <div id="biom-active-note" class="note" style="display:none;margin:-2px 0 10px 0;padding:8px 12px;font-size:11.5px;background:var(--surface2);border-right:3px solid var(--amber);color:var(--text2);line-height:1.55">
+        <b style="color:var(--amber-text,var(--amber))">טכניקת מדידה:</b> <span id="biom-active-note-text">—</span>
       </div>
 
       <button class="btn btn-primary" onclick="calcBiom()">חשב</button>
@@ -7052,7 +7057,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.29';
+const APP_VERSION = '4.30';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -12160,26 +12165,34 @@ const biomMeasurements = {
   },
   cc: {
     label: 'אורך Corpus Callosum', unit:'מ"מ', min:18, max:40,
-    // Default = Pashaj 2013 (modern, widely-cited reference)
-    median: (ga) => Math.max(10, -29.4 + 2.70*ga - 0.018*ga*ga),
-    sd: (ga) => 2.0 + 0.04*ga,
-    range: { min: 10, max: 55 },
-    src: 'Pashaj S, Merz E, Wellek S. UOG 2013;42:691–698 — "Biometry of the fetal corpus callosum by 3D ultrasound" (n=623, 19–42w · עקומה ראשית) · ניתן לעבור לעקומה ישראלית Achiron 2001 בבורר',
+    // DEFAULT = Cignini 2014 — highest-quality reference per Corroenne UOG 2023 systematic review
+    // (quality score 95.7%, n=2950, 2D-US, prospective)
+    median: (ga) => Math.max(8, -48.452 + 4.6058*ga - 0.05679*ga*ga),
+    sd: (ga) => Math.max(1.2, -2.6 + 0.19*ga),
+    range: { min: 8, max: 55 },
+    note: 'מדידה: midsagittal, transabdominal, מקצה ה-genu עד קצה ה-splenium בקו ישר (rostrocaudal). מבנה אנכואי בין שני קווים אקוגניים — sulcus של CC + cingulate gyrus מעל; cavum septi pellucidi + cavum vergae + lateral ventricles מתחת. [Corroenne UOG 2023]',
+    src: 'Cignini P et al. <i>J Prenat Med</i> 2014 (n=2950, 19–37w, 2D-US, prospective) — <b>עקומת ייחוס מומלצת לפי הסקירה הסיסטמטית Corroenne et al. <i>UOG</i> 2023;62:175–184</b> (ציון איכות 95.7% מתוך 12 מחקרים)',
     altCurves: {
+      cignini: {
+        label: 'Cignini 2014 ⭐',
+        median: (ga) => Math.max(8, -48.452 + 4.6058*ga - 0.05679*ga*ga),
+        sd: (ga) => Math.max(1.2, -2.6 + 0.19*ga),
+        src: 'Cignini P et al. <i>J Prenat Med</i> 2014 — n=2950, 19–37w, 2D-US, prospective · <b>מומלץ לפי Corroenne UOG 2023;62:175 — ציון איכות 95.7%</b> (הגבוה ביותר מ-12 מחקרים) · 2D עדיף על פני 3D לפי הסקירה'
+      },
       pashaj: {
         label: 'Pashaj 2013',
-        median: (ga) => Math.max(10, -29.4 + 2.70*ga - 0.018*ga*ga),
-        sd: (ga) => 2.0 + 0.04*ga,
-        src: 'Pashaj S, Merz E, Wellek S. UOG 2013;42:691–698 — "Biometry of the fetal corpus callosum by 3D ultrasound" (n=623, 19–42w, גישת 3D)'
+        median: (ga) => Math.max(8, -76.652 + 6.4731*ga - 0.08912*ga*ga),
+        sd: (ga) => 2.0 + 0.05*ga,
+        src: 'Pashaj S, Merz E, Wellek S. <i>UOG</i> 2013;42:691–698 — "Biometry of the fetal corpus callosum by 3D ultrasound" (n=466, 17–42w, 3D-US) · ציון איכות 60.9% (Corroenne 2023). העקומה מעט נמוכה משאר העקומות, לקראת קצה ההריון מתייצבת ~41 מ"מ'
       },
       achiron: {
-        label: 'Achiron 2001',
-        median: (ga) => Math.max(10, 0.0036*ga*ga + 1.36*ga - 13.6),
-        sd: (ga) => 2.0 + 0.04*ga,
-        src: 'Achiron R, Achiron A. UOG 2001;18:343–348 — "Development of the human fetal corpus callosum" (n=139, 18–39w · עקומה ישראלית מקורית)'
+        label: 'Achiron 2001 (IL)',
+        median: (ga) => Math.max(4, -66.419 + 5.5882*ga - 0.07022*ga*ga),
+        sd: (ga) => 1.5 + 0.08*ga,
+        src: 'Achiron R, Achiron A. <i>UOG</i> 2001;18:343–348 — "Development of the human fetal corpus callosum" (n=255, 16–37w, 2D-US, prospective · עקומה ישראלית מקורית) · ציון איכות 47.8% (Corroenne 2023) — נשמרת לתאימות אך לא מומלצת כעקומה ראשית'
       }
     },
-    defaultCurve: 'pashaj'
+    defaultCurve: 'cignini'
   },
   nf: {
     label: 'Nuchal Fold (קפל עורף)', unit:'מ"מ', min:16, max:22,
@@ -13539,7 +13552,7 @@ function setBiomCurve(k, curveKey){
   // Refresh source line
   const v = getActiveBiomVariant(k);
   const srcEl = document.getElementById('biom-active-src-text');
-  if (srcEl && v) srcEl.textContent = v.src;
+  if (srcEl && v) srcEl.innerHTML = v.src;
   // If results already shown, recalculate
   const res = document.getElementById('biom-res');
   if (res && res.innerHTML.trim()) calcBiom();
@@ -13585,7 +13598,19 @@ function selectBiomMeas(k){
   renderBiomCurveSelector(k);
   const v = getActiveBiomVariant(k);
   const srcEl = document.getElementById('biom-active-src-text');
-  if (srcEl && v) srcEl.textContent = v.src;
+  if (srcEl && v) srcEl.innerHTML = v.src;
+
+  // Methodology / technique note (e.g. how to measure CC)
+  const noteWrap = document.getElementById('biom-active-note');
+  const noteText = document.getElementById('biom-active-note-text');
+  if (noteWrap && noteText) {
+    if (m.note) {
+      noteText.innerHTML = m.note;
+      noteWrap.style.display = '';
+    } else {
+      noteWrap.style.display = 'none';
+    }
+  }
 
   document.getElementById('biom-input-area').scrollIntoView({block:'nearest', behavior:'smooth'});
 }
