@@ -3320,26 +3320,71 @@
 
     <!-- ═══ SOFT MARKERS — per Israeli paper #30 (Jan 2026) ═══
          RULE: each soft marker individually has LR=1 (no risk increase).
-         Only ≥2 soft markers together trigger indication for counseling + amnio.
-         EIF, CPC, pyelectasis, SUA are VARIANTS OF NORMAL — no clinical effect. -->
+         Only ≥2 soft markers together trigger indication for counseling + amnio. -->
 
-    <div class="sec" style="margin-top:18px">סמנים רכים — נייר עמדה #30 (ינואר 2026)</div>
-    <div class="note" style="margin:6px 0 10px;background:var(--primary-bg);border-right-color:var(--primary);font-size:12px;color:var(--text2)">
-      <b>חישוב לפי נייר #30:</b> כל סמן רך בודד = <b>LR 1</b> (אינו משנה סיכון). <b>2+ סמנים רכים יחד = אינדיקציה לייעוץ גנטי + דיקור (בסל הבריאות).</b> סמן רך בודד + וריאנט אנטומי אחד או יותר — <b>אינו</b> מהווה אינדיקציה.
+    <div class="sec" style="margin-top:18px">סמנים רכים ווריאנטים של הנורמה</div>
+
+    <div class="note" style="margin:6px 0 14px;background:var(--primary-bg);border-right-color:var(--primary);font-size:12.5px;color:var(--text2);line-height:1.7">
+      <b style="font-size:13.5px;color:var(--primary)">⚡ עיקרון מרכזי לפי <a href="https://cdn.mednet.co.il/2026/02/%D7%91%D7%91%D7%93%D7%99%D7%A7%D7%AA-%D7%90%D7%95%D7%9C%D7%98%D7%A8%D7%94-%D7%A1%D7%90%D7%95%D7%A0%D7%93-%D7%A2%D7%9C-%D7%A9%D7%9E%D7%A2-%D7%91%D7%94%D7%99%D7%A8%D7%99%D7%95%D7%9F-.pdf" target="_blank" rel="noopener" style="color:var(--primary);text-decoration:underline">נייר #30 (ינואר 2026)</a></b><br>
+      • לכל סמן רך כממצא יחיד — <b>LR = 1</b> · אינו מגדיל את הסיכון מעבר לסיכון הרקע<br>
+      • סמן רך בודד אינו אינדיקציה לייעוץ גנטי או דיקור<br>
+      • סמן רך בודד עם ווריאנט (אחד או יותר) של הנורמה — אינו מחייב ייעוץ גנטי / דיקור<br>
+      • <b>≥2 סמנים רכים = ייעוץ גנטי + דיקור במימון סל הבריאות</b><br>
+      • הימצאות סמנים רכים: <b>10–15% מההריונות</b> (ממצא שכיח!)<br>
+      • אבחנה של תסמונת דאון בעקבות סמן רך: רק <b>&lt;50%</b> מהמקרים מתגלים כך
     </div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;margin-bottom:14px;font-size:12.5px">
-      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="nf" data-lr="1" onchange="calcDsRisk()"> <span><b>NF פתולוגי</b><br><span style="font-size:11px;color:var(--text3)">14–18+6 ≥5 מ"מ · 19–24 ≥6 מ"מ (חוזר 13/2014)</span></span></label>
+
+    <!-- ─── Table 1-א' — historical LRs per MoH circular 13/2014 (informational reference) ─── -->
+    <div style="font-size:12.5px;font-weight:700;color:var(--text);margin:14px 0 4px">
+      טבלה 1-א' · סמנים רכים לפי
+      <a href="https://www.wikirefua.org.il/w/index.php?title=%D7%A1%D7%9E%D7%A0%D7%99%D7%9D_%D7%91%D7%90%D7%95%D7%9C%D7%98%D7%A8%D7%94_%D7%A1%D7%90%D7%95%D7%A0%D7%93_(%D7%A2%D7%9C_%D7%A9%D7%9E%D7%A2)_%D7%91%D7%98%D7%A8%D7%99%D7%9E%D7%A1%D7%98%D7%A8_%D7%94%D7%A9%D7%A0%D7%99_%D7%9C%D7%90%D7%99%D7%AA%D7%95%D7%A8_%D7%AA%D7%A1%D7%9E%D7%95%D7%A0%D7%AA_%D7%93%D7%90%D7%95%D7%9F_%D7%95%D7%AA%D7%A1%D7%9E%D7%95%D7%A0%D7%95%D7%AA_%D7%92%D7%A0%D7%98%D7%99%D7%95%D7%AA_%D7%90%D7%97%D7%A8%D7%95%D7%AA-%D7%97%D7%95%D7%96%D7%A8_%D7%9E%D7%A9%D7%A8%D7%93_%D7%94%D7%91%D7%A8%D7%99%D7%90%D7%95%D7%AA" target="_blank" rel="noopener" style="color:var(--primary)">חוזר משרד הבריאות 13/2014</a>
+      <span style="font-size:11px;font-weight:500;color:var(--text3)">— לצורך הפניה היסטורית</span>
+    </div>
+    <table style="width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:6px;border:1px solid var(--border);border-radius:8px;overflow:hidden">
+      <thead>
+        <tr style="background:var(--surface2);color:var(--text2);font-size:11.5px">
+          <th style="padding:8px 10px;text-align:right;border-bottom:1px solid var(--border)">סמן רך</th>
+          <th style="padding:8px 10px;text-align:right;border-bottom:1px solid var(--border)">קריטריון</th>
+          <th style="padding:8px 10px;text-align:center;border-bottom:1px solid var(--border);width:80px">LR (13/2014)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:7px 10px">NF פתולוגי (Nuchal fold)</td><td style="padding:7px 10px;color:var(--text3)">14–18+6 ≥5 מ"מ · 19–24 ≥6 מ"מ</td><td style="padding:7px 10px;text-align:center;font-weight:700;color:var(--red-text)">17</td></tr>
+        <tr><td style="padding:7px 10px">מעי היפראקוגני</td><td style="padding:7px 10px;color:var(--text3)">18–24w · אקו ≥ עצם</td><td style="padding:7px 10px;text-align:center;font-weight:700;color:var(--amber-text)">6</td></tr>
+        <tr><td style="padding:7px 10px">קיצור פמור</td><td style="padding:7px 10px;color:var(--text3)">13–23w · Hadlock &lt;2.5% (&gt;2 SD)</td><td style="padding:7px 10px;text-align:center;font-weight:700;color:var(--amber-text)">2</td></tr>
+        <tr><td style="padding:7px 10px">מוקד אקוגני בלב (EIF)</td><td style="padding:7px 10px;color:var(--text3)">סקירת מערכות</td><td style="padding:7px 10px;text-align:center;font-weight:700;color:var(--text2)">1<span style="color:var(--red-text)">*</span></td></tr>
+        <tr><td style="padding:7px 10px">Choroid Plexus Cyst</td><td style="padding:7px 10px;color:var(--text3)">14–24w</td><td style="padding:7px 10px;text-align:center;font-weight:700;color:var(--green-text)">1.0</td></tr>
+        <tr><td style="padding:7px 10px">הרחבת אגן כליה קלה</td><td style="padding:7px 10px;color:var(--text3)">14–19+6 ≥4 מ"מ · 20–29+6 ≥6 מ"מ · ≥30 ≥7 מ"מ</td><td style="padding:7px 10px;text-align:center;font-weight:700;color:var(--green-text)">1.0</td></tr>
+        <tr><td style="padding:7px 10px">SUA (עורק טבורי בודד)</td><td style="padding:7px 10px;color:var(--text3)">סקירת מערכות</td><td style="padding:7px 10px;text-align:center;font-weight:700;color:var(--green-text)">1.0</td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:11px;color:var(--text3);margin:0 0 16px 0;line-height:1.5">
+      <span style="color:var(--red-text);font-weight:700">*</span> בחוזר 13/2014 נקבע LR = 1.5 ל-EIF (חדר שמאל). EIF בחדר ימני / מרובים — "סיכון מוגבר ללא LR מוגדר". בנייר עמדה #30 (ינואר 2026) — <b>כל סוגי EIF (ימין / שמאל / מרובים) הוגדרו סמן רך עם LR = 1</b>.
+    </div>
+
+    <!-- ─── Table 1-ב' — INTERACTIVE soft markers per paper #30 (Jan 2026) ─── -->
+    <div style="font-size:12.5px;font-weight:700;color:var(--text);margin:18px 0 6px">
+      טבלה 1-ב' · סמנים רכים לפי
+      <a href="https://cdn.mednet.co.il/2026/02/%D7%91%D7%91%D7%93%D7%99%D7%A7%D7%AA-%D7%90%D7%95%D7%9C%D7%98%D7%A8%D7%94-%D7%A1%D7%90%D7%95%D7%A0%D7%93-%D7%A2%D7%9C-%D7%A9%D7%9E%D7%A2-%D7%91%D7%94%D7%99%D7%A8%D7%99%D7%95%D7%9F-.pdf" target="_blank" rel="noopener" style="color:var(--primary)">נייר עמדה #30</a>
+      <span style="font-size:11px;font-weight:500;color:var(--text3)">— סמן כל ממצא שזוהה (כל אחד LR 1, ≥2 = אינדיקציה)</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px;margin-bottom:16px;font-size:12.5px">
+      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="nf" data-lr="1" onchange="calcDsRisk()"> <span><b>NF פתולוגי</b><br><span style="font-size:11px;color:var(--text3)">14–18+6 ≥5 מ"מ · 19–24 ≥6 מ"מ</span></span></label>
       <label class="ds-soft-check"><input type="checkbox" data-ds-soft="hb" data-lr="1" onchange="calcDsRisk()"> <span><b>מעי היפראקוגני</b><br><span style="font-size:11px;color:var(--text3)">18–24w · אקוגניות ≥ עצם</span></span></label>
       <label class="ds-soft-check"><input type="checkbox" data-ds-soft="sf" data-lr="1" onchange="calcDsRisk()"> <span><b>קיצור פמור</b><br><span style="font-size:11px;color:var(--text3)">13–23w · Hadlock &lt;2.5% (&gt;2 SD)</span></span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-soft="eif" data-lr="1" onchange="calcDsRisk()"> <span><b>מוקד אקוגני בלב (EIF)</b><br><span style="font-size:11px;color:var(--text3)">ימין / שמאל / מרובים — כולם LR 1</span></span></label>
     </div>
 
-    <div class="sec" style="margin-top:14px">וריאנטים של המרונה — ללא משמעות קלינית</div>
-    <div class="note" style="margin:6px 0 10px;background:var(--green-bg);border-right-color:var(--green);font-size:12px;color:var(--text2)">
-      <b>לפי נייר #30:</b> וריאנטים של המרונה אינם מעלים סיכון לטריזומיה/הפרעה כרומוזומלית. אין חובה לאתר או לדווח. אם זוהו — ניתן לציין בחוות הדעת ש"אין משמעות קלינית, אין המלצה לייעוץ או בדיקה אבחנתית". <b>סימון כאן הוא לצורך תיעוד בלבד — אינו משפיע על החישוב.</b>
+    <!-- ─── Table 2 — variants of normal (documentation only, no risk effect) ─── -->
+    <div style="font-size:12.5px;font-weight:700;color:var(--text);margin:18px 0 6px">
+      טבלה 2 · וריאנטים של הנורמה
+      <span style="font-size:11px;font-weight:500;color:var(--text3)">— תיעוד בלבד, אינם משפיעים על החישוב</span>
+    </div>
+    <div class="note" style="margin:0 0 8px;background:var(--green-bg);border-right-color:var(--green);font-size:11.5px;color:var(--text2);padding:8px 10px">
+      <b>לפי נייר #30:</b> וריאנטים אנטומיים אינם מעלים סיכון לטריזומיה / הפרעה כרומוזומלית. אין חובה לאתר או לדווח. אם זוהו — ניתן לציין בחוות הדעת ש"אין משמעות קלינית, אין המלצה לייעוץ או בדיקה אבחנתית".
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px;margin-bottom:14px;font-size:12px">
-      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="eif" onchange="calcDsRisk()"> <span>EIF (כולל ימני / מרובים)</span></label>
-      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="cpc" onchange="calcDsRisk()"> <span>Choroid Plexus Cyst</span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="cpc" onchange="calcDsRisk()"> <span>Choroid Plexus Cyst (CPC)</span></label>
       <label class="ds-soft-check"><input type="checkbox" data-ds-variant="pyel" onchange="calcDsRisk()"> <span>פיאלקטזיס קלה (מתחת לסף)</span></label>
       <label class="ds-soft-check"><input type="checkbox" data-ds-variant="sua" onchange="calcDsRisk()"> <span>SUA (עורק טבורי בודד)</span></label>
       <label class="ds-soft-check"><input type="checkbox" data-ds-variant="arsa" onchange="calcDsRisk()"> <span>ARSA</span></label>
@@ -3348,6 +3393,11 @@
       <label class="ds-soft-check"><input type="checkbox" data-ds-variant="lsvc" onchange="calcDsRisk()"> <span>Persistent LSVC</span></label>
       <label class="ds-soft-check"><input type="checkbox" data-ds-variant="mildtr" onchange="calcDsRisk()"> <span>אי ספיקה קלה של מסתם טריקוספידלי</span></label>
       <label class="ds-soft-check"><input type="checkbox" data-ds-variant="clinodactyly" onchange="calcDsRisk()"> <span>קלינודקטיליה / sandal gap / 11 צלעות</span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="brachy" onchange="calcDsRisk()"> <span>ברכיצפליה</span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="doublepvr" onchange="calcDsRisk()"> <span>מערכת מאספת כפולה</span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="cavum" onchange="calcDsRisk()"> <span>Cavum veli interpositi</span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="placentalcyst" onchange="calcDsRisk()"> <span>ציסטות בשליה</span></label>
+      <label class="ds-soft-check"><input type="checkbox" data-ds-variant="gallbladder" onchange="calcDsRisk()"> <span>כיס מרה — קטן/מספטי/גדול</span></label>
     </div>
 
     <button class="btn btn-primary" onclick="calcDsRisk()">חשב סיכון</button>
@@ -6977,7 +7027,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.25';
+const APP_VERSION = '4.28';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -8034,32 +8084,34 @@ const ISRAELI_PAPERS = [
      'משמע: <b>סמן רך בודד אינו אינדיקציה לייעוץ גנטי או דיקור</b>',
      '<b>הימצאות סמנים רכים: 10-15% מההריונות</b> (ממצא שכיח!)',
      '<b>━━━ קבוצה 1: סמנים רכים (Soft Markers) ━━━</b>',
-     '<b>הגדרה:</b> ממצא אנטומי שאינו מום, יתכן ומעלה סיכון לאנייפלואידיה',
-     '<b>רשימה (10 פריטים):</b>',
+     '<b>הגדרה:</b> ממצא אנטומי שאינו מום, יתכן ומעלה סיכון לאנייפלואידיה. <b>כל אחד כממצא יחיד = LR 1</b>. ≥2 = ייעוץ + דיקור בסל',
+     '<b>רשימה (9 פריטים, לפי טבלה בנייר #30):</b>',
      '• Persistent Left Superior Vena Cava (PLSVC)',
      '• ציסטות צוואריות ≥4 מ"מ',
      '• Persistent Right Umbilical Vein (PRUV)',
      '• Aberrant Right Subclavian Artery (ARSA)',
      '• Muscular Ventricular Septal Defect',
-     '• מוקד אקוגני (כולל בחדר ימין/מרובים)',
+     '• מוקד אקוגני בלב (EIF) — כולל ימין / שמאל / מרובים',
      '• Single Umbilical Artery (SUA)',
-     '• Mild Pyelectasis (4 מ"מ ב-14-19+6 / 6 מ"מ ב-20-29+6)',
+     '• Mild Pyelectasis (במסגרת הקריטריונים)',
      '• Choroid Plexus Cyst (CPC)',
-     '• היפופלסיה של עצם אף',
      '<b>━━━ קבוצה 2: וריאנטים של הנורמה (אין משמעות קלינית) ━━━</b>',
      '<b>אין חובה לאתר/לדווח — אם דווח, יש לציין שאין משמעות קלינית:</b>',
-     '• חוסר איחוי אמניון/כוריון · קלינודקטיליה · 11 צלעות · Sandal gap',
-     '• Wide iliac angle · ברכיצפליה · אי-ספיקה קלה מסתם טריקוספידלי',
-     '• מערכת מאספת כפולה · אזניים/עיניים בולטות · Cavum veli interpositi',
+     '• חוסר איחוי אמניון וכוריון · קלינודקטיליה · 11 צלעות',
+     '• Sandal gap · Wide iliac angle · ברכיצפליה',
+     '• אי-ספיקה קלה של מסתם טריקוספידלי · מערכת מאספת כפולה',
+     '• אזניים / עיניים בולטות · Cavum veli interpositi',
      '• ציסטות בשליה · Small/septated/large gallbladder · Prenasal thickness',
-     '• אוליגוהידרמניוס (AFI<5) אחרי שב׳ 28 · אסימטריית חדרים <10 מ"מ',
-     '<b>━━━ קבוצה 3: מומים אנטומיים (התוויה לדיקור) ━━━</b>',
+     '• מיעוט מי שפיר (AFI &lt;5 ס"מ) לאחר שבוע 28',
+     '• אסימטריה של חדרי מוח (כששניהם &lt;10 מ"מ)',
+     '<b>━━━ קבוצה 3: מומים אנטומיים (התוויה לייעוץ גנטי + דיקור בסל) ━━━</b>',
+     '<b>כל אחד כשלעצמו = אינדיקציה. הסיווג בנייר #30 מעלה את NF/HB/SF מ"סמן רך" למום אנטומי.</b>',
      '• <b>אגנזיס Ductus Venosus</b>',
      '• <b>Perimembranous Ventricular Septal Defect</b>',
      '• <b>אגנזיס עצם אף</b>',
-     '• <b>Nuchal Fold (NF):</b> ≥5 מ"מ (14-18+6) או ≥6 מ"מ (19-24)',
-     '• <b>מעי היפר-אקוגני בדרגת עצם</b> (18-24w)',
-     '• <b>קיצור עצם פמור:</b> <2 SD מתחת לממוצע (אחוזון 2.5 לפי Hadlock, 13-23w)',
+     '• <b>NF — Nuchal Fold:</b> 14–18+6 ≥5 מ"מ · 19–24 ≥6 מ"מ',
+     '• <b>מעי היפראקוגני בדרגת עצם</b> (18–24w)',
+     '• <b>קיצור עצם ארוכה (פמור)</b> בסקירת מערכות 13–23w · Hadlock &lt;2.5%',
      '<b>━━━ אלגוריתם החלטות ━━━</b>',
      '🟢 <b>חשד</b> לממצא חריג — אין אינדיקציה לייעוץ',
      '🟢 <b>סמן רך בודד</b> — אין אינדיקציה',
@@ -12491,8 +12543,14 @@ function showSoftMarkersInfo(){
     <div style="grid-column:1/-1;background:var(--surface);border-radius:12px;padding:14px;font-size:13px;line-height:1.6">
       <!-- Header -->
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
-        <span class="rec-tag" style="background:var(--primary-bg);color:var(--primary);font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700">נייר עמדה #30 — ינואר 2026</span>
-        <span class="rec-tag" style="background:var(--amber-bg);color:var(--amber-text);font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700">חוזר משרד הבריאות 13/2014</span>
+        <a href="https://cdn.mednet.co.il/2026/02/%D7%91%D7%91%D7%93%D7%99%D7%A7%D7%AA-%D7%90%D7%95%D7%9C%D7%98%D7%A8%D7%94-%D7%A1%D7%90%D7%95%D7%A0%D7%93-%D7%A2%D7%9C-%D7%A9%D7%9E%D7%A2-%D7%91%D7%94%D7%99%D7%A8%D7%99%D7%95%D7%9F-.pdf" target="_blank" rel="noopener" class="rec-tag" style="background:var(--primary-bg);color:var(--primary);font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:4px">
+          נייר עמדה #30 — ינואר 2026
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2H2v8h8V7M7 2h3v3M5 7l5-5"/></svg>
+        </a>
+        <a href="https://www.wikirefua.org.il/w/index.php?title=%D7%A1%D7%9E%D7%A0%D7%99%D7%9D_%D7%91%D7%90%D7%95%D7%9C%D7%98%D7%A8%D7%94_%D7%A1%D7%90%D7%95%D7%A0%D7%93_(%D7%A2%D7%9C_%D7%A9%D7%9E%D7%A2)_%D7%91%D7%98%D7%A8%D7%99%D7%9E%D7%A1%D7%98%D7%A8_%D7%94%D7%A9%D7%A0%D7%99_%D7%9C%D7%90%D7%99%D7%AA%D7%95%D7%A8_%D7%AA%D7%A1%D7%9E%D7%95%D7%A0%D7%AA_%D7%93%D7%90%D7%95%D7%9F_%D7%95%D7%AA%D7%A1%D7%9E%D7%95%D7%A0%D7%95%D7%AA_%D7%92%D7%A0%D7%98%D7%99%D7%95%D7%AA_%D7%90%D7%97%D7%A8%D7%95%D7%AA-%D7%97%D7%95%D7%96%D7%A8_%D7%9E%D7%A9%D7%A8%D7%93_%D7%94%D7%91%D7%A8%D7%99%D7%90%D7%95%D7%AA" target="_blank" rel="noopener" class="rec-tag" style="background:var(--amber-bg);color:var(--amber-text);font-size:11px;padding:4px 10px;border-radius:999px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:4px">
+          חוזר משרד הבריאות 13/2014
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2H2v8h8V7M7 2h3v3M5 7l5-5"/></svg>
+        </a>
       </div>
 
       <!-- Key principle alert -->
@@ -12518,12 +12576,12 @@ function showSoftMarkersInfo(){
         </div>
       </div>
 
-      <!-- TABLE 1: Soft Markers with LR — wide single-column -->
+      <!-- TABLE 1-א': Historical LRs per MoH circular 13/2014 -->
       <details style="margin-bottom:14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
         <summary style="cursor:pointer;padding:12px 14px;font-weight:700;color:var(--text);font-size:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:var(--amber-bg)">
           <span style="display:flex;align-items:center;gap:8px">
-            <span style="background:var(--amber);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700">טבלה 1</span>
-            🟡 סמנים רכים — LR + המלצות (חוזר 13/2014) · 7 ממצאים
+            <span style="background:var(--amber);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700">טבלה 1-א'</span>
+            🟡 סמנים רכים לפי חוזר משרד הבריאות 13/2014 — LR + המלצות (7 ממצאים)
           </span>
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s"><path d="M3 5l4 4 4-4"/></svg>
         </summary>
@@ -12559,11 +12617,10 @@ function showSoftMarkersInfo(){
               <tr style="background:var(--surface2)">
                 <td style="padding:8px;border-bottom:1px solid var(--border);font-weight:600"><b>מוקד אקוגני בלב (EIF)</b><br><span style="font-size:11px;color:var(--text3)">Echogenic Intracardiac Focus</span></td>
                 <td style="padding:8px;border-bottom:1px solid var(--border)"><b>שמאל (88%):</b> שכיח<br><b>ימין (7%):</b> פחות שכיח<br><b>מרובה (5%):</b> כל החדרים</td>
-                <td style="padding:8px;border-bottom:1px solid var(--border);text-align:center;background:var(--amber-bg);color:var(--amber-text);font-weight:700;font-size:14px">1.5*</td>
+                <td style="padding:8px;border-bottom:1px solid var(--border);text-align:center;background:var(--green-bg);color:var(--text2);font-weight:700;font-size:14px">1<span style="color:var(--red-text)">*</span></td>
                 <td style="padding:8px;border-bottom:1px solid var(--border)">
-                  <b>שמאל בלבד:</b> חישוב משוקלל · אם >1:380 → גנטיקה<br>
-                  <b>ימין / מרובה:</b> ייעוץ גנטי תמיד<br>
-                  *LR=1.5 לשמאל בלבד; ימין/מרובה — מוגבר אך לא ניתן לקבוע
+                  עודכן בנייר #30 ל-LR=1 לכל סוגי EIF.<br>
+                  <span style="color:var(--red-text);font-weight:700">*</span> בחוזר 13/2014: שמאל=LR 1.5; ימין/מרובה — סיכון מוגבר ללא LR מוגדר.
                 </td>
               </tr>
               <tr>
@@ -12598,12 +12655,48 @@ function showSoftMarkersInfo(){
         </div>
       </details>
 
+      <!-- TABLE 1-ב': Soft markers per Israeli paper #30 (Jan 2026) — all LR=1 -->
+      <details style="margin-bottom:14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
+        <summary style="cursor:pointer;padding:12px 14px;font-weight:700;color:var(--text);font-size:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:var(--primary-bg)">
+          <span style="display:flex;align-items:center;gap:8px">
+            <span style="background:var(--primary);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700">טבלה 1-ב'</span>
+            🔵 סמנים רכים לפי נייר עמדה #30 (ינואר 2026) — כל אחד LR=1 (9 ממצאים)
+          </span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s"><path d="M3 5l4 4 4-4"/></svg>
+        </summary>
+        <div style="padding:10px;overflow-x:auto">
+          <div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-bottom:10px;font-size:12.5px">
+            <b>כלל אצבע נייר #30:</b> כל אחד מהסמנים הרכים כממצא יחיד = LR 1 (אינו משנה סיכון). <b>≥2 סמנים רכים = ייעוץ גנטי + דיקור בסל הבריאות.</b><br>
+            <b style="color:var(--red-text)">שים לב:</b> NF, מעי היפראקוגני וקיצור פמור מסווגים בנייר #30 כ<b>מומים אנטומיים</b> (טבלה 3) — לא כסמנים רכים. כל אחד מהם בנפרד = אינדיקציה לדיקור.
+          </div>
+          <table style="width:100%;border-collapse:collapse;font-size:12px;background:var(--surface);table-layout:fixed">
+            <thead style="background:var(--surface2)">
+              <tr style="text-align:right">
+                <th style="padding:8px;border-bottom:1px solid var(--border);font-weight:700;color:var(--text2)">ממצא</th>
+                <th style="padding:8px;border-bottom:1px solid var(--border);font-weight:700;color:var(--text2);text-align:center;width:70px">LR</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--border);font-weight:600">Persistent Left Superior Vena Cava (PLSVC)</td><td style="padding:8px;border-bottom:1px solid var(--border);text-align:center;background:var(--green-bg);color:var(--green-text);font-weight:700;font-size:14px">1</td></tr>
+              <tr style="background:var(--surface2)"><td style="padding:8px;border-bottom:1px solid var(--border);font-weight:600">ציסטות צוואריות ≥4 מ"מ</td><td style="padding:8px;border-bottom:1px solid var(--border);text-align:center;background:var(--green-bg);color:var(--green-text);font-weight:700;font-size:14px">1</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--border);font-weight:600">Persistent Right Umbilical Vein (PRUV)</td><td style="padding:8px;border-bottom:1px solid var(--border);text-align:center;background:var(--green-bg);color:var(--green-text);font-weight:700;font-size:14px">1</td></tr>
+              <tr style="background:var(--surface2)"><td style="padding:8px;border-bottom:1px solid var(--border);font-weight:600">Aberrant Right Subclavian Artery (ARSA)</td><td style="padding:8px;border-bottom:1px solid var(--border);text-align:center;background:var(--green-bg);color:var(--green-text);font-weight:700;font-size:14px">1</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--border);font-weight:600">Muscular VSD</td><td style="padding:8px;border-bottom:1px solid var(--border);text-align:center;background:var(--green-bg);color:var(--green-text);font-weight:700;font-size:14px">1</td></tr>
+              <tr style="background:var(--surface2)"><td style="padding:8px;border-bottom:1px solid var(--border);font-weight:600">מוקד אקוגני בלב (EIF) — כולל ימין/שמאל/מרובה</td><td style="padding:8px;border-bottom:1px solid var(--border);text-align:center;background:var(--green-bg);color:var(--green-text);font-weight:700;font-size:14px">1</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--border);font-weight:600">Single Umbilical Artery (SUA)</td><td style="padding:8px;border-bottom:1px solid var(--border);text-align:center;background:var(--green-bg);color:var(--green-text);font-weight:700;font-size:14px">1</td></tr>
+              <tr style="background:var(--surface2)"><td style="padding:8px;border-bottom:1px solid var(--border);font-weight:600">Mild Pyelectasis (במסגרת הקריטריונים)</td><td style="padding:8px;border-bottom:1px solid var(--border);text-align:center;background:var(--green-bg);color:var(--green-text);font-weight:700;font-size:14px">1</td></tr>
+              <tr><td style="padding:8px;font-weight:600">Choroid Plexus Cyst (CPC)</td><td style="padding:8px;text-align:center;background:var(--green-bg);color:var(--green-text);font-weight:700;font-size:14px">1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
       <!-- TABLE 2: Variants of normal — 2-column grid -->
       <details style="margin-bottom:14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden">
         <summary style="cursor:pointer;padding:12px 14px;font-weight:700;color:var(--text);font-size:14px;display:flex;align-items:center;justify-content:space-between;gap:8px;list-style:none;background:var(--green-bg)">
           <span style="display:flex;align-items:center;gap:8px">
             <span style="background:var(--green);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700">טבלה 2</span>
-            🟢 וריאנטים של הנורמה (ללא משמעות קלינית) · 20 פריטים
+            🟢 וריאנטים של הנורמה לפי נייר #30 — ללא משמעות קלינית (15 פריטים)
           </span>
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.2s"><path d="M3 5l4 4 4-4"/></svg>
         </summary>
@@ -12612,26 +12705,21 @@ function showSoftMarkersInfo(){
             <b>אין חובה לאתר או לדווח</b> · אם אותר — לציין בדוח שאין משמעות קלינית ואין צורך בבירור גנטי
           </div>
           <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:8px;font-size:12px">
-          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">Persistent Left SVC (PLSVC)</div>
-          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">PRUV (Right Umbilical Vein)</div>
-          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">ARSA (Aberrant R. Subclavian)</div>
-          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">Muscular VSD</div>
-          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">היפופלסיה של עצם אף</div>
-          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">חוסר איחוי אמניון/כוריון</div>
+          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">חוסר איחוי אמניון וכוריון</div>
           <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">קלינודקטיליה</div>
           <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">11 צלעות</div>
           <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">Sandal gap</div>
           <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">Wide iliac angle</div>
-          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">ברכיצפליה (CI תקין)</div>
-          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">אי-ספיקה קלה טריקוספיד</div>
+          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">ברכיצפליה</div>
+          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">אי ספיקה קלה של מסתם טריקוספידלי</div>
           <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">מערכת מאספת כפולה</div>
-          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">אזניים/עיניים בולטות</div>
+          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">אזניים / עיניים בולטות</div>
           <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">Cavum veli interpositi</div>
           <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">ציסטות בשליה</div>
-          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">Small/septated gallbladder</div>
+          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">Small/septated/large gallbladder</div>
           <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">Prenasal thickness</div>
-          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">אוליגו (AFI<5) >28w</div>
-          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">אסימטריית חדרים <10mm</div>
+          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">מיעוט מי שפיר (AFI &lt;5 ס"מ) &gt;28w</div>
+          <div style="background:var(--surface);padding:6px 10px;border-radius:6px;border:1px solid var(--border)">אסימטריית חדרי מוח (שניהם &lt;10 מ"מ)</div>
         </div>
         </div>
       </details>
@@ -12653,12 +12741,12 @@ function showSoftMarkersInfo(){
             <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">אגנזיס Ductus Venosus</div>
             <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">Perimembranous VSD</div>
             <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">אגנזיס עצם אף</div>
-            <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">NF פתולוגי (≥5/6 מ"מ)</div>
-            <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">מעי היפראקוגני בדרגת עצם</div>
-            <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">קיצור פמור משמעותי</div>
+            <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">NF — Nuchal Fold<br><span style="font-size:10.5px;font-weight:500;color:var(--text3)">14–18+6 ≥5 מ"מ · 19–24 ≥6 מ"מ</span></div>
+            <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">מעי היפראקוגני בדרגת עצם<br><span style="font-size:10.5px;font-weight:500;color:var(--text3)">18–24w · אקו ≥ עצם</span></div>
+            <div style="background:var(--surface);padding:8px 10px;border-radius:6px;border:1px solid var(--red);font-weight:600">קיצור עצם פמור<br><span style="font-size:10.5px;font-weight:500;color:var(--text3)">13–23w · Hadlock &lt;2.5% (&gt;2 SD)</span></div>
           </div>
-          <div style="font-size:11.5px;color:var(--text3);margin-top:6px">
-            הרשימה אינה ממצה — קיימים מומים נוספים שמחייבים ייעוץ
+          <div style="font-size:11.5px;color:var(--text3);margin-top:8px;padding:6px 10px;background:var(--amber-bg);border-right:3px solid var(--amber);border-radius:6px">
+            <b style="color:var(--amber-text)">חידוש נייר #30:</b> NF / מעי היפראקוגני / קיצור פמור הועברו מקטגוריית "סמן רך" (חוזר 13/2014, עם LR) לקטגוריית "מום אנטומי". משמע: <b>כל אחד מהם בנפרד מהווה אינדיקציה לדיקור בסל</b> — לא רק כמכפיל סטטיסטי.
           </div>
         </div>
       </details>
