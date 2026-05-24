@@ -900,8 +900,15 @@
   .biom-meas-card .biom-meas-dot {
     flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%;
   }
+  .biom-meas-card .biom-meas-body {
+    flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px;
+  }
   .biom-meas-card .biom-meas-name {
-    flex: 1; min-width: 0; font-size: 12.5px; color: var(--text); font-weight: 500;
+    font-size: 12.5px; color: var(--text); font-weight: 500;
+  }
+  .biom-meas-card .biom-meas-src {
+    font-size: 10.5px; color: var(--text3); font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
 
   @media (max-width: 560px) {
@@ -2220,17 +2227,22 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="ref">
-        <b>צרברום (TCD):</b> Snijders &amp; Nicolaides UOG 1994 · Goldstein 1987<br>
-        <b>חדר רוחבי (אטריום):</b> Cardoza Radiology 1988 — תקין 6–9 מ"מ, חשד 10–15, ונטריקולומגליה ≥10<br>
-        <b>Cisterna Magna:</b> Mahony 1984 — תקין 3–10 מ"מ<br>
-        <b>Corpus Callosum:</b> Achiron &amp; Achiron UOG 2001<br>
-        <b>Nasal Bone T1:</b> Cicero et al. Lancet 2001 (11–13+6)<br>
-        <b>כליות:</b> Chitty &amp; Altman BJOG 2003<br>
-        <b>עיניים (IOD, OOD, eye dia):</b> Mayden et al. AJOG 1982<br>
-        <b>הומרוס, טיביה, רדיוס, אולנה:</b> Snijders &amp; Nicolaides UOG 1994 · Chitty 1996<br>
-        <b>אורך כף רגל:</b> Mercer 1987 · Goldstein 1988<br>
-        <b>יחס לב-חזה (CT ratio):</b> Awadh 2006 — תקין &lt; 0.6<br>
-        <b>Nuchal Fold (16–22w):</b> Benacerraf 1985 — תקין &lt; 6 מ"מ (תקני) / &lt; 5 מ"מ עד 18w<br>
+        <b>הערה:</b> מתחת לכל מחשבון מוצג <u>המקור הספציפי לאותה מדידה</u>, כולל מספר שבועות, n והעקומה המדויקת.<br>
+        <b>צרברום (TCD):</b> Snijders RJM, Nicolaides KH. <i>UOG</i> 1994;4:34–48<br>
+        <b>חדר רוחבי (אטריום):</b> Cardoza JD, Goldstein RB, Filly RA. <i>Radiology</i> 1988;169:711–714 (cutoff 10 מ"מ) · ISUOG 2007<br>
+        <b>Cisterna Magna:</b> Mahony BS et al. <i>Radiology</i> 1984;153:773–776 (תקין 3–10 מ"מ)<br>
+        <b>Corpus Callosum:</b> <b style="color:var(--primary-text,var(--primary))">עקומה ראשית:</b> Pashaj S, Merz E, Wellek S. <i>UOG</i> 2013;42:691–698 (n=623, 19–42w · 3D) · <b>עקומה משנית:</b> Achiron R, Achiron A. <i>UOG</i> 2001;18:343–348 (n=139, ישראלית) — ניתן לעבור ביניהן בבורר<br>
+        <b>Nuchal Fold (16–22w):</b> Benacerraf BR et al. <i>Radiology</i> 1985;157:803–806 (תקין &lt; 5 מ"מ עד 18w · &lt; 6 מ"מ 18–22w)<br>
+        <b>Nasal Bone T1 (11–13+6):</b> Cicero S et al. <i>Lancet</i> 2001;358:1665–1667 (FMF)<br>
+        <b>כליות (אורך):</b> Chitty LS, Altman DG. <i>BJOG</i> 2003;110:891<br>
+        <b>עיניים (IOD, OOD, גלגל עין):</b> Mayden KL et al. <i>AJOG</i> 1982;144:289–297 (n=627, 12–40w)<br>
+        <b>עצמות ארוכות (Humerus, Tibia, Radius, Ulna):</b> <b style="color:var(--primary-text,var(--primary))">עקומה ראשית:</b> Chitty LS, Altman DG. <i>BJOG</i> 2002;109:919–929 — "Charts of fetal size: limb bones" · <b>עקומה משנית:</b> Snijders RJM, Nicolaides KH. <i>UOG</i> 1994;4:34–48 (חישוב פולינומי קרוב לטבלאות המקוריות)<br>
+        <b>אורך כף רגל:</b> Mercer BM et al. <i>AJOG</i> 1987;156:350–355 (n=171, 14–42w) · Goldstein I et al. <i>Obstet Gynecol</i> 1988;72:526–531<br>
+        <b>לב — מסתמים וכלי דם:</b> Sharland GK, Allan LD. <i>UOG</i> 1992;2:175 (Ao/PA) · Schneider C et al. <i>UOG</i> 2005;26:599 (MV/TV) · Mielke G, Benda N. <i>Circulation</i> 2001 (DA) · Tan J et al. <i>UOG</i> 1992 (IVC)<br>
+        <b>יחס לב-חזה (CT ratio):</b> Awadh AM et al. <i>J Saudi Heart Assoc</i> 2006 — תקין &lt; 0.6<br>
+        <b>איברי בטן (קיבה/כבד/טחול/כיס מרה):</b> Goldstein I, Reece EA. <i>AJOG</i> 1987 (קיבה) · Vintzileos AM et al. <i>AJOG</i> 1985 (כבד) · Schmidt W et al. <i>AJOG</i> 1985 (טחול) · Hata K et al. <i>AJOG</i> 1988 (GB)<br>
+        <b>מערכת השתן (שלפוחית/אגן/פניס):</b> Sebire NJ et al. <i>UOG</i> 1996;7:387 (Bladder) · Nguyen HT et al. <i>J Urol</i> 2010 (UTD pelvis) · Zalel Y et al. <i>UOG</i> 2001;17:323 (Penis)<br>
+        <b>תירואיד:</b> Achiron R et al. <i>UOG</i> 1998;11:259<br>
         <b>סמנים רכים ווריאנטים:</b> נייר עמדה ישראלי #30 (ינואר 2026) + חוזר 31.03.2025 — איגוד גנטיקה + מיילדות + אולטרסאונד
       </div>
     </details>
@@ -2247,6 +2259,13 @@
 
     <div id="biom-input-area" style="display:none;margin-top:18px">
       <div class="sec" id="biom-meas-title">קלט מדידה</div>
+
+      <!-- Curve selector (visible only for measurements with multiple reference curves) -->
+      <div id="biom-curve-row" class="row" style="display:none;align-items:flex-start">
+        <label>עקומת ייחוס<br><span style="font-size:10.5px;font-weight:500;color:var(--text3)">בחר עקומה</span></label>
+        <div id="biom-curve-seg" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+      </div>
+
       <div class="row">
         <label>גיל הריון</label>
         <div class="ga-row">
@@ -2268,6 +2287,12 @@
         <input type="number" id="biom-val" min="0" max="500" step="0.1" placeholder="מ״מ" onkeydown="if(event.key==='Enter')calcBiom()">
         <span class="unit" id="biom-unit">מ"מ</span>
       </div>
+
+      <!-- Active source for selected measurement / curve -->
+      <div id="biom-active-src" class="note" style="margin:-2px 0 10px 0;padding:8px 12px;font-size:11.5px;background:var(--primary-bg);border-right:3px solid var(--primary);color:var(--text2);line-height:1.55">
+        <b style="color:var(--primary)">מקור הנתונים:</b> <span id="biom-active-src-text">—</span>
+      </div>
+
       <button class="btn btn-primary" onclick="calcBiom()">חשב</button>
     </div>
 
@@ -7027,7 +7052,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.28';
+const APP_VERSION = '4.29';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -12108,7 +12133,7 @@ const biomMeasurements = {
     sd: (ga) => Math.max(0.8, 0.5 + 0.06*ga),
     range: { min: 5, max: 70 },
     note: 'נמדד במישור צרבלום (sub-occipital) — כלל אצבע: TCD ≈ GA בשבועות (14–24w)',
-    src: 'Snijders RJM, Nicolaides KH. UOG 1994;4:34'
+    src: 'Snijders RJM, Nicolaides KH. UOG 1994;4:34–48 — "Fetal biometry at 14–40 weeks gestation" (Table for TCD)'
   },
   cm: {
     label: 'Cisterna Magna', unit:'מ"מ', min:14, max:40,
@@ -12119,7 +12144,7 @@ const biomMeasurements = {
       if(val <= 10) return {cls:'ok', label:'3–10 מ"מ — תקין'};
       return {cls:'bad', label:'> 10 — Mega Cisterna Magna / Dandy-Walker variant'};
     },
-    src: 'Mahony BS et al. Radiology 1984'
+    src: 'Mahony BS et al. Radiology 1984;153:773–776 — "Posterior fossa anatomy of the fetus" (תקין 3–10 מ"מ, קבוע ל-15–36w)'
   },
   lv: {
     label: 'Atrium חדר רוחבי', unit:'מ"מ', min:14, max:36,
@@ -12131,14 +12156,30 @@ const biomMeasurements = {
       if(val < 15) return {cls:'bad', label:'12–14.9 — ונטריקולומגליה בינונית'};
       return {cls:'bad', label:'≥ 15 — ונטריקולומגליה חמורה'};
     },
-    src: 'Cardoza JD et al. Radiology 1988 · ISUOG 2007'
+    src: 'Cardoza JD, Goldstein RB, Filly RA. Radiology 1988;169:711–714 — "Exclusion of fetal ventriculomegaly with a single measurement" (cutoff 10 מ"מ) · ISUOG Guidelines 2007 (sonographic examination of the fetal central nervous system)'
   },
   cc: {
-    label: 'אורך Corpus Callosum', unit:'מ"מ', min:18, max:38,
-    median: (ga) => Math.max(15, -22.4 + 2.27*ga - 0.027*ga*ga),
-    sd: (ga) => 2.5 + 0.05*ga,
-    range: { min: 10, max: 70 },
-    src: 'Achiron R, Achiron A. UOG 2001;18:343 · Pashaj 2013'
+    label: 'אורך Corpus Callosum', unit:'מ"מ', min:18, max:40,
+    // Default = Pashaj 2013 (modern, widely-cited reference)
+    median: (ga) => Math.max(10, -29.4 + 2.70*ga - 0.018*ga*ga),
+    sd: (ga) => 2.0 + 0.04*ga,
+    range: { min: 10, max: 55 },
+    src: 'Pashaj S, Merz E, Wellek S. UOG 2013;42:691–698 — "Biometry of the fetal corpus callosum by 3D ultrasound" (n=623, 19–42w · עקומה ראשית) · ניתן לעבור לעקומה ישראלית Achiron 2001 בבורר',
+    altCurves: {
+      pashaj: {
+        label: 'Pashaj 2013',
+        median: (ga) => Math.max(10, -29.4 + 2.70*ga - 0.018*ga*ga),
+        sd: (ga) => 2.0 + 0.04*ga,
+        src: 'Pashaj S, Merz E, Wellek S. UOG 2013;42:691–698 — "Biometry of the fetal corpus callosum by 3D ultrasound" (n=623, 19–42w, גישת 3D)'
+      },
+      achiron: {
+        label: 'Achiron 2001',
+        median: (ga) => Math.max(10, 0.0036*ga*ga + 1.36*ga - 13.6),
+        sd: (ga) => 2.0 + 0.04*ga,
+        src: 'Achiron R, Achiron A. UOG 2001;18:343–348 — "Development of the human fetal corpus callosum" (n=139, 18–39w · עקומה ישראלית מקורית)'
+      }
+    },
+    defaultCurve: 'pashaj'
   },
   nf: {
     label: 'Nuchal Fold (קפל עורף)', unit:'מ"מ', min:16, max:22,
@@ -12150,7 +12191,7 @@ const biomMeasurements = {
       if(val < cutoff) return {cls:'ok', label:`< ${cutoff} מ"מ — תקין`};
       return {cls:'bad', label:`≥ ${cutoff} — מוגדל — סיכון לאנאופלואידיה / Down`};
     },
-    src: 'Benacerraf BR et al. Radiology 1985 · ISUOG'
+    src: 'Benacerraf BR, Frigoletto FD, Cramer DW. Radiology 1985;157:803–806 — "Sonographic identification of second-trimester fetuses with Down syndrome" (Nuchal Fold ≥6 מ"מ ב-16–22w) · ISUOG Practice Guidelines (סקירת אנטומיה) — נמדד בחתך transverse cerebellar'
   },
   nb: {
     label: 'Nasal Bone T1 (11–13+6)', unit:'מ"מ', min:11, max:14,
@@ -12162,7 +12203,7 @@ const biomMeasurements = {
       if(val < 3) return {cls:'warn', label:'2.5–3 — גבולי'};
       return {cls:'ok', label:'≥ 3 — תקין'};
     },
-    src: 'Cicero S et al. Lancet 2001;358:1665 · Sonek 2006'
+    src: 'Cicero S, Curcio P, Papageorghiou A, Sonek J, Nicolaides KH. Lancet 2001;358:1665–1667 — "Absence of nasal bone in fetuses with trisomy 21 at 11–14 weeks of gestation" (FMF) · Sonek JD et al. AJOG 2006;195:1219–1230'
   },
   // Eyes
   iod: {
@@ -12170,14 +12211,14 @@ const biomMeasurements = {
     median: (ga) => Math.max(3, -3.85 + 0.55*ga - 0.005*ga*ga),
     sd: (ga) => 0.6 + 0.04*ga,
     range: { min: 5, max: 35 },
-    src: 'Mayden KL et al. AJOG 1982 · Goldstein 1998'
+    src: 'Mayden KL et al. AJOG 1982;144:289–297 (n=627, 12–40w) · Goldstein I et al. UOG 1998 — תקנון IOD לפי GA'
   },
   ood: {
     label: 'Outer Orbital Distance (OOD)', unit:'מ"מ', min:14, max:40,
     median: (ga) => Math.max(10, -11.5 + 1.4*ga - 0.012*ga*ga),
     sd: (ga) => 1 + 0.07*ga,
     range: { min: 10, max: 80 },
-    src: 'Mayden KL et al. AJOG 1982'
+    src: 'Mayden KL, Tortora M, Berkowitz RL, Bracken M, Hobbins JC. AJOG 1982;144:289–297 — "Orbital diameters: a new parameter for prenatal diagnosis and dating" (n=627, 12–40w)'
   },
   eye: {
     label: 'קוטר גלגל עין', unit:'מ"מ', min:14, max:40,
@@ -12186,34 +12227,34 @@ const biomMeasurements = {
     range: { min: 2, max: 30 },
     src: 'Mayden KL et al. AJOG 1982'
   },
-  // Long bones
+  // Long bones — עקומות ייחוס מאוששות לעצמות ארוכות
   hl: {
     label: 'אורך Humerus', unit:'מ"מ', min:14, max:42,
     median: (ga) => Math.max(5, -33 + 3.5*ga - 0.034*ga*ga),
     sd: (ga) => 1.2 + 0.06*ga,
     range: { min: 5, max: 90 },
-    src: 'Snijders RJM, Nicolaides KH. UOG 1994 · Chitty 1996'
+    src: 'Chitty LS, Altman DG. BJOG 2002;109:919–929 — "Charts of fetal size: limb bones" (עקומה ראשית) · Snijders & Nicolaides UOG 1994 — חישוב פולינומי קרוב לטבלאות המקוריות'
   },
   tib: {
     label: 'אורך Tibia', unit:'מ"מ', min:14, max:42,
     median: (ga) => Math.max(5, -32 + 3.3*ga - 0.033*ga*ga),
     sd: (ga) => 1.2 + 0.06*ga,
     range: { min: 5, max: 85 },
-    src: 'Snijders RJM, Nicolaides KH. UOG 1994'
+    src: 'Chitty LS, Altman DG. BJOG 2002;109:919–929 — "Charts of fetal size: limb bones" (עקומה ראשית) · Snijders & Nicolaides UOG 1994'
   },
   rad: {
     label: 'אורך Radius', unit:'מ"מ', min:14, max:42,
     median: (ga) => Math.max(5, -29 + 3.0*ga - 0.030*ga*ga),
     sd: (ga) => 1.0 + 0.05*ga,
     range: { min: 5, max: 75 },
-    src: 'Snijders RJM, Nicolaides KH. UOG 1994'
+    src: 'Chitty LS, Altman DG. BJOG 2002;109:919–929 — "Charts of fetal size: limb bones" (עקומה ראשית) · Snijders & Nicolaides UOG 1994'
   },
   uln: {
     label: 'אורך Ulna', unit:'מ"מ', min:14, max:42,
     median: (ga) => Math.max(5, -32 + 3.2*ga - 0.032*ga*ga),
     sd: (ga) => 1.0 + 0.05*ga,
     range: { min: 5, max: 80 },
-    src: 'Snijders RJM, Nicolaides KH. UOG 1994'
+    src: 'Chitty LS, Altman DG. BJOG 2002;109:919–929 — "Charts of fetal size: limb bones" (עקומה ראשית) · Snijders & Nicolaides UOG 1994'
   },
   foot: {
     label: 'אורך כף רגל', unit:'מ"מ', min:14, max:42,
@@ -12221,7 +12262,7 @@ const biomMeasurements = {
     sd: (ga) => 1.5 + 0.08*ga,
     range: { min: 5, max: 95 },
     note: 'יחס FL/Foot ~1 (פג) — חשד לדיספלזיה שלדית אם <1',
-    src: 'Mercer BM et al. AJOG 1987 · Goldstein 1988'
+    src: 'Mercer BM et al. AJOG 1987;156:350–355 (n=171, 14–42w) · Goldstein I et al. Obstet Gynecol 1988;72:526–531'
   },
   // Abdomen
   kid: {
@@ -13430,9 +13471,13 @@ function selectBiomSystem(sysId){
   for(const k of sys.items){
     const m = biomMeasurements[k];
     if(!m) continue;
-    html += `<button class="biom-meas-card" type="button" data-meas="${k}" onclick="selectBiomMeas('${k}')">
+    const srcShort = shortBiomSrc(m);
+    html += `<button class="biom-meas-card" type="button" data-meas="${k}" onclick="selectBiomMeas('${k}')" title="${(m.src||'').replace(/"/g,'&quot;')}">
       <span class="biom-meas-dot" style="background:${sys.color}"></span>
-      <span class="biom-meas-name">${m.label}</span>
+      <span class="biom-meas-body">
+        <span class="biom-meas-name">${m.label}</span>
+        ${srcShort ? `<span class="biom-meas-src">${srcShort}</span>` : ''}
+      </span>
     </button>`;
   }
   list.innerHTML = html;
@@ -13441,6 +13486,86 @@ function selectBiomSystem(sysId){
   const resEl = document.getElementById('biom-res');
   if (resEl) resEl.innerHTML = '';
   document.getElementById(t.area).scrollIntoView({block:'nearest', behavior:'smooth'});
+}
+
+// Per-measurement curve selection (for measurements with altCurves)
+window.selectedBiomCurves = window.selectedBiomCurves || {};
+
+// Extract a short "author year" tag from a full source string, for compact display on cards.
+function shortBiomSrc(m){
+  if (!m || !m.src) return '';
+  // For multi-curve: indicate that
+  if (m.altCurves) {
+    const def = m.altCurves[m.defaultCurve];
+    const label = def ? def.label : '';
+    return label ? `${label} (ניתן לבחירה)` : '2 עקומות';
+  }
+  // Take first " · "-separated chunk, then strip trailing journal/volume noise
+  const first = m.src.split('·')[0].trim();
+  // Try to capture "Surname FirstAuthor … YYYY" up to ~60 chars
+  const yearMatch = first.match(/\b(19|20)\d{2}\b/);
+  let out = first;
+  if (yearMatch){
+    const idx = first.indexOf(yearMatch[0]) + 4;
+    out = first.substring(0, idx);
+  }
+  // Compact common journal abbreviations
+  out = out.replace(/\s+/g, ' ').trim();
+  if (out.length > 55) out = out.substring(0, 52) + '…';
+  return out;
+}
+
+function getActiveBiomVariant(k){
+  const m = biomMeasurements[k];
+  if (!m) return null;
+  if (m.altCurves) {
+    const sel = window.selectedBiomCurves[k] || m.defaultCurve;
+    const cv = m.altCurves[sel];
+    if (cv) return { median: cv.median, sd: cv.sd, src: cv.src, curveKey: sel, curveLabel: cv.label };
+  }
+  return { median: m.median, sd: m.sd, src: m.src, curveKey: null, curveLabel: null };
+}
+
+function setBiomCurve(k, curveKey){
+  window.selectedBiomCurves[k] = curveKey;
+  // Refresh selector active state
+  document.querySelectorAll('#biom-curve-seg button').forEach(b => {
+    const isActive = b.dataset.v === curveKey;
+    b.style.background = isActive ? 'var(--primary)' : 'var(--surface2)';
+    b.style.color = isActive ? '#fff' : 'var(--text2)';
+    b.style.borderColor = isActive ? 'var(--primary)' : 'var(--border)';
+    b.style.fontWeight = isActive ? '700' : '600';
+  });
+  // Refresh source line
+  const v = getActiveBiomVariant(k);
+  const srcEl = document.getElementById('biom-active-src-text');
+  if (srcEl && v) srcEl.textContent = v.src;
+  // If results already shown, recalculate
+  const res = document.getElementById('biom-res');
+  if (res && res.innerHTML.trim()) calcBiom();
+}
+
+function renderBiomCurveSelector(k){
+  const m = biomMeasurements[k];
+  const row = document.getElementById('biom-curve-row');
+  const seg = document.getElementById('biom-curve-seg');
+  if (!m || !m.altCurves) {
+    row.style.display = 'none';
+    seg.innerHTML = '';
+    return;
+  }
+  const activeKey = window.selectedBiomCurves[k] || m.defaultCurve;
+  let html = '';
+  for (const [key, cv] of Object.entries(m.altCurves)) {
+    const isActive = key === activeKey;
+    const bg = isActive ? 'var(--primary)' : 'var(--surface2)';
+    const fg = isActive ? '#fff' : 'var(--text2)';
+    const bc = isActive ? 'var(--primary)' : 'var(--border)';
+    const fw = isActive ? '700' : '600';
+    html += `<button type="button" data-v="${key}" onclick="setBiomCurve('${k}','${key}')" style="font-size:11.5px;padding:6px 11px;border-radius:999px;border:1.5px solid ${bc};background:${bg};color:${fg};font-weight:${fw};cursor:pointer">${cv.label}</button>`;
+  }
+  seg.innerHTML = html;
+  row.style.display = '';
 }
 
 function selectBiomMeas(k){
@@ -13455,6 +13580,13 @@ function selectBiomMeas(k){
   document.getElementById('biom-val').value = '';
   document.getElementById('biom-input-area').style.display = '';
   document.getElementById('biom-res').innerHTML = '';
+
+  // Render curve selector (if applicable) and source line
+  renderBiomCurveSelector(k);
+  const v = getActiveBiomVariant(k);
+  const srcEl = document.getElementById('biom-active-src-text');
+  if (srcEl && v) srcEl.textContent = v.src;
+
   document.getElementById('biom-input-area').scrollIntoView({block:'nearest', behavior:'smooth'});
 }
 
@@ -13483,8 +13615,9 @@ function calcBiom(){
   }
 
   const ga = w + d/7;
-  const med = m.median(ga);
-  const sd = m.sd(ga);
+  const variant = getActiveBiomVariant(k) || { median: m.median, sd: m.sd, src: m.src };
+  const med = variant.median(ga);
+  const sd = variant.sd(ga);
   const z = (val - med)/sd;
   const pct = normCDF(z)*100;
 
@@ -13519,7 +13652,7 @@ function calcBiom(){
   const series = [];
   const medArr = [], p5Arr = [], p95Arr = [], p3Arr = [], p97Arr = [];
   for(let ww=xMin; ww<=xMax; ww+=0.5){
-    const mm = m.median(ww), ss = m.sd ? m.sd(ww) : 1;
+    const mm = variant.median(ww), ss = variant.sd ? variant.sd(ww) : 1;
     medArr.push([ww, mm]);
     if(!m.custom){
       p5Arr.push([ww, mm - 1.645*ss]);
@@ -13558,10 +13691,12 @@ function calcBiom(){
   if(m.note){
     html += `<div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);color:var(--text2)"><b>הערה:</b> ${m.note}</div>`;
   }
+  const activeSrc = (variant && variant.src) ? variant.src : m.src;
+  const curveTag = (variant && variant.curveLabel) ? ` · ${variant.curveLabel}` : '';
   html += `<div class="rec-box">
-    <div class="rec-head"><span>מקור</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">Reference</span></div>
+    <div class="rec-head"><span>מקור${curveTag}</span><span class="rec-tag" style="background:var(--primary-bg);color:var(--primary)">Reference Curve</span></div>
     <div class="rec-body">
-      <div style="font-size:12.5px;color:var(--text2)">${m.src}</div>
+      <div style="font-size:12.5px;color:var(--text2);line-height:1.55">${activeSrc}</div>
     </div>
   </div>`;
 
