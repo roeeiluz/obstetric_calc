@@ -567,6 +567,52 @@
   .btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
   .btn-primary:active { background: var(--primary-hover); }
 
+  /* ── Reset button (next to main "חשב" buttons) ────────────────────── */
+  .btn-reset {
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 36px; padding: 0 14px;
+    font-size: 13px; font-weight: 600;
+    border: 1px solid var(--border2); background: var(--surface2);
+    color: var(--text2); border-radius: var(--radius);
+    cursor: pointer; transition: all .15s;
+    font-family: inherit;
+  }
+  .btn-reset:hover { background: var(--red-bg); color: var(--red-text); border-color: var(--red); }
+  .btn-reset:active { transform: translateY(1px); }
+  .btn-reset svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+  /* Wrap calc + reset together so they sit on the same row */
+  .calc-row {
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 6px;
+  }
+  .calc-row .btn-primary { flex: 1; min-width: 180px; margin-top: 0; }
+
+  /* ── Floating "Back to top" button ────────────────────────────────── */
+  #back-to-top {
+    position: fixed; bottom: 22px; left: 22px; z-index: 250;
+    width: 46px; height: 46px; border-radius: 50%;
+    border: 1px solid var(--border2); background: var(--surface);
+    color: var(--primary); cursor: pointer;
+    box-shadow: var(--sh-lg);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity .25s, transform .25s, background .15s;
+    transform: translateY(8px);
+  }
+  #back-to-top.visible {
+    opacity: 1; pointer-events: auto; transform: translateY(0);
+  }
+  #back-to-top:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+  #back-to-top:active { transform: translateY(1px); }
+  #back-to-top svg { width: 22px; height: 22px; }
+  @media (max-width: 480px) {
+    #back-to-top { width: 42px; height: 42px; bottom: 16px; left: 16px; }
+    #back-to-top svg { width: 20px; height: 20px; }
+  }
+  @media print {
+    #back-to-top, .btn-reset { display: none !important; }
+  }
+
   /* ── Segmented controls ───────────────────────────────────────────── */
   .seg {
     display: inline-flex; gap: 2px; padding: 3px;
@@ -1813,6 +1859,10 @@
         <button class="tab" onclick="showTab('pph',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2.5s5 4 5 8.5a5 5 0 0 1-10 0c0-4.5 5-8.5 5-8.5Z"/><path d="M8 11.5l1.5 1.5L13 9.5"/></svg>
           <span>PPH</span>
+        </button>
+        <button class="tab" onclick="showTab('anaphy',this)" role="tab">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 2L4 12h5l-1 6 7-10h-5l1-6Z"/></svg>
+          <span>אנפילקסיס</span>
         </button>
         <button class="tab" onclick="showTab('sd',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="6" r="2.5"/><path d="M5 18c1-3 3-5 5-5s4 2 5 5"/><path d="M3 11l3 1M17 11l-3 1"/></svg>
@@ -5290,8 +5340,10 @@
         <b>ACOG Practice Bulletin 183 (2017, מאומץ 2023):</b> Postpartum Hemorrhage<br>
         <b>FIGO 2022:</b> Postpartum Hemorrhage Initiative · <b>RCOG Green-top Guideline 52</b><br>
         <b>WOMAN Trial (Shakur 2017, Lancet):</b> TXA 1g תוך 3 שעות — הפחתת תמותה מ-PPH ב-31% (Bleeding-related)<br>
-        <b>הגדרה:</b> איבוד דם ≥1000 מ"ל בכל סוג לידה, או דימום עם סימני שוק. דימום קטסטרופלי: ≥1500 מ"ל / 4 יחידות דם / קרישה לקויה<br>
-        <b>4 T's:</b> Tone (אטוניה 70%) · Trauma (קרעים 20%) · Tissue (שאריות 10%) · Thrombin (קרישיות 1%)
+        <b>הגדרה Primary PPH:</b> איבוד דם ≥1000 מ"ל בכל סוג לידה, או דימום עם סימני שוק. דימום קטסטרופלי: ≥1500 מ"ל / 4 יחידות דם / קרישה לקויה<br>
+        <b>4 T's:</b> Tone (אטוניה 70%) · Trauma (קרעים 20%) · Tissue (שאריות 10%) · Thrombin (קרישיות 1%)<br>
+        <b>Late-onset (Secondary) PPH:</b> דימום מ-24h עד 12 שב' פוסט-פרטום; שכיחות 0.5–2% · DDx: RPOC (השכיח) · endometritis · subinvolution · ‎AVM/pseudoaneurysm · vWD חבוי · ‎GTD/choriocarcinoma · scar dehiscence / niche<br>
+        <b>מקורות Late-PPH:</b> Hoveyda F, MacKenzie IZ. <i>BJOG</i> 2001;108:927–930 · Belfort MA. UpToDate "Secondary postpartum hemorrhage" (2024) · Soyer P et al. <i>Eur Radiol</i> 2018 (post-partum vascular) · SMFM Consult Series
       </div>
     </details>
 
@@ -5835,6 +5887,520 @@
 
     <div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-top:14px">
       <b>עקרון מפתח:</b> ב-PPH פעיל, התחל MTP <b>אמפירית 1:1:1</b> (RBC:FFP:Plt) ואל תחכה למעבדה. הוסף TXA 1g מיידי, וכוון לפיברינוגן ≥2 g/L מוקדם — אם TEG/ROTEM זמין, הוא מנחה החלפת מוצרים מדויקת יותר תוך 10–15 דקות.
+    </div>
+
+    <!-- ============== LATE-ONSET (SECONDARY) PPH ============== -->
+    <div class="sec" style="margin-top:24px">Late-onset PPH — דימום משני</div>
+    <details class="rec-box" style="margin-top:0;border-right:4px solid var(--purple)">
+      <summary class="rec-head" style="cursor:pointer">
+        <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span>Late-onset / Secondary PPH — אבחנה מבדלת וגישה</span>
+          <span class="rec-tag" style="background:var(--purple);color:#fff">24h – 12 שבועות</span>
+        </span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="rec-body">
+
+        <div class="note" style="border-right-color:var(--purple);background:rgba(139,92,246,0.08);margin-bottom:14px">
+          <b>הגדרה (ACOG PB 183 · RCOG 52):</b> דימום משמעותי מ-24 שעות עד 12 שבועות לאחר לידה. שכיחות 0.5–2% מהלידות. ברוב המקרים מופיע 7–14 ימים פוסט-פרטום.
+        </div>
+
+        <div class="rec-section">
+          <div class="rec-section-title">אבחנה מבדלת — לפי שכיחות</div>
+
+          <!-- DDx cards -->
+          <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px">
+
+            <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                <span style="font-size:11px;font-weight:700;background:var(--red);color:#fff;padding:2px 8px;border-radius:999px">השכיח ביותר</span>
+                <span style="font-size:14px;font-weight:700;color:var(--text)">RPOC — Retained Products of Conception</span>
+              </div>
+              <ul class="rec-list" style="margin-top:4px">
+                <li><b>הצגה:</b> דימום ממושך/חוזר ב-7–14 ימים, עם או בלי כאב, ± חום אם זיהום מצטרף</li>
+                <li><b>‎US TVS:</b> רקמה היפר/הטרו-אקואית בחלל הרחם · עובי endometrium &gt;10 מ"מ עם תוכן מורכב · ‎Doppler: וסקולריזציה מוגברת מהמיומטריום פנימה</li>
+                <li><b>‎β-hCG:</b> ‎לרוב נמוך/שלילי, אך עזר אבחנתי — אם עולה חשד GTD ראה למטה</li>
+                <li><b>טיפול:</b> ‎Misoprostol 600–800 mcg PR/SL אם stable וקטן · ‎D&C גלוי-US (לא עיוור!) אם מסה גדולה או דימום מתמשך · ‎הסטרוסקופיה — קו ראשון בידיים מנוסות, פחות סיכון לאדהזיות (Asherman)</li>
+              </ul>
+            </div>
+
+            <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                <span style="font-size:11px;font-weight:700;background:var(--amber);color:#fff;padding:2px 8px;border-radius:999px">שכיח</span>
+                <span style="font-size:14px;font-weight:700;color:var(--text)">Endometritis</span>
+              </div>
+              <ul class="rec-list" style="margin-top:4px">
+                <li><b>הצגה:</b> חום ‎≥38°, רחם רגיש, הפרשה ריחנית · לרוב משולב עם RPOC</li>
+                <li><b>בירור:</b> ‎CBC + CRP · ‎תרבית רחם (‎endometrial), תרבית דם אם חום ‎≥38.5°</li>
+                <li><b>טיפול אמפירי:</b> ‎Ampicillin 2g q6h + Gentamicin 1.5 mg/kg q8h + Clindamycin 900 mg q8h IV · המשך עד 48h afebrile + asymptomatic; ללא צורך ב-PO follow-on אלא אם בקטרמיה</li>
+                <li><b>אנאירובי:</b> אם חשד גבוה — להוסיף ‎metronidazole · בחולה אלרגית ל-β-lactam — Clinda+Gent בלבד</li>
+              </ul>
+            </div>
+
+            <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                <span style="font-size:11px;font-weight:700;background:var(--primary);color:#fff;padding:2px 8px;border-radius:999px">2–6 שבועות</span>
+                <span style="font-size:14px;font-weight:700;color:var(--text)">Subinvolution of the placental bed</span>
+              </div>
+              <ul class="rec-list" style="margin-top:4px">
+                <li><b>פתופיזיולוגיה:</b> כלי שליה ספירליים שלא עברו רגרסיה תקינה — נשארים פתוחים ומדממים</li>
+                <li><b>הצגה:</b> דימום שופע 2–6 שבועות, רחם רך/מוגדל ביחס לזמן, ללא חום</li>
+                <li><b>אבחנה:</b> ‎קלינית; אישור היסטולוגי רק אם נעשית גרידה</li>
+                <li><b>טיפול:</b> Uterotonics ‎(Methergine, Misoprostol) · אם חוזר — ‎D&C; כישלון → אמבוליזציה / היסטרקטומיה</li>
+              </ul>
+            </div>
+
+            <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                <span style="font-size:11px;font-weight:700;background:var(--red-text);color:#fff;padding:2px 8px;border-radius:999px">דחוף — אנגיו</span>
+                <span style="font-size:14px;font-weight:700;color:var(--text)">Uterine AVM / Pseudoaneurysm</span>
+              </div>
+              <ul class="rec-list" style="margin-top:4px">
+                <li><b>חשד מוגבר:</b> לאחר ‎D&C חוזר, CS, פלצנטה accreta, או דימום מסיבי לא צפוי בלי RPOC</li>
+                <li><b>‎US Doppler:</b> זרימה ‎high-velocity, low-resistance, turbulent ("‎mosaic pattern") · ‎PSV &gt;60–80 cm/s · CDI עירוי וסקולרי</li>
+                <li><b>אבחנה דפיניטיבית:</b> ‎CTA או pelvic angiography</li>
+                <li><b>טיפול:</b> ‎UAE — Uterine Artery Embolization (קו ראשון, שומר פוריות) · היסטרקטומיה אם לא יציבה או embolization נכשל</li>
+                <li><b>⚠ הימנע מ-D&C עיוור</b> — עלולה לגרום למאסיבי דימום אם נחתך pseudoaneurysm</li>
+              </ul>
+            </div>
+
+            <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                <span style="font-size:11px;font-weight:700;background:var(--teal);color:#fff;padding:2px 8px;border-radius:999px">פחות שכיח</span>
+                <span style="font-size:14px;font-weight:700;color:var(--text)">Inherited Bleeding Disorders — vWD נחשפת</span>
+              </div>
+              <ul class="rec-list" style="margin-top:4px">
+                <li><b>למה דווקא אז:</b> רמת ‎vWF + FVIII עולים פי 2–3 בהיריון, ומאוחר יותר חוזרים לבייסליין — חולפת הגנה</li>
+                <li><b>חשד:</b> דימום וסת מבוסס לפני הריון, אפיסטקסיס/חניכיים, סיפור משפחתי</li>
+                <li><b>בירור:</b> ‎vWF:Ag, vWF:RCo, FVIII, multimer analysis · ‎ABO type (vWF נמוך פיזיולוגית בקבוצה O)</li>
+                <li><b>טיפול:</b> ‎Tranexamic acid · ‎DDAVP IV/IN (type 1 בלבד) · ‎vWF concentrate / Humate-P אם מאסיבי</li>
+              </ul>
+            </div>
+
+            <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                <span style="font-size:11px;font-weight:700;background:var(--purple);color:#fff;padding:2px 8px;border-radius:999px">חובה לשלול</span>
+                <span style="font-size:14px;font-weight:700;color:var(--text)">GTD / Choriocarcinoma</span>
+              </div>
+              <ul class="rec-list" style="margin-top:4px">
+                <li><b>הצגה:</b> דימום ממושך לאחר לידה תקינה (לעיתים חודשים), ± סימנים סיסטמיים (גרורות ריאתיות — דיספניאה, hemoptysis)</li>
+                <li><b>בירור:</b> <b>‎β-hCG חיוני</b> — לאחר לידה תקין יורד עד שלילי תוך 4 שבועות. ערך מעל הצפוי → choriocarcinoma עד שיוכח אחרת</li>
+                <li><b>‎US:</b> מסה רחמית עם וסקולריזציה מוגברת, ± cystic spaces</li>
+                <li><b>הפניה:</b> אונקולוגיה גינקולוגית מיידית — בירור גרורות (‎CXR/CT, סקירת מוח) · Methotrexate ‎vs ‎EMA-CO לפי FIGO staging + WHO score</li>
+              </ul>
+            </div>
+
+            <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                <span style="font-size:11px;font-weight:700;background:var(--text2);color:#fff;padding:2px 8px;border-radius:999px">לאחר CS</span>
+                <span style="font-size:14px;font-weight:700;color:var(--text)">Cesarean Scar Issues</span>
+              </div>
+              <ul class="rec-list" style="margin-top:4px">
+                <li><b>‎Dehiscence / Endometritis בצלקת:</b> כאב, חום, ‎leukocytosis · ‎US/MRI לאבחנה</li>
+                <li><b>‎Niche / isthmocele:</b> מאוחר יותר — דימום מתמשך לסירוגין, נוזל בצלקת</li>
+                <li><b>טיפול:</b> אנטיביוטיקה לחיידקים פולימיקרוביאליים · התערבות כירורגית במקרים נבחרים</li>
+              </ul>
+            </div>
+
+            <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+                <span style="font-size:11px;font-weight:700;background:var(--pink);color:#fff;padding:2px 8px;border-radius:999px">מיקומי</span>
+                <span style="font-size:14px;font-weight:700;color:var(--text)">המטומה מאוחרת / קרע סוטרה / חבלה לא מאובחנת</span>
+              </div>
+              <ul class="rec-list" style="margin-top:4px">
+                <li><b>‎Vulvar / vaginal hematoma:</b> כאב לא פרופורציונלי, נפיחות · ‎US/CT אם עמוקה</li>
+                <li><b>טיפול:</b> ניקוז, רביזיה תחת הרדמה, סטריליות + אנטיביוטיקה אם מזוהמת</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Work-up algorithm -->
+        <div class="rec-section">
+          <div class="rec-section-title">אלגוריתם בירור מסודר</div>
+          <ol class="rec-list" style="counter-reset:item;padding-right:0;list-style:none">
+            <li style="counter-increment:item"><b style="color:var(--primary)">1.</b> <b>‎Vitals</b> + הערכת יציבות המודינמית · ‎Hb, WBC, CRP, פיברינוגן, ‎PT/PTT, ‎sodium · ‎β-hCG · ‎בדיקת שתן</li>
+            <li style="counter-increment:item"><b style="color:var(--primary)">2.</b> <b>‎TVUS</b> — להעריך תוכן רחמי (‎RPOC?), קוטר חלל, ‎Doppler (AVM? Pseudoaneurysm?)</li>
+            <li style="counter-increment:item"><b style="color:var(--primary)">3.</b> <b>אם חום:</b> תרבית רחם · אם מאסיבי → תרבית דם · אנטיביוטיקה אמפירית מוקדמת</li>
+            <li style="counter-increment:item"><b style="color:var(--primary)">4.</b> <b>אם ‎β-hCG חיובי באופן בלתי צפוי:</b> חזרה כעבור 48h · ‎CXR לסקר גרורות · הפניה אונקולוגית גינקולוגית</li>
+            <li style="counter-increment:item"><b style="color:var(--primary)">5.</b> <b>אם דימום חוזר/מסיבי ללא RPOC ב-US:</b> ‎CTA / pelvic angiography → ‎AVM/pseudoaneurysm → ‎UAE</li>
+            <li style="counter-increment:item"><b style="color:var(--primary)">6.</b> <b>אם דימום מבוסס + סיפור משפחתי:</b> פאנל קרישה מורחב — ‎vWF:Ag, vWF:RCo, FVIII, פאנל פלטלטים</li>
+            <li style="counter-increment:item"><b style="color:var(--primary)">7.</b> <b>טיפול כירורגי:</b> ‎D&C גלוי-‎US (לא עיוור) או ‎hysteroscopy לעדיפות; היסטרקטומיה כאופציה אחרונה</li>
+          </ol>
+        </div>
+
+        <div class="note" style="border-right-color:var(--red);background:var(--red-bg);margin-top:12px">
+          <b>⚠ אזהרה:</b> ב-Late PPH מסיבי או בלתי צפוי <u>תמיד</u> שלול ‎AVM/pseudoaneurysm לפני ‎D&C — ‎Doppler חובה. ‎D&C עיוור על ‎AVM עלול לגרום לדימום קטסטרופלי. אם חשד — אנגיו ראשי + ‎embolization על ידי intervention radiology.
+        </div>
+
+        <div class="rec-src" style="margin-top:14px;color:var(--text3);font-size:10.5px">
+          <b>Sources:</b> ACOG Practice Bulletin 183 (PPH) · RCOG Green-top 52 · SMFM Consult Series · נייר עמדה ישראלי #12 (PPH, אפריל 2025) · Belfort MA. UpToDate "Secondary postpartum hemorrhage" 2024 · Hoveyda F, MacKenzie IZ. <i>BJOG</i> 2001;108:927–930 · Alexander J et al. <i>Cochrane</i> 2002 (RPOC management) · Soyer P et al. <i>Eur Radiol</i> 2018 (Pelvic vascular complications post-partum)
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ===== Anaphylaxis in Pregnancy / Labor — Emergency Protocol ===== -->
+  <div id="anaphy" class="panel">
+    <details class="ref-wrap">
+      <summary>
+        <svg class="ref-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5h7l3 3v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1Z"/><path d="M10 2.5v3h3"/><path d="M5 9h6M5 11.5h4"/></svg>
+        <span>מקורות וקריטריונים</span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="ref">
+        <b>Resuscitation Council UK — Adult Anaphylaxis Guideline 2021 (refresh):</b> אפינפרין IM ירך 0.5 mg כקו ראשון; חזרה כל 5 דק'; ‎IV infusion רק בידיים מנוסות לאחר 2 מנות IM<br>
+        <b>WAO Guidance 2020 (Cardona V et al., World Allergy Organ J 2020;13:100472):</b> קריטריונים מעודכנים — ירידת BP / סימני ‎end-organ + חשיפה ידועה ⇒ אבחנה<br>
+        <b>NIAID/FAAN 2006 (עודכן 2020):</b> סטים A/B/C לאבחנה קלינית של אנפילקסיס<br>
+        <b>EAACI Anaphylaxis Guidelines (Muraro 2014, Cardona 2021):</b> פרוטוקול אירופי<br>
+        <b>OAA / AAGBI 2018 (Harper NJN, Cook TM et al., Anaesthesia 73:212):</b> אנפילקסיס פרי-ניתוחית במיילדות — ‎NAP6<br>
+        <b>UKOSS BJOG 2018 (Hepner DL, McCall SJ et al.):</b> אנפילקסיס בהריון — שכיחות 1.6:100,000 לידות; אנטיביוטיקה ‎β-לקטמיות הסיבה השכיחה ביותר (47%), אחריהן ‎NMBA והרדמה<br>
+        <b>הגדרה (WAO):</b> תגובה אלרגית חמורה ‎life-threatening, נטייה מולטי-סיסטמית, פריצה תוך דקות-שעות מהחשיפה<br>
+        <b>שכיחות במיילדות:</b> נדירה (~1:20,000) אך תמותה אמהית 1–3% ותחלואה עוברית 2–6× (היפוקסיה אמהית, hypotension)<br>
+        <b>טריגרים שכיחים ב-OB:</b> ‎β-לקטמים (Penicillin/Cef ל-GBS/chorio), חומרי הרדמה (suxamethonium, NMBA, opioids), אוקסיטוצין, latex, צבעי ניגוד, עירויי דם/cryo/FFP, NSAIDs
+      </div>
+    </details>
+
+    <!-- ============== STEP 0: CRITICAL IMMEDIATE BANNER ============== -->
+    <div class="note" style="border-right-color:var(--red);background:var(--red-bg);margin-top:14px;padding:14px 16px">
+      <div style="font-size:14px;font-weight:800;color:var(--red-text);margin-bottom:6px">⚠ אם חשד מבוסס — אפינפרין IM ירך הקדמי-לטרלי <u>מיידית</u>. אל תחכה לאישור או למעבדה.</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.6">
+        <b>0.5 mg IM</b> (0.5 mL מ-1:1000) למבוגרת בכל גיל הריון · חזרה כל <b>5 דקות</b> לפי דופק/לחץ דם<br>
+        <b>בו-זמנית:</b> הפסקת חשיפה לטריגר · ‎Left lateral tilt (15-30°) · ‎O₂ 100% NRM 15 ל'/דקה · ‎IV ‎×2 רחבי קוטר · קוד אנפילקסיס
+      </div>
+    </div>
+
+    <!-- ============== INITIAL CALL & ASSESSMENT ============== -->
+    <details class="rec-box" style="margin-top:14px;border-right:4px solid var(--red)" open>
+      <summary class="rec-head" style="cursor:pointer">
+        <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span>פעולות ראשוניות — 0-5 דקות</span>
+          <span class="rec-tag" style="background:var(--red);color:#fff">דקות ראשונות</span>
+        </span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="rec-body">
+        <div class="rec-section">
+          <div class="rec-section-title">קריאה לעזרה והערכה</div>
+          <ul class="rec-list">
+            <li><b>פתיחת "קוד אנפילקסיס":</b> מיילדת בכירה · רופאה בכירה · מרדים · נאונטולוג (אם פרי-לידתית) · חדר ניתוח</li>
+            <li><b>הפסקה מיידית של החשיפה:</b> הפסק עירוי / antibiotic / contrast / oxytocin · הרחק latex · בדוק blood unit (סוג, שגיאה)</li>
+            <li><b>‎Position:</b> ‎Left lateral tilt 15-30° (להפחית aortocaval compression)<br>⚠ <b>אל תושיב/תרים</b> את החולה — נפילת preload עלולה לגרום לקריסה</li>
+            <li><b>ניטור:</b> NIBP כל 1-3 דק' · ‎SpO₂ · ‎ECG · ‎CTG עוברי רציף (אם &gt;24w)</li>
+            <li><b>‎ABC:</b> דרכי אוויר (stridor? edema? צרידות?) · נשימה (wheezing? פרודוקטיב?) · מחזור (BP, דופק, מילוי קפילרי)</li>
+          </ul>
+        </div>
+
+        <div class="rec-section">
+          <div class="rec-section-title">אפינפרין — קו ראשון, מיידי</div>
+          <ul class="rec-list">
+            <li><b>‎Epinephrine 0.5 mg IM</b> (0.5 mL מ-‎1:1000) · ירך הקדמי-לטרלי, מחט ‎23-25G באורך 25 מ"מ · דרך הבגד מותר</li>
+            <li><b>חזרה כל 5 דק'</b> אם אין שיפור · עד 3 מנות לפני מעבר ל-IV (אלא אם כבר אינטובציה/CPR)</li>
+            <li><b>‎IV bolus</b> רק במצב periarrest/CPR: ‎50-100 mcg IV (0.5-1 mL מ-1:10,000) · רב הסיבוכים (אריתמיות, ‎MI) קורים בעירוי לא מדויק</li>
+            <li><b>‎IV infusion</b> אם רפרקטרי לאחר 2 מנות IM: ‎0.05-0.5 mcg/kg/min ב-titration. הכן: ‎1 mg ב-100 mL NS (=10 mcg/mL) · התחל 5-10 mL/h למבוגרת 70 ק"ג</li>
+            <li><b>⚠ נטילת ‎β-blockers:</b> ייתכן עמידות לאפינפרין → ‎Glucagon 1-5 mg IV (משחזר ‎cAMP בעקיפה ל-β-receptor)</li>
+            <li><b>הריון:</b> אפינפרין בטוח. גורם וזוקונסטריקציה רחמית, אך הצלת האם = הצלת העובר. אל תהסס.</li>
+          </ul>
+        </div>
+
+        <div class="rec-section">
+          <div class="rec-section-title">חמצן ונוזלים</div>
+          <ul class="rec-list">
+            <li><b>‎O₂ 100%</b> במסכת רזרבואר 15 ל'/דקה. אינטובציה מוקדמת אם stridor, אם angioedema של פנים/לשון, אם רוויה ‎&lt;92% למרות חמצן</li>
+            <li><b>נוזלים:</b> ‎Crystalloid bolus 1-2 L NS/Hartmann תוך 10-15 דק' · יתכן צורך ב-4-6 L בקריסה חמורה (vasodilation מאסיבית + נזילת capillary)</li>
+            <li><b>‎Aerosolized salbutamol</b> 5 mg neb אם ברונכוספאזם — אדג'ובנט בלבד; אפינפרין הוא הטיפול העיקרי</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- ============== DIAGNOSTIC CRITERIA ============== -->
+    <details class="rec-box" style="margin-top:14px;border-right:4px solid var(--primary)">
+      <summary class="rec-head" style="cursor:pointer">
+        <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span>קריטריונים לאבחנה — WAO 2020 / NIAID</span>
+          <span class="rec-tag" style="background:var(--primary);color:#fff">קליני</span>
+        </span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="rec-body">
+        <div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-bottom:12px">
+          אבחנה <b>קלינית</b> — לא תלויה בערכי tryptase/לבורטוריה. <b>אחד</b> משני הסטים מספיק:
+        </div>
+
+        <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:10px">
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px">סט 1 — פריצה חדה (דקות עד מספר שעות)</div>
+          <ul class="rec-list" style="margin-top:0">
+            <li>מעורבות עור/רירית (אורטיקריה, צריבה, גרד, angioedema של שפתיים/לשון/uvula)</li>
+            <li><b>‏‏וגם לפחות אחד מ:</b> <i>(א)</i> חסר אוויר / dyspnea / wheezing / hypoxemia · <i>(ב)</i> ירידת BP או סימני end-organ (קריסה, סינקופה, אינקונטיננציה)</li>
+          </ul>
+        </div>
+
+        <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px">סט 2 — חשיפה לאלרגן ידוע/חשוד + hypotension לבד</div>
+          <ul class="rec-list" style="margin-top:0">
+            <li><b>‎Hypotension</b> תוך דקות-שעות מחשיפה לאלרגן ידוע אצל החולה</li>
+            <li><b>בהריון:</b> ‎SBP &lt;100 mmHg, או ירידה ‎&gt;20% מבייסליין</li>
+            <li><b>גם בלי</b> פריחה/wheezing — חשיפה + hypotension = אנפילקסיס</li>
+          </ul>
+        </div>
+
+        <div class="note" style="border-right-color:var(--amber);background:var(--amber-bg);margin-top:12px">
+          <b>⚠ ייחוד בהריון:</b> ‎אורטיקריה לפעמים מוסווית ע"י changes פיזיולוגיים של היריון (vasodilation, hyperdynamic state). חרדה לעוברי על מוניטור (ירידה ב-FHR, bradycardia, late decelerations) <u>עשויה להיות הסימן הראשון</u> לאמא היפוטוניבית — חפש סיבה אמהית.
+        </div>
+      </div>
+    </details>
+
+    <!-- ============== ETIOLOGY CARDS ============== -->
+    <details class="rec-box" style="margin-top:14px;border-right:4px solid var(--amber)">
+      <summary class="rec-head" style="cursor:pointer">
+        <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span>אטיולוגיה — שכיח בהקשר מיילדותי</span>
+          <span class="rec-tag" style="background:var(--amber);color:#fff">UKOSS 2018</span>
+        </span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="rec-body">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:6px">
+          <div style="padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--red-bg)">
+            <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:4px">47% — הסיבה השכיחה</div>
+            <div style="font-size:13px;font-weight:700;color:var(--text)">‎β-לקטמים</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-top:4px">‎Penicillin / Ampicillin ל-GBS · ‎Cefazolin pre-CS · ‎Pip-Tazo ל-chorio. הקפד על שאלון אלרגיה לפני כל מנה ראשונה.</div>
+          </div>
+          <div style="padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--amber-bg)">
+            <div style="font-size:11px;font-weight:700;color:var(--amber-text);margin-bottom:4px">חומרי הרדמה</div>
+            <div style="font-size:13px;font-weight:700;color:var(--text)">‎NMBA + Suxamethonium</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-top:4px">Rocuronium, Atracurium · suxamethonium · ‎Latex · ‎opioids (מורפין, פטידין)</div>
+          </div>
+          <div style="padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--purple-bg,var(--primary-bg))">
+            <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:4px">תרופות מיילדותיות</div>
+            <div style="font-size:13px;font-weight:700;color:var(--text)">‎Oxytocin / Misoprostol</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-top:4px">תיאורי מקרה של ‎anaphylactoid לאחר אוקסיטוצין IV. ‎PG sulprostone / carboprost — להיזהר.</div>
+          </div>
+          <div style="padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--teal-bg)">
+            <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:4px">‎Latex</div>
+            <div style="font-size:13px;font-weight:700;color:var(--text)">כפפות, צנתרים</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-top:4px">‎סיכון מוגבר: צוות רפואי, ‎spina bifida historic, ‎multiple surgeries.<br>שאל את החולה ספציפית.</div>
+          </div>
+          <div style="padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--surface2)">
+            <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:4px">עירויי דם</div>
+            <div style="font-size:13px;font-weight:700;color:var(--text)">‎FFP / Cryo / PRBC</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-top:4px">תגובות אלרגיות לחלבוני פלסמה. ‎IgA deficient → תגובות אנפילקטיות לכל ‎PRBC עם IgA.</div>
+          </div>
+          <div style="padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--surface2)">
+            <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:4px">צבעי ניגוד</div>
+            <div style="font-size:13px;font-weight:700;color:var(--text)">‎Iodinated / Gadolinium</div>
+            <div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-top:4px">‎CT-PE, ‎pyelography. ‎פרה-מדיקציה אם סיפור — סטרואידים 13h+7h+1h + antihistamine.</div>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- ============== SECOND-LINE / ADJUNCTS ============== -->
+    <details class="rec-box" style="margin-top:14px;border-right:4px solid var(--teal)">
+      <summary class="rec-head" style="cursor:pointer">
+        <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span>קווי טיפול נוסף — אדג'ובנטים</span>
+          <span class="rec-tag" style="background:var(--teal);color:#fff">לאחר אפינפרין</span>
+        </span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="rec-body">
+        <div class="note" style="border-right-color:var(--amber);background:var(--amber-bg);margin-bottom:12px">
+          <b>⚠ עקרון:</b> אנטיהיסטמינים וסטרואידים <u>אינם</u> טיפול קו ראשון. הם <b>לא</b> מטפלים ב-airway/hypotension. תן אותם רק לאחר שהוזרק אפינפרין.
+        </div>
+
+        <div class="rec-section">
+          <div class="rec-section-title">אנטיהיסטמינים</div>
+          <ul class="rec-list">
+            <li><b>‎H1 antagonist:</b> ‎Chlorpheniramine 10 mg IV איטי, או ‎Diphenhydramine 25-50 mg IV/IM · מטפל בעיקר בעור (גרד, אורטיקריה)</li>
+            <li><b>‎H2 antagonist:</b> ‎Ranitidine 50 mg IV (אם זמין) או ‎Famotidine 20 mg IV · ‎שילוב H1+H2 יעיל יותר מ-H1 לבד</li>
+          </ul>
+        </div>
+
+        <div class="rec-section">
+          <div class="rec-section-title">סטרואידים</div>
+          <ul class="rec-list">
+            <li><b>‎Hydrocortisone 200 mg IV</b>, או ‎Methylprednisolone 80-125 mg IV</li>
+            <li><b>תפקיד:</b> מניעת ‎biphasic reaction (חזרה 1-72h לאחר ההחלמה הראשונית, ב-5-20% מהמקרים)</li>
+            <li><b>‎עיכוב בהשפעה:</b> 4-6 שעות — לא מטפל באירוע החריף</li>
+          </ul>
+        </div>
+
+        <div class="rec-section">
+          <div class="rec-section-title">תרחישים מיוחדים</div>
+          <ul class="rec-list">
+            <li><b>חולה על ‎β-blocker (refractory):</b> ‎Glucagon 1-5 mg IV bolus over 5 min, ואז 5-15 mcg/min infusion</li>
+            <li><b>‎Bronchospasm refractory:</b> ‎Salbutamol nebs 5 mg, ‎Ipratropium 500 mcg neb, ‎magnesium sulfate 2g IV</li>
+            <li><b>‎Hypotension refractory לאחר Epi:</b> הוסף ‎Norepinephrine 0.05-0.5 mcg/kg/min · ‎Vasopressin 0.01-0.04 U/min · ‎Methylene blue 1-2 mg/kg ‎(NO synthase inhibitor) — נדיר</li>
+            <li><b>‎ECMO/VA-ECMO:</b> במקרים של ‎refractory shock עם תפקוד קרדיאלי מתדרדר — לשקול הפניה למרכז ECMO</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- ============== OB-SPECIFIC CONSIDERATIONS ============== -->
+    <details class="rec-box" style="margin-top:14px;border-right:4px solid var(--pink)">
+      <summary class="rec-head" style="cursor:pointer">
+        <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span>שיקולים מיילדותיים ייעודיים</span>
+          <span class="rec-tag" style="background:var(--pink);color:#fff">OB-specific</span>
+        </span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="rec-body">
+        <div class="rec-section">
+          <div class="rec-section-title">העובר — שיקול שני, האם — ראשון</div>
+          <ul class="rec-list">
+            <li><b>‎Maternal resuscitation = fetal resuscitation.</b> ‎אל תיילד מאינדיקציה עוברית בלבד אם האם לא יציבה — נוזלים ואפינפרין משחזרים את הפרפוזיה השלייתית.</li>
+            <li><b>‎FHR/CTG:</b> ירידה, ‎late decelerations, ‎bradycardia ממושכת — לרוב תיקון עצמי לאחר ייצוב אמהי</li>
+            <li><b>אם CTG לא משתפר לאחר ייצוב אמהי וגיל הריון ≥24w:</b> שקלי לידה — בקיסרי דחוף לרוב</li>
+          </ul>
+        </div>
+
+        <div class="rec-section">
+          <div class="rec-section-title">Perimortem Cesarean (RCM/PMCS)</div>
+          <ul class="rec-list">
+            <li><b>אינדיקציה:</b> ‎Maternal cardiac arrest שלא מגיב להחייאה ‎+ ‎גיל הריון ‎≥20w (גובה רחמי = טבור)</li>
+            <li><b>טיימינג:</b> ‎תוך 4 דקות מתחילת ‎CPR · ייצור עד 5 דקות</li>
+            <li><b>‎Rationale:</b> הסרת ‎aortocaval compression משפר venous return ויעילות CPR · ‎neonatal survival טוב אם נעשה תוך &lt;5 דק'</li>
+            <li><b>הצוות:</b> אין צורך להעבירה לחדר ניתוח. בלינה, ‎skin prep מינימלי, ‎vertical midline incision, vertical uterine incision · האם בו-זמנית continues CPR</li>
+          </ul>
+        </div>
+
+        <div class="rec-section">
+          <div class="rec-section-title">אם תחת רגיונל (אפידורל/ספינל) בזמן האירוע</div>
+          <ul class="rec-list">
+            <li><b>הפסקת מתן regional anesthetic</b> · המשך infusion ייתכן וגורם להעמקת sympathetic block ולhypotension</li>
+            <li><b>הבדל מ-high spinal:</b> אנפילקסיס לרוב פריחה + wheezing + תגובה לטריגר ספציפי. ‎high spinal: bradycardia, ירידה בפעולה נשימתית, ‎LOC ללא פריחה</li>
+            <li><b>‎Phenylephrine bolus 100-200 mcg</b> או ‎ephedrine 10 mg יכולים לעזור עד שאפינפרין IM זמין</li>
+          </ul>
+        </div>
+
+        <div class="rec-section">
+          <div class="rec-section-title">בדיקות מעבדה — Tryptase</div>
+          <ul class="rec-list">
+            <li><b>‎Mast cell tryptase</b> — עליה תומכת באבחנה (פעילות mast cell). שלוש דגימות:</li>
+            <li>‎<b>T1:</b> 15-180 דקות מהפריצה</li>
+            <li>‎<b>T2:</b> 1-2 שעות לאחר האירוע</li>
+            <li>‎<b>T3 (baseline):</b> 24+ שעות מהאירוע, או בביקור חוץ-אשפוז בהמשך</li>
+            <li>‎<b>פירוש (NAP6):</b> ‎עליה ≥1.2× baseline + 2 ng/mL = פעילות mast cell משמעותית</li>
+          </ul>
+        </div>
+
+        <div class="rec-section">
+          <div class="rec-section-title">לאחר הייצוב — מעקב</div>
+          <ul class="rec-list">
+            <li><b>אשפוז 6-12 שעות מינימום</b> בניטור (סיכון ל-biphasic reaction). אם תגובה חמורה — אשפוז 24 שעות</li>
+            <li><b>‎EpiPen 300 mcg</b> במרשם לעת שחרור · הסברה לזיהוי תסמיני חזרה</li>
+            <li><b>הפניה לאלרגולוג</b> — בדיקות עור 4-6 שב' לאחר האירוע (לא לפני — תקופת ‎refractory). זיהוי הטריגר חיוני לפני הריון הבא</li>
+            <li><b>תיעוד:</b> נייר אדום בכרטיס, רשומת אלרגיה רפואית, ‎MedicAlert bracelet</li>
+            <li><b>‎ICD-10:</b> ‎T78.2 (Anaphylactic shock, unspecified) · ‎T88.6 (anaesthetic) · ‎T80.5 (transfusion)</li>
+          </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- ============== DIFFERENTIAL DIAGNOSIS ============== -->
+    <details class="rec-box" style="margin-top:14px;border-right:4px solid var(--purple)">
+      <summary class="rec-head" style="cursor:pointer">
+        <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span>אבחנה מבדלת ב-OB — קריסה אמהית פתאומית</span>
+          <span class="rec-tag" style="background:var(--purple);color:#fff">DDx</span>
+        </span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="rec-body">
+        <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:6px">
+
+          <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">‎AFE — Amniotic Fluid Embolism</div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.55">
+              <b>חפיפה גבוהה.</b> AFE עם hypoxia + hypotension + DIC, ללא פריחה לרוב. ‎Tryptase יעזור (נורמלי ב-AFE). חשב 1:50,000 לידות, תמותה 11-44%. <b>טיפול חופף</b> — ‎ABC, אפינפרין, MTP.
+            </div>
+          </div>
+
+          <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">‎High Spinal / Total Spinal</div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.55">
+              ‎Bradycardia + hypotension לאחר רגיונל · ‎respiratory paralysis · ‎LOC · אין פריחה. תיקון: vasopressors + airway support.
+            </div>
+          </div>
+
+          <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">‎Eclampsia / PRES</div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.55">
+              עוויתות + ‎HTN (לעתים hypotension לאחר), היסטוריה של preeclampsia, פרוטינוריה. ‎MgSO₄.
+            </div>
+          </div>
+
+          <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Septic Shock</div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.55">
+              ‎Chorio, ‎pyelonephritis, ‎endometritis · חום, מקור זיהומי ברור, התפתחות איטית יותר · ‎antibiotics + fluids + pressors.
+            </div>
+          </div>
+
+          <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">‎VTE / PE מסיבי</div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.55">
+              ‎Dyspnea, ‎chest pain, ‎pleuritic, ‎JVP, ‎RV strain ב-ECG. ‎D-dimer, CTPA. ‎Thrombolytics בשוק עמיד.
+            </div>
+          </div>
+
+          <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">‎PPH מסיבי</div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.55">
+              ‎Hypotension עם דם נראה לעין/מוסתר (‎intra-abdominal, broad ligament). ‎4T's. ‎לרוב כיוון/מקור ברור.
+            </div>
+          </div>
+
+          <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">‎Hypoglycemia / Hyponatremia</div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.55">
+              ‎Sweating, confusion, ‎LOC, ללא פריחה. בדוק ‎glucose stick + ‎electrolytes מיד.
+            </div>
+          </div>
+
+          <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">‎Vasovagal Syncope</div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.55">
+              ‎Bradycardia + hypotension לאחר טריגר (כאב, דקירה), שיפור מהיר עם פוזיציה לראש למטה. <b>אין</b> פריחה/wheezing.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </details>
+
+    <!-- ============== POCKET CHECKLIST FOR PRINTING ============== -->
+    <details class="rec-box" style="margin-top:14px;border-right:4px solid var(--green)">
+      <summary class="rec-head" style="cursor:pointer">
+        <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span>צ'ק-ליסט כיס להדפסה</span>
+          <span class="rec-tag" style="background:var(--green);color:#fff">7 צעדים</span>
+        </span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="rec-body">
+        <ol style="padding-right:18px;line-height:2;font-size:13.5px">
+          <li>☐ <b>הפסק חשיפה לטריגר</b> · קרא לעזרה · קוד אנפילקסיס</li>
+          <li>☐ <b>‎Epinephrine 0.5 mg IM</b> ירך הקדמי-לטרלי (חזרה כל 5 דק')</li>
+          <li>☐ <b>‎Left lateral tilt</b> · ‎O₂ 100% NRM · 2 IV ‎×2 רחבי קוטר</li>
+          <li>☐ <b>נוזלים:</b> ‎Crystalloid 1-2 L bolus (יותר אם hypotension עמיד)</li>
+          <li>☐ <b>אדג'ובנטים:</b> ‎H1 + H2 antagonists · ‎Hydrocortisone 200 mg IV</li>
+          <li>☐ <b>‎Bronchospasm:</b> ‎Salbutamol 5 mg neb</li>
+          <li>☐ <b>מוניטור עוברי</b> · אל תיילד לאינדיקציה עוברית בלי ייצוב אמהי</li>
+          <li>☐ <b>‎Tryptase:</b> ‎15 דק' + 1-2h + 24h</li>
+          <li>☐ <b>תיעוד טריגר חשוד</b> · רשומת אלרגיה · הפניה לאלרגולוג</li>
+          <li>☐ <b>אשפוז 6-24 שעות</b> בניטור (biphasic reaction)</li>
+        </ol>
+      </div>
+    </details>
+
+    <div class="rec-src" style="margin-top:14px;color:var(--text3);font-size:10.5px;line-height:1.7">
+      <b>Sources:</b> Resuscitation Council UK — Adult Anaphylaxis 2021 · WAO Anaphylaxis Guidance 2020 (Cardona V et al. World Allergy Organ J 2020;13:100472) · EAACI Guidelines (Muraro 2014; Cardona 2021) · NIAID/FAAN Symposium 2006 (Sampson HA et al. JACI 2006;117:391) · NAP6 — Royal College of Anaesthetists 6th National Audit Project (Cook TM et al. Br J Anaesth 2018) · OAA/AAGBI 2018 — Suspected anaphylaxis during anaesthesia (Anaesthesia 73:212) · UKOSS Anaphylaxis in Pregnancy (McCall SJ et al. BJOG 2018;125:965-71) · ACOG Committee Opinion 776 (Immune Modulators) · WHO Model List of Essential Medicines · Hepner DL, Castells MC. Anesth Analg 2006;102:526
     </div>
   </div>
 
@@ -7038,6 +7604,11 @@
   </div>
 </div>
 
+<!-- Floating back-to-top button -->
+<button id="back-to-top" type="button" onclick="scrollActivePanelToTop()" aria-label="חזרה למעלה" title="חזרה למעלה">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
 <footer style="max-width:560px;margin:0 auto;padding:16px 18px 48px;text-align:center;
   font-size:11.5px;color:var(--text3);line-height:1.65">
   <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border:1px solid var(--border);border-radius:999px;background:var(--surface);box-shadow:var(--sh-sm);font-size:11px">
@@ -7057,7 +7628,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.30';
+const APP_VERSION = '4.31';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -9108,7 +9679,8 @@ const TAB_KEYWORDS = {
   infection:  ['זיהום','infection','אמניוניטיס','chorioamnionitis','amnionitis','triple i','gbs','ampicillin','gentamicin','clindamycin','hiv','aids','zidovudine','azt','hbv','hepatitis b','tenofovir','hbig','hsv','herpes','acyclovir','valacyclovir','zovirax','valtrex','hcv','hepatitis c','סיפיליס','syphilis','penicillin','ליסטריה','listeria'],
   tolac:      ['tolac','vbac','grobman','קיסרי','cs','קיסרית','race-neutral'],
   rupture:    ['rupture','קרע','רחם','uterine','landon','bujold','gyamfi','interval'],
-  pph:        ['pph','דימום','postpartum','tone','trauma','tissue','thrombin','txa','bakri','b-lynch','massive transfusion','mtp','woman','tranexamic','teg','rotem','cryo','קריו','ffp','פלזמה','פיברינוגן','fibrinogen','riastap','prbc','כדוריות','platelets','פלטליות','novoseven'],
+  pph:        ['pph','דימום','postpartum','tone','trauma','tissue','thrombin','txa','bakri','b-lynch','massive transfusion','mtp','woman','tranexamic','teg','rotem','cryo','קריו','ffp','פלזמה','פיברינוגן','fibrinogen','riastap','prbc','כדוריות','platelets','פלטליות','novoseven','secondary pph','late pph','rpoc','endometritis','אנדומטריטיס','subinvolution','avm','pseudoaneurysm','vwd','choriocarcinoma','gtd'],
+  anaphy:     ['anaphy','אנפילקסיס','anaphylaxis','אלרגיה','allergy','epinephrine','אפינפרין','adrenalin','אדרנלין','epipen','tryptase','טריפטאז','penicillin','פניצילין','latex','לטקס','sux','rocuronium','histamine','antihistamine','antihistamines','chlorpheniramine','diphenhydramine','hydrocortisone','salbutamol','wao','niaid','nap6','ukoss'],
   dka:        ['dka','ketoacidosis','ketoacidoze','חמצת','קטוזיס','euglycemic','אינסולין','insulin','sibai']
 };
 
@@ -9298,6 +9870,90 @@ function showTab(id,el){
   // Scroll to top of new panel for clarity (especially when triggered from a nested card)
   if (panel) window.scrollTo({ top: panel.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' });
 }
+
+// ─── Floating "Back to top" + Reset buttons ────────────────────────────
+function scrollActivePanelToTop(){
+  const active = document.querySelector('.panel.active');
+  const targetY = active ? (active.getBoundingClientRect().top + window.scrollY - 80) : 0;
+  window.scrollTo({ top: Math.max(0, targetY), behavior: 'smooth' });
+}
+
+(function initBackToTop(){
+  const onScroll = () => {
+    const btn = document.getElementById('back-to-top');
+    if(!btn) return;
+    if(window.scrollY > 600) btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', onScroll);
+  } else { onScroll(); }
+})();
+
+// resetPanel: clears inputs and results in a given panel.
+// Intentionally leaves segmented (.seg) state alone — that's mode/state, not data.
+function resetPanel(panelId){
+  const p = document.getElementById(panelId);
+  if(!p) return;
+  // Clear text/number/date/tel inputs
+  p.querySelectorAll('input[type="number"], input[type="text"], input[type="date"], input[type="tel"], input:not([type])').forEach(i => { i.value = ''; });
+  // Reset checkboxes to their default (defaultChecked is the HTML-declared state)
+  p.querySelectorAll('input[type="checkbox"]').forEach(i => { i.checked = i.defaultChecked; });
+  // Reset radio groups to default
+  p.querySelectorAll('input[type="radio"]').forEach(i => { i.checked = i.defaultChecked; });
+  // Reset textareas
+  p.querySelectorAll('textarea').forEach(t => { t.value = ''; });
+  // Reset selects to first option (or default if set)
+  p.querySelectorAll('select').forEach(s => {
+    const def = Array.from(s.options).findIndex(o => o.defaultSelected);
+    s.selectedIndex = def >= 0 ? def : 0;
+  });
+  // Clear result containers — heuristic: id ends with -res, or .result, or .res
+  p.querySelectorAll('[id$="-res"], .result, .res-block').forEach(r => { r.innerHTML = ''; });
+  // Clear any inline chart canvases inside result containers (Chart.js destroys on innerHTML clear)
+  // Scroll panel back to its top for clarity
+  setTimeout(() => p.scrollIntoView({ block: 'start', behavior: 'smooth' }), 50);
+}
+
+// Auto-inject a "Reset" button next to every panel's main calc button.
+// Runs after DOM ready and whenever a new panel becomes visible (covers late-rendered content).
+function injectResetButtons(){
+  document.querySelectorAll('.panel').forEach(panel => {
+    const panelId = panel.id;
+    if(!panelId) return;
+    // Find ALL primary calc buttons in this panel (some panels have multiple sub-calcs)
+    const primaries = panel.querySelectorAll('button.btn-primary');
+    primaries.forEach(btn => {
+      // Skip if a reset is already adjacent
+      if(btn.nextElementSibling && btn.nextElementSibling.classList && btn.nextElementSibling.classList.contains('btn-reset')) return;
+      if(btn.dataset.noreset === 'true') return;
+      // Skip tiny inline buttons (less than min-width threshold) — keep this simple: only the panel-level calc button
+      // Wrap btn + reset in a .calc-row for clean layout
+      const reset = document.createElement('button');
+      reset.type = 'button';
+      reset.className = 'btn-reset';
+      reset.title = 'איפוס נתוני המחשבון';
+      reset.setAttribute('aria-label', 'איפוס');
+      reset.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span>איפוס</span>';
+      reset.onclick = () => resetPanel(panelId);
+      // If button has block-style display (margin-top etc) — wrap both in a calc-row container for inline alignment
+      const parent = btn.parentElement;
+      if(parent && !parent.classList.contains('calc-row')){
+        const row = document.createElement('div');
+        row.className = 'calc-row';
+        parent.insertBefore(row, btn);
+        row.appendChild(btn);
+        row.appendChild(reset);
+      } else {
+        btn.parentElement.appendChild(reset);
+      }
+    });
+  });
+}
+if (document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', injectResetButtons);
+} else { injectResetButtons(); }
 
 // ─── PREGNANCY CALCULATOR ─────────────────────────────────────────────────
 let pregMode='lmp', ivfType='3';
