@@ -1941,6 +1941,10 @@
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11a7 7 0 1 1 14 0"/><path d="M3 11v3M17 11v3"/><path d="M6.5 14.5l1.5 1.5 4-4"/></svg>
           <span>TOLAC</span>
         </button>
+        <button class="tab" onclick="showTab('rupture',this)" role="tab">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v6M7 5l3-3 3 3"/><path d="M3 17l4-4 3 3 4-4 3 3"/><path d="M2 14h16"/></svg>
+          <span>קרע רחם</span>
+        </button>
         <button class="tab" onclick="showTab('infection',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="3"/><path d="M10 3v2M10 15v2M3 10h2M15 10h2M5.5 5.5l1.5 1.5M13 13l1.5 1.5M14.5 5.5L13 7M7 13l-1.5 1.5"/></svg>
           <span>זיהומים</span>
@@ -1954,10 +1958,6 @@
     <div class="tab-group emergency">
       <div class="tab-group-title">מצבי חירום מיילדותיים</div>
       <nav class="tabs" role="tablist" aria-label="מצבי חירום מיילדותיים">
-        <button class="tab" onclick="showTab('rupture',this)" role="tab">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v6M7 5l3-3 3 3"/><path d="M3 17l4-4 3 3 4-4 3 3"/><path d="M2 14h16"/></svg>
-          <span>קרע רחם</span>
-        </button>
         <button class="tab" onclick="showTab('pec',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10.5" r="6.5"/><path d="M10 6.5v4l3 1.5"/><path d="M5 4l-2 2M15 4l2 2"/></svg>
           <span>רעלת</span>
@@ -7707,7 +7707,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.34';
+const APP_VERSION = '4.35';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
