@@ -613,6 +613,83 @@
     #back-to-top, .btn-reset { display: none !important; }
   }
 
+  /* ── Anaphylaxis visual flowchart (echoes the Israeli MoH schema) ─── */
+  .anaphy-flow {
+    display: flex; flex-direction: column; align-items: stretch; gap: 6px;
+    padding: 18px 14px; background: var(--surface2);
+    border-radius: 12px; border: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .anaphy-flow .af-node {
+    padding: 11px 14px; border-radius: 10px;
+    text-align: center; font-weight: 600; font-size: 12.5px; line-height: 1.45;
+    border: 2px solid transparent; max-width: 100%;
+    align-self: center;
+  }
+  .anaphy-flow .af-alert {
+    background: #FEF3C7; color: #78350F; border-color: #F59E0B;
+    border-radius: 999px; padding: 12px 22px; font-weight: 800; font-size: 14px;
+  }
+  .anaphy-flow .af-blue {
+    background: rgba(45,127,234,0.10); color: #1E3A8A; border-color: #60A5FA;
+    width: 88%; max-width: 540px;
+  }
+  .anaphy-flow .af-arrow {
+    width: 0; height: 0; align-self: center;
+    border-left: 9px solid transparent; border-right: 9px solid transparent;
+    border-top: 11px solid var(--text3); margin: 2px 0;
+  }
+  .anaphy-flow .af-split {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    width: 100%; margin-top: 4px;
+  }
+  .anaphy-flow .af-col {
+    display: flex; flex-direction: column; gap: 6px;
+    padding: 10px; border-radius: 10px;
+    border: 2px solid;
+  }
+  .anaphy-flow .af-col-light  { border-color: var(--green); background: rgba(16,185,129,0.07); }
+  .anaphy-flow .af-col-severe { border-color: var(--amber); background: rgba(245,158,11,0.07); }
+  .anaphy-flow .af-col-arrest { border-color: var(--red);   background: rgba(225,29,72,0.06); }
+  .anaphy-flow .af-col-head {
+    padding: 8px 10px; border-radius: 8px; text-align: center;
+    font-weight: 800; font-size: 13px; color: #fff;
+  }
+  .anaphy-flow .af-col-head.h-light  { background: var(--green); }
+  .anaphy-flow .af-col-head.h-severe { background: var(--amber); }
+  .anaphy-flow .af-col-head.h-arrest { background: var(--red); }
+  .anaphy-flow .af-actions {
+    background: #fff; border: 1px solid var(--border); border-radius: 8px;
+    padding: 8px 10px; font-size: 11.5px; line-height: 1.6; color: var(--text);
+    text-align: right; font-weight: 500;
+  }
+  .anaphy-flow .af-actions ul { margin: 0; padding-right: 18px; }
+  .anaphy-flow .af-actions li { margin: 2px 0; }
+  .anaphy-flow .af-arrow-mini {
+    width: 0; height: 0; align-self: center;
+    border-left: 6px solid transparent; border-right: 6px solid transparent;
+    border-top: 8px solid var(--text3); margin: 1px 0;
+  }
+  .anaphy-flow .af-diamond {
+    background: #FCD34D; color: #78350F; border: 1.5px solid #F59E0B;
+    padding: 5px 10px; border-radius: 6px; font-weight: 800; font-size: 11.5px;
+    text-align: center;
+  }
+  .anaphy-flow .af-escalate {
+    background: var(--red-bg); color: var(--red-text); border: 1px dashed var(--red);
+    border-radius: 8px; padding: 7px 9px; font-size: 11px; line-height: 1.5;
+    font-weight: 600; text-align: right;
+  }
+  .anaphy-flow .af-pink {
+    background: #FCE7F3; color: #831843; border: 2px solid #EC4899;
+    margin-top: 8px; width: 92%; max-width: 600px; padding: 12px 16px;
+    font-size: 12.5px; font-weight: 600;
+  }
+  @media (max-width: 600px) {
+    .anaphy-flow .af-split { grid-template-columns: 1fr; }
+    .anaphy-flow .af-blue { width: 100%; }
+  }
+
   /* ── Segmented controls ───────────────────────────────────────────── */
   .seg {
     display: inline-flex; gap: 2px; padding: 3px;
@@ -6041,7 +6118,7 @@
     </details>
   </div>
 
-  <!-- ===== Anaphylaxis in Pregnancy / Labor — Emergency Protocol ===== -->
+  <!-- ===== Anaphylaxis — Emergency Algorithm (Israeli protocol + OB adaptation) ===== -->
   <div id="anaphy" class="panel">
     <details class="ref-wrap">
       <summary>
@@ -6050,357 +6127,334 @@
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="ref">
-        <b>Resuscitation Council UK — Adult Anaphylaxis Guideline 2021 (refresh):</b> אפינפרין IM ירך 0.5 mg כקו ראשון; חזרה כל 5 דק'; ‎IV infusion רק בידיים מנוסות לאחר 2 מנות IM<br>
-        <b>WAO Guidance 2020 (Cardona V et al., World Allergy Organ J 2020;13:100472):</b> קריטריונים מעודכנים — ירידת BP / סימני ‎end-organ + חשיפה ידועה ⇒ אבחנה<br>
-        <b>NIAID/FAAN 2006 (עודכן 2020):</b> סטים A/B/C לאבחנה קלינית של אנפילקסיס<br>
-        <b>EAACI Anaphylaxis Guidelines (Muraro 2014, Cardona 2021):</b> פרוטוקול אירופי<br>
-        <b>OAA / AAGBI 2018 (Harper NJN, Cook TM et al., Anaesthesia 73:212):</b> אנפילקסיס פרי-ניתוחית במיילדות — ‎NAP6<br>
-        <b>UKOSS BJOG 2018 (Hepner DL, McCall SJ et al.):</b> אנפילקסיס בהריון — שכיחות 1.6:100,000 לידות; אנטיביוטיקה ‎β-לקטמיות הסיבה השכיחה ביותר (47%), אחריהן ‎NMBA והרדמה<br>
-        <b>הגדרה (WAO):</b> תגובה אלרגית חמורה ‎life-threatening, נטייה מולטי-סיסטמית, פריצה תוך דקות-שעות מהחשיפה<br>
-        <b>שכיחות במיילדות:</b> נדירה (~1:20,000) אך תמותה אמהית 1–3% ותחלואה עוברית 2–6× (היפוקסיה אמהית, hypotension)<br>
-        <b>טריגרים שכיחים ב-OB:</b> ‎β-לקטמים (Penicillin/Cef ל-GBS/chorio), חומרי הרדמה (suxamethonium, NMBA, opioids), אוקסיטוצין, latex, צבעי ניגוד, עירויי דם/cryo/FFP, NSAIDs
+        <b>פרוטוקול ישראלי — אנפילקסיס (מד"א / חוזר משרד הבריאות):</b> טריאז' ל-3 דרגות חומרה (קל-בינוני / קשה / דום לב) · אפינפרין IM <span dir="ltr">0.3-0.5 mg</span> עד 3 מנות בהפרש <span dir="ltr">10</span> דק' · עירוי סליין מדורג <span dir="ltr">1 / 2-3 / 4-5 L/hr</span> · סולומדרול IV · ונטולין באינהלציה · דופאמין <span dir="ltr">5-20 mcg/kg/min</span> ב-hypoperfusion<br>
+        <b>הגדרה (WAO 2020 — Cardona V et al. World Allergy Organ J 2020;13:100472):</b> תגובה אלרגית מולטי-סיסטמית חיונית, פריצה תוך דקות-שעות מחשיפה. <b>אחד</b> משני סטים: (א) מעורבות עור/רירית + נשימתי/קרדיווסקולרי/end-organ · (ב) חשיפה לאלרגן ידוע + hypotension לבד<br>
+        <b>Resuscitation Council UK 2021</b> · <b>NAP6 (Cook TM et al. Br J Anaesth 2018)</b> — anaesthetic anaphylaxis · <b>OAA/AAGBI 2018 (Anaesthesia 73:212)</b><br>
+        <b>UKOSS BJOG 2018 (McCall SJ et al. 125:965-71):</b> אנפילקסיס בהריון — שכיחות <span dir="ltr">1.6:100,000</span> לידות · β-לקטמים <span dir="ltr">47%</span> מהמקרים · NMBA והרדמה בהמשך<br>
+        <b>OB-specific:</b> Left lateral tilt 15-30° · Perimortem CS תוך 4 דק' מ-cardiac arrest אם ≥20w · Tryptase t1=15min, t2=1-2h, t3=24h
       </div>
     </details>
 
     <!-- ============== STEP 0: CRITICAL IMMEDIATE BANNER ============== -->
     <div class="note" style="border-right-color:var(--red);background:var(--red-bg);margin-top:14px;padding:14px 16px">
-      <div style="font-size:14px;font-weight:800;color:var(--red-text);margin-bottom:6px">⚠ אם חשד מבוסס — אפינפרין IM ירך הקדמי-לטרלי <u>מיידית</u>. אל תחכה לאישור או למעבדה.</div>
-      <div style="font-size:13px;color:var(--text);line-height:1.6">
-        <b>0.5 mg IM</b> (0.5 mL מ-1:1000) למבוגרת בכל גיל הריון · חזרה כל <b>5 דקות</b> לפי דופק/לחץ דם<br>
-        <b>בו-זמנית:</b> הפסקת חשיפה לטריגר · ‎Left lateral tilt (15-30°) · ‎O₂ 100% NRM 15 ל'/דקה · ‎IV ‎×2 רחבי קוטר · קוד אנפילקסיס
+      <div style="font-size:14px;font-weight:800;color:var(--red-text);margin-bottom:6px">⚠ חשד לאנפילקסיס → אדרנלין IM ירך מיידית</div>
+      <div style="font-size:13px;color:var(--text);line-height:1.7">
+        <b><span dir="ltr">0.3-0.5 mg</span> IM</b> (<span dir="ltr">1:1000</span>) ירך הקדמי-לטרלי · <b>חזרה כל <span dir="ltr">10</span> דק'</b> עד 3 מנות<br>
+        <b>בו-זמנית:</b> הפסקת חשיפה · O₂ NRM · 2 IV · מוניטור · קוד אנפילקסיס · <b>Left lateral tilt</b> (אם הריון ‎≥20w)
       </div>
     </div>
 
-    <!-- ============== INITIAL CALL & ASSESSMENT ============== -->
-    <details class="rec-box" style="margin-top:14px;border-right:4px solid var(--red)" open>
-      <summary class="rec-head" style="cursor:pointer">
-        <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <span>פעולות ראשוניות — 0-5 דקות</span>
-          <span class="rec-tag" style="background:var(--red);color:#fff">דקות ראשונות</span>
-        </span>
-        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
-      </summary>
-      <div class="rec-body">
-        <div class="rec-section">
-          <div class="rec-section-title">קריאה לעזרה והערכה</div>
-          <ul class="rec-list">
-            <li><b>פתיחת "קוד אנפילקסיס":</b> מיילדת בכירה · רופאה בכירה · מרדים · נאונטולוג (אם פרי-לידתית) · חדר ניתוח</li>
-            <li><b>הפסקה מיידית של החשיפה:</b> הפסק עירוי / antibiotic / contrast / oxytocin · הרחק latex · בדוק blood unit (סוג, שגיאה)</li>
-            <li><b>‎Position:</b> ‎Left lateral tilt 15-30° (להפחית aortocaval compression)<br>⚠ <b>אל תושיב/תרים</b> את החולה — נפילת preload עלולה לגרום לקריסה</li>
-            <li><b>ניטור:</b> NIBP כל 1-3 דק' · ‎SpO₂ · ‎ECG · ‎CTG עוברי רציף (אם &gt;24w)</li>
-            <li><b>‎ABC:</b> דרכי אוויר (stridor? edema? צרידות?) · נשימה (wheezing? פרודוקטיב?) · מחזור (BP, דופק, מילוי קפילרי)</li>
-          </ul>
-        </div>
-
-        <div class="rec-section">
-          <div class="rec-section-title">אפינפרין — קו ראשון, מיידי</div>
-          <ul class="rec-list">
-            <li><b>‎Epinephrine 0.5 mg IM</b> (0.5 mL מ-‎1:1000) · ירך הקדמי-לטרלי, מחט ‎23-25G באורך 25 מ"מ · דרך הבגד מותר</li>
-            <li><b>חזרה כל 5 דק'</b> אם אין שיפור · עד 3 מנות לפני מעבר ל-IV (אלא אם כבר אינטובציה/CPR)</li>
-            <li><b>‎IV bolus</b> רק במצב periarrest/CPR: ‎50-100 mcg IV (0.5-1 mL מ-1:10,000) · רב הסיבוכים (אריתמיות, ‎MI) קורים בעירוי לא מדויק</li>
-            <li><b>‎IV infusion</b> אם רפרקטרי לאחר 2 מנות IM: ‎0.05-0.5 mcg/kg/min ב-titration. הכן: ‎1 mg ב-100 mL NS (=10 mcg/mL) · התחל 5-10 mL/h למבוגרת 70 ק"ג</li>
-            <li><b>⚠ נטילת ‎β-blockers:</b> ייתכן עמידות לאפינפרין → ‎Glucagon 1-5 mg IV (משחזר ‎cAMP בעקיפה ל-β-receptor)</li>
-            <li><b>הריון:</b> אפינפרין בטוח. גורם וזוקונסטריקציה רחמית, אך הצלת האם = הצלת העובר. אל תהסס.</li>
-          </ul>
-        </div>
-
-        <div class="rec-section">
-          <div class="rec-section-title">חמצן ונוזלים</div>
-          <ul class="rec-list">
-            <li><b>‎O₂ 100%</b> במסכת רזרבואר 15 ל'/דקה. אינטובציה מוקדמת אם stridor, אם angioedema של פנים/לשון, אם רוויה ‎&lt;92% למרות חמצן</li>
-            <li><b>נוזלים:</b> ‎Crystalloid bolus 1-2 L NS/Hartmann תוך 10-15 דק' · יתכן צורך ב-4-6 L בקריסה חמורה (vasodilation מאסיבית + נזילת capillary)</li>
-            <li><b>‎Aerosolized salbutamol</b> 5 mg neb אם ברונכוספאזם — אדג'ובנט בלבד; אפינפרין הוא הטיפול העיקרי</li>
-          </ul>
-        </div>
-      </div>
-    </details>
-
-    <!-- ============== DIAGNOSTIC CRITERIA ============== -->
-    <details class="rec-box" style="margin-top:14px;border-right:4px solid var(--primary)">
-      <summary class="rec-head" style="cursor:pointer">
-        <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <span>קריטריונים לאבחנה — WAO 2020 / NIAID</span>
-          <span class="rec-tag" style="background:var(--primary);color:#fff">קליני</span>
-        </span>
-        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
-      </summary>
-      <div class="rec-body">
-        <div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-bottom:12px">
-          אבחנה <b>קלינית</b> — לא תלויה בערכי tryptase/לבורטוריה. <b>אחד</b> משני הסטים מספיק:
-        </div>
-
-        <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);margin-bottom:10px">
-          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px">סט 1 — פריצה חדה (דקות עד מספר שעות)</div>
-          <ul class="rec-list" style="margin-top:0">
-            <li>מעורבות עור/רירית (אורטיקריה, צריבה, גרד, angioedema של שפתיים/לשון/uvula)</li>
-            <li><b>‏‏וגם לפחות אחד מ:</b> <i>(א)</i> חסר אוויר / dyspnea / wheezing / hypoxemia · <i>(ב)</i> ירידת BP או סימני end-organ (קריסה, סינקופה, אינקונטיננציה)</li>
-          </ul>
-        </div>
-
-        <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
-          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px">סט 2 — חשיפה לאלרגן ידוע/חשוד + hypotension לבד</div>
-          <ul class="rec-list" style="margin-top:0">
-            <li><b>‎Hypotension</b> תוך דקות-שעות מחשיפה לאלרגן ידוע אצל החולה</li>
-            <li><b>בהריון:</b> ‎SBP &lt;100 mmHg, או ירידה ‎&gt;20% מבייסליין</li>
-            <li><b>גם בלי</b> פריחה/wheezing — חשיפה + hypotension = אנפילקסיס</li>
-          </ul>
-        </div>
-
-        <div class="note" style="border-right-color:var(--amber);background:var(--amber-bg);margin-top:12px">
-          <b>⚠ ייחוד בהריון:</b> ‎אורטיקריה לפעמים מוסווית ע"י changes פיזיולוגיים של היריון (vasodilation, hyperdynamic state). חרדה לעוברי על מוניטור (ירידה ב-FHR, bradycardia, late decelerations) <u>עשויה להיות הסימן הראשון</u> לאמא היפוטוניבית — חפש סיבה אמהית.
-        </div>
-      </div>
-    </details>
-
-    <!-- ============== ETIOLOGY CARDS ============== -->
+    <!-- ============== VISUAL FLOWCHART (Israeli MoH schema) ============== -->
     <details class="rec-box" style="margin-top:14px;border-right:4px solid var(--amber)">
       <summary class="rec-head" style="cursor:pointer">
         <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <span>אטיולוגיה — שכיח בהקשר מיילדותי</span>
-          <span class="rec-tag" style="background:var(--amber);color:#fff">UKOSS 2018</span>
+          <span>סכמה חזותית — אלגוריתם פעולה</span>
+          <span class="rec-tag" style="background:var(--amber);color:#fff">תרשים זרימה</span>
         </span>
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="rec-body">
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:6px">
-          <div style="padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--red-bg)">
-            <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:4px">47% — הסיבה השכיחה</div>
-            <div style="font-size:13px;font-weight:700;color:var(--text)">‎β-לקטמים</div>
-            <div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-top:4px">‎Penicillin / Ampicillin ל-GBS · ‎Cefazolin pre-CS · ‎Pip-Tazo ל-chorio. הקפד על שאלון אלרגיה לפני כל מנה ראשונה.</div>
+        <div class="anaphy-flow">
+
+          <!-- Yellow alert oval -->
+          <div class="af-node af-alert">חשד לתגובה אנפילקטית</div>
+          <div class="af-arrow"></div>
+
+          <!-- Sequential blue boxes -->
+          <div class="af-node af-blue">הערך מצב הכרה, נשימה ומדדים חיוניים נוספים · בצע אנמנזה מהירה</div>
+          <div class="af-arrow"></div>
+
+          <div class="af-node af-blue">שקול מעבר לפרוטוקול הפסקת נשימה מאיימת</div>
+          <div class="af-arrow"></div>
+
+          <div class="af-node af-blue">שקול מתן חמצן · שקול מתן אדרנלין IM · התקן עירוי תוך-ורידי וחבר מוניטור</div>
+          <div class="af-arrow"></div>
+
+          <!-- 3-way split: severity triage -->
+          <div class="af-split">
+
+            <!-- Right column (RTL first): Light/Moderate -->
+            <div class="af-col af-col-light">
+              <div class="af-col-head h-light">קל / בינוני</div>
+              <div class="af-actions">
+                <ul>
+                  <li>שקול אינהלציית <b>ונטולין</b></li>
+                  <li>תן <b>סולומדרול IV</b></li>
+                  <li>שקול עירוי סליין <span dir="ltr">1 L/hr</span></li>
+                </ul>
+              </div>
+              <div class="af-arrow-mini"></div>
+              <div class="af-diamond">שיפור?</div>
+              <div class="af-arrow-mini"></div>
+              <div class="af-escalate">
+                <b>לא:</b> אדרנלין IM · אינהלציית ונטולין · המשך עירוי סליין
+              </div>
+            </div>
+
+            <!-- Middle column: Severe -->
+            <div class="af-col af-col-severe">
+              <div class="af-col-head h-severe">מצב קשה</div>
+              <div class="af-actions">
+                <ul>
+                  <li>תן <b>אדרנלין IM</b></li>
+                  <li>בצע אינהלציית <b>ונטולין</b></li>
+                  <li>תן <b>סולומדרול IV</b></li>
+                  <li>תן עירוי סליין <span dir="ltr">2-3 L/hr</span></li>
+                </ul>
+              </div>
+              <div class="af-arrow-mini"></div>
+              <div class="af-diamond">שיפור?</div>
+              <div class="af-arrow-mini"></div>
+              <div class="af-escalate">
+                <b>לא:</b> שקול <b>אדרנלין IV</b> · שקול <b>דופאמין IV</b> · המשך עירוי סליין
+              </div>
+            </div>
+
+            <!-- Left column: Cardiac Arrest -->
+            <div class="af-col af-col-arrest">
+              <div class="af-col-head h-arrest">דום לב</div>
+              <div class="af-actions">
+                <ul>
+                  <li>בצע <b>החייאה מלאה</b> ע"פ פרוטוקול דום לב</li>
+                  <li>תן <b>אדרנלין במינונים עולים</b></li>
+                  <li>תן עירוי סליין <span dir="ltr">4-5 L/hr</span></li>
+                  <li>שקול מתן <b>סולומדרול IV</b></li>
+                </ul>
+              </div>
+              <div class="af-arrow-mini"></div>
+              <div class="af-escalate" style="background:rgba(252,231,243,0.6);color:#831843;border-color:#EC4899">
+                שקול מעבר לפרוטוקול <b>ROSC</b> או פרוטוקול הפסקת החייאה
+              </div>
+            </div>
+
           </div>
-          <div style="padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--amber-bg)">
-            <div style="font-size:11px;font-weight:700;color:var(--amber-text);margin-bottom:4px">חומרי הרדמה</div>
-            <div style="font-size:13px;font-weight:700;color:var(--text)">‎NMBA + Suxamethonium</div>
-            <div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-top:4px">Rocuronium, Atracurium · suxamethonium · ‎Latex · ‎opioids (מורפין, פטידין)</div>
+
+          <div class="af-arrow"></div>
+          <div class="af-node af-pink">
+            המשך ניטור / טיפול תוך פינוי דחוף לבית-חולים · בצע הערכת מדדים חוזרת כל <span dir="ltr">5-10</span> דק' · שקול העברת דיווח מקדים למלר"ד
           </div>
-          <div style="padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--purple-bg,var(--primary-bg))">
-            <div style="font-size:11px;font-weight:700;color:var(--purple);margin-bottom:4px">תרופות מיילדותיות</div>
-            <div style="font-size:13px;font-weight:700;color:var(--text)">‎Oxytocin / Misoprostol</div>
-            <div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-top:4px">תיאורי מקרה של ‎anaphylactoid לאחר אוקסיטוצין IV. ‎PG sulprostone / carboprost — להיזהר.</div>
-          </div>
-          <div style="padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--teal-bg)">
-            <div style="font-size:11px;font-weight:700;color:var(--teal);margin-bottom:4px">‎Latex</div>
-            <div style="font-size:13px;font-weight:700;color:var(--text)">כפפות, צנתרים</div>
-            <div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-top:4px">‎סיכון מוגבר: צוות רפואי, ‎spina bifida historic, ‎multiple surgeries.<br>שאל את החולה ספציפית.</div>
-          </div>
-          <div style="padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--surface2)">
-            <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:4px">עירויי דם</div>
-            <div style="font-size:13px;font-weight:700;color:var(--text)">‎FFP / Cryo / PRBC</div>
-            <div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-top:4px">תגובות אלרגיות לחלבוני פלסמה. ‎IgA deficient → תגובות אנפילקטיות לכל ‎PRBC עם IgA.</div>
-          </div>
-          <div style="padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--surface2)">
-            <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:4px">צבעי ניגוד</div>
-            <div style="font-size:13px;font-weight:700;color:var(--text)">‎Iodinated / Gadolinium</div>
-            <div style="font-size:11.5px;color:var(--text2);line-height:1.5;margin-top:4px">‎CT-PE, ‎pyelography. ‎פרה-מדיקציה אם סיפור — סטרואידים 13h+7h+1h + antihistamine.</div>
-          </div>
+
+        </div>
+
+        <div class="rec-src" style="margin-top:10px;font-size:10.5px;color:var(--text3)">
+          סכמה מבוססת על פרוטוקול אנפילקסיס ישראלי (מד"א / משרד הבריאות), בהתאמה למבנה העמודה במחשבון.
         </div>
       </div>
     </details>
 
-    <!-- ============== SECOND-LINE / ADJUNCTS ============== -->
-    <details class="rec-box" style="margin-top:14px;border-right:4px solid var(--teal)">
+    <!-- ============== STEP 1: ASSESSMENT & INITIAL ACTIONS ============== -->
+    <div class="sec" style="margin-top:18px">שלב 1 — הערכה ופעולות ראשוניות</div>
+    <div class="rec-box" style="margin-top:0;border-right:4px solid var(--primary)">
+      <div class="rec-body">
+        <ul class="rec-list">
+          <li><b>הפסק חשיפה לטריגר</b> · עצור עירוי / antibiotic / contrast / oxytocin · הרחק latex · בדוק יחידת דם</li>
+          <li><b>הערך מצב הכרה, נשימה, מדדים חיוניים</b> · אנמנזה מהירה (תרופה? אוכל? עקיצה? חשיפה?)</li>
+          <li><b>חמצן</b> NRM 15 ל'/דק' · יעד <span dir="ltr">SpO₂ &gt; 94%</span></li>
+          <li><b>2 עירויים תוך-ורידיים</b> רחבי קוטר · חיבור למוניטור (NIBP, SpO₂, ECG) · CTG עוברי רציף אם <span dir="ltr">≥24w</span></li>
+          <li><b>שקול אינטובציה מוקדמת</b> אם: צרידות מתקדמת · סטרידור · נפיחות גוברת בלשון/פנים · רוויה <span dir="ltr">&lt;92%</span> למרות חמצן</li>
+          <li><b>Position מיילדותי:</b> Left lateral tilt 15-30° (להפחית aortocaval compression) · <u>אל תושיב</u> את המטופלת — נפילת preload</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ============== STEP 2: SEVERITY TRIAGE — 3 PATHS ============== -->
+    <div class="sec" style="margin-top:18px">שלב 2 — טריאז' לפי חומרה</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:6px">
+
+      <!-- ─── Path A: Light/Moderate ─── -->
+      <div style="border:2px solid var(--green);border-radius:12px;background:var(--green-bg);overflow:hidden">
+        <div style="padding:10px 14px;background:var(--green);color:#fff;font-weight:800;font-size:14px;text-align:center">קל / בינוני</div>
+        <div style="padding:12px 14px">
+          <div style="font-size:11.5px;font-weight:700;color:var(--green-text);margin-bottom:6px">פעולות</div>
+          <ul class="rec-list" style="margin:0;padding-right:18px;font-size:12.5px">
+            <li>אינהלציית <b>ונטולין</b> <span dir="ltr">2.5-5 mg</span></li>
+            <li><b>סולומדרול IV</b></li>
+            <li>עירוי סליין <span dir="ltr">1 L/hr</span></li>
+          </ul>
+          <div style="margin-top:10px;padding:8px 10px;background:#fff;border:1px dashed var(--amber);border-radius:8px;font-size:12px;text-align:center">
+            <b style="color:var(--amber-text)">אין שיפור?</b> →<br>
+            אדרנלין IM · המשך ונטולין · המשך סליין
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Path B: Severe ─── -->
+      <div style="border:2px solid var(--amber);border-radius:12px;background:var(--amber-bg);overflow:hidden">
+        <div style="padding:10px 14px;background:var(--amber);color:#fff;font-weight:800;font-size:14px;text-align:center">מצב קשה</div>
+        <div style="padding:12px 14px">
+          <div style="font-size:11.5px;font-weight:700;color:var(--amber-text);margin-bottom:6px">פעולות</div>
+          <ul class="rec-list" style="margin:0;padding-right:18px;font-size:12.5px">
+            <li><b>אדרנלין IM</b> <span dir="ltr">0.3-0.5 mg</span></li>
+            <li>אינהלציית <b>ונטולין</b></li>
+            <li><b>סולומדרול IV</b></li>
+            <li>עירוי סליין <span dir="ltr">2-3 L/hr</span></li>
+          </ul>
+          <div style="margin-top:10px;padding:8px 10px;background:#fff;border:1px dashed var(--red);border-radius:8px;font-size:12px;text-align:center">
+            <b style="color:var(--red-text)">אין שיפור?</b> →<br>
+            <b>אדרנלין IV</b> · שקול <b>דופאמין IV</b> · המשך סליין
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Path C: Cardiac Arrest ─── -->
+      <div style="border:2px solid var(--red);border-radius:12px;background:var(--red-bg);overflow:hidden">
+        <div style="padding:10px 14px;background:var(--red);color:#fff;font-weight:800;font-size:14px;text-align:center">דום לב</div>
+        <div style="padding:12px 14px">
+          <div style="font-size:11.5px;font-weight:700;color:var(--red-text);margin-bottom:6px">פעולות</div>
+          <ul class="rec-list" style="margin:0;padding-right:18px;font-size:12.5px">
+            <li><b>החייאה מלאה</b> ע"פ פרוטוקול דום לב</li>
+            <li><b>אדרנלין במנות עולות</b> כל <span dir="ltr">3-5</span> דק'</li>
+            <li>עירוי סליין <span dir="ltr">4-5 L/hr</span></li>
+            <li><b>סולומדרול IV</b></li>
+            <li><b>Perimortem CS</b> תוך <span dir="ltr">4</span> דק' אם <span dir="ltr">≥20w</span></li>
+          </ul>
+          <div style="margin-top:10px;padding:8px 10px;background:#fff;border:1px dashed var(--red);border-radius:8px;font-size:12px;text-align:center">
+            <b style="color:var(--red-text)">ROSC?</b> →<br>
+            מעבר לפרוטוקול ROSC או הפסקת החייאה
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============== STEP 3: TRANSFER / CONTINUED MONITORING ============== -->
+    <div class="note" style="border-right-color:var(--purple);background:rgba(139,92,246,0.08);margin-top:14px">
+      <b>המשך:</b> ניטור וטיפול תוך פינוי דחוף · הערכת מדדים חוזרת כל <span dir="ltr">5-10</span> דק' · דיווח מקדים למלר"ד/מוקד יולדות · אשפוז <span dir="ltr">6-24</span> שעות (סיכון ל-biphasic reaction).
+    </div>
+
+    <!-- ============== DOSES SIDEBAR — fixed reference ============== -->
+    <div class="sec" style="margin-top:18px">מינונים — סרגל מהיר</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px">
+
+      <div style="padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+        <div style="font-size:13px;font-weight:700;color:var(--red);margin-bottom:6px">אדרנלין (Epinephrine)</div>
+        <ul class="rec-list" style="margin:0;padding-right:18px;font-size:12.5px;line-height:1.7">
+          <li><b>IM</b> <span dir="ltr">0.3-0.5 mg</span> · ירך הקדמי-לטרלי · עד <span dir="ltr">3</span> מנות בהפרש <span dir="ltr">10</span> דק'</li>
+          <li><b>IV infusion</b> <span dir="ltr">1-10 mcg/min</span> או מנות חוזרות <span dir="ltr">0.1-0.2 mg</span> כל <span dir="ltr">5-10</span> דק'</li>
+          <li><b>דום לב</b> — מנות עולות כל <span dir="ltr">3-5</span> דק' תוך כדי CPR</li>
+          <li style="color:var(--red-text)"><b>זהירות:</b> גיל <span dir="ltr">&gt;40</span>, היסטוריה של IHD</li>
+        </ul>
+      </div>
+
+      <div style="padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+        <div style="font-size:13px;font-weight:700;color:var(--amber-text);margin-bottom:6px">ונטולין (Salbutamol)</div>
+        <ul class="rec-list" style="margin:0;padding-right:18px;font-size:12.5px;line-height:1.7">
+          <li><b>אינהלציה</b> <span dir="ltr">2.5-5 mg</span> · עד <span dir="ltr">3</span> מנות בהפרש <span dir="ltr">20</span> דק'</li>
+          <li><b>תוך טובוס</b> (לאחר אינטובציה, אם קושי ניכר בהנשמה): <span dir="ltr">5 mg</span> מהול ב-<span dir="ltr">5 mL</span> סליין <span dir="ltr">0.9%</span></li>
+        </ul>
+      </div>
+
+      <div style="padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+        <div style="font-size:13px;font-weight:700;color:var(--primary);margin-bottom:6px">דופאמין (Dopamine)</div>
+        <ul class="rec-list" style="margin:0;padding-right:18px;font-size:12.5px;line-height:1.7">
+          <li>אם <b>סימני היפופרפוזיה</b> נמשכים למרות אדרנלין ונוזלים</li>
+          <li><b>מינון:</b> <span dir="ltr">5-20 mcg/kg/min</span> בעירוי</li>
+        </ul>
+      </div>
+
+      <div style="padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+        <div style="font-size:13px;font-weight:700;color:var(--teal);margin-bottom:6px">סולומדרול (Methylprednisolone)</div>
+        <ul class="rec-list" style="margin:0;padding-right:18px;font-size:12.5px;line-height:1.7">
+          <li><b>IV</b> <span dir="ltr">80-125 mg</span> (חלופה: Hydrocortisone <span dir="ltr">200 mg</span> IV)</li>
+          <li>תפקיד עיקרי: מניעת <b>biphasic reaction</b> · אינו טיפול חריף</li>
+        </ul>
+      </div>
+
+      <div style="padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+        <div style="font-size:13px;font-weight:700;color:var(--purple);margin-bottom:6px">אנטיהיסטמינים (אדג'ובנט)</div>
+        <ul class="rec-list" style="margin:0;padding-right:18px;font-size:12.5px;line-height:1.7">
+          <li><b>H1:</b> Chlorpheniramine <span dir="ltr">10 mg</span> IV / Diphenhydramine <span dir="ltr">25-50 mg</span></li>
+          <li><b>H2:</b> Famotidine <span dir="ltr">20 mg</span> IV / Ranitidine <span dir="ltr">50 mg</span></li>
+          <li>מטפל בעור — <b>לא</b> ב-airway/hypotension</li>
+        </ul>
+      </div>
+
+      <div style="padding:12px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+        <div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:6px">תרחישים מיוחדים</div>
+        <ul class="rec-list" style="margin:0;padding-right:18px;font-size:12.5px;line-height:1.7">
+          <li><b>β-blocker רפרקטרי:</b> Glucagon <span dir="ltr">1-5 mg</span> IV</li>
+          <li><b>נוזלים מסיביים:</b> שקול עד <span dir="ltr">4-6 L</span> בקריסה</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ============== OB-SPECIFIC: compact ============== -->
+    <details class="rec-box" style="margin-top:16px;border-right:4px solid var(--pink)">
       <summary class="rec-head" style="cursor:pointer">
         <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <span>קווי טיפול נוסף — אדג'ובנטים</span>
-          <span class="rec-tag" style="background:var(--teal);color:#fff">לאחר אפינפרין</span>
+          <span>תוספים מיילדותיים — שיקולים ייעודיים</span>
+          <span class="rec-tag" style="background:var(--pink);color:#fff">OB</span>
         </span>
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="rec-body">
-        <div class="note" style="border-right-color:var(--amber);background:var(--amber-bg);margin-bottom:12px">
-          <b>⚠ עקרון:</b> אנטיהיסטמינים וסטרואידים <u>אינם</u> טיפול קו ראשון. הם <b>לא</b> מטפלים ב-airway/hypotension. תן אותם רק לאחר שהוזרק אפינפרין.
-        </div>
-
-        <div class="rec-section">
-          <div class="rec-section-title">אנטיהיסטמינים</div>
-          <ul class="rec-list">
-            <li><b>‎H1 antagonist:</b> ‎Chlorpheniramine 10 mg IV איטי, או ‎Diphenhydramine 25-50 mg IV/IM · מטפל בעיקר בעור (גרד, אורטיקריה)</li>
-            <li><b>‎H2 antagonist:</b> ‎Ranitidine 50 mg IV (אם זמין) או ‎Famotidine 20 mg IV · ‎שילוב H1+H2 יעיל יותר מ-H1 לבד</li>
-          </ul>
-        </div>
-
-        <div class="rec-section">
-          <div class="rec-section-title">סטרואידים</div>
-          <ul class="rec-list">
-            <li><b>‎Hydrocortisone 200 mg IV</b>, או ‎Methylprednisolone 80-125 mg IV</li>
-            <li><b>תפקיד:</b> מניעת ‎biphasic reaction (חזרה 1-72h לאחר ההחלמה הראשונית, ב-5-20% מהמקרים)</li>
-            <li><b>‎עיכוב בהשפעה:</b> 4-6 שעות — לא מטפל באירוע החריף</li>
-          </ul>
-        </div>
-
-        <div class="rec-section">
-          <div class="rec-section-title">תרחישים מיוחדים</div>
-          <ul class="rec-list">
-            <li><b>חולה על ‎β-blocker (refractory):</b> ‎Glucagon 1-5 mg IV bolus over 5 min, ואז 5-15 mcg/min infusion</li>
-            <li><b>‎Bronchospasm refractory:</b> ‎Salbutamol nebs 5 mg, ‎Ipratropium 500 mcg neb, ‎magnesium sulfate 2g IV</li>
-            <li><b>‎Hypotension refractory לאחר Epi:</b> הוסף ‎Norepinephrine 0.05-0.5 mcg/kg/min · ‎Vasopressin 0.01-0.04 U/min · ‎Methylene blue 1-2 mg/kg ‎(NO synthase inhibitor) — נדיר</li>
-            <li><b>‎ECMO/VA-ECMO:</b> במקרים של ‎refractory shock עם תפקוד קרדיאלי מתדרדר — לשקול הפניה למרכז ECMO</li>
-          </ul>
-        </div>
+        <ul class="rec-list">
+          <li><b>Left lateral tilt 15-30°</b> (אם הריון <span dir="ltr">≥20w</span>) — הפחתת aortocaval compression</li>
+          <li><b>העובר תלוי באם:</b> ייצוב אמהי = ייצוב עוברי. <u>אל תיילד</u> מאינדיקציה עוברית בלבד לפני ייצוב אמהי</li>
+          <li><b>Perimortem CS:</b> בדום לב לא מגיב <u>+ ≥20w</u> · תוך <span dir="ltr">4</span> דק' מתחילת CPR · במקום, ללא העברה לחדר ניתוח</li>
+          <li><b>תחת רגיונל:</b> הפסק עירוי אפידורל · Phenylephrine <span dir="ltr">100-200 mcg</span> או Ephedrine <span dir="ltr">10 mg</span> עד אפינפרין · הבדל מ-high spinal: שם אין פריחה</li>
+          <li><b>Tryptase:</b> t1=<span dir="ltr">15</span> דק' · t2=<span dir="ltr">1-2</span> שעות · t3=<span dir="ltr">24</span> שעות baseline · עליה <span dir="ltr">≥1.2×</span> baseline + <span dir="ltr">2 ng/mL</span> משמעותית (NAP6)</li>
+          <li><b>שחרור:</b> EpiPen <span dir="ltr">300 mcg</span> במרשם · רשומת אלרגיה אדומה · הפניה לאלרגולוג (בדיקות עור <span dir="ltr">4-6</span> שב' אחר-כך) · MedicAlert</li>
+        </ul>
       </div>
     </details>
 
-    <!-- ============== OB-SPECIFIC CONSIDERATIONS ============== -->
-    <details class="rec-box" style="margin-top:14px;border-right:4px solid var(--pink)">
+    <!-- ============== DDx + Etiology: collapsed/compact ============== -->
+    <details class="rec-box" style="margin-top:12px;border-right:4px solid var(--purple)">
       <summary class="rec-head" style="cursor:pointer">
         <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <span>שיקולים מיילדותיים ייעודיים</span>
-          <span class="rec-tag" style="background:var(--pink);color:#fff">OB-specific</span>
+          <span>טריגרים שכיחים ב-OB · אבחנה מבדלת</span>
+          <span class="rec-tag" style="background:var(--purple);color:#fff">הקשר</span>
         </span>
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="rec-body">
         <div class="rec-section">
-          <div class="rec-section-title">העובר — שיקול שני, האם — ראשון</div>
+          <div class="rec-section-title">טריגרים (UKOSS 2018)</div>
           <ul class="rec-list">
-            <li><b>‎Maternal resuscitation = fetal resuscitation.</b> ‎אל תיילד מאינדיקציה עוברית בלבד אם האם לא יציבה — נוזלים ואפינפרין משחזרים את הפרפוזיה השלייתית.</li>
-            <li><b>‎FHR/CTG:</b> ירידה, ‎late decelerations, ‎bradycardia ממושכת — לרוב תיקון עצמי לאחר ייצוב אמהי</li>
-            <li><b>אם CTG לא משתפר לאחר ייצוב אמהי וגיל הריון ≥24w:</b> שקלי לידה — בקיסרי דחוף לרוב</li>
+            <li><b>β-לקטמים <span dir="ltr">47%</span></b> (Penicillin/Cef ל-GBS/pre-CS/chorio) · <b>NMBA + Suxamethonium</b> · <b>Latex</b> · <b>אוקסיטוצין</b> (נדיר, anaphylactoid) · עירויי דם · צבעי ניגוד · NSAIDs · opioids</li>
           </ul>
         </div>
-
         <div class="rec-section">
-          <div class="rec-section-title">Perimortem Cesarean (RCM/PMCS)</div>
+          <div class="rec-section-title">אבחנה מבדלת בקריסה אמהית פתאומית</div>
           <ul class="rec-list">
-            <li><b>אינדיקציה:</b> ‎Maternal cardiac arrest שלא מגיב להחייאה ‎+ ‎גיל הריון ‎≥20w (גובה רחמי = טבור)</li>
-            <li><b>טיימינג:</b> ‎תוך 4 דקות מתחילת ‎CPR · ייצור עד 5 דקות</li>
-            <li><b>‎Rationale:</b> הסרת ‎aortocaval compression משפר venous return ויעילות CPR · ‎neonatal survival טוב אם נעשה תוך &lt;5 דק'</li>
-            <li><b>הצוות:</b> אין צורך להעבירה לחדר ניתוח. בלינה, ‎skin prep מינימלי, ‎vertical midline incision, vertical uterine incision · האם בו-זמנית continues CPR</li>
-          </ul>
-        </div>
-
-        <div class="rec-section">
-          <div class="rec-section-title">אם תחת רגיונל (אפידורל/ספינל) בזמן האירוע</div>
-          <ul class="rec-list">
-            <li><b>הפסקת מתן regional anesthetic</b> · המשך infusion ייתכן וגורם להעמקת sympathetic block ולhypotension</li>
-            <li><b>הבדל מ-high spinal:</b> אנפילקסיס לרוב פריחה + wheezing + תגובה לטריגר ספציפי. ‎high spinal: bradycardia, ירידה בפעולה נשימתית, ‎LOC ללא פריחה</li>
-            <li><b>‎Phenylephrine bolus 100-200 mcg</b> או ‎ephedrine 10 mg יכולים לעזור עד שאפינפרין IM זמין</li>
-          </ul>
-        </div>
-
-        <div class="rec-section">
-          <div class="rec-section-title">בדיקות מעבדה — Tryptase</div>
-          <ul class="rec-list">
-            <li><b>‎Mast cell tryptase</b> — עליה תומכת באבחנה (פעילות mast cell). שלוש דגימות:</li>
-            <li>‎<b>T1:</b> 15-180 דקות מהפריצה</li>
-            <li>‎<b>T2:</b> 1-2 שעות לאחר האירוע</li>
-            <li>‎<b>T3 (baseline):</b> 24+ שעות מהאירוע, או בביקור חוץ-אשפוז בהמשך</li>
-            <li>‎<b>פירוש (NAP6):</b> ‎עליה ≥1.2× baseline + 2 ng/mL = פעילות mast cell משמעותית</li>
-          </ul>
-        </div>
-
-        <div class="rec-section">
-          <div class="rec-section-title">לאחר הייצוב — מעקב</div>
-          <ul class="rec-list">
-            <li><b>אשפוז 6-12 שעות מינימום</b> בניטור (סיכון ל-biphasic reaction). אם תגובה חמורה — אשפוז 24 שעות</li>
-            <li><b>‎EpiPen 300 mcg</b> במרשם לעת שחרור · הסברה לזיהוי תסמיני חזרה</li>
-            <li><b>הפניה לאלרגולוג</b> — בדיקות עור 4-6 שב' לאחר האירוע (לא לפני — תקופת ‎refractory). זיהוי הטריגר חיוני לפני הריון הבא</li>
-            <li><b>תיעוד:</b> נייר אדום בכרטיס, רשומת אלרגיה רפואית, ‎MedicAlert bracelet</li>
-            <li><b>‎ICD-10:</b> ‎T78.2 (Anaphylactic shock, unspecified) · ‎T88.6 (anaesthetic) · ‎T80.5 (transfusion)</li>
+            <li><b>AFE</b> — חפיפה גבוהה: hypoxia + hypotension + DIC, ללא פריחה. Tryptase נורמלי</li>
+            <li><b>High/Total spinal</b> — לאחר רגיונל, bradycardia + LOC ללא פריחה</li>
+            <li><b>Eclampsia</b> — עוויתות + HTN רקע · MgSO₄</li>
+            <li><b>Septic shock</b> — חום + מקור (chorio, pyelo) · התפתחות איטית יותר</li>
+            <li><b>VTE/PE מסיבי</b> — dyspnea, chest pain, JVP, RV strain · CTPA</li>
+            <li><b>PPH מסיבי</b> — דם נראה/מוסתר · 4T's</li>
+            <li><b>Vasovagal</b> — שיפור מיידי עם trendelenburg, ללא פריחה/wheeze</li>
           </ul>
         </div>
       </div>
     </details>
 
-    <!-- ============== DIFFERENTIAL DIAGNOSIS ============== -->
-    <details class="rec-box" style="margin-top:14px;border-right:4px solid var(--purple)">
+    <!-- ============== POCKET CHECKLIST ============== -->
+    <details class="rec-box" style="margin-top:12px;border-right:4px solid var(--green)">
       <summary class="rec-head" style="cursor:pointer">
         <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <span>אבחנה מבדלת ב-OB — קריסה אמהית פתאומית</span>
-          <span class="rec-tag" style="background:var(--purple);color:#fff">DDx</span>
-        </span>
-        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
-      </summary>
-      <div class="rec-body">
-        <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-top:6px">
-
-          <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
-            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">‎AFE — Amniotic Fluid Embolism</div>
-            <div style="font-size:12px;color:var(--text2);line-height:1.55">
-              <b>חפיפה גבוהה.</b> AFE עם hypoxia + hypotension + DIC, ללא פריחה לרוב. ‎Tryptase יעזור (נורמלי ב-AFE). חשב 1:50,000 לידות, תמותה 11-44%. <b>טיפול חופף</b> — ‎ABC, אפינפרין, MTP.
-            </div>
-          </div>
-
-          <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
-            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">‎High Spinal / Total Spinal</div>
-            <div style="font-size:12px;color:var(--text2);line-height:1.55">
-              ‎Bradycardia + hypotension לאחר רגיונל · ‎respiratory paralysis · ‎LOC · אין פריחה. תיקון: vasopressors + airway support.
-            </div>
-          </div>
-
-          <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
-            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">‎Eclampsia / PRES</div>
-            <div style="font-size:12px;color:var(--text2);line-height:1.55">
-              עוויתות + ‎HTN (לעתים hypotension לאחר), היסטוריה של preeclampsia, פרוטינוריה. ‎MgSO₄.
-            </div>
-          </div>
-
-          <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
-            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Septic Shock</div>
-            <div style="font-size:12px;color:var(--text2);line-height:1.55">
-              ‎Chorio, ‎pyelonephritis, ‎endometritis · חום, מקור זיהומי ברור, התפתחות איטית יותר · ‎antibiotics + fluids + pressors.
-            </div>
-          </div>
-
-          <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
-            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">‎VTE / PE מסיבי</div>
-            <div style="font-size:12px;color:var(--text2);line-height:1.55">
-              ‎Dyspnea, ‎chest pain, ‎pleuritic, ‎JVP, ‎RV strain ב-ECG. ‎D-dimer, CTPA. ‎Thrombolytics בשוק עמיד.
-            </div>
-          </div>
-
-          <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
-            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">‎PPH מסיבי</div>
-            <div style="font-size:12px;color:var(--text2);line-height:1.55">
-              ‎Hypotension עם דם נראה לעין/מוסתר (‎intra-abdominal, broad ligament). ‎4T's. ‎לרוב כיוון/מקור ברור.
-            </div>
-          </div>
-
-          <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
-            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">‎Hypoglycemia / Hyponatremia</div>
-            <div style="font-size:12px;color:var(--text2);line-height:1.55">
-              ‎Sweating, confusion, ‎LOC, ללא פריחה. בדוק ‎glucose stick + ‎electrolytes מיד.
-            </div>
-          </div>
-
-          <div style="padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
-            <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">‎Vasovagal Syncope</div>
-            <div style="font-size:12px;color:var(--text2);line-height:1.55">
-              ‎Bradycardia + hypotension לאחר טריגר (כאב, דקירה), שיפור מהיר עם פוזיציה לראש למטה. <b>אין</b> פריחה/wheezing.
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </details>
-
-    <!-- ============== POCKET CHECKLIST FOR PRINTING ============== -->
-    <details class="rec-box" style="margin-top:14px;border-right:4px solid var(--green)">
-      <summary class="rec-head" style="cursor:pointer">
-        <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <span>צ'ק-ליסט כיס להדפסה</span>
-          <span class="rec-tag" style="background:var(--green);color:#fff">7 צעדים</span>
+          <span>צ'ק-ליסט כיס</span>
+          <span class="rec-tag" style="background:var(--green);color:#fff">להדפסה</span>
         </span>
         <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text3);width:14px;height:14px"><path d="M3 5l4 4 4-4"/></svg>
       </summary>
       <div class="rec-body">
         <ol style="padding-right:18px;line-height:2;font-size:13.5px">
-          <li>☐ <b>הפסק חשיפה לטריגר</b> · קרא לעזרה · קוד אנפילקסיס</li>
-          <li>☐ <b>‎Epinephrine 0.5 mg IM</b> ירך הקדמי-לטרלי (חזרה כל 5 דק')</li>
-          <li>☐ <b>‎Left lateral tilt</b> · ‎O₂ 100% NRM · 2 IV ‎×2 רחבי קוטר</li>
-          <li>☐ <b>נוזלים:</b> ‎Crystalloid 1-2 L bolus (יותר אם hypotension עמיד)</li>
-          <li>☐ <b>אדג'ובנטים:</b> ‎H1 + H2 antagonists · ‎Hydrocortisone 200 mg IV</li>
-          <li>☐ <b>‎Bronchospasm:</b> ‎Salbutamol 5 mg neb</li>
-          <li>☐ <b>מוניטור עוברי</b> · אל תיילד לאינדיקציה עוברית בלי ייצוב אמהי</li>
-          <li>☐ <b>‎Tryptase:</b> ‎15 דק' + 1-2h + 24h</li>
-          <li>☐ <b>תיעוד טריגר חשוד</b> · רשומת אלרגיה · הפניה לאלרגולוג</li>
-          <li>☐ <b>אשפוז 6-24 שעות</b> בניטור (biphasic reaction)</li>
+          <li>☐ <b>הפסק חשיפה</b> · קרא לעזרה · קוד אנפילקסיס</li>
+          <li>☐ <b>אדרנלין IM <span dir="ltr">0.3-0.5 mg</span></b> ירך · חזרה כל <span dir="ltr">10</span> דק' (עד <span dir="ltr">3</span> מנות)</li>
+          <li>☐ <b>חמצן NRM</b> · <b>Left lateral tilt</b> · 2 IV · מוניטור · CTG</li>
+          <li>☐ <b>טריאז':</b> קל/בינוני → ונטולין+סולומדרול+סליין <span dir="ltr">1 L/hr</span></li>
+          <li>☐ קשה → <b>אדרנלין IM</b>+ונטולין+סולומדרול+סליין <span dir="ltr">2-3 L/hr</span></li>
+          <li>☐ דום לב → <b>החייאה</b>+אדרנלין מנות עולות+סליין <span dir="ltr">4-5 L/hr</span>+שקול PMCS</li>
+          <li>☐ <b>אין שיפור</b> → אדרנלין IV / דופאמין <span dir="ltr">5-20 mcg/kg/min</span></li>
+          <li>☐ <b>Tryptase</b> <span dir="ltr">15</span> דק' + <span dir="ltr">1-2</span> שעות + <span dir="ltr">24</span> שעות</li>
+          <li>☐ <b>אשפוז <span dir="ltr">6-24</span> שעות</b> · EpiPen · הפניה לאלרגולוג</li>
         </ol>
       </div>
     </details>
 
     <div class="rec-src" style="margin-top:14px;color:var(--text3);font-size:10.5px;line-height:1.7">
-      <b>Sources:</b> Resuscitation Council UK — Adult Anaphylaxis 2021 · WAO Anaphylaxis Guidance 2020 (Cardona V et al. World Allergy Organ J 2020;13:100472) · EAACI Guidelines (Muraro 2014; Cardona 2021) · NIAID/FAAN Symposium 2006 (Sampson HA et al. JACI 2006;117:391) · NAP6 — Royal College of Anaesthetists 6th National Audit Project (Cook TM et al. Br J Anaesth 2018) · OAA/AAGBI 2018 — Suspected anaphylaxis during anaesthesia (Anaesthesia 73:212) · UKOSS Anaphylaxis in Pregnancy (McCall SJ et al. BJOG 2018;125:965-71) · ACOG Committee Opinion 776 (Immune Modulators) · WHO Model List of Essential Medicines · Hepner DL, Castells MC. Anesth Analg 2006;102:526
+      <b>Sources:</b> פרוטוקול אנפילקסיס ישראלי (מד"א / משרד הבריאות) · Resuscitation Council UK Adult Anaphylaxis 2021 · WAO Guidance 2020 (Cardona V et al. World Allergy Organ J 2020;13:100472) · NAP6 (Cook TM et al. Br J Anaesth 2018) · OAA/AAGBI 2018 (Anaesthesia 73:212) · UKOSS BJOG 2018 (McCall SJ et al. 125:965-71) · EAACI Guidelines (Muraro 2014; Cardona 2021) · NIAID/FAAN (Sampson HA et al. JACI 2006;117:391) · Hepner DL, Castells MC. Anesth Analg 2006;102:526
     </div>
   </div>
 
@@ -7628,7 +7682,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.31';
+const APP_VERSION = '4.33';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
