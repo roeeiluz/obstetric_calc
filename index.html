@@ -1730,6 +1730,21 @@
   }
   details.pp-section .pp-sec-body .sec { display: none; } /* hide legacy sec headers inside */
   details.pp-section .pp-sec-body > :first-child { margin-top: 12px; }
+
+  /* ── Chart-ready plain-text plan (Clalix copy) ────────────────────── */
+  details.pp-chart-acc { margin-top: 14px; }
+  details.pp-chart-acc[open] { border-color: var(--teal, var(--primary)); }
+  .pp-chart-ta {
+    width: 100%; box-sizing: border-box; resize: vertical;
+    min-height: 220px; padding: 12px 14px; margin-top: 4px;
+    border: 1px solid var(--border2); border-radius: 10px;
+    background: var(--surface2); color: var(--text);
+    font-family: inherit; font-size: 13px; line-height: 1.85;
+    direction: rtl; text-align: right; white-space: pre-wrap;
+  }
+  .pp-chart-ta:focus { outline: none; border-color: var(--primary); background: var(--surface); }
+  .pp-chart-hint { font-size: 11px; color: var(--text3); margin-top: 6px; line-height: 1.6; }
+
   .pp-cta-row {
     display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap;
   }
@@ -7707,7 +7722,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.35';
+const APP_VERSION = '4.37';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -16892,10 +16907,38 @@ function calcPp(){
     </button>
   </div>`;
 
+  // ── Chart-ready plain-text plan (collapsible accordion, opens on demand) ──
+  const chartText = buildPpChartText(allItems, lmp, edd);
+  const chartEsc = chartText.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const chartRows = Math.min(22, Math.max(10, chartText.split('\n').length + 1));
+  html += `<details class="pp-section pp-chart-acc no-print">
+    <summary>
+      <div class="pp-sec-ico">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="10" height="14" rx="2"/><path d="M8 3.5h4a1 1 0 0 1 1 1V5a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-.5a1 1 0 0 1 1-1Z"/><path d="M7.5 10h5M7.5 13h3"/></svg>
+      </div>
+      <div class="pp-sec-text">
+        <div class="pp-sec-title">תוכנית לתיק היולדת (קליקס)</div>
+        <div class="pp-sec-sub">טקסט פשוט בבולטים — להעתקה ישירה לתיק</div>
+      </div>
+      <svg class="pp-sec-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+    </summary>
+    <div class="pp-sec-body">
+      <textarea id="pp-chart-text" class="pp-chart-ta" dir="rtl" rows="${chartRows}" spellcheck="false">${chartEsc}</textarea>
+      <div class="pp-chart-hint">ניתן לערוך את הטקסט לפני ההעתקה. הבולטים אינם ממוספרים ומותאמים להדבקה בתיק היולדת.</div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="btn btn-primary" type="button" onclick="copyPpChartText()" style="flex:1">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;vertical-align:-2px;margin-inline-end:6px"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M11 5V3.5A1.5 1.5 0 0 0 9.5 2H3.5A1.5 1.5 0 0 0 2 3.5v6A1.5 1.5 0 0 0 3.5 11H5"/></svg>
+          העתק לתיק
+        </button>
+      </div>
+    </div>
+  </details>`;
+
   el.innerHTML = html;
 
   // Stash plan data for copy/share/export
   window._lastPpPlan = buildPpPlanText(state, lmp, edd, allItems, activeRisks, riskNotes);
+  window._lastPpChart = chartText;
   window._lastPpData = {state, lmp, edd, allItems, activeRisks, riskNotes};
 }
 
@@ -17036,6 +17079,61 @@ function buildPpPlanText(state, lmp, edd, items, risks, notes){
   }
   txt += '\n───────────────────────\nמחשבון מיילדות · בהשראתו של ד"ר גלעד שחק';
   return txt;
+}
+
+// ── Simple chart-ready plan (plain bullets, for pasting into Clalix) ──
+// Condenses the full schedule into short, non-numbered bullet lines that a
+// physician can paste straight into the patient's chart and edit as needed.
+function ppWeekTag(a, b){
+  const L = '‎'; // LRM — keeps numeric week ranges from flipping in RTL text
+  return a === b ? `שבוע ${L}${a}${L}` : `שבוע ${L}${a}-${b}${L}`;
+}
+
+function buildPpChartBullets(items){
+  const sorted = [...items].sort((x, y) => x.fromW - y.fromW || (x.toW - x.fromW) - (y.toW - y.fromW));
+  const out = [];
+  for(const it of sorted){
+    // Expand the generic "supplements" row into individual, chart-friendly lines
+    if(/תוספים מומלצים/.test(it.label)){
+      out.push('חומצה פולית — מדי יום');
+      out.push('מולטי-ויטמין להריון — מדי יום');
+      out.push('אומגה 3 (DHA) — מדי יום');
+      out.push('ויטמין D — מדי יום');
+      continue;
+    }
+    const label = it.label.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+    const span = it.toW - it.fromW;
+    // Show a week marker only for reasonably specific windows (not whole-pregnancy items)
+    const prefix = (it.fromW > 0 && span <= 10 && it.toW <= 42) ? ppWeekTag(it.fromW, it.toW) + ' — ' : '';
+    out.push(prefix + label);
+  }
+  return out;
+}
+
+function buildPpChartText(items, lmp, edd){
+  let t = 'תוכנית מעקב הריון';
+  if(lmp && edd) t += ` (LMP ${fmtDate(lmp)} · EDD ${fmtDate(edd)})`;
+  t += '\n';
+  t += buildPpChartBullets(items).map(b => '• ' + b).join('\n');
+  return t;
+}
+
+function copyPpChartText(){
+  const ta = document.getElementById('pp-chart-text');
+  if(!ta) return;
+  const done = () => {
+    const btn = event && event.target ? event.target.closest('button') : null;
+    if(!btn) return;
+    const orig = btn.innerHTML;
+    btn.innerHTML = 'הועתק לתיק ✓';
+    btn.style.background = 'var(--green)';
+    setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 1800);
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(ta.value).then(done).catch(() => { ta.select(); document.execCommand('copy'); done(); });
+  } else {
+    ta.select(); document.execCommand('copy'); done();
+  }
 }
 
 function copyPpPlan(){
