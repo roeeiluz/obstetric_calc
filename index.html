@@ -7722,7 +7722,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.37';
+const APP_VERSION = '4.38';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -10595,9 +10595,28 @@ function dollbergInterp(w, d, sex, plurality){
     p97: lerp(r0.p97,r1.p97,f)
   };
 }
+// z-score for each percentile anchor (inverse normal). Used for interpolation
+// in z-space across all available percentiles — respects the skewed (non-normal)
+// shape of birthweight distributions instead of assuming a symmetric SD.
+const PCT_Z = {p1:-2.3263,p3:-1.8808,p5:-1.6449,p10:-1.2816,p25:-0.6745,
+               p50:0,p75:0.6745,p90:1.2816,p95:1.6449,p97:1.8808,p99:2.3263};
+// Piecewise-linear interpolation of z across the published percentile anchors.
+// Hits every published percentile exactly; extrapolates linearly past the ends.
+function zFromPercentiles(efw, p){
+  const order=['p1','p3','p5','p10','p25','p50','p75','p90','p95','p97','p99'];
+  const xs=[], zs=[];
+  for(const k of order){ if(p[k]!=null){ xs.push(p[k]); zs.push(PCT_Z[k]); } }
+  const n=xs.length;
+  if(n<2) return 0;
+  if(efw<=xs[0]){ const s=(zs[1]-zs[0])/(xs[1]-xs[0]); return zs[0]+(efw-xs[0])*s; }
+  if(efw>=xs[n-1]){ const s=(zs[n-1]-zs[n-2])/(xs[n-1]-xs[n-2]); return zs[n-1]+(efw-xs[n-1])*s; }
+  for(let i=0;i<n-1;i++){
+    if(efw>=xs[i] && efw<=xs[i+1]){ const f=(efw-xs[i])/(xs[i+1]-xs[i]); return zs[i]+f*(zs[i+1]-zs[i]); }
+  }
+  return 0;
+}
 function dollbergZ(efw, p){
-  const sd=(p.p50-p.p10)/1.2816;
-  return (efw-p.p50)/sd;
+  return zFromPercentiles(efw, p);
 }
 
 // ── ISMFM Twin — Israeli twin EFW curve (ultrasound-based) ──
