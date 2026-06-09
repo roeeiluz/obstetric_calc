@@ -2012,7 +2012,10 @@
     <div class="ref">
       <b>OB Wheel:</b> חישוב גיל הריון ותאריך לידה משוער (EDD) מכל נקודת התייחסות —<br>
       LMP · CRL · גיל הריון מבדיקה קודמת · תאריך החזרת עוברים (IVF) · תאריך לידה מתוכנן<br>
-      <b>חישוב CRL → GA:</b> Robinson &amp; Fleming 1975 (BJOG 82:702): GA (ימים) = 8.052·√CRL + 23.73<br>
+      <b>חישוב CRL → GA — עקומות בשימוש:</b><br>
+      &nbsp;&nbsp;<b>Robinson &amp; Fleming 1975</b> (BJOG 82:702–710) — העבודה המקורית, הנפוצה בעולם; בה מחושבים התאריכים: GA(ימים) = 8.052·√CRL + 23.73 (CRL 2–84 מ"מ)<br>
+      &nbsp;&nbsp;★ <b>INTERGROWTH-21st</b> (Papageorghiou et al. <i>UOG</i> 2014;44:641–648) — הסטנדרט הבינלאומי המקובל (מומלץ ע"י ISUOG): GA(ימים) = 40.9041 + 3.21585·√CRL + 0.348956·CRL (CRL 15–95 מ"מ, 9+0–13+6)<br>
+      &nbsp;&nbsp;<i>★ = העקומה המקובלת בעולם. סקירה שיטתית (Napolitano et al. <i>BJOG</i> 2014) מצאה שהעקומות הנפוצות תואמות בטווח ±1–2 ימים.</i><br>
       <b>תיקון תאריך וסת לפי בדיקת US:</b> ACOG/SMFM 2017 + נייר עמדה ישראלי FGR · ההפרש המקסימלי המותר תלוי בגיל הריון בעת הבדיקה
     </div>
     </details>
@@ -2136,7 +2139,7 @@
       &nbsp;&nbsp;<b>H2 (BPD+AC+FL):</b> 1.335 − 0.0034·AC·FL + 0.0316·BPD + 0.0457·AC + 0.1623·FL · 1 SD ≈ 8.2%<br>
       &nbsp;&nbsp;<b>H3 (HC+AC+FL):</b> 1.326 − 0.00326·AC·FL + 0.0107·HC + 0.0438·AC + 0.158·FL · 1 SD ≈ 7.5%<br>
       &nbsp;&nbsp;<b>H4 (BPD+HC+AC+FL):</b> 1.3596 − 0.00386·AC·FL + 0.0064·HC + 0.00061·BPD·AC + 0.0424·AC + 0.174·FL · 1 SD ≈ 7.5%<br>
-      <b>Dollberg:</b> Dollberg S et al. <i>IMAJ</i> 2005;7:311–314 — סטנדרט משקלי לידה ישראלי (לפי מין + הריון יחיד/תאומים)<br>
+      <b>Dollberg:</b> Dollberg S et al. <i>IMAJ</i> 2005;7:311–314 (Table 2) — סטנדרט משקלי לידה ישראלי, אחוזונים 1/5/10/50/90/95/99 לפי מין והריון יחיד/מרובה (כולל טבלאות מרובה‑עוברים מקוריות). ערכים מאומתים מול המאמר המקורי.<br>
       <b>ISMFM Twin (תאומים, מבוסס US):</b> Yefet E, Daniel-Spiegel E et al. <i>הרפואה</i> 2026 ינואר;165(1):14-20 — עקומת EFW סונוגרפית ישראלית לתאומים. עוקבה ארצית של 7,060 עוברים, 18,248 מדידות, 11 מרכזים, 2010-2022. אחוזונים 1/3/5/10/25/50/75/90/95/97/99 לשבועות 14-40<br>
       <i>(<a href="https://www.twinsakumotismfm.com/" target="_blank" rel="noopener">twinsakumotismfm.com</a> — כלי מקוון רשמי של המחברים)</i><br>
       ⚠ דולברג מבוסס על משקלי לידה ולכן אחוזון 10 בפג נמוך מ-Hadlock (over-representation של IUGR בלידות פג).<br>
@@ -7722,7 +7725,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.38';
+const APP_VERSION = '4.40';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -10066,10 +10069,16 @@ function setIvfType(btn){
   ivfType=btn.dataset.v;
 }
 
-// CRL → GA in days (Robinson & Fleming 1975)
+// CRL → GA in days (Robinson & Fleming 1975) — original work, drives the date math.
 function crlToGAdays(crlMm){
   if(crlMm<2 || crlMm>84) return null;
   return Math.round(8.052*Math.sqrt(crlMm) + 23.73);
+}
+// CRL → GA in days (INTERGROWTH-21st — Papageorghiou et al. UOG 2014;44:641-648).
+// The internationally accepted standard (ISUOG). Valid CRL 15–95 mm (9+0–13+6).
+function crlToGAdaysIG(crlMm){
+  if(crlMm<15 || crlMm>95) return null;
+  return Math.round(40.9041 + 3.21585*Math.sqrt(crlMm) + 0.348956*crlMm);
 }
 
 // Israeli FGR position paper + ACOG 2017: when to redate based on US-LMP discrepancy
@@ -10178,6 +10187,15 @@ function calcPreg(){
     const usLmp = addDays(crlDate, -gaAtScan);
     const daysFromScan = diffDays(refDate, crlDate);
 
+    // CRL dating-curve comparison: Robinson (drives the calc) vs INTERGROWTH-21st (★ accepted standard)
+    const igGa = crlToGAdaysIG(crl);
+    const rW = Math.floor(gaAtScan/7), rD = gaAtScan%7;
+    const crlCmp = `<div class="note" style="border-right-color:var(--purple);margin-top:8px">
+        <b>עקומות תיארוך CRL:</b><br>
+        ${igGa!=null ? `★ <b>INTERGROWTH-21st</b> <span style="color:var(--text2)">(סטנדרט בינלאומי מקובל, ISUOG)</span>: <b>${Math.floor(igGa/7)}+${igGa%7}</b> (${igGa} ימים)<br>` : ''}
+        <b>Robinson–Fleming 1975</b> <span style="color:var(--text2)">(${igGa!=null?'בה מחושבים התאריכים':'בה מחושבים התאריכים · INTERGROWTH תקף ל-CRL 15–95 מ"מ'})</span>: <b>${rW}+${rD}</b> (${gaAtScan} ימים)${igGa!=null && igGa!==gaAtScan ? ` · הפרש ${Math.abs(igGa-gaAtScan)} ימים` : ''}
+      </div>`;
+
     if(userLmp){
       // Compare with user-provided LMP
       const lmpGaAtScan = diffDays(crlDate, userLmp);
@@ -10208,6 +10226,7 @@ function calcPreg(){
           <b>הערה:</b> נייר העמדה הישראלי ל-FGR מאמץ את כללי ה-ACOG. בטרימסטר השלישי (≥28+0) הפרש >21 ימים — תיקון מבוצע בזהירות יתרה כי עובר קטן יכול לשקף FGR, ולא רק תאריכים שגויים.
         </div>
       </div>`;
+      extra += crlCmp;
 
       // Use US-derived dates as definitive when redating, else stick with LMP
       if(rule.shouldRedate){
@@ -10227,6 +10246,7 @@ function calcPreg(){
       gaDays = gaAtScan + daysFromScan;
       const usW = Math.floor(gaAtScan/7), usD = gaAtScan%7;
       src = `CRL ${crl} מ"מ ב-${fmtDate(crlDate)} → ${usW}+${usD} בבדיקה`;
+      extra = crlCmp;
     }
   }
   else if(pregMode==='us'){
@@ -10512,88 +10532,130 @@ const hadlockRef = {
   39:{m:3435,sd:481},40:{m:3619,sd:507},41:{m:3787,sd:530}
 };
 
-// Dollberg 2005 singleton birth weights
+// Dollberg 2005 birth-weight percentiles — verified against the ORIGINAL Table 2
+// (Dollberg S et al. IMAJ 2005;7:311–314). Published percentiles: 1/5/10/50/90/95/99.
+// NOTE: earlier versions stored an inflated/mislabeled table (term medians ~500 g too
+// high, e.g. female p50@40w = 3815 g vs the true 3270 g). These are the corrected values
+// (cross-checked against Table 1: overall median@40w = 3340 g = (F 3270 + M 3410)/2).
+// Singletons:
 const dollbergM = {
-  24:{p3:405, p10:480, p50:665, p90:910, p97:1040},
-  25:{p3:465, p10:555, p50:765, p90:1035,p97:1175},
-  26:{p3:535, p10:635, p50:875, p90:1175,p97:1325},
-  27:{p3:615, p10:725, p50:995, p90:1335,p97:1500},
-  28:{p3:705, p10:825, p50:1130,p90:1515,p97:1695},
-  29:{p3:810, p10:945, p50:1290,p90:1720,p97:1915},
-  30:{p3:935, p10:1085,p50:1480,p90:1955,p97:2170},
-  31:{p3:1080,p10:1255,p50:1705,p90:2225,p97:2455},
-  32:{p3:1255,p10:1455,p50:1965,p90:2530,p97:2775},
-  33:{p3:1455,p10:1690,p50:2255,p90:2870,p97:3120},
-  34:{p3:1685,p10:1950,p50:2570,p90:3225,p97:3480},
-  35:{p3:1935,p10:2230,p50:2895,p90:3580,p97:3835},
-  36:{p3:2190,p10:2510,p50:3210,p90:3905,p97:4155},
-  37:{p3:2440,p10:2780,p50:3490,p90:4180,p97:4420},
-  38:{p3:2670,p10:3025,p50:3725,p90:4395,p97:4625},
-  39:{p3:2865,p10:3230,p50:3900,p90:4540,p97:4760},
-  40:{p3:3015,p10:3380,p50:4015,p90:4625,p97:4830},
-  41:{p3:3110,p10:3470,p50:4075,p90:4655,p97:4855},
-  42:{p3:3145,p10:3500,p50:4090,p90:4660,p97:4855}
+  22:{p1:500,p5:500,p10:500,p50:560,p90:670,p95:750,p99:750},
+  23:{p1:500,p5:500,p10:500,p50:610,p90:750,p95:800,p99:800},
+  24:{p1:500,p5:500,p10:530,p50:680,p90:820,p95:870,p99:1000},
+  25:{p1:550,p5:590,p10:620,p50:800,p90:940,p95:1000,p99:1070},
+  26:{p1:520,p5:620,p10:670,p50:890,p90:1060,p95:1160,p99:1200},
+  27:{p1:510,p5:710,p10:770,p50:1000,p90:1220,p95:1300,p99:1550},
+  28:{p1:550,p5:700,p10:780,p50:1120,p90:1400,p95:1500,p99:1800},
+  29:{p1:670,p5:780,p10:880,p50:1275,p90:1610,p95:1740,p99:2400},
+  30:{p1:740,p5:850,p10:1020,p50:1440,p90:1830,p95:2100,p99:2920},
+  31:{p1:800,p5:1030,p10:1150,p50:1620,p90:2290,p95:2640,p99:2950},
+  32:{p1:940,p5:1190,p10:1340,p50:1845,p90:2950,p95:3290,p99:3690},
+  33:{p1:1070,p5:1380,p10:1550,p50:2050,p90:2845,p95:3250,p99:3640},
+  34:{p1:1300,p5:1610,p10:1760,p50:2300,p90:3110,p95:3410,p99:3710},
+  35:{p1:1480,p5:1800,p10:1990,p50:2520,p90:3270,p95:3550,p99:4000},
+  36:{p1:1660,p5:2040,p10:2210,p50:2740,p90:3400,p95:3630,p99:4050},
+  37:{p1:1920,p5:2260,p10:2440,p50:2960,p90:3550,p95:3770,p99:4210},
+  38:{p1:2150,p5:2480,p10:2630,p50:3140,p90:3700,p95:3900,p99:4280},
+  39:{p1:2340,p5:2640,p10:2790,p50:3290,p90:3840,p95:4010,p99:4360},
+  40:{p1:2450,p5:2770,p10:2910,p50:3410,p90:3970,p95:4140,p99:4480},
+  41:{p1:2580,p5:2860,p10:3000,p50:3510,p90:4060,p95:4230,p99:4550},
+  42:{p1:2570,p5:2900,p10:3060,p50:3580,p90:4150,p95:4310,p99:4670},
+  43:{p1:2410,p5:2810,p10:2980,p50:3520,p90:4150,p95:4330,p99:4660},
+  44:{p1:2420,p5:2780,p10:2950,p50:3470,p90:4040,p95:4190,p99:4630}
 };
 const dollbergF = {
-  24:{p3:380, p10:450, p50:620, p90:855, p97:970},
-  25:{p3:435, p10:515, p50:715, p90:965, p97:1090},
-  26:{p3:495, p10:590, p50:820, p90:1090,p97:1230},
-  27:{p3:565, p10:670, p50:935, p90:1235,p97:1390},
-  28:{p3:645, p10:760, p50:1065,p90:1400,p97:1570},
-  29:{p3:740, p10:870, p50:1215,p90:1590,p97:1780},
-  30:{p3:855, p10:1000,p50:1390,p90:1810,p97:2020},
-  31:{p3:990, p10:1160,p50:1600,p90:2055,p97:2285},
-  32:{p3:1155,p10:1350,p50:1840,p90:2330,p97:2575},
-  33:{p3:1340,p10:1565,p50:2105,p90:2630,p97:2880},
-  34:{p3:1545,p10:1800,p50:2390,p90:2935,p97:3185},
-  35:{p3:1770,p10:2050,p50:2680,p90:3245,p97:3490},
-  36:{p3:2000,p10:2305,p50:2965,p90:3540,p97:3775},
-  37:{p3:2230,p10:2555,p50:3235,p90:3805,p97:4030},
-  38:{p3:2440,p10:2785,p50:3470,p90:4030,p97:4240},
-  39:{p3:2625,p10:2980,p50:3660,p90:4205,p97:4400},
-  40:{p3:2775,p10:3140,p50:3815,p90:4335,p97:4515},
-  41:{p3:2885,p10:3245,p50:3915,p90:4410,p97:4575},
-  42:{p3:2940,p10:3290,p50:3955,p90:4435,p97:4585}
+  22:{p1:500,p5:500,p10:500,p50:510,p90:530,p95:610,p99:610},
+  23:{p1:500,p5:500,p10:500,p50:580,p90:670,p95:700,p99:740},
+  24:{p1:500,p5:500,p10:500,p50:645,p90:750,p95:860,p99:1110},
+  25:{p1:500,p5:520,p10:600,p50:720,p90:900,p95:930,p99:1080},
+  26:{p1:530,p5:640,p10:690,p50:850,p90:1000,p95:1070,p99:1260},
+  27:{p1:530,p5:570,p10:675,p50:950,p90:1125,p95:1220,p99:1950},
+  28:{p1:570,p5:650,p10:730,p50:1030,p90:1310,p95:1400,p99:1720},
+  29:{p1:610,p5:720,p10:820,p50:1160,p90:1490,p95:1660,p99:2650},
+  30:{p1:670,p5:900,p10:1040,p50:1385,p90:1920,p95:2440,p99:2830},
+  31:{p1:830,p5:1000,p10:1140,p50:1540,p90:2250,p95:2750,p99:2940},
+  32:{p1:890,p5:1105,p10:1280,p50:1800,p90:3180,p95:3465,p99:3690},
+  33:{p1:950,p5:1270,p10:1480,p50:1970,p90:3020,p95:3320,p99:3660},
+  34:{p1:1200,p5:1480,p10:1650,p50:2200,p90:3070,p95:3370,p99:3680},
+  35:{p1:1360,p5:1720,p10:1890,p50:2440,p90:3140,p95:3400,p99:3840},
+  36:{p1:1600,p5:1940,p10:2120,p50:2640,p90:3290,p95:3510,p99:3980},
+  37:{p1:1850,p5:2160,p10:2330,p50:2840,p90:3410,p95:3620,p99:4070},
+  38:{p1:2080,p5:2370,p10:2520,p50:3000,p90:3560,p95:3750,p99:4140},
+  39:{p1:2250,p5:2540,p10:2680,p50:3150,p90:3700,p95:3860,p99:4220},
+  40:{p1:2370,p5:2650,p10:2790,p50:3270,p90:3810,p95:3980,p99:4320},
+  41:{p1:2480,p5:2740,p10:2880,p50:3360,p90:3900,p95:4060,p99:4400},
+  42:{p1:2490,p5:2790,p10:2930,p50:3430,p90:3980,p95:4140,p99:4480},
+  43:{p1:2400,p5:2700,p10:2850,p50:3390,p90:3950,p95:4150,p99:4510},
+  44:{p1:2250,p5:2620,p10:2830,p50:3340,p90:3870,p95:4040,p99:4450}
 };
-
-// Twin adjustment factors: based on published Israeli twin growth (Glinianaia 2000;
-// Cohen-Sacher 2006; Ananth 1998) and Dollberg-aligned twin curves.
-// Twins are ≈similar to singletons until ~28w, then diverge progressively.
-function twinFactor(ga){
-  if(ga<=28) return 1.00;
-  if(ga>=40) return 0.80;
-  // linear interpolation 28→40w: 1.00 → 0.80
-  return 1.00 - (ga-28)*(0.20/12);
-}
-function dollbergU(w){
-  const m=dollbergM[w], f=dollbergF[w];
-  if(!m||!f) return null;
-  return {p3:(m.p3+f.p3)/2, p10:(m.p10+f.p10)/2, p50:(m.p50+f.p50)/2, p90:(m.p90+f.p90)/2, p97:(m.p97+f.p97)/2};
+// Multiple-gestation (real published Dollberg 2005 twin/multiple table — replaces the
+// previous synthetic twinFactor). Small-sample noise at preterm/post-term as printed.
+const dollbergMmult = {
+  22:{p1:500,p5:500,p10:500,p50:610,p90:860,p95:860,p99:860},
+  23:{p1:360,p5:370,p10:500,p50:560,p90:725,p95:750,p99:780},
+  24:{p1:500,p5:500,p10:540,p50:650,p90:780,p95:1000,p99:1000},
+  25:{p1:490,p5:510,p10:600,p50:760,p90:1000,p95:1000,p99:1200},
+  26:{p1:500,p5:500,p10:600,p50:820,p90:1010,p95:1140,p99:1200},
+  27:{p1:560,p5:700,p10:730,p50:960,p90:1180,p95:1240,p99:1450},
+  28:{p1:530,p5:740,p10:800,p50:1030,p90:1310,p95:1470,p99:1880},
+  29:{p1:750,p5:890,p10:970,p50:1260,p90:1590,p95:1700,p99:1960},
+  30:{p1:610,p5:930,p10:1070,p50:1400,p90:1680,p95:1820,p99:2360},
+  31:{p1:750,p5:1040,p10:1190,p50:1530,p90:1920,p95:2100,p99:2400},
+  32:{p1:980,p5:1230,p10:1350,p50:1700,p90:2090,p95:2200,p99:2500},
+  33:{p1:1005,p5:1300,p10:1450,p50:1900,p90:2330,p95:2450,p99:2820},
+  34:{p1:1140,p5:1460,p10:1600,p50:2060,p90:2490,p95:2610,p99:2880},
+  35:{p1:1380,p5:1690,p10:1830,p50:2260,p90:2700,p95:2830,p99:3140},
+  36:{p1:1510,p5:1810,p10:1970,p50:2420,p90:2900,p95:3030,p99:3340},
+  37:{p1:1700,p5:1990,p10:2120,p50:2570,p90:3050,p95:3170,p99:3470},
+  38:{p1:1800,p5:2070,p10:2220,p50:2700,p90:3200,p95:3310,p99:3600},
+  39:{p1:1880,p5:2140,p10:2300,p50:2775,p90:3270,p95:3440,p99:3750},
+  40:{p1:1650,p5:2080,p10:2270,p50:2850,p90:3410,p95:3550,p99:3860},
+  41:{p1:1980,p5:2230,p10:2390,p50:2980,p90:3530,p95:3700,p99:4030}
+};
+const dollbergFmult = {
+  22:{p1:500,p5:500,p10:500,p50:530,p90:690,p95:690,p99:690},
+  23:{p1:500,p5:500,p10:520,p50:550,p90:610,p95:700,p99:700},
+  24:{p1:500,p5:500,p10:520,p50:630,p90:780,p95:950,p99:1200},
+  25:{p1:500,p5:500,p10:550,p50:700,p90:880,p95:1000,p99:1240},
+  26:{p1:530,p5:560,p10:640,p50:820,p90:1000,p95:1100,p99:1200},
+  27:{p1:500,p5:640,p10:710,p50:850,p90:1110,p95:1220,p99:1490},
+  28:{p1:530,p5:710,p10:800,p50:1050,p90:1320,p95:1480,p99:1750},
+  29:{p1:590,p5:820,p10:920,p50:1180,p90:1450,p95:1560,p99:1800},
+  30:{p1:710,p5:870,p10:1000,p50:1330,p90:1670,p95:1830,p99:2630},
+  31:{p1:760,p5:1030,p10:1110,p50:1450,p90:1870,p95:2040,p99:2530},
+  32:{p1:960,p5:1170,p10:1270,p50:1640,p90:2010,p95:2160,p99:2570},
+  33:{p1:1020,p5:1290,p10:1410,p50:1770,p90:2180,p95:2360,p99:2670},
+  34:{p1:1080,p5:1380,p10:1530,p50:1960,p90:2360,p95:2480,p99:2790},
+  35:{p1:1300,p5:1600,p10:1730,p50:2150,p90:2600,p95:2730,p99:3000},
+  36:{p1:1430,p5:1730,p10:1870,p50:2300,p90:2710,p95:2840,p99:3210},
+  37:{p1:1530,p5:1880,p10:2010,p50:2450,p90:2900,p95:3040,p99:3320},
+  38:{p1:1680,p5:2010,p10:2150,p50:2600,p90:3050,p95:3190,p99:3440},
+  39:{p1:1710,p5:2040,p10:2210,p50:2700,p90:3170,p95:3300,p99:3710},
+  40:{p1:1720,p5:2110,p10:2250,p50:2750,p90:3260,p95:3420,p99:3750},
+  41:{p1:1880,p5:2090,p10:2280,p50:2800,p90:3400,p95:3600,p99:4000}
+};
+const DB_KEYS = ['p1','p5','p10','p50','p90','p95','p99'];
+function dollbergTable(sex, mult){
+  if(sex==='M') return mult?dollbergMmult:dollbergM;
+  if(sex==='F') return mult?dollbergFmult:dollbergF;
+  return null;
 }
 function dollbergGet(w, sex, plurality){
-  let r;
-  if(sex==='M') r = dollbergM[w];
-  else if(sex==='F') r = dollbergF[w];
-  else r = dollbergU(w);
-  if(!r) return null;
-  if(plurality==='twin'){
-    const f = twinFactor(w);
-    return {p3:r.p3*f, p10:r.p10*f, p50:r.p50*f, p90:r.p90*f, p97:r.p97*f};
-  }
+  const mult = plurality==='twin';
+  if(sex==='M' || sex==='F') return dollbergTable(sex, mult)[w] || null;
+  // unknown sex → average male + female of the matching plurality
+  const M=dollbergTable('M',mult)[w], F=dollbergTable('F',mult)[w];
+  if(!M||!F) return null;
+  const r={}; for(const k of DB_KEYS) r[k]=(M[k]+F[k])/2;
   return r;
 }
 function dollbergInterp(w, d, sex, plurality){
   const r0=dollbergGet(w, sex, plurality);
-  const r1=dollbergGet(w+1, sex, plurality)||r0;
   if(!r0) return null;
-  const f=d/7;
-  return {
-    p3:  lerp(r0.p3, r1.p3, f),
-    p10: lerp(r0.p10,r1.p10,f),
-    p50: lerp(r0.p50,r1.p50,f),
-    p90: lerp(r0.p90,r1.p90,f),
-    p97: lerp(r0.p97,r1.p97,f)
-  };
+  const r1=dollbergGet(w+1, sex, plurality)||r0;
+  const f=d/7, out={};
+  for(const k of DB_KEYS) out[k]=lerp(r0[k], (r1[k]!=null?r1[k]:r0[k]), f);
+  return out;
 }
 // z-score for each percentile anchor (inverse normal). Used for interpolation
 // in z-space across all available percentiles — respects the skewed (non-normal)
@@ -10606,12 +10668,16 @@ function zFromPercentiles(efw, p){
   const order=['p1','p3','p5','p10','p25','p50','p75','p90','p95','p97','p99'];
   const xs=[], zs=[];
   for(const k of order){ if(p[k]!=null){ xs.push(p[k]); zs.push(PCT_Z[k]); } }
-  const n=xs.length;
+  // Keep only strictly-ascending weights (skip flat plateaus / inversions, e.g. the
+  // 500 g floor at extreme preterm) so interpolation never divides by zero.
+  const X=[], Z=[];
+  for(let i=0;i<xs.length;i++){ if(!X.length || xs[i]>X[X.length-1]){ X.push(xs[i]); Z.push(zs[i]); } }
+  const n=X.length;
   if(n<2) return 0;
-  if(efw<=xs[0]){ const s=(zs[1]-zs[0])/(xs[1]-xs[0]); return zs[0]+(efw-xs[0])*s; }
-  if(efw>=xs[n-1]){ const s=(zs[n-1]-zs[n-2])/(xs[n-1]-xs[n-2]); return zs[n-1]+(efw-xs[n-1])*s; }
+  if(efw<=X[0]){ const s=(Z[1]-Z[0])/(X[1]-X[0]); return Z[0]+(efw-X[0])*s; }
+  if(efw>=X[n-1]){ const s=(Z[n-1]-Z[n-2])/(X[n-1]-X[n-2]); return Z[n-1]+(efw-X[n-1])*s; }
   for(let i=0;i<n-1;i++){
-    if(efw>=xs[i] && efw<=xs[i+1]){ const f=(efw-xs[i])/(xs[i+1]-xs[i]); return zs[i]+f*(zs[i+1]-zs[i]); }
+    if(efw>=X[i] && efw<=X[i+1]){ const f=(efw-X[i])/(X[i+1]-X[i]); return Z[i]+f*(Z[i+1]-Z[i]); }
   }
   return 0;
 }
@@ -11382,11 +11448,11 @@ function calcEFW(){
     </div>`;
   } else if(primaryCurve==='dollberg' && rD){
     html+=`<div class="detail-grid">
-      <div class="di"><div class="dl">3rd</div><div class="dv">${Math.round(rD.p3).toLocaleString()} גר'</div></div>
+      <div class="di"><div class="dl">5th</div><div class="dv">${Math.round(rD.p5).toLocaleString()} גר'</div></div>
       <div class="di"><div class="dl">10th</div><div class="dv">${Math.round(rD.p10).toLocaleString()} גר'</div></div>
       <div class="di"><div class="dl">50th</div><div class="dv">${Math.round(rD.p50).toLocaleString()} גר'</div></div>
       <div class="di"><div class="dl">90th</div><div class="dv">${Math.round(rD.p90).toLocaleString()} גר'</div></div>
-      <div class="di"><div class="dl">97th</div><div class="dv">${Math.round(rD.p97).toLocaleString()} גר'</div></div>
+      <div class="di"><div class="dl">95th</div><div class="dv">${Math.round(rD.p95).toLocaleString()} גר'</div></div>
       <div class="di"><div class="dl">סוג הריון</div><div class="dv">${plurLabel}</div></div>
     </div>`;
   } else if(primaryCurve==='ismfm' && rI){
@@ -11498,18 +11564,19 @@ function calcEFW(){
     series.push({label:'Hadlock p97', color:'#185FA5', points:p97, width:0.8, dash:'2 3', opacity:0.5});
   }
   if(useDollberg){
-    const p3=[], p10=[], p50=[], p90=[], p97=[];
-    for(let ww=24; ww<=42; ww++){
+    const p5=[], p10=[], p50=[], p90=[], p95=[];
+    for(let ww=22; ww<=44; ww++){
       const r = dollbergGet(ww, efwSex, efwPlurality);
-      p3.push([ww,r.p3]); p10.push([ww,r.p10]);
-      p50.push([ww,r.p50]); p90.push([ww,r.p90]); p97.push([ww,r.p97]);
+      if(!r) continue;
+      p5.push([ww,r.p5]); p10.push([ww,r.p10]);
+      p50.push([ww,r.p50]); p90.push([ww,r.p90]); p95.push([ww,r.p95]);
     }
     if(!useHadlock && !useIsmfm) bands.push({color:'var(--chart-band2)', lower:p10, upper:p90});
     series.push({label:'Dollberg p50', color:'#7E57C2', points:p50, width:1.6});
     series.push({label:'Dollberg p10', color:'#7E57C2', points:p10, width:1, dash:'4 3', opacity:0.7});
     series.push({label:'Dollberg p90', color:'#7E57C2', points:p90, width:1, dash:'4 3', opacity:0.7});
-    series.push({label:'Dollberg p3',  color:'#7E57C2', points:p3,  width:0.8, dash:'2 3', opacity:0.5});
-    series.push({label:'Dollberg p97', color:'#7E57C2', points:p97, width:0.8, dash:'2 3', opacity:0.5});
+    series.push({label:'Dollberg p5',  color:'#7E57C2', points:p5,  width:0.8, dash:'2 3', opacity:0.5});
+    series.push({label:'Dollberg p95', color:'#7E57C2', points:p95, width:0.8, dash:'2 3', opacity:0.5});
   }
   if(useIsmfm){
     const p3=[], p10=[], p50=[], p90=[], p97=[];
