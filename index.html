@@ -7725,7 +7725,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.40';
+const APP_VERSION = '4.41';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -12184,17 +12184,16 @@ function calcMCA(){
 }
 
 // ─── HC ───────────────────────────────────────────────────────────────────
-const hcRef = {
-  18:{m:163,sd:12},19:{m:175,sd:12},20:{m:187,sd:12},21:{m:199,sd:12},
-  22:{m:211,sd:12},23:{m:222,sd:13},24:{m:233,sd:13},25:{m:244,sd:13},
-  26:{m:254,sd:14},27:{m:264,sd:14},28:{m:274,sd:14},29:{m:283,sd:14},
-  30:{m:292,sd:15},31:{m:301,sd:15},32:{m:309,sd:15},33:{m:317,sd:16},
-  34:{m:325,sd:16},35:{m:332,sd:16},36:{m:338,sd:16},37:{m:344,sd:17},
-  38:{m:350,sd:17},39:{m:355,sd:17},40:{m:359,sd:17}
-};
+// Chervenak et al. 1984 (HC for GA, based on Jeanty 1984). Verified against
+// Prof. Z. Leibovitz's reference calculator (zvi.assafl.com):
+//   mean HC(mm) = 10.885·t − 69.625 + 0.14769·t² − 0.00405·t³   (t = GA in weeks)
+//   SD = 14.7 mm (constant)  ·  z = (HC − mean) / 14.7
+// NOTE: prior versions used a hand-entered table whose means were ~12–16 mm too
+// high and used a GA-varying SD — that made normal heads read as ~−1 SD.
+const HC_SD = 14.7;
+function hcMeanCherv(t){ return 10.885*t - 69.625 + 0.14769*t*t - 0.00405*t*t*t; }
 function hcInterp(w,d){
-  const r0=hcRef[w], r1=hcRef[w+1]||r0, f=d/7;
-  return {m:lerp(r0.m,r1.m,f), sd:lerp(r0.sd,r1.sd,f)};
+  return {m: hcMeanCherv(w + (d||0)/7), sd: HC_SD};
 }
 function calcHC(){
   const w=parseInt(document.getElementById('hc-w').value);
@@ -12216,7 +12215,7 @@ function calcHC(){
   else flag=badge('ok','תקין');
   const med=[], p2u=[], p2l=[], n3=[], n5=[];
   for(let ww=18; ww<=40; ww++){
-    const rr=hcRef[ww];
+    const rr={m:hcMeanCherv(ww), sd:HC_SD};
     med.push([ww, rr.m]); p2u.push([ww, rr.m+2*rr.sd]);
     p2l.push([ww, rr.m-2*rr.sd]); n3.push([ww, rr.m-3*rr.sd]); n5.push([ww, rr.m-5*rr.sd]);
   }
