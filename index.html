@@ -7728,7 +7728,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.42';
+const APP_VERSION = '4.43';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -12983,12 +12983,13 @@ const biomMeasurements = {
   // CNS
   tcd: {
     label: 'TCD — קוטר צרברום', unit:'מ"מ', min:11, max:40,
-    // Snijders & Nicolaides 1994: median TCD(mm) ≈ -7.04 + 0.85*GA - 0.0017*GA²
-    median: (ga) => Math.max(8, -7.04 + 0.85*ga - 0.0017*ga*ga),
-    sd: (ga) => Math.max(0.8, 0.5 + 0.06*ga),
+    // Chavez et al. 2003 / Goldstein 1987 — curvilinear (exponential) TCD–GA model.
+    // (Prior polynomial ran ~½ of true: gave 8mm@17w vs real ~17.5mm; ~20mm@34w vs real ~45mm.)
+    median: (ga) => 6.422 * Math.exp(0.05616*ga),
+    sd: (ga) => 0.30 + 0.075*ga,
     range: { min: 5, max: 70 },
     note: 'נמדד במישור צרבלום (sub-occipital) — כלל אצבע: TCD ≈ GA בשבועות (14–24w)',
-    src: 'Snijders RJM, Nicolaides KH. UOG 1994;4:34–48 — "Fetal biometry at 14–40 weeks gestation" (Table for TCD)'
+    src: 'Chavez MR et al. AJOG 2003;189:1021–1025 — נומוגרמת TCD (דגש טרימסטר 3) · מודל עקום מבוסס Goldstein I et al. AJOG 1987;156:1065'
   },
   cm: {
     label: 'Cisterna Magna', unit:'מ"מ', min:14, max:40,
@@ -13071,69 +13072,78 @@ const biomMeasurements = {
   // Eyes
   iod: {
     label: 'Inner Orbital Distance (IOD)', unit:'מ"מ', min:14, max:40,
-    median: (ga) => Math.max(3, -3.85 + 0.55*ga - 0.005*ga*ga),
-    sd: (ga) => 0.6 + 0.04*ga,
+    // (Prior polynomial ran ~⅓ of true: gave 5mm@20w vs real ~12.5mm.)
+    median: (ga) => 2.304 + 0.510*ga,
+    sd: (ga) => 0.85 + 0.022*ga,
     range: { min: 5, max: 35 },
-    src: 'Mayden KL et al. AJOG 1982;144:289–297 (n=627, 12–40w) · Goldstein I et al. UOG 1998 — תקנון IOD לפי GA'
+    src: 'Sukonpan K, Phupong V. J Med Assoc Thai 2008;91(9):1318–22 — "Fetal ocular distance in normal pregnancies" (n=595, 15–40w, R²=0.887)'
   },
   ood: {
     label: 'Outer Orbital Distance (OOD)', unit:'מ"מ', min:14, max:40,
-    median: (ga) => Math.max(10, -11.5 + 1.4*ga - 0.012*ga*ga),
-    sd: (ga) => 1 + 0.07*ga,
+    // = binocular distance (BOD). (Prior polynomial ran ~⅓ of true: gave 11.7mm@20w vs real ~31mm.)
+    median: (ga) => 2.590 + 1.420*ga,
+    sd: (ga) => 0.95 + 0.033*ga,
     range: { min: 10, max: 80 },
-    src: 'Mayden KL, Tortora M, Berkowitz RL, Bracken M, Hobbins JC. AJOG 1982;144:289–297 — "Orbital diameters: a new parameter for prenatal diagnosis and dating" (n=627, 12–40w)'
+    src: 'Sukonpan K, Phupong V. J Med Assoc Thai 2008;91(9):1318–22 — "Fetal ocular distance in normal pregnancies" (n=595, 15–40w, R²=0.953) · מקור היסטורי: Mayden KL et al. AJOG 1982'
   },
   eye: {
     label: 'קוטר גלגל עין', unit:'מ"מ', min:14, max:40,
-    median: (ga) => Math.max(3, -2.2 + 0.4*ga - 0.0035*ga*ga),
-    sd: () => 0.8,
+    // קוטר הגלגל (eye globe) — לא קוטר הארובה. (Prior polynomial gave ~4.4mm@20w vs real ~8.1mm.)
+    median: (ga) => 3.40 + 0.236*ga,
+    sd: () => 0.60,
     range: { min: 2, max: 30 },
-    src: 'Mayden KL et al. AJOG 1982'
+    src: 'Jeanty P et al. Radiology 1982;143:513–6 — נומוגרמת קוטר גלגל עין · אומת מול MRI (Velasco-Annis 2015)'
   },
   // Long bones — עקומות ייחוס מאוששות לעצמות ארוכות
   hl: {
     label: 'אורך Humerus', unit:'מ"מ', min:14, max:42,
-    median: (ga) => Math.max(5, -33 + 3.5*ga - 0.034*ga*ga),
-    sd: (ga) => 1.2 + 0.06*ga,
+    // Chitty 2002 exact regression (was polynomial ~25-30% low: 19mm@18w vs real 26.6mm).
+    median: (ga) => Math.max(5, 11.459*ga - 2.2362*ga*Math.log(ga) - 63.704),
+    sd: (ga) => 0.040292*ga + 1.3464,
     range: { min: 5, max: 90 },
-    src: 'Chitty LS, Altman DG. BJOG 2002;109:919–929 — "Charts of fetal size: limb bones" (עקומה ראשית) · Snijders & Nicolaides UOG 1994 — חישוב פולינומי קרוב לטבלאות המקוריות'
+    src: 'Chitty LS, Altman DG. BJOG 2002;109:919–929 — "Charts of fetal size: limb bones" — משוואת הרגרסיה המקורית (fractional polynomial, ln טבעי)'
   },
   tib: {
     label: 'אורך Tibia', unit:'מ"מ', min:14, max:42,
-    median: (ga) => Math.max(5, -32 + 3.3*ga - 0.033*ga*ga),
-    sd: (ga) => 1.2 + 0.06*ga,
+    // Chitty 2002 exact regression (fractional polynomial).
+    median: (ga) => Math.max(5, 14451/(ga*ga) - 2553.2/ga + 120.05),
+    sd: (ga) => 0.049978*ga + 1.1102,
     range: { min: 5, max: 85 },
-    src: 'Chitty LS, Altman DG. BJOG 2002;109:919–929 — "Charts of fetal size: limb bones" (עקומה ראשית) · Snijders & Nicolaides UOG 1994'
+    src: 'Chitty LS, Altman DG. BJOG 2002;109:919–929 — "Charts of fetal size: limb bones" — משוואת הרגרסיה המקורית'
   },
   rad: {
     label: 'אורך Radius', unit:'מ"מ', min:14, max:42,
-    median: (ga) => Math.max(5, -29 + 3.0*ga - 0.030*ga*ga),
-    sd: (ga) => 1.0 + 0.05*ga,
+    // Chitty 2002 exact regression (fractional polynomial).
+    median: (ga) => Math.max(5, 7983/(ga*ga) - 1698.6/ga + 91.634),
+    sd: (ga) => 0.046386*ga + 1.1933,
     range: { min: 5, max: 75 },
-    src: 'Chitty LS, Altman DG. BJOG 2002;109:919–929 — "Charts of fetal size: limb bones" (עקומה ראשית) · Snijders & Nicolaides UOG 1994'
+    src: 'Chitty LS, Altman DG. BJOG 2002;109:919–929 — "Charts of fetal size: limb bones" — משוואת הרגרסיה המקורית'
   },
   uln: {
     label: 'אורך Ulna', unit:'מ"מ', min:14, max:42,
-    median: (ga) => Math.max(5, -32 + 3.2*ga - 0.032*ga*ga),
-    sd: (ga) => 1.0 + 0.05*ga,
+    // Chitty 2002 exact regression (fractional polynomial).
+    median: (ga) => Math.max(5, 11120/(ga*ga) - 2146.3/ga + 108.94),
+    sd: (ga) => 0.049218*ga + 1.2021,
     range: { min: 5, max: 80 },
-    src: 'Chitty LS, Altman DG. BJOG 2002;109:919–929 — "Charts of fetal size: limb bones" (עקומה ראשית) · Snijders & Nicolaides UOG 1994'
+    src: 'Chitty LS, Altman DG. BJOG 2002;109:919–929 — "Charts of fetal size: limb bones" — משוואת הרגרסיה המקורית'
   },
   foot: {
     label: 'אורך כף רגל', unit:'מ"מ', min:14, max:42,
-    median: (ga) => Math.max(8, -10 + 2.4*ga - 0.018*ga*ga),
-    sd: (ga) => 1.5 + 0.08*ga,
+    // Mercer 1987 table refit (was bending too low at late GA: 53mm@36w vs real ~73mm).
+    median: (ga) => Math.max(8, -0.02576*ga*ga + 3.91862*ga - 35.0004),
+    sd: (ga) => 0.06*ga + 0.8,
     range: { min: 5, max: 95 },
     note: 'יחס FL/Foot ~1 (פג) — חשד לדיספלזיה שלדית אם <1',
-    src: 'Mercer BM et al. AJOG 1987;156:350–355 (n=171, 14–42w) · Goldstein I et al. Obstet Gynecol 1988;72:526–531'
+    src: 'Mercer BM et al. AJOG 1987;156:350–355 (n=171, 14–42w, R²=0.981) — התאמה לטבלה המקורית'
   },
   // Abdomen
   kid: {
     label: 'אורך כליה', unit:'מ"מ', min:18, max:40,
-    median: (ga) => Math.max(8, -11.8 + 1.66*ga - 0.0086*ga*ga),
-    sd: (ga) => 1.5 + 0.06*ga,
+    // Refit to Chitty 2003 50th-centile anchors (20w≈20, 28w≈33, 36w≈42; was ~12% low at term).
+    median: (ga) => Math.max(8, -32.15 + 3.3*ga - 0.034375*ga*ga),
+    sd: (ga) => 1.2 + 0.10*ga,
     range: { min: 5, max: 60 },
-    src: 'Chitty LS, Altman DG. BJOG 2003;110:891'
+    src: 'Chitty LS, Altman DG. Prenat Diagn 2003;23:891–897 — "Charts of fetal size: kidney and renal pelvis"'
   },
   pelvis: {
     label: 'AP Renal Pelvis', unit:'מ"מ', min:18, max:40,
@@ -13167,14 +13177,16 @@ const biomMeasurements = {
     median: (ga) => Math.max(1, -2.4 + 0.27*ga - 0.0010*ga*ga),
     sd: (ga) => 0.4 + 0.025*ga,
     range: { min: 0, max: 12 },
-    src: 'Sharland GK, Allan LD. UOG 1992;2:175 · Tan 1992'
+    // verified vs diastolic-annulus convention (within ~4%); cite equation-based source
+    src: 'Tongprasert F et al. UOG 2011 (STIC) · Liao H et al. PLoS One 2020;15(6):e0233179'
   },
   pa: {
     label: 'Pulmonary Artery Diameter', unit:'מ"מ', min:14, max:40,
     median: (ga) => Math.max(1, -1.9 + 0.26*ga - 0.0008*ga*ga),
     sd: (ga) => 0.4 + 0.03*ga,
     range: { min: 0, max: 13 },
-    src: 'Sharland GK, Allan LD. UOG 1992'
+    // diastolic-annulus convention; marginally low near term — acceptable
+    src: 'Tongprasert F et al. UOG 2011 (STIC) · Liao H et al. PLoS One 2020;15(6):e0233179'
   },
   da: {
     label: 'Ductus Arteriosus Diameter', unit:'מ"מ', min:18, max:40,
@@ -13192,40 +13204,45 @@ const biomMeasurements = {
   },
   mv: {
     label: 'Mitral Valve Annulus', unit:'מ"מ', min:14, max:40,
-    median: (ga) => Math.max(2, -4 + 0.45*ga - 0.003*ga*ga),
-    sd: () => 1.5,
+    // (Prior quadratic ~25-35% low: 8.3mm@36w vs published ~11-12mm.)
+    median: (ga) => Math.max(2, -3.7 + 0.42*ga),
+    sd: (ga) => 0.4 + 0.025*ga,
     range: { min: 0, max: 18 },
-    src: 'Schneider C et al. Ultrasound Obstet Gynecol 2005;26:599'
+    src: 'Schneider C et al. Ultrasound Obstet Gynecol 2005;26:599–605 (annulus MV ~11–12 מ"מ בטרם)'
   },
   tv: {
     label: 'Tricuspid Valve Annulus', unit:'מ"מ', min:14, max:40,
-    median: (ga) => Math.max(2, -4 + 0.48*ga - 0.003*ga*ga),
-    sd: () => 1.5,
+    // (Prior quadratic ~25-35% low: 9.1mm@36w vs published ~12-13mm. TV ~1mm > MV.)
+    median: (ga) => Math.max(2, -4.3 + 0.47*ga),
+    sd: (ga) => 0.4 + 0.028*ga,
     range: { min: 0, max: 18 },
-    src: 'Schneider C et al. UOG 2005;26:599'
+    src: 'Schneider C et al. Ultrasound Obstet Gynecol 2005;26:599–605 (annulus TV ~12–13 מ"מ בטרם)'
   },
   lvw: {
     label: 'LV End-Diastolic Diameter', unit:'מ"מ', min:18, max:40,
-    median: (ga) => Math.max(3, -8 + 0.65*ga - 0.005*ga*ga),
-    sd: () => 1.5,
+    // (Prior quadratic floored at 3mm@20w vs real ~5.7mm — ~47% low; curled down too steeply.)
+    median: (ga) => Math.max(3, 0.40*ga - 2.3),
+    sd: (ga) => 0.5 + 0.030*ga,
     range: { min: 0, max: 25 },
-    src: 'Allan LD. UOG 1995 · Pediatric cardiology reference'
+    src: 'Liao H et al. PLoS One 2020;15(6):e0233179 — fetal cardiac dimensions (LV = 0.04·GA − 0.23 ס"מ) · שיטת Schneider 2005'
   },
   // GI system
   stom: {
     label: 'Stomach Diameter (longest)', unit:'מ"מ', min:14, max:40,
     median: (ga) => Math.max(3, -6 + 0.55*ga - 0.004*ga*ga),
-    sd: (ga) => 1.5 + 0.07*ga,
+    // wider SD — gastric size is physiologically state-dependent (filling/emptying); weak GA correlation
+    sd: (ga) => 2.5 + 0.12*ga,
     range: { min: 0, max: 50 },
-    note: 'שקול ספירת איזון נוזלים אם > 95th — חסימת תריסריון/חסימה',
-    src: 'Goldstein I, Reece EA. AJOG 1987 · Nyberg 1987'
+    note: 'גודל הקיבה משתנה פיזיולוגית (מילוי/ריקון) — מדידה קטנה/נעדרת בודדת אינה בהכרח פתולוגית. שקול מעקב אם > 95th (חסימת תריסריון)',
+    src: 'Goldstein I, Reece EA. AJOG 1987 · Nyberg 1987 — מתאם חלש ל-GA'
   },
   liver: {
     label: 'Liver Length', unit:'מ"מ', min:16, max:40,
-    median: (ga) => Math.max(15, -27.6 + 2.4*ga - 0.017*ga*ga),
-    sd: (ga) => 3 + 0.15*ga,
+    // Tongprasert 2011 published linear equation (was floored flat at 15mm in early T2; real ~27mm@20w).
+    median: (ga) => 1.61*ga - 6.75,
+    sd: (ga) => 0.13*ga + 0.4,
     range: { min: 0, max: 90 },
-    src: 'Vintzileos AM et al. AJOG 1985 · Murao 1990'
+    src: 'Tongprasert F et al. J Clin Ultrasound 2011;39(2):74–77 — "Normal length of the fetal liver 14–40w" (Liver mm = 1.61·GA − 6.75, r²=0.94) · מקור היסטורי: Vintzileos AM et al. Obstet Gynecol 1985'
   },
   gb: {
     label: 'Gallbladder Length', unit:'מ"מ', min:16, max:40,
@@ -13241,10 +13258,11 @@ const biomMeasurements = {
   },
   spleen: {
     label: 'Spleen Length', unit:'מ"מ', min:18, max:40,
-    median: (ga) => Math.max(10, -3 + 0.94*ga - 0.005*ga*ga),
-    sd: (ga) => 2 + 0.1*ga,
+    // (Prior quadratic ~30-47% low: 24.4mm@36w vs published ~36mm.)
+    median: (ga) => Math.max(10, 11.25 + 0.125*ga + 0.0156*ga*ga),
+    sd: (ga) => 2.0 + 0.06*ga,
     range: { min: 0, max: 60 },
-    src: 'Schmidt W et al. AJOG 1985 · Aoki S 1992'
+    src: 'Schmidt W et al. J Ultrasound Med 1985;4:667 · Aoki S 1992 · You W et al. 2014 (3D reference ranges)'
   },
   // Endocrine
   thy: {
@@ -13253,16 +13271,17 @@ const biomMeasurements = {
     sd: (ga) => 1.5 + 0.1*ga,
     range: { min: 0, max: 65 },
     note: 'יעדים אבחנתיים: > 95th = חשד היפו/היפר-תיירואידיזם מולד',
-    src: 'Achiron R et al. UOG 1998;11:259'
+    src: 'Achiron R et al. Clin Endocrinol (Oxf) 1998;48:259–264 — "The development of the fetal thyroid"'
   },
   // Genital / Urinary
   pen: {
     label: 'Penis Length (זכר)', unit:'מ"מ', min:18, max:40,
-    median: (ga) => Math.max(3, -8 + 0.92*ga - 0.005*ga*ga),
-    sd: () => 2,
+    // Calibrated to pooled consensus (~16mm term). Prior ran high (18.6@36w); Zalel's own √-eq runs even higher (~22mm).
+    median: (ga) => Math.max(3, -17.75 + 1.5*ga - 0.0156*ga*ga),
+    sd: (ga) => 1.5 + 0.04*ga,
     range: { min: 0, max: 45 },
     note: 'אורך < 3rd percentile = מיקרופניס (חשד אנדוקרינופתיה)',
-    src: 'Zalel Y et al. UOG 2001;17:323 · Johnson 1989'
+    src: 'Zalel Y et al. UOG 2001;17:323 (מגמת התפתחות) · כויל לערכי ייחוס מאוחדים כולל Nemec 2011 (טרם ~16 מ"מ)'
   },
   bladd: {
     label: 'Bladder Length (AP)', unit:'מ"מ', min:14, max:40,
