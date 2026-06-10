@@ -2637,7 +2637,10 @@
     <div class="ref">
       <b>נייר עמדה ישראלי #31 (2015):</b> מיקרוצפליה — חברת אולטרסאונד + AAM (חשד: HC≤-3SD · ודאי: HC≤-5SD)<br>
       <b>נייר עמדה ישראלי #53 (מרץ 2026):</b> נוירוסונוגרפיה עוברית — אינדיקציות, פרוטוקול, MRI משלים<br>
-      <b>מקור:</b> Chervenak FA et al. <i>Am J Obstet Gynecol</i> 1984;149:512–517<br>
+      <b>עקומות HC בשימוש:</b><br>
+      &nbsp;&nbsp;★ <b>Chervenak FA et al.</b> <i>Am J Obstet Gynecol</i> 1984;149:512–517 (מבוסס Jeanty 1984) — הקריטריון האבחנתי המקובל למיקרוצפליה: ממוצע = 10.885·t − 69.625 + 0.14769·t² − 0.00405·t³ · SD קבוע = 14.7 מ"מ<br>
+      &nbsp;&nbsp;<b>Daniel-Spiegel E et al. 2013</b> — עקומה ישראלית מודרנית (אוכלוסייה גדולה, מדידה אלקטרונית): ממוצע = −0.1754·t² + 18.782·t − 131.48 · SD = 0.0027·t² − 0.2025·t + 17.23<br>
+      &nbsp;&nbsp;<i>★ = העקומה שעליה מבוסס הקריטריון האבחנתי. שתיהן מאומתות מול מחשבון פרופ' לייבוביץ (zvi.assafl.com).</i><br>
       <b>נכלל בחישוב:</b> HC בלבד — מדידת היקף ראש באליפסה סביב הגולגולת במישור transthalamic (תאלמי + CSP)<br>
       קריטריון מיקרוצפליה: HC ≤ −3 SD · פתולוגי ודאי: ≤ −5 SD (SMFM 2016)
     </div>
@@ -7725,7 +7728,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.41';
+const APP_VERSION = '4.42';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -12195,6 +12198,10 @@ function hcMeanCherv(t){ return 10.885*t - 69.625 + 0.14769*t*t - 0.00405*t*t*t;
 function hcInterp(w,d){
   return {m: hcMeanCherv(w + (d||0)/7), sd: HC_SD};
 }
+// Daniel-Spiegel et al. 2013 — modern Israeli HC reference. Verified against
+// zvi.assafl.com: mean(mm) = -0.1754·t² + 18.782·t − 131.48 ; SD(mm) = 0.0027·t² − 0.2025·t + 17.23
+function hcMeanDS(t){ return -0.1754*t*t + 18.782*t - 131.48; }
+function hcSdDS(t){ return 0.0027*t*t - 0.2025*t + 17.23; }
 function calcHC(){
   const w=parseInt(document.getElementById('hc-w').value);
   const d=parseInt(document.getElementById('hc-d').value)||0;
@@ -12221,8 +12228,11 @@ function calcHC(){
   }
   const pointColor = z<=-3?'#E24B4A':z<=-2?'#EF9F27':'#1D9E75';
   const ga=w+d/7;
+  // Daniel-Spiegel 2013 (modern Israeli reference) — shown alongside Chervenak
+  const dsM=hcMeanDS(ga), dsSd=hcSdDS(ga), dsZ=(hc-dsM)/dsSd, dsPct=normCDF(dsZ)*100;
+  const dsPs=dsPct<0.1?'<0.1':dsPct>99.9?'>99.9':dsPct.toFixed(1);
   el.innerHTML=`<div class="result">
-    <div class="result-label">HC · ${gaStr(w,d)} שבועות · Chervenak et al. 1984</div>
+    <div class="result-label">HC · ${gaStr(w,d)} שבועות · ★ Chervenak et al. 1984</div>
     <div class="big">${z.toFixed(2)}<span> SD</span></div>
     <div class="zscore">אחוזון ${ps}</div>
     ${bar(barPct,c)}
@@ -12234,6 +12244,11 @@ function calcHC(){
       <div class="di"><div class="dl">−2 SD</div><div class="dv">${Math.round(r.m-2*r.sd)} מ"מ</div></div>
       <div class="di"><div class="dl">−3 SD (סף)</div><div class="dv">${m3} מ"מ</div></div>
       <div class="di"><div class="dl">−5 SD (פתולוגי)</div><div class="dv">${m5} מ"מ</div></div>
+    </div>
+    <div class="note" style="border-right-color:var(--purple);margin-top:10px">
+      <b>השוואת עקומות HC:</b><br>
+      ★ <b>Chervenak 1984</b> <span style="color:var(--text2)">(קריטריון אבחנתי מקובל למיקרוצפליה)</span>: z = <b>${z.toFixed(2)}</b> · אחוזון ${ps}<br>
+      <b>Daniel-Spiegel 2013</b> <span style="color:var(--text2)">(עקומה ישראלית מודרנית)</span>: z = <b>${dsZ.toFixed(2)}</b> · אחוזון ${dsPs}
     </div>
     <div class="chart-card">
       <div class="chart-head">
