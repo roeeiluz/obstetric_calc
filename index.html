@@ -7728,7 +7728,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.43';
+const APP_VERSION = '4.44';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -13174,19 +13174,19 @@ const biomMeasurements = {
   },
   ao: {
     label: 'Aortic Root Diameter', unit:'מ"מ', min:14, max:40,
-    median: (ga) => Math.max(1, -2.4 + 0.27*ga - 0.0010*ga*ga),
-    sd: (ga) => 0.4 + 0.025*ga,
+    // Schneider 2005 exact GA eq: ln(cm)=−5.019+1.263·ln(GA), systole. SD≈median·rootMSE(0.1282).
+    median: (ga) => 0.066189 * Math.pow(ga, 1.263),
+    sd: (ga) => 0.066189 * Math.pow(ga, 1.263) * 0.1282,
     range: { min: 0, max: 12 },
-    // verified vs diastolic-annulus convention (within ~4%); cite equation-based source
-    src: 'Tongprasert F et al. UOG 2011 (STIC) · Liao H et al. PLoS One 2020;15(6):e0233179'
+    src: 'Schneider C et al. Ultrasound Obstet Gynecol 2005;26:599–605, Table 3 (n=128, מדידה בסיסטולה)'
   },
   pa: {
     label: 'Pulmonary Artery Diameter', unit:'מ"מ', min:14, max:40,
-    median: (ga) => Math.max(1, -1.9 + 0.26*ga - 0.0008*ga*ga),
-    sd: (ga) => 0.4 + 0.03*ga,
+    // Schneider 2005 exact GA eq: ln(cm)=−5.114+1.352·ln(GA), systole. SD≈median·rootMSE(0.1208).
+    median: (ga) => 0.060187 * Math.pow(ga, 1.352),
+    sd: (ga) => 0.060187 * Math.pow(ga, 1.352) * 0.1208,
     range: { min: 0, max: 13 },
-    // diastolic-annulus convention; marginally low near term — acceptable
-    src: 'Tongprasert F et al. UOG 2011 (STIC) · Liao H et al. PLoS One 2020;15(6):e0233179'
+    src: 'Schneider C et al. Ultrasound Obstet Gynecol 2005;26:599–605, Table 3 (n=124, מדידה בסיסטולה)'
   },
   da: {
     label: 'Ductus Arteriosus Diameter', unit:'מ"מ', min:18, max:40,
@@ -13197,34 +13197,35 @@ const biomMeasurements = {
   },
   ivc: {
     label: 'IVC (Inferior Vena Cava)', unit:'מ"מ', min:18, max:40,
-    median: (ga) => Math.max(2, -3 + 0.26*ga),
-    sd: () => 1.0,
+    // Schneider 2005 exact GA eq: ln(cm)=−5.140+1.201·ln(GA). → 2.1/3.2/4.3 מ"מ @20/28/36w (r=0.85).
+    median: (ga) => 0.058642 * Math.pow(ga, 1.201),
+    sd: (ga) => 0.058642 * Math.pow(ga, 1.201) * 0.1893,
     range: { min: 0, max: 12 },
-    src: 'Tan J et al. UOG 1992'
+    src: 'Schneider C et al. Ultrasound Obstet Gynecol 2005;26:599–605, Table 3 (IVC, n=114)'
   },
   mv: {
     label: 'Mitral Valve Annulus', unit:'מ"מ', min:14, max:40,
-    // (Prior quadratic ~25-35% low: 8.3mm@36w vs published ~11-12mm.)
-    median: (ga) => Math.max(2, -3.7 + 0.42*ga),
-    sd: (ga) => 0.4 + 0.025*ga,
+    // Schneider 2005 exact GA eq: ln(cm)=−4.084+1.173·ln(GA), diastole. → 5.7/8.4/11.3 מ"מ @20/28/36w.
+    median: (ga) => 0.168349 * Math.pow(ga, 1.173),
+    sd: (ga) => 0.168349 * Math.pow(ga, 1.173) * 0.1315,
     range: { min: 0, max: 18 },
-    src: 'Schneider C et al. Ultrasound Obstet Gynecol 2005;26:599–605 (annulus MV ~11–12 מ"מ בטרם)'
+    src: 'Schneider C et al. Ultrasound Obstet Gynecol 2005;26:599–605, Table 3 (n=126, מדידה בדיאסטולה)'
   },
   tv: {
     label: 'Tricuspid Valve Annulus', unit:'מ"מ', min:14, max:40,
-    // (Prior quadratic ~25-35% low: 9.1mm@36w vs published ~12-13mm. TV ~1mm > MV.)
-    median: (ga) => Math.max(2, -4.3 + 0.47*ga),
-    sd: (ga) => 0.4 + 0.028*ga,
+    // Schneider 2005 exact GA eq: ln(cm)=−4.766+1.395·ln(GA), diastole. → 5.6/8.9/12.6 מ"מ @20/28/36w.
+    median: (ga) => 0.085165 * Math.pow(ga, 1.395),
+    sd: (ga) => 0.085165 * Math.pow(ga, 1.395) * 0.1394,
     range: { min: 0, max: 18 },
-    src: 'Schneider C et al. Ultrasound Obstet Gynecol 2005;26:599–605 (annulus TV ~12–13 מ"מ בטרם)'
+    src: 'Schneider C et al. Ultrasound Obstet Gynecol 2005;26:599–605, Table 3 (n=127, מדידה בדיאסטולה)'
   },
   lvw: {
     label: 'LV End-Diastolic Diameter', unit:'מ"מ', min:18, max:40,
-    // (Prior quadratic floored at 3mm@20w vs real ~5.7mm — ~47% low; curled down too steeply.)
-    median: (ga) => Math.max(3, 0.40*ga - 2.3),
-    sd: (ga) => 0.5 + 0.030*ga,
+    // Schneider 2005 exact GA eq: ln(cm)=−4.292+1.298·ln(GA), diastole. → 6.7/10.3/14.3 מ"מ @20/28/36w.
+    median: (ga) => 0.136723 * Math.pow(ga, 1.298),
+    sd: (ga) => 0.136723 * Math.pow(ga, 1.298) * 0.1560,
     range: { min: 0, max: 25 },
-    src: 'Liao H et al. PLoS One 2020;15(6):e0233179 — fetal cardiac dimensions (LV = 0.04·GA − 0.23 ס"מ) · שיטת Schneider 2005'
+    src: 'Schneider C et al. Ultrasound Obstet Gynecol 2005;26:599–605, Table 3 (LV-EDD, n=126, דיאסטולה)'
   },
   // GI system
   stom: {
