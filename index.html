@@ -7827,7 +7827,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.47';
+const APP_VERSION = '4.48';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -13082,14 +13082,28 @@ const biomMeasurements = {
   // CNS
   tcd: {
     label: 'TCD — קוטר צרברום', unit:'מ"מ', min:11, max:40,
-    // Chavez 2003 / Goldstein 1987 — TCD–GA nomogram (per-week table, cubic fit, maxErr ~1mm).
-    // Re-validated 2026-06-16: replaced earlier exponential that over-accelerated at term
-    // (gave ~61mm@40w; cubic gives ~56, matching literature ~52–55mm). Monotonic 14–41w.
-    median: (ga) => -0.4341 + 1.08088*ga - 0.012180*ga*ga + 0.00050819*ga*ga*ga,
+    // DEFAULT = Goldstein 1987 (LOINC-standard TCD-for-GA method). Chavez 2003 as alternative
+    // (3rd-trimester emphasis — runs ~4mm higher near term). Both cubic fits, monotonic 14–41w.
+    median: (ga) => 5.4863 + 0.19929*ga + 0.028189*ga*ga - 0.00011419*ga*ga*ga,
     sd: (ga) => 0.30 + 0.075*ga,
     range: { min: 5, max: 70 },
     note: 'נמדד במישור צרבלום (sub-occipital) — כלל אצבע: TCD ≈ GA בשבועות (14–24w)',
-    src: 'Chavez MR et al. AJOG 2003;189:1021–1025 — נומוגרמת TCD (דגש טרימסטר 3) · מודל עקום מבוסס Goldstein I et al. AJOG 1987;156:1065'
+    src: 'Goldstein I et al. AJOG 1987;156:1065–1069 — נומוגרמת TCD-לפי-GA (שיטת הייחוס LOINC 33181-9); עקומה מותאמת לערכי הנומוגרמה',
+    altCurves: {
+      goldstein: {
+        label: 'Goldstein 1987 ⭐',
+        median: (ga) => 5.4863 + 0.19929*ga + 0.028189*ga*ga - 0.00011419*ga*ga*ga,
+        sd: (ga) => 0.30 + 0.075*ga,
+        src: 'Goldstein I et al. AJOG 1987;156:1065–1069 — שיטת הייחוס הסטנדרטית (LOINC 33181-9); טרם ~51 מ"מ. <b>מומלצת כעקומה ראשית.</b>'
+      },
+      chavez: {
+        label: 'Chavez 2003',
+        median: (ga) => -0.4341 + 1.08088*ga - 0.012180*ga*ga + 0.00050819*ga*ga*ga,
+        sd: (ga) => 0.30 + 0.075*ga,
+        src: 'Chavez MR et al. AJOG 2003;189:1021–1025 — נומוגרמה עם דגש טרימסטר 3 (גבוה ~4 מ"מ בטרם מ-Goldstein)'
+      }
+    },
+    defaultCurve: 'goldstein'
   },
   cm: {
     label: 'Cisterna Magna', unit:'מ"מ', min:14, max:40,
