@@ -1931,6 +1931,10 @@
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v8M10 11l-3 3M10 11l3 3M10 3a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/><circle cx="10" cy="6" r="1.2" fill="currentColor"/></svg>
           <span>VTE</span>
         </button>
+        <button class="tab" onclick="showTab('pas',this)" role="tab">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3c4 0 7 2.6 7 6 0 2-1.6 3.6-3.6 3.6-1.4 0-2.4-1-2.4-2.4M10 3C6 3 3 5.6 3 9c0 4.2 3.6 8 7 8"/><circle cx="8.5" cy="8" r="1" fill="currentColor"/><circle cx="12" cy="10.5" r="1" fill="currentColor"/></svg>
+          <span>נעיצות שליה</span>
+        </button>
         <button class="tab" onclick="showTab('pplan',this)" role="tab">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="13" height="13.5" rx="1.5"/><path d="M6.5 7.5h7M6.5 10.5h7M6.5 13.5h4"/><path d="M5.5 7l.6.6L7.2 6.5"/></svg>
           <span>תוכנית הריון</span>
@@ -5052,6 +5056,101 @@
   </div>
 
   <!-- ===== VTE Postpartum Prophylaxis (JAMA 2024 selective protocol) ===== -->
+  <div id="pas" class="panel">
+    <details class="ref-wrap">
+      <summary>
+        <svg class="ref-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5h7l3 3v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1Z"/><path d="M10 2.5v3h3"/><path d="M5 9h6M5 11.5h4"/></svg>
+        <span>מקורות PAS (נעיצות שליה)</span>
+        <svg class="ref-caret" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5l4 4 4-4"/></svg>
+      </summary>
+      <div class="ref">
+        <b>Silver RM et al. (MFMU):</b> <i>Obstet Gynecol</i> 2006;107:1226 — סיכון accreta לפי שליית פתח + מספר קיסריים<br>
+        <b>Rac MW et al. (Placenta Accreta Index, PAI):</b> <i>AJOG</i> 2015;212:343 — ניקוד משוקלל (AUC 0.87); אומת חיצונית (Hasegawa): סף PAI>2 → רגישות 90%, סגוליות 96%<br>
+        <b>Tovbin J et al.:</b> <i>UOG</i> 2016;48:504 — מערכת ניקוד ישראלית (AUC 0.94); bands: 0.9% / 29.4% / 84.2%<br>
+        <b>Collins SL et al. (EW-AIP/ISUOG):</b> <i>UOG</i> 2016;47:271 — הגדרות סטנדרטיות לסמני PAS באולטרסאונד
+      </div>
+    </details>
+
+    <div class="note" style="border-right-color:var(--primary);background:var(--primary-bg)">
+      <b>שלב 1 — שער:</b> שליית פתח/נמוכה + מספר קיסריים קודמים (Silver). <b>שלב 2 — ניקוד:</b> סמני אולטרסאונד → Placenta Accreta Index (Rac).
+    </div>
+
+    <div class="row">
+      <label>מיקום השליה</label>
+      <div class="seg" id="pas-loc">
+        <button data-v="none" class="active" onclick="pasSeg(this)">רגיל</button>
+        <button data-v="ant" onclick="pasSeg(this)">קדמית נמוכה</button>
+        <button data-v="pvp" onclick="pasSeg(this)">פתח אחורית</button>
+        <button data-v="pva" onclick="pasSeg(this)">פתח קדמית</button>
+      </div>
+    </div>
+    <div class="row">
+      <label>מספר ניתוחים קיסריים קודמים</label>
+      <select id="pas-cs" onchange="calcPAS()" style="width:110px">
+        <option value="0">0</option><option value="1">1</option><option value="2">2</option>
+        <option value="3">3</option><option value="4">4</option><option value="5">5+</option>
+      </select>
+    </div>
+
+    <div class="divider"></div>
+    <div class="sec">סמני אולטרסאונד (PAS)</div>
+    <div class="row">
+      <label>מספר לקונות שלייתיות</label>
+      <div class="seg" id="pas-lacn">
+        <button data-v="0" class="active" onclick="pasSeg(this)">אין</button>
+        <button data-v="le2" onclick="pasSeg(this)">≤ 2</button>
+        <button data-v="gt2" onclick="pasSeg(this)">&gt; 2</button>
+      </div>
+    </div>
+    <div class="row">
+      <label>גודל לקונה מקסימלי</label>
+      <div class="seg" id="pas-lacs">
+        <button data-v="0" class="active" onclick="pasSeg(this)">אין</button>
+        <button data-v="le2" onclick="pasSeg(this)">≤ 2 ס"מ</button>
+        <button data-v="gt2" onclick="pasSeg(this)">&gt; 2 ס"מ</button>
+      </div>
+    </div>
+    <div class="row">
+      <label>טשטוש דמרקציה רחם-שליה (clear zone)</label>
+      <div class="seg" id="pas-oblit">
+        <button data-v="no" class="active" onclick="pasSeg(this)">תקין</button>
+        <button data-v="yes" onclick="pasSeg(this)">אבוד</button>
+      </div>
+    </div>
+    <div class="row">
+      <label>עובי מיומטריום מינימלי (סגיטלי)</label>
+      <div class="seg" id="pas-myo">
+        <button data-v="gt5" class="active" onclick="pasSeg(this)">&gt; 5 מ"מ</button>
+        <button data-v="m35" onclick="pasSeg(this)">3–5</button>
+        <button data-v="m13" onclick="pasSeg(this)">1–3</button>
+        <button data-v="le1" onclick="pasSeg(this)">≤ 1</button>
+      </div>
+    </div>
+    <div class="row">
+      <label>דופלר צבע</label>
+      <div class="seg" id="pas-dop">
+        <button data-v="none" class="active" onclick="pasSeg(this)">תקין</button>
+        <button data-v="lac" onclick="pasSeg(this)">זרימה בלקונות</button>
+        <button data-v="hyper" onclick="pasSeg(this)">היפר-וסקולריות</button>
+      </div>
+    </div>
+    <div class="row">
+      <label>כלי דם גשריים (Bridging vessels · Rac)</label>
+      <label class="pp-check"><input type="checkbox" id="pas-bridge" onchange="calcPAS()"> נוכחים</label>
+    </div>
+
+    <div id="pas-res" style="margin-top:6px"></div>
+
+    <details style="margin-top:12px;border:1px solid var(--border);border-radius:10px;overflow:hidden">
+      <summary style="cursor:pointer;padding:10px 12px;font-weight:700;background:var(--surface2)">📋 הגדרות סמני PAS (ISUOG/Collins) + ניקוד Tovbin</summary>
+      <div style="padding:12px;font-size:12.5px;line-height:1.7">
+        <b>סמני אפור (Grayscale):</b> אובדן ה-"clear zone" הרטרו-שלייתי · לקונות לא-סדירות מרובות ("גבינה שוויצרית") · הפרעה לקו דופן השלפוחית · הידקקות מיומטריום &lt;1מ"מ · בליטה שלייתית (placental bulge) · מסה אקסופיטית.<br>
+        <b>סמני דופלר:</b> היפר-וסקולריות אוטרו-וזיקלית/תת-שלייתית · כלי דם גשריים (שליה→מיומטריום→סרוזה) · כלי הזנה ללקונות.<br><br>
+        <b>ניקוד Tovbin (ישראלי, AUC 0.94 · UOG 2016, n=258)</b> — 6 קריטריונים (טבלה 1), כל אחד 0/1/2: מספר קיסריים · גודל לקונה מקסימלי · מספר לקונות · טשטוש דמרקציה רחם-שליה · מיקום (קדמית 1 / פתח 2) · דופלר (זרימה בלקונות 1 / היפר-וסקולריות 2). ספי הניקוד המדויקים מהמאמר: <b>נמוך ≤5 (0.9%) · בינוני 6–7 (29.4%) · גבוה 8–12 (84.2%)</b> — מחושב אוטומטית למעלה.
+      </div>
+    </details>
+  </div>
+
   <div id="vte" class="panel">
     <details class="ref-wrap">
       <summary>
@@ -7728,7 +7827,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.44';
+const APP_VERSION = '4.45';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -13094,6 +13193,40 @@ const biomMeasurements = {
     range: { min: 2, max: 30 },
     src: 'Jeanty P et al. Radiology 1982;143:513–6 — נומוגרמת קוטר גלגל עין · אומת מול MRI (Velasco-Annis 2015)'
   },
+  // Face — nasal bone length & tongue (added, source-validated)
+  nbl: {
+    label: 'אורך עצם האף (NBL)', unit:'מ"מ', min:14, max:40,
+    // Sonek 2003 (n=3537) growth pattern. median מבוסס היטב; SD מקורב ותלוי-אוכלוסייה.
+    median: (ga) => Math.max(1, -0.00625*ga*ga + 0.6154*ga - 4.460),
+    sd: (ga) => 0.0185*ga + 0.385,
+    range: { min: 0, max: 16 },
+    note: 'NBL < אחוזון 5 / היפופלזיה = סמן לטריזומיה 21 (בעיקר עם סמנים נוספים). ⚠ ה-SD מקורב ותלוי-אוכלוסייה (קצר יותר באוכלוסייה אסיאתית) — פרש ערכי גבול בזהירות.',
+    src: 'Sonek JD et al. Ultrasound Obstet Gynecol 2003;21:152–155 (n=3537, 11–40w) — דפוס גדילה; SD נגזר ממקורות משניים (מקורב)'
+  },
+  tongc: {
+    label: 'היקף לשון (Tongue Circ.)', unit:'מ"מ', min:13, max:40,
+    median: (ga) => -57.2210 + 7.76212*ga - 0.134588*ga*ga + 0.00107457*ga*ga*ga,
+    sd: (ga) => Math.max(1, 2.8188 - 0.03294*ga + 0.004505*ga*ga),
+    range: { min: 0, max: 140 },
+    note: 'מאקרוגלוסיה ≥ אחוזון 95 (Beckwith-Wiedemann, T21) · מיקרוגלוסיה ≤ אחוזון 5 (Pierre-Robin). היקף = הפרמטר הטוב ביותר (r=0.953). מדידה: מישור אקסיאלי בין רכסי הלסת, לשון במנוחה, עד ל-terminal sulcus.',
+    src: 'Koren N et al. J Ultrasound Med 2023;42:59–70 (Sheba, n=664, 13–40w, ICC>0.9) — נומוגרמה מודרנית. ⚠ מרכז יחיד; שקול תיקוף מול האוכלוסייה המקומית.'
+  },
+  tongl: {
+    label: 'אורך לשון (Tongue Length)', unit:'מ"מ', min:13, max:40,
+    median: (ga) => -7.0387 + 1.02855*ga + 0.014283*ga*ga - 0.00034419*ga*ga*ga,
+    sd: (ga) => Math.max(0.5, -0.1121 + 0.05317*ga + 0.000983*ga*ga),
+    range: { min: 0, max: 45 },
+    note: 'מדידה אנטרו-פוסטריורית במישור אקסיאלי, עד ל-terminal sulcus.',
+    src: 'Koren N et al. J Ultrasound Med 2023;42:59–70 (Sheba, n=664). ⚠ מרכז יחיד.'
+  },
+  tongw: {
+    label: 'רוחב לשון (Tongue Width)', unit:'מ"מ', min:13, max:40,
+    median: (ga) => -16.7516 + 2.28012*ga - 0.042338*ga*ga + 0.00034717*ga*ga*ga,
+    sd: (ga) => Math.max(0.5, -0.3131 + 0.08080*ga - 0.000147*ga*ga),
+    range: { min: 0, max: 40 },
+    note: 'מדידה רוחבית (latero-lateral) במישור אקסיאלי.',
+    src: 'Koren N et al. J Ultrasound Med 2023;42:59–70 (Sheba, n=664). ⚠ מרכז יחיד.'
+  },
   // Long bones — עקומות ייחוס מאוששות לעצמות ארוכות
   hl: {
     label: 'אורך Humerus', unit:'מ"מ', min:14, max:42,
@@ -13265,6 +13398,29 @@ const biomMeasurements = {
     range: { min: 0, max: 60 },
     src: 'Schmidt W et al. J Ultrasound Med 1985;4:667 · Aoki S 1992 · You W et al. 2014 (3D reference ranges)'
   },
+  // GI (added) — colon & small bowel
+  colon: {
+    label: 'קוטר מעי גס (Colon)', unit:'מ"מ', min:20, max:41,
+    // Zalel 2003 + Goldstein 2002 + Haidar 2020 (קולון יורד/רוחבי). ביטחון בינוני; SD מוערך.
+    median: (ga) => { const g=ga-20; return 5.0 + 0.30*g - 0.0125*g*g + 0.00190*g*g*g; },
+    sd: (ga) => { const g=ga-20; return Math.max(1.2, 0.13*(5.0 + 0.30*g - 0.0125*g*g + 0.00190*g*g*g)); },
+    range: { min: 0, max: 30 },
+    note: 'מעי גס נראה ~20–22w, גדל ל-~18מ"מ בטרם. גבול עליון מוחלט > 23מ"מ (Parulekar) → חשד מגהקולון/חסימה דיסטלית. רקטוסיגמואיד מלא-מקוניום נורמלית גדול יותר. ⚠ ביטחון בינוני, SD מוערך.',
+    src: 'Zalel Y et al. UOG 2003;21:161 (n=379) · Goldstein I 2002 · Haidar 2020 — קולון יורד/רוחבי'
+  },
+  sbowel: {
+    label: 'קוטר מעי דק (Small Bowel)', unit:'מ"מ', min:18, max:40,
+    median: () => 4, sd: () => 1.5,
+    range: { min: 0, max: 25 },
+    custom: (val, ga) => {
+      if(val >= 15) return {cls:'bad', label:'≥ 15 מ"מ — מורחב מאוד (חסימה/אטרזיה) · בדוק התקדמות בסריקות חוזרות'};
+      if(val >= 7) return {cls:'bad', label: ga<24 ? '≥ 7 מ"מ לפני 24w — חשד לחסימה/אטרזיה; הצלב' : '≥ 7 מ"מ — חשד לחסימה/אטרזיה. מעקב התקדמות'};
+      if(val >= 6) return {cls:'warn', label:'6–7 מ"מ — גבולי (נורמלי עד ~6מ"מ); שקול מעקב'};
+      return {cls:'ok', label:'תקין (< 6–7 מ"מ)'};
+    },
+    note: 'סף-מבוסס (Nyberg 1987): קוטר תקין < 7מ"מ, אורך לולאה < 15מ"מ. ⚠ אין נומוגרמת z אמינה — התקדמות בסריקות חוזרות היא המנבא, לא ערך בודד.',
+    src: 'Nyberg DA et al. J Ultrasound Med 1987;6:3 · Parulekar SG 1991 — סִפֵּי דילול'
+  },
   // Endocrine
   thy: {
     label: 'Thyroid Circumference', unit:'מ"מ', min:14, max:40,
@@ -13311,7 +13467,13 @@ const biomSystems = {
     group: 'main',
     name: 'פנים ועיניים', color: 'var(--pink)',
     icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><circle cx="7.5" cy="9" r="1.2"/><circle cx="12.5" cy="9" r="1.2"/><path d="M7.5 13.5c1 1 4 1 5 0"/></svg>',
-    items: ['iod','ood','eye']
+    items: ['iod','ood','eye','nbl','tongc','tongl','tongw']
+  },
+  micrognathia: {
+    group: 'main',
+    name: 'מיקרוגנטיה / סנטר', color: 'var(--pink)',
+    icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3c0 3-2 4-2 7 0 3 2 5 5 5 1.5 0 2.5-.5 3.5-1.5"/><path d="M13 4l1.5 4-1.5 1"/><circle cx="8" cy="7" r="1" fill="currentColor"/></svg>',
+    items: [], customHandler: 'showMicrognathiaInfo', subtitle: 'IFA + Jaw Index + HML — מדריך ומחשבון'
   },
   cardio: {
     group: 'main',
@@ -13323,7 +13485,7 @@ const biomSystems = {
     group: 'main',
     name: 'מערכת עיכול', color: 'var(--amber)',
     icon: '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3c0 1-1 2-2 2H4c-1 0-2 1-2 2v3c0 3 2 6 5 6 1.5 0 3-.5 4-2 1 1.5 2.5 2 4 2 3 0 5-3 5-6V9c0-1-1-2-2-2h-2c-1 0-2-1-2-2V2"/></svg>',
-    items: ['stom','liver','gb','spleen']
+    items: ['stom','liver','gb','spleen','colon','sbowel']
   },
   endo: {
     group: 'main',
@@ -13453,6 +13615,130 @@ function renderNeurosonoAccordion(){
       </div>
     </details>
   `;
+}
+
+// ─── Placenta Accreta Spectrum (PAS) — Silver gate + Rac PAI ──
+// Silver RM 2006 (pretest by previa + prior CS); Rac MW 2015 Placenta Accreta Index (PAI>2 = high risk).
+function segVal(id){ const el=document.getElementById(id); if(!el) return null; const b=el.querySelector('button.active'); return b?b.dataset.v:null; }
+function pasSeg(btn){ btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); calcPAS(); }
+function calcPAS(){
+  const el=document.getElementById('pas-res'); if(!el) return;
+  const cl = c => 'var(--'+(c==='bad'?'red':c==='warn'?'amber':'green')+')';
+  const loc=segVal('pas-loc');           // none / ant / pvp / pva
+  const cs=parseInt((document.getElementById('pas-cs')||{}).value||'0');
+  const lacn=segVal('pas-lacn'), lacs=segVal('pas-lacs'), oblit=segVal('pas-oblit');
+  const myo=segVal('pas-myo'), dop=segVal('pas-dop');
+  const bridge=document.getElementById('pas-bridge') && document.getElementById('pas-bridge').checked;
+  const hasPrevia = loc==='pvp'||loc==='pva';
+  // ── Silver 2006 pretest accreta risk (previa × prior CS) ──
+  const silverWith=[3,11,40,61,67,67], silverNo=[0.03,0.2,0.1,0.8,0.8,4.7];
+  const silver=(hasPrevia?silverWith:silverNo)[Math.min(cs,5)];
+  const silverCls = silver>=20?'bad':silver>=5?'warn':'ok';
+  // ── Rac 2015 Placenta Accreta Index ──
+  let pai=0; const rparts=[];
+  if(cs>=2){ pai+=3.0; rparts.push('≥2 קיסריים +3.0'); }
+  const anyLac=(lacn!=='0'||lacs!=='0'), bigLac=(lacn==='gt2'&&lacs==='gt2');
+  if(bigLac){ pai+=3.5; rparts.push('לקונות נרחבות G3 +3.5'); } else if(anyLac){ pai+=1.0; rparts.push('לקונות G2 +1.0'); }
+  if(myo==='le1'){ pai+=1.0; rparts.push('מיומטריום ≤1מ"מ +1.0'); } else if(myo==='m13'){ pai+=0.5; rparts.push('מיומטריום 1–3מ"מ +0.5'); } else if(myo==='m35'){ pai+=0.25; rparts.push('מיומטריום 3–5מ"מ +0.25'); }
+  if(loc==='pva'){ pai+=1.0; rparts.push('שליית פתח קדמית +1.0'); }
+  if(bridge){ pai+=0.5; rparts.push('כלי דם גשריים +0.5'); }
+  const prob=100/(1+Math.exp(-(pai-4.3)*0.95));
+  const racCls = pai>2?'bad':(pai>=1?'warn':'ok');
+  const racVerdict = pai>2?'PAI > 2 — סיכון גבוה ל-PAS (רגישות 90%, סגוליות 96%) · הפניה למרכז PAS':(pai>=1?'PAI נמוך-בינוני — מעקב':'PAI = 0 — סיכון נמוך לפי הסמנים');
+  // ── Tovbin 2016 score (Table 1; bands ≤5 / 6–7 / 8–12) ──
+  let tov=0; const tparts=[];
+  if(cs>=2){ tov+=2; tparts.push('קיסריים ≥2: 2'); } else if(cs===1){ tov+=1; tparts.push('קיסרי 1: 1'); }
+  if(lacs==='gt2'){ tov+=2; tparts.push('לקונה >2ס"מ: 2'); } else if(lacs==='le2'){ tov+=1; tparts.push('לקונה ≤2ס"מ: 1'); }
+  if(lacn==='gt2'){ tov+=2; tparts.push('לקונות >2: 2'); } else if(lacn==='le2'){ tov+=1; tparts.push('לקונות ≤2: 1'); }
+  if(oblit==='yes'){ tov+=2; tparts.push('טשטוש דמרקציה: 2'); }
+  if(hasPrevia){ tov+=2; tparts.push('שליית פתח: 2'); } else if(loc==='ant'){ tov+=1; tparts.push('קדמית: 1'); }
+  if(dop==='hyper'){ tov+=2; tparts.push('היפר-וסקולריות: 2'); } else if(dop==='lac'){ tov+=1; tparts.push('זרימה בלקונות: 1'); }
+  const tovBand = tov<=5?{c:'ok',l:'נמוך (≤5) — שכיחות MAP 0.9%'}:tov<=7?{c:'warn',l:'בינוני (6–7) — שכיחות 29.4%'}:{c:'bad',l:'גבוה (8–12) — שכיחות 84.2%'};
+  el.innerHTML = `<div class="result">
+      <div class="result-label">שלב 1 · סיכון קדם-בדיקה (Silver 2006)</div>
+      <div class="big" style="color:${cl(silverCls)}">${silver}%<span> accreta</span></div>
+      <div class="zscore">${hasPrevia?'עם שליית פתח':'ללא שליית פתח'} · ${cs} קיסריים קודמים</div>
+    </div>
+    <div class="detail-grid two" style="margin-top:10px">
+      <div class="result" style="margin:0">
+        <div class="result-label">Rac · PAI</div>
+        <div class="big" style="color:${cl(racCls)}">${pai.toFixed(2)}</div>
+        <div class="zscore">הסתברות פלישה ≈ ${prob.toFixed(0)}%</div>
+        ${badge(racCls, racVerdict)}
+        ${rparts.length?`<div style="font-size:11px;color:var(--text3);margin-top:6px">${rparts.join(' · ')}</div>`:''}
+      </div>
+      <div class="result" style="margin:0">
+        <div class="result-label">Tovbin · ציון</div>
+        <div class="big" style="color:${cl(tovBand.c)}">${tov}<span> /12</span></div>
+        ${badge(tovBand.c, tovBand.l)}
+        ${tparts.length?`<div style="font-size:11px;color:var(--text3);margin-top:6px">${tparts.join(' · ')}</div>`:''}
+      </div>
+    </div>`;
+}
+
+// ─── Micrognathia / chin assessment — guide + calculator ──
+// Validated indices: Inferior Facial Angle (Rotten 2002), Jaw Index (Paladini 1999),
+// Hemi-mandible length (Qiu 2017). Reproducibility is limited → require ≥2 concordant indices.
+function calcMicrognathia(){
+  const v = id => { const el=document.getElementById(id); return el?parseFloat(el.value):NaN; };
+  const ifa=v('mg-ifa'), md=v('mg-md'), bpd=v('mg-bpd'), hml=v('mg-hml'), ga=v('mg-ga');
+  const rows=[]; let abn=0, n=0;
+  const row=(name,val,lab,cls)=>`<div class="di" style="border-right:3px solid var(--${cls==='bad'?'red':cls==='warn'?'amber':'green'})">
+    <div class="dl">${name}</div><div class="dv">${val}</div>
+    <div style="font-size:11px;color:var(--text3);margin-top:2px">${lab}</div></div>`;
+  if(!isNaN(ifa)){ n++; const bad=ifa<49.2; if(bad)abn++; rows.push(row('IFA', ifa.toFixed(1)+'°', bad?'< 49.2° — רטרוגנטיה':'תקין (ממוצע 65.5°±8.1)', bad?'bad':'ok')); }
+  if(!isNaN(md)&&!isNaN(bpd)&&bpd>0){ n++; const ji=md/bpd*100; const bad=ji<23, hi=ji<21; if(bad)abn++; rows.push(row('Jaw Index', ji.toFixed(1), bad?(hi?'< 21 — מיקרוגנטיה (ודאות גבוהה)':'< 23 — מיקרוגנטיה'):'תקין (≥ 23)', bad?'bad':'ok')); }
+  if(!isNaN(hml)&&!isNaN(ga)&&ga>0){ n++; const m=40.89-6327.495/(ga*ga); const z=(hml-m)/1.231; const bad=z<=-1.645; if(bad)abn++; rows.push(row('HML (אורך הֵמי-מנדיבולה)', hml.toFixed(1)+' מ"מ', 'z='+z.toFixed(2)+(bad?' · < אחוזון 5 לגיל':' · תקין לגיל (חציון '+m.toFixed(1)+')'), bad?'warn':'ok')); }
+  const el=document.getElementById('mg-res');
+  if(!el) return;
+  if(!n){ el.innerHTML='<div class="note" style="border-right-color:var(--text3)">הזן לפחות מדד אחד</div>'; return; }
+  let verdict, vcls;
+  if(abn>=2){ verdict='חשד גבוה לאנומליית סנטר — ≥2 מדדים חריגים'; vcls='bad'; }
+  else if(abn===1){ verdict='מדד בודד חריג — גבולי; מומלץ אימות במדד נוסף ומעקב'; vcls='warn'; }
+  else { verdict='כל המדדים שהוזנו תקינים'; vcls='ok'; }
+  el.innerHTML=`<div class="detail-grid two" style="margin-top:6px">${rows.join('')}</div>
+    ${badge(vcls, verdict)}`;
+}
+function showMicrognathiaInfo(){
+  const t = getBiomTargets();
+  document.getElementById(t.title).textContent = 'מיקרוגנטיה / הערכת הסנטר — מדריך ומחשבון';
+  document.getElementById(t.area).style.display = '';
+  if (t.inputArea) document.getElementById(t.inputArea).style.display = 'none';
+  const inp = (id,ph,w) => `<input id="${id}" type="number" step="0.1" inputmode="decimal" placeholder="${ph}" oninput="calcMicrognathia()" style="width:${w||'72px'};padding:6px 8px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);font-size:13px">`;
+  const html = `
+  <div style="grid-column:1/-1;background:var(--surface);border-radius:12px;padding:14px;font-size:13px;line-height:1.6">
+    <div class="note" style="border-right-color:var(--primary);background:var(--primary-bg);margin-bottom:12px">
+      <b style="color:var(--primary)">⚡ עיקרון</b> — אבחנת מיקרוגנטיה/רטרוגנטיה כמותית: השתמש ב-<b>≥2 מדדים מתואמים</b>. לכל מדד בנפרד שונוּת בין-בודק לא מבוטלת.
+    </div>
+    <!-- Calculator -->
+    <div style="display:grid;gap:10px;margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="min-width:150px;font-weight:600">Inferior Facial Angle</span>${inp('mg-ifa','מעלות')}<span style="font-size:11px;color:var(--text3)">סף < 49.2°</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="min-width:150px;font-weight:600">Jaw Index</span>
+        ${inp('mg-md','קוטר מנדיבולה AP')}<span style="color:var(--text3)">÷</span>${inp('mg-bpd','BPD')}<span style="color:var(--text3)">×100</span><span style="font-size:11px;color:var(--text3)">סף < 23</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span style="min-width:150px;font-weight:600">HML + גיל</span>${inp('mg-hml','אורך הֵמי-מנדיבולה')}${inp('mg-ga','שבוע','64px')}<span style="font-size:11px;color:var(--text3)">z מול Qiu</span>
+      </div>
+    </div>
+    <div id="mg-res"></div>
+    <!-- Guide -->
+    <details style="margin-top:12px;border:1px solid var(--border);border-radius:10px;overflow:hidden">
+      <summary style="cursor:pointer;padding:10px 12px;font-weight:700;background:var(--surface2)">📐 מדריך מדידה ופירוש</summary>
+      <div style="padding:12px;font-size:12.5px;line-height:1.7">
+        <b>1. Inferior Facial Angle (IFA)</b> — חתך מיד-סגיטלי של הפרופיל. קו (א) אנכי, ניצב לחלק האנכי של המצח בגובה ה-nasion; קו (ב) מחבר את קצה הסנטר (mentum) לשפה הקדמית הבולטת. הזווית ביניהם. <b>תקין 65.5°±8.1; < 49.2° = רטרוגנטיה</b> (בלתי תלוי בגיל). <i>Rotten 2002.</i><br><br>
+        <b>2. Jaw Index (JI)</b> — מישור אקסיאלי של המנדיבולה. JI = (קוטר אנטרו-פוסטריורי של המנדיבולה ÷ BPD) ×100. <b>< 23 = מיקרוגנטיה</b> (רגישות 100%, סגוליות 98%); <b>< 21</b> = ודאות גבוהה. בלתי תלוי בגיל. <i>Paladini 1999.</i><br><br>
+        <b>3. אורך הֵמי-מנדיבולה (HML)</b> — מ-TMJ (כולל ה-condyle) ל-symphysis mentis בחתך אלכסוני של הראמוס. חציון לגיל ≈ 40.89 − 6327.5/GA² מ"מ (SD 1.23). < אחוזון 5 = תומך בגודל קטן. תלוי-גיל ובגודל העובר — מדד תומך, לא עצמאי. <i>Qiu 2017.</i><br><br>
+        <div class="note" style="border-right-color:var(--amber);background:var(--amber-bg)">⚠ <b>שונוּת בין-בודק:</b> זוויות הפרופיל (IFA) רגישות לשגיאת מדידה. אבחנה ודאית = ≥2 מדדים חריגים + הקשר (פוליהידרמניוס, חך שסוע, glossoptosis → Pierre-Robin).</div>
+      </div>
+    </details>
+    <div style="margin-top:10px;font-size:11px;color:var(--text3);border-top:1px dashed var(--border);padding-top:8px">
+      <b>מקורות:</b> Rotten D, Levaillant JM. UOG 2002;19:122–130 (IFA) · Paladini D et al. UOG 1999;13:303–307 (Jaw Index) · Qiu Y et al. 2017 (HML reference). מתוקפים; שונוּת בין-בודק מתועדת.
+    </div>
+  </div>`;
+  document.getElementById(t.list).innerHTML = html;
 }
 
 // ─── Soft Markers Info Panel (Israeli #30 ינואר 2026 + MoH 13/2014) ──
