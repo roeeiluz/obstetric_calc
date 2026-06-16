@@ -7827,7 +7827,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.45';
+const APP_VERSION = '4.46';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -13082,9 +13082,10 @@ const biomMeasurements = {
   // CNS
   tcd: {
     label: 'TCD — קוטר צרברום', unit:'מ"מ', min:11, max:40,
-    // Chavez et al. 2003 / Goldstein 1987 — curvilinear (exponential) TCD–GA model.
-    // (Prior polynomial ran ~½ of true: gave 8mm@17w vs real ~17.5mm; ~20mm@34w vs real ~45mm.)
-    median: (ga) => 6.422 * Math.exp(0.05616*ga),
+    // Chavez 2003 / Goldstein 1987 — TCD–GA nomogram (per-week table, cubic fit, maxErr ~1mm).
+    // Re-validated 2026-06-16: replaced earlier exponential that over-accelerated at term
+    // (gave ~61mm@40w; cubic gives ~56, matching literature ~52–55mm). Monotonic 14–41w.
+    median: (ga) => -0.4341 + 1.08088*ga - 0.012180*ga*ga + 0.00050819*ga*ga*ga,
     sd: (ga) => 0.30 + 0.075*ga,
     range: { min: 5, max: 70 },
     note: 'נמדד במישור צרבלום (sub-occipital) — כלל אצבע: TCD ≈ GA בשבועות (14–24w)',
