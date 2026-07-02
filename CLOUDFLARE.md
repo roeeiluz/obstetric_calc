@@ -1,26 +1,24 @@
-# פריסה ל-Cloudflare Pages (Git-connected)
+# פריסה ל-Cloudflare Pages
 
-האתר הוא HTML סטטי (index.html + assets/). Cloudflare Pages מחובר ל-repo הזה ב-GitHub
-ומפרסם אוטומטית בכל `git push` ל-`main`.
-
-## חיבור ראשוני (פעם אחת, ב-dashboard)
-1. https://dash.cloudflare.com → **Workers & Pages** → **Create** → לשונית **Pages** → **Connect to Git**.
-2. אשר את GitHub ובחר את המאגר **`roeeiluz/obstetric_calc`**, ענף **`main`**.
-3. **Build settings** — קריטי לאתר סטטי:
-   - Framework preset: **None**
-   - Build command: **(השאר ריק)**
-   - Build output directory: **`/`**
-4. **Save and Deploy**. תוך ~1 דקה מתקבל URL: `https://obstetric-calc.pages.dev` (או שם דומה).
+**חי:** https://obstetric-calc.pages.dev
+**פרויקט:** `obstetric-calc` (חשבון Roee.iluz@gmail.com, direct-upload דרך wrangler — כמו iluz-hr-docs / maq-trainee / obgyn-orientation).
 
 ## עבודה שוטפת (דרך Claude Code)
-זהה לתהליך הקיים — עורכים את `index.html`, ואז:
-```
-git add -A && git commit -m "..." && git push
-```
-Cloudflare מזהה את ה-push ומפרסם אוטומטית תוך ~30 שניות. אין טוקנים לנהל.
+1. עורכים את `index.html`.
+2. פורסים:
+   ```
+   ./deploy-cloudflare.sh
+   ```
+   הסקריפט אורז staging נקי (index.html + assets/ + _headers) ומריץ `wrangler pages deploy`.
+   האתר מתעדכן תוך ~שנייה. (הפעלה ראשונה עשויה לדרוש אישור פריסה ב-Claude Code — אפשר להוסיף כלל הרשאה קבוע ל-`wrangler pages deploy`.)
+3. מומלץ גם `git push` כדי לשמור את GitHub כמקור-אמת (וכגיבוי GitHub Pages).
 
-## הערות
-- `_headers` — קאשינג ארוך ל-`assets/`, ורענון מיידי של ה-shell כדי שבּאמפ-גרסה יופיע מיד.
-- GitHub Pages (`roeeiluz.github.io/obstetric_calc`) ממשיך לעבוד במקביל כגיבוי.
-- `high_risk_combined.html` (23MB) אינו מקושר מ-index; הוא ייפרס אך נגיש רק בכתובת ישירה.
-- דומיין מותאם (אופציונלי): ב-Pages → Custom domains → Add domain.
+## מה נפרס
+`index.html` + `assets/iptus/` (14 תמונות). **לא** נפרסים: `high_risk_combined.html` (23MB, לא מקושר), מסמכי docs, zip.
+
+## קבצים
+- `_headers` — קאשינג ארוך ל-`assets/`, רענון מיידי של ה-app shell.
+- `deploy-cloudflare.sh` — פריסה בפקודה אחת.
+
+## גיבוי
+GitHub Pages (`roeeiluz.github.io/obstetric_calc`) ממשיך לעבוד במקביל. דומיין מותאם (אופציונלי): Cloudflare dashboard → Pages → obstetric-calc → Custom domains.
