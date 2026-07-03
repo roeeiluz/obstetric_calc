@@ -4,7 +4,7 @@
 set -e
 cd "$(dirname "$0")"
 STAGE="$(mktemp -d)"
-cp index.html _headers "$STAGE"/
+cp index.html _headers high_risk_combined.html "$STAGE"/
 cp -R assets "$STAGE"/assets
 echo "פורס $(find "$STAGE" -type f | wc -l | tr -d ' ') קבצים ל-obstetric-calc…"
 npx --yes wrangler@latest pages deploy "$STAGE" \
