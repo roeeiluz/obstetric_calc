@@ -7827,7 +7827,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.48';
+const APP_VERSION = '4.49';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -13287,11 +13287,14 @@ const biomMeasurements = {
   // Abdomen
   kid: {
     label: 'אורך כליה', unit:'מ"מ', min:18, max:40,
-    // Refit to Chitty 2003 50th-centile anchors (20w≈20, 28w≈33, 36w≈42; was ~12% low at term).
-    median: (ga) => Math.max(8, -32.15 + 3.3*ga - 0.034375*ga*ga),
-    sd: (ga) => 1.2 + 0.10*ga,
+    // KL(mm) ≈ GA(wk): well-replicated ~1mm/week rule, term ~40–42mm. Linear fit to
+    // consensus per-week values (verified vs anchors 20/28/36/38w). Replaced a quadratic
+    // that read ~16mm@18w and ~33mm@28w — both ~3mm off the rule.
+    median: (ga) => Math.max(8, 1.069 + 1.025*ga),
+    sd: (ga) => 1.0 + 0.06*ga,
     range: { min: 5, max: 60 },
-    src: 'Chitty LS, Altman DG. Prenat Diagn 2003;23:891–897 — "Charts of fetal size: kidney and renal pelvis"'
+    note: 'כלל אצבע: אורך הכליה (מ"מ) ≈ גיל ההריון (שבועות); גדילה ~1מ"מ/שבוע מ-18w.',
+    src: 'Chitty LS, Altman DG. Prenat Diagn 2003;23:891–897 — עקומה מותאמת לערכי קונצנזוס תואמי-Chitty (הטבלה המילולית נעולה ב-paywall)'
   },
   pelvis: {
     label: 'AP Renal Pelvis', unit:'מ"מ', min:18, max:40,
