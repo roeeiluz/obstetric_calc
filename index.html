@@ -7827,7 +7827,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.49';
+const APP_VERSION = '4.50';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -13081,7 +13081,7 @@ function riskRow(label, abbr, adjusted, base){
 const biomMeasurements = {
   // CNS
   tcd: {
-    label: 'TCD — קוטר צרברום', unit:'מ"מ', min:11, max:40,
+    label: 'TCD — קוטר צרברום', unit:'מ"מ', min:11, max:40, datesGA:true,
     // DEFAULT = Goldstein 1987 (LOINC-standard TCD-for-GA method). Chavez 2003 as alternative
     // (3rd-trimester emphasis — runs ~4mm higher near term). Both cubic fits, monotonic 14–41w.
     median: (ga) => 5.4863 + 0.19929*ga + 0.028189*ga*ga - 0.00011419*ga*ga*ga,
@@ -14843,6 +14843,36 @@ function updateBiomMeas(){
   document.getElementById('biom-res').innerHTML = '';
 }
 
+// Reverse dating: from a measured value, invert the active curve to estimate GA.
+// Grounded in the same validated forward curve (self-consistent). The 90% band comes
+// from where the ±1.645·SD envelope crosses the value — it widens as the curve
+// flattens, which honestly shows why late-3rd-trimester dating by a single biometry is weak.
+function biomDatingBlock(k){
+  const m = biomMeasurements[k];
+  if(!m || !m.datesGA) return '';
+  const val = parseFloat(document.getElementById('biom-val').value);
+  if(isNaN(val)) return '';
+  const v = getActiveBiomVariant(k) || { median:m.median, sd:m.sd, curveLabel:null };
+  const lo0=m.min, hi0=m.max;
+  const inv = (target, shift) => {
+    let lo=lo0, hi=hi0;
+    if(v.median(lo)+shift*v.sd(lo) >= target) return lo0;
+    if(v.median(hi)+shift*v.sd(hi) <= target) return hi0;
+    for(let i=0;i<60;i++){ const mm=(lo+hi)/2; if(v.median(mm)+shift*v.sd(mm) < target) lo=mm; else hi=mm; }
+    return (lo+hi)/2;
+  };
+  const fmtGA = ga => { let w=Math.floor(ga), dd=Math.round((ga-w)*7); if(dd===7){w++;dd=0;} return w+'+'+dd; };
+  const pt=inv(val,0), lo=inv(val,1.645), hi=inv(val,-1.645);
+  const below=val<v.median(lo0), above=val>v.median(hi0);
+  const curveTag = v.curveLabel ? ` · ${v.curveLabel}` : '';
+  const bandW = hi-lo;
+  return `<div class="note" style="border-right-color:var(--purple);background:var(--purple-bg,#F4F0FB);margin-top:10px">
+    <b style="color:#5A3A91">🗓️ תיארוך לפי ${m.label}${curveTag}</b><br>
+    ${(below||above)?`<span style="color:var(--amber-text)">הערך ${below?'קטן מ':''}${above?'גדול מ':''}טווח העקומה — התיארוך מוערך בקצה בלבד.</span><br>`:''}
+    גיל הריון משוער: <b style="font-size:15px">${fmtGA(pt)}</b> שבועות · טווח 90%: <b>${fmtGA(lo)}–${fmtGA(hi)}</b> (±${(bandW/2*7).toFixed(0)} ימים)<br>
+    <span style="font-size:11px;color:var(--text3)">TCD אמין לתיארוך בעיקר בטרימסטר 2 ותחילת 3; הטווח מתרחב בטרימסטר 3 (העקומה מאטה). עמיד יחסית ל-FGR — יתרון בתיארוך מאוחר לא ודאי. אינו מחליף תיארוך CRL בטרימסטר 1.</span>
+  </div>`;
+}
 function calcBiom(){
   const el = document.getElementById('biom-res');
   const k = document.getElementById('biom-meas').value;
@@ -14850,7 +14880,12 @@ function calcBiom(){
   const m = biomMeasurements[k];
   const w = parseInt(document.getElementById('biom-w').value);
   const d = parseInt(document.getElementById('biom-d').value)||0;
-  if(isNaN(w)){ el.innerHTML='<div class="note" style="border-right-color:var(--red);background:var(--red-bg);color:var(--red-text)">בחר גיל הריון</div>'; return; }
+  if(isNaN(w)){
+    // Reverse-dating mode: value present but GA unknown → estimate GA from the measure.
+    const db = biomDatingBlock(k);
+    if(db){ el.innerHTML = `<div class="result"><div class="result-label">${m.label} — תיארוך (גיל הריון לא ידוע)</div></div>` + db; return; }
+    el.innerHTML='<div class="note" style="border-right-color:var(--red);background:var(--red-bg);color:var(--red-text)">בחר גיל הריון (או הזן ערך לתיארוך הפוך)</div>'; return;
+  }
   const val = parseFloat(document.getElementById('biom-val').value);
   if(isNaN(val)){ el.innerHTML='<div class="note" style="border-right-color:var(--red);background:var(--red-bg);color:var(--red-text)">הזן ערך מדידה</div>'; return; }
   if(w < m.min || w > m.max){
@@ -14950,6 +14985,7 @@ function calcBiom(){
     </div>
   </div>`;
 
+  if(m.datesGA) html += biomDatingBlock(k);
   el.innerHTML = html;
 }
 
