@@ -22,3 +22,6 @@ _obstetrics_calculator_v*_upload/
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# Wrangler local state — caches the Cloudflare account id, never belongs in a public repo
+.wrangler/
