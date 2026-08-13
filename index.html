@@ -2121,7 +2121,14 @@
     <div style="border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin:10px 0;background:var(--primary-bg)">
       <div style="font-weight:700;font-size:13px;color:var(--primary);margin-bottom:6px">🕰️ מכונת זמן — שבוע ⇄ תאריך</div>
       <div class="ga-row" style="align-items:center;gap:8px;flex-wrap:wrap">
-        <input id="tm-ga" type="text" inputmode="numeric" placeholder="38+0" style="width:96px;direction:ltr;text-align:center;font-weight:700" oninput="tmFromWeek()">
+        <select id="tm-w" style="width:92px" onchange="tmFromWeek()">
+          <option value="">שבוע</option>
+          <script>for(let i=4;i<=43;i++)document.write(`<option value="${i}">${i}</option>`)</script>
+        </select>
+        <span class="unit">+</span>
+        <select id="tm-d" style="width:66px" onchange="tmFromWeek()">
+          <script>for(let i=0;i<=6;i++)document.write(`<option value="${i}">${i}</option>`)</script>
+        </select>
         <span style="font-size:16px;color:var(--text3)">⇄</span>
         <input id="tm-date" type="date" style="width:160px" onchange="tmFromDate()">
       </div>
@@ -7838,7 +7845,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.53';
+const APP_VERSION = '4.54';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -10280,18 +10287,12 @@ const TM_DAYNAMES = ['ראשון','שני','שלישי','רביעי','חמישי
 function tmActivate(lmp){
   _tmLmp = lmp;
   const out=document.getElementById('tm-out');
-  if(out && !document.getElementById('tm-ga').value && !document.getElementById('tm-date').value){
-    out.innerHTML='מוכן — הזן שבוע בסימון 38+0 (או בחר צ\'יפ) או תאריך';
+  if(out && !document.getElementById('tm-w').value && !document.getElementById('tm-date').value){
+    out.innerHTML='מוכן — בחר שבוע (או צ\'יפ) או תאריך';
   }
   // refresh whichever side has a value
-  if(document.getElementById('tm-ga') && document.getElementById('tm-ga').value) tmFromWeek();
+  if(document.getElementById('tm-w') && document.getElementById('tm-w').value) tmFromWeek();
   else if(document.getElementById('tm-date') && document.getElementById('tm-date').value) tmFromDate();
-}
-// parse canonical obstetric notation: "38+0" / "38+" / "38" (→ +0)
-function tmParseGA(str){
-  const m=String(str||'').match(/^\s*(\d{1,2})\s*(?:\+\s*([0-6])?)?\s*$/);
-  if(!m) return null;
-  return { w: parseInt(m[1]), d: m[2]!=null ? parseInt(m[2]) : 0 };
 }
 function tmNeedCalc(){
   const out=document.getElementById('tm-out');
@@ -10312,20 +10313,21 @@ function tmShow(w,d,target){
   out.innerHTML=`שבוע <b>${w}+${d}</b> ⇄ יום <b>${dow}</b>, <b>${fmtDate(target)}</b> <span style="color:var(--text3)">(${when})</span>`;
 }
 function tmSetQuick(w,d){
-  const el=document.getElementById('tm-ga');
-  if(el) el.value=w+'+'+d;
+  const wEl=document.getElementById('tm-w'), dEl=document.getElementById('tm-d');
+  if(wEl) wEl.value=String(w);
+  if(dEl) dEl.value=String(d);
   tmFromWeek();
 }
 function tmFromWeek(){
   if(!_tmLmp){ tmNeedCalc(); return; }
   const out=document.getElementById('tm-out');
-  const raw=document.getElementById('tm-ga').value;
-  if(!raw.trim()){ if(out) out.innerHTML='מוכן — הזן שבוע בסימון 38+0 (או בחר צ\'יפ) או תאריך'; return; }
-  const ga=tmParseGA(raw);
-  if(!ga||ga.w<4||ga.w>43){ if(out) out.innerHTML='סימון: שבוע+ימים, למשל 38+0 (שבוע 4–43)'; return; }
-  const target=addDays(_tmLmp, ga.w*7+ga.d);
+  const w=parseInt(document.getElementById('tm-w').value);
+  if(isNaN(w)){ if(out) out.innerHTML='מוכן — בחר שבוע (או צ\'יפ) או תאריך'; return; }
+  const d=parseInt(document.getElementById('tm-d').value)||0;
+  // closed selects — values are guaranteed in-range (week 4–43, day 0–6)
+  const target=addDays(_tmLmp, w*7+d);
   tmSetDateField(target);
-  tmShow(ga.w,ga.d,target);
+  tmShow(w,d,target);
 }
 function tmFromDate(){
   if(!_tmLmp){ tmNeedCalc(); return; }
@@ -10335,8 +10337,9 @@ function tmFromDate(){
   const days=diffDays(t, _tmLmp);
   if(days<0||days>320){ if(out) out.innerHTML='<span style="color:var(--amber-text)">התאריך מחוץ לטווח ההריון</span>'; return; }
   const w=Math.floor(days/7), d=days%7;
-  const el=document.getElementById('tm-ga');
-  if(el) el.value=w+'+'+d;
+  const wEl=document.getElementById('tm-w'), dEl=document.getElementById('tm-d');
+  if(wEl) wEl.value=String(w);
+  if(dEl) dEl.value=String(d);
   tmShow(w,d,t);
 }
 
