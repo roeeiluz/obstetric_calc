@@ -7845,7 +7845,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.54';
+const APP_VERSION = '4.55';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -10703,6 +10703,45 @@ function hadlockEFW(opts){
   return null;
 }
 
+// ─── Hadlock 1984 per-parameter growth references (BPD/HC/AC/FL) ───
+// mean(cm) as f(GA) with constant SD — as implemented by perinatology.com
+// Fetal Biometry 5.0 (site treated as reliable reproduction; FL identical to our
+// validated flHadlock). Verified vs textbook anchors @28w: BPD 70.6, HC 266, AC 240, FL 53 mm.
+const hadlockParamSpecs = {
+  bpd: {label:'BPD', meanCm: ga => -3.08 + 0.41*ga - 0.000061*Math.pow(ga,3), sdCm: 0.30},
+  hc:  {label:'HC',  meanCm: ga => -11.48 + 1.56*ga - 0.0002548*Math.pow(ga,3), sdCm: 1.00},
+  ac:  {label:'AC',  meanCm: ga => -13.3 + 1.61*ga - 0.00998*ga*ga, sdCm: 1.34},
+  fl:  {label:'FL',  meanCm: ga => -3.91 + 0.427*ga - 0.0034*ga*ga, sdCm: 0.30}
+};
+// "Age-equivalent GA": the GA whose median equals the measured value (median-curve
+// inversion, 1/7-week steps — the FB5.0 approach; same idea as our TCD dating).
+function medianEquivalentGA(value, medianFn, minGa, maxGa){
+  if(!Number.isFinite(value)) return null;
+  let best=null, bestDiff=Infinity;
+  for(let ga=minGa; ga<=maxGa+1e-4; ga+=1/7){
+    const m=medianFn(ga);
+    if(!Number.isFinite(m)) continue;
+    const diff=Math.abs(m-value);
+    if(diff<bestDiff){ bestDiff=diff; best=ga; }
+  }
+  return best;
+}
+function hadlockParamAssess(key, mm, gaFloat){
+  const s=hadlockParamSpecs[key];
+  if(!s || !Number.isFinite(mm) || mm<=0) return null;
+  const cm=mm/10;
+  const mean=s.meanCm(gaFloat);
+  const z=(cm-mean)/s.sdCm;
+  const pct=normCDF(z)*100;
+  const eqGa=medianEquivalentGA(cm, s.meanCm, 12, 42);
+  return {z, pct, eqGa, meanMm: mean*10, edge: eqGa!==null && (eqGa<12.1 || eqGa>41.9)};
+}
+function fmtGaFloat(g){
+  if(g===null||!Number.isFinite(g)) return '—';
+  const w=Math.floor(g), d=Math.round((g-w)*7);
+  return d===7 ? (w+1)+'+0' : w+'+'+d;
+}
+
 let uaEdv='present';
 function setEDV(btn){
   btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
@@ -11483,6 +11522,31 @@ function calcEFW(){
         <div class="di"><div class="dl">AC</div><div class="dv">${fmtMM(biometryInfo.ac)}</div></div>
         <div class="di"><div class="dl">FL</div><div class="dv">${fmtMM(biometryInfo.fl)}</div></div>
       </div>`;
+
+    // Per-parameter percentiles + age-equivalent GA (Hadlock 1984)
+    const paramRows = [['bpd','BPD'],['hc','HC'],['ac','AC'],['fl','FL']]
+      .map(([k,lab]) => ({k, lab, mm: biometryInfo[k+'Mm'], a: hadlockParamAssess(k, biometryInfo[k+'Mm'], gaFloat)}))
+      .filter(r => r.a);
+    if(paramRows.length){
+      const pcls = p => p<3?'var(--red)':p<10?'var(--amber)':p>97?'var(--red)':p>90?'var(--amber)':'var(--green)';
+      const pfmt = p => p<1?'<1':p>99?'>99':p.toFixed(0);
+      html += `<div class="divider"></div>
+      <div class="sec" style="color:var(--blue)">הערכה פר-מדד · אחוזון + שבוע מקביל (Hadlock 1984)</div>
+      <div style="overflow-x:auto"><table class="redate-table" style="width:100%;margin-top:4px">
+        <thead><tr><th>מדד</th><th>נמדד</th><th>חציון לגיל</th><th>אחוזון</th><th>Z</th><th>מתאים לשבוע</th></tr></thead>
+        <tbody>
+        ${paramRows.map(r=>`<tr>
+          <td style="font-weight:700">${r.lab}</td>
+          <td>${r.mm.toFixed(1)} מ"מ</td>
+          <td>${r.a.meanMm.toFixed(0)} מ"מ</td>
+          <td style="color:${pcls(r.a.pct)};font-weight:700">${pfmt(r.a.pct)}</td>
+          <td dir="ltr">${r.a.z.toFixed(2)}</td>
+          <td style="font-weight:700">${r.a.edge?'≈':''}${fmtGaFloat(r.a.eqGa)}</td>
+        </tr>`).join('')}
+        </tbody>
+      </table></div>
+      <div style="font-size:11px;color:var(--text3);margin-top:6px">אחוזון: עקומות גדילה פר-מדד Hadlock 1984 (SD קבוע) · "מתאים לשבוע" = הגיל שחציונו שווה לערך הנמדד (היפוך חציון, כבאתר perinatology)</div>`;
+    }
     if(allResults.length>1){
       html += `<div class="multi-result" style="margin-top:14px">`;
       for(const r of allResults){
@@ -11531,6 +11595,10 @@ function calcEFW(){
       <div class="zscore">Z = ${z.toFixed(2)}</div>
       ${bar(parseFloat(ps)||0,c)}
       ${badge(c,lab)}`;
+    const efwEqGa = medianEquivalentGA(efw, g => { const r=hadlockRef[Math.floor(g)]; return r ? hadlockInterp(Math.floor(g), Math.round((g-Math.floor(g))*7)).m : NaN; }, 10, 40);
+    if(efwEqGa!==null){
+      html += `<div class="zscore" style="margin-top:6px">משקל זה מתאים לחציון של שבוע <b>${fmtGaFloat(efwEqGa)}</b>${(efwEqGa<10.2||efwEqGa>39.8)?' (קצה העקומה)':''}</div>`;
+    }
   }
 
   // ── Comparison block (when 2+ curves selected) ──
