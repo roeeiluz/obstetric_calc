@@ -7845,7 +7845,7 @@
 <script>
 // ─── App version ──────────────────────────────────────────────────────────
 // עדכן את המספר הזה בלבד בכל שחרור גרסה. התאריך מתעדכן אוטומטית מ-document.lastModified.
-const APP_VERSION = '4.55';
+const APP_VERSION = '4.56';
 
 // ─── Helper: open Papers panel (from header button) ───────────────────
 function openPapersPanel(){
@@ -10970,11 +10970,38 @@ function ismfmTwinZ(efw, p){
 
 // ── Unified EFW percentile evaluator across all 3 curves ──
 // Returns {hadlock, dollberg, ismfm} — each has {z, pct, ps, r} or null
+// ─── Hadlock 1991 published in-utero weight percentiles (explicit table) ───
+// p3/p10/p50/p90, weeks 10–40, as reproduced by perinatology.com FB5.0.
+// Percentile via piecewise z-space interpolation across the published anchors
+// (zFromPercentiles — the same skew-honoring mechanism Dollberg uses); outside
+// the anchors it extrapolates linearly in z. This replaces the normal-model
+// approximation (m±1.88·SD ran ~2% low at the p3 line, e.g. 890 vs 908g @28w).
+const hadlockPctTable = {
+  weeks0: 10,
+  p3: [26,34,43,55,70,88,110,136,167,205,248,299,359,426,503,589,685,791,908,1034,1169,1313,1465,1622,1783,1946,2110,2271,2427,2576,2714],
+  p10:[29,37,48,61,77,97,121,150,185,227,275,331,398,471,556,652,758,876,1004,1145,1294,1453,1621,1794,1973,2154,2335,2513,2686,2851,3004],
+  p50:[35,45,58,73,93,117,146,181,223,273,331,399,478,568,670,785,913,1055,1210,1379,1559,1751,1953,2162,2377,2595,2813,3028,3236,3435,3619],
+  p90:[41,53,68,85,109,137,171,212,261,319,387,467,559,665,784,918,1068,1234,1416,1613,1824,2049,2285,2530,2781,3036,3291,3543,3786,4019,4234]
+};
+function hadlockTableAt(w, d){
+  if(w < 10 || w > 40) return null;
+  const idx = w - 10;
+  const idx1 = Math.min(30, idx + 1);
+  const f = (w === 40) ? 0 : (d || 0) / 7;
+  const g = k => lerp(hadlockPctTable[k][idx], hadlockPctTable[k][idx1], f);
+  return { p3: g('p3'), p10: g('p10'), p50: g('p50'), p90: g('p90') };
+}
+
 function evalEfwAllCurves(efw, w, d, sex, plurality){
   const out = {hadlock:null, dollberg:null, ismfm:null};
-  // Hadlock (singleton in-utero)
+  // Hadlock (singleton in-utero) — explicit published percentiles when in range
   const rH = hadlockInterp(w, d);
-  if(rH){
+  const tH = hadlockTableAt(w, d);
+  if(tH){
+    const z = zFromPercentiles(efw, tH);
+    const pct = normCDF(z)*100;
+    out.hadlock = {z, pct, ps: pct<0.5?'<1':pct>99.5?'>99':pct.toFixed(1), r: rH || {m: tH.p50, sd: (tH.p90-tH.p10)/2.5631}};
+  } else if(rH){
     const z = (efw - rH.m)/rH.sd;
     const pct = normCDF(z)*100;
     out.hadlock = {z, pct, ps: pct<0.5?'<1':pct>99.5?'>99':pct.toFixed(1), r: rH};
